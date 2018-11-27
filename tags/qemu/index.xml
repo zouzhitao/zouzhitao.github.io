@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on taotao never stoped</title>
-    <link>https://zouzhitao.github.io/posts/</link>
-    <description>Recent content in Posts on taotao never stoped</description>
+    <title>qemu on taotao never stoped</title>
+    <link>https://zouzhitao.github.io/tags/qemu/</link>
+    <description>Recent content in qemu on taotao never stoped</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Tue, 27 Nov 2018 08:32:56 +0800</lastBuildDate>
     
-	<atom:link href="https://zouzhitao.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://zouzhitao.github.io/tags/qemu/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -23,16 +23,6 @@
 fatal: unable to access &#39;https://pdos.csail.mit.edu/6.828/2018/jos.git/&#39;: OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection to pdos.csail.mit.edu:443  解决方法
 添加两行就行了
 export GIT_CURL_VERBOSE=1 export GIT_TRACE_PACKET=2  注意 这个方法在win10 下能成功安装，但是 Ubuntu 下仅能 clone 2017 年的版本</description>
-    </item>
-    
-    <item>
-      <title>blog test</title>
-      <link>https://zouzhitao.github.io/posts/test/</link>
-      <pubDate>Mon, 26 Nov 2018 01:13:07 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/posts/test/</guid>
-      <description> 这里什么都没有，这是一个博客测试页面
-11/27/18 功能  默认 数学公式支持， $$$$行间公式，$$行内 有一个从udpsec 处copy 的丑陋的目录。以后再做更改了，麻烦 分类，tag支持 disqus 支持  </description>
     </item>
     
   </channel>

@@ -6,18 +6,56 @@
     <description>Recent content on taotao never stoped</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Mon, 26 Nov 2018 01:13:07 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 27 Nov 2018 09:26:05 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Test</title>
+      <title>about</title>
+      <link>https://zouzhitao.github.io/about/</link>
+      <pubDate>Tue, 27 Nov 2018 09:26:05 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/about/</guid>
+      <description>about me 97 年生人，从上大学开始接触blog, 之前一直在 CSDN 上面写 dylanfrank，后来转过一次 hexo,感觉太麻烦，弃坑，写了三年之后，内容逐渐增加啊，CSDN商业气息太重。
+个人关注点主要集中在 : algorithm, computer system(distributed system), 互联网数据挖掘，推荐系统，机器学习。目前还在学习中并没有太多个人输出
+喜欢技术，喜欢探索，喜欢编程，喜欢跑步，读书，
+about blog 这个blog 主要记录一些自己的技术见解，以及一些个人的学习经过，以及一些想法。这个blog 非常简陋，我甚至都没有做多少 SEO， 网上简单的找了一个主题就行了，我也不关心阅读数，我唯一关心的是我是否在认真的写blog，是否是必须要写，不得不写才去写的。目前的想法是
+ course ： 这个目录主要访一些，网上学习的课程笔记 tech ： 这里准备放一些个人的技术见解 thought : 这里主要放一些个人的生活中的想法  contact me 如果您对我博文有一些想法想与我更快的交流可以联系
+e-mail : zhitaozou97@gmail.com</description>
+    </item>
+    
+    <item>
+      <title>archives</title>
+      <link>https://zouzhitao.github.io/archives/</link>
+      <pubDate>Tue, 27 Nov 2018 09:14:34 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/archives/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>MIT 6.828 环境配置，踩坑指南</title>
+      <link>https://zouzhitao.github.io/posts/mit6.828-env/</link>
+      <pubDate>Tue, 27 Nov 2018 08:32:56 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/mit6.828-env/</guid>
+      <description>我的环境 :
+ win10, git 2.19 Ubuntu 18.04 git 2.17 jos.git year : 2018  git clone err  SSL err  直接 git clone git clone https://pdos.csail.mit.edu/6.828/2018/jos.git lab
+可能会出现
+fatal: unable to access &#39;https://pdos.csail.mit.edu/6.828/2018/jos.git/&#39;: OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection to pdos.csail.mit.edu:443  解决方法
+添加两行就行了
+export GIT_CURL_VERBOSE=1 export GIT_TRACE_PACKET=2  注意 这个方法在win10 下能成功安装，但是 Ubuntu 下仅能 clone 2017 年的版本</description>
+    </item>
+    
+    <item>
+      <title>blog test</title>
       <link>https://zouzhitao.github.io/posts/test/</link>
       <pubDate>Mon, 26 Nov 2018 01:13:07 +0800</pubDate>
       
       <guid>https://zouzhitao.github.io/posts/test/</guid>
-      <description></description>
+      <description> 这里什么都没有，这是一个博客测试页面
+11/27/18 功能  默认 数学公式支持， $$$$行间公式，$$行内 有一个从udpsec 处copy 的丑陋的目录。以后再做更改了，麻烦 分类，tag支持 disqus 支持  </description>
     </item>
     
   </channel>
