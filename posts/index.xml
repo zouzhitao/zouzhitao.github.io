@@ -31,8 +31,8 @@ export GIT_CURL_VERBOSE=1 export GIT_TRACE_PACKET=2  注意 这个方法在win10
       <pubDate>Mon, 26 Nov 2018 01:13:07 +0800</pubDate>
       
       <guid>https://zouzhitao.github.io/posts/test/</guid>
-      <description> 这里什么都没有，这是一个博客测试页面
-11/27/18 功能  默认 数学公式支持， $$$$行间公式，$$行内 有一个从udpsec 处copy 的丑陋的目录。以后再做更改了，麻烦 分类，tag支持 disqus 支持  </description>
+      <description>这里什么都没有，这是一个博客测试页面
+11/27/18 功能  默认 数学公式支持， $$$$行间公式，$$行内 有一个从udpsec 处copy 的丑陋的目录。以后再做更改了，麻烦 分类，tag支持 disqus 支持  添加站点ico 在theme 对应的partials 页面下有一个 head.html 文件，找到 ico 文本，替换成你的 ico 路劲，我这里是将ico 放在了 static/img/favicon.ico</description>
     </item>
     
   </channel>
