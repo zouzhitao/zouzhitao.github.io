@@ -19,5 +19,23 @@
       <description></description>
     </item>
     
+    <item>
+      <title>course</title>
+      <link>https://zouzhitao.github.io/categories/course/</link>
+      <pubDate>Wed, 05 Dec 2018 14:02:01 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/categories/course/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>programing language</title>
+      <link>https://zouzhitao.github.io/categories/programing-language/</link>
+      <pubDate>Wed, 05 Dec 2018 14:02:01 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/categories/programing-language/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>
