@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="generator" content="Hugo 0.51" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>MIT6.828 OS lab1 note | taotao never stoped</title>
+    <meta property="og:title" content="MIT6.828 OS lab1 note - taotao never stoped">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content="2018-12-05T23:41:09&#43;08:00">
+        
+        
+    <meta property="article:modified_time" content="2018-12-05T23:41:09&#43;08:00">
+        
+    <meta name="Keywords" content="computer science,computer system,algorithm,OS,distribute system,big data,算法，系统，分布式，大数据，推荐系统">
+    <meta name="description" content="MIT6.828 OS lab1 note">
+        
+    <meta name="author" content="taotao">
+    <meta property="og:url" content="https://zouzhitao.github.io/posts/mit6.828os-lab1-note/">
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="/css/normalize.css">
+    
+        <link rel="stylesheet" href="/css/prism.css">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+    
+
+
+    
+    
+</head>
+
+<body>
+<header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://zouzhitao.github.io/">
+                        taotao never stoped
+                    </a>
+                
+                <p class="description">对机器的探索滔滔不绝</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://zouzhitao.github.io/">首页</a>
+                    
+                    <a  href="https://zouzhitao.github.io/archives/" title="archives">archives</a>
+                    
+                    <a  href="https://zouzhitao.github.io/about/" title="about">about</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div id="body">
+    <div class="container">
+        <div class="col-group">
+
+            <div class="col-8" id="main">
+                <div class="res-cons">
+                    <article class="post">
+                        <header>
+                            <h1 class="post-title">MIT6.828 OS lab1 note</h1>
+                        </header>
+                        <date class="post-meta meta-date">
+                            2018年12月5日
+                        </date>
+                        
+                        <div class="post-meta meta-category">
+                            |
+                            
+                                <a href="https://zouzhitao.github.io/categories/operating-system">Operating System</a>
+                            
+                        </div>
+                        
+                        
+                        <div class="post-meta">
+                            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span> 阅读</span></span>
+                        </div>
+                        
+                        
+                        <aside id="toc" class="dismissed">
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
+<ul>
+<li><a href="#ex6">ex6</a></li>
+<li><a href="#ex8">ex8</a>
+<ul>
+<li><a href="#3">3.</a></li>
+<li><a href="#4">4</a></li>
+</ul></li>
+<li><a href="#ex9">ex9</a></li>
+<li><a href="#ex10">ex10</a></li>
+<li><a href="#ex11">ex11</a></li>
+<li><a href="#ex12">ex12</a></li>
+<li><a href="#完整代码">完整代码</a>
+<ul>
+<li><a href="#debuginfo-eip">debuginfo_eip</a></li>
+<li><a href="#mon-bactrace">mon_bactrace</a></li>
+</ul></li>
+<li><a href="#最终成果">最终成果:</a></li>
+<li><a href="#总结">总结</a></li>
+<li><a href="#ref">ref</a></li>
+</ul>
+</nav>
+                        </aside><div class="post-content">
+                            
+
+<p>这里是 MIT 6.828 OS lab1 笔记.</p>
+
+<p><a href="https://pdos.csail.mit.edu/6.828/2018/">课程链接</a></p>
+
+<p>简单记录一些有趣，和有意思的东西</p>
+
+<h1 id="ex6">ex6</h1>
+
+<blockquote>
+<p>Exercise 6. We can examine memory using GDB&rsquo;s x command. The GDB manual has full details, but for now, it is enough to know that the command x/Nx ADDR prints N words of memory at ADDR. (Note that both &lsquo;x&rsquo;s in the command are lowercase.) Warning: The size of a word is not a universal standard. In GNU assembly, a word is two bytes (the &lsquo;w&rsquo; in xorw, which stands for word, means 2 bytes).
+Reset the machine (exit QEMU/GDB and start them again). Examine the 8 words of memory at 0x00100000 at the point the BIOS enters the boot loader, and then again at the point the boot loader enters the kernel. Why are they different? What is there at the second breakpoint? (You do not really need to use QEMU to answer this question. Just think.)</p>
+</blockquote>
+
+<p>首先我们看看 <code>objdump -h obj/kern/kernel</code> 将 kernel 的elf 二进制文件给输出出来看看</p>
+
+<pre><code>obj/kern/kernel：     文件格式 elf32-i386
+
+节：
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000019e9  f0100000  00100000  00001000  2**4
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .rodata       000006c0  f0101a00  00101a00  00002a00  2**5
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  2 .stab         00003b95  f01020c0  001020c0  000030c0  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  3 .stabstr      00001948  f0105c55  00105c55  00006c55  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  4 .data         00009300  f0108000  00108000  00009000  2**12
+                  CONTENTS, ALLOC, LOAD, DATA
+  5 .got          00000008  f0111300  00111300  00012300  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  6 .got.plt      0000000c  f0111308  00111308  00012308  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  7 .data.rel.local 00001000  f0112000  00112000  00013000  2**12
+                  CONTENTS, ALLOC, LOAD, DATA
+  8 .data.rel.ro.local 00000044  f0113000  00113000  00014000  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  9 .bss          00000648  f0113060  00113060  00014060  2**5
+                  CONTENTS, ALLOC, LOAD, DATA
+ 10 .comment      0000002a  00000000  00000000  000146a8  2**0
+                  CONTENTS, READONLY
+
+</code></pre>
+
+<p>VMA 是(link addr),LMA 是 (load addr), 也就是说 kernel 的 .text 也就是代码段全都被加载到 LMA, 而对应的虚拟地址是 VMA, 即后面需将虚地址转化为实地址</p>
+
+<pre><code class="language-asm">entry:
+	movw	$0x1234,0x472			# warm boot
+f0100000:	02 b0 ad 1b 00 00    	add    0x1bad(%eax),%dh
+f0100006:	00 00                	add    %al,(%eax)
+f0100008:	fe 4f 52             	decb   0x52(%edi)
+f010000b:	e4                   	.byte 0xe4
+
+</code></pre>
+
+<p><a href="./img/ex6.png">ex6</a></p>
+
+<p>boot 之后会被 内核就被加载了，即: 在跳转到 内核之前，那一段read代码其实试讲kernel的各个段加载到 0x100000,处，至于为什么要加载在这里呢？lab中说了 <strong>为了保证其内存有&gt; 1M</strong></p>
+
+<h1 id="ex8">ex8</h1>
+
+<h2 id="3">3.</h2>
+
+<p>跟踪这段代码，技巧：　将这段代码放在　kernel/monitor.c 中　即可运行</p>
+
+<pre><code class="language-cpp">int x = 1, y = 3, z = 4;
+cprintf(&quot;x %d, y %x, z %d\n&quot;, x, y, z);
+</code></pre>
+
+<pre><code class="language-asm">	int x = 1, y = 3, z = 4;
+	cprintf(&quot;x %d, y %x, z %d\n&quot;, x, y, z);
+f010089f:	6a 04                	push   $0x4 #z,y,x push in stack 
+f01008a1:	6a 03                	push   $0x3
+f01008a3:	6a 01                	push   $0x1
+f01008a5:	8d 83 66 0a ff ff    	lea    -0xf59a(%ebx),%eax # fmt pointer
+f01008ab:	50                   	push   %eax #fmt addr
+f01008ac:	e8 c9 01 00 00       	call   f0100a7a &lt;cprintf&gt;
+
+</code></pre>
+
+<p><a href="./img/fmt.png">ap&amp;fmt</a></p>
+
+<p>可以看到　：　fmt－＞&rdquo;x %d, y %x, z %d\n&rdquo;ap 指向的是栈中构造的参数１方的地方，而且如果你实实在在的跟踪并且打印栈中的数据，你会发现参数是倒着来的也就是说先压: z,y,x,fmt,这个可见 asm代码</p>
+
+<p><strong>ap到底是什么</strong></p>
+
+<p>看下面两张图，你就会发现 ap 的地址正好等于 <code>x</code>在栈中的地址</p>
+
+<p><a href="./img/x_addr.png">x_addr</a></p>
+
+<p>(<strong>remark</strong>)
+ap_addr = <code>x</code> 放在栈中的地址</p>
+
+<p><a href="./img/ap_addr.png">ap_addr</a></p>
+
+<h2 id="4">4</h2>
+
+<pre><code class="language-cpp">unsigned int i = 0x00646c72;
+cprintf(&quot;H%x Wo%s&quot;, 57616, &amp;i);
+</code></pre>
+
+<p>57616 = 0xe110</p>
+
+<p><a href="./img/hello.png">hello wolrd!</a></p>
+
+<p><strong>解释</strong> : 将　57616 转化为16base,-&gt;e110,(<strong>这个转化与端系统没有关系，因为代码中是将整数 -&gt; base16，即这个整数是已经被读取出来的结果了</strong>)</p>
+
+<p>后面的 <code>&quot;rld\0&quot;</code> 是小端机器解释的结果，即解释的是这段ASCII code : 726c6400</p>
+
+<h1 id="ex9">ex9</h1>
+
+<p>kernel stack init</p>
+
+<pre><code class="language-asm">
+# kernel asm 54 ~ 58 line 
+f010002f:	bd 00 00 00 00       	mov    $0x0,%ebp
+
+	# Set the stack pointer
+	movl	$(bootstacktop),%esp
+f0100034:	bc 00 00 11 f0       	mov    $0xf0110000,%esp
+</code></pre>
+
+<p>栈的最顶部是 放置的数是0(<strong>value</strong>),因此后面打印栈帧的时候只需要判断 ebp =0 结束就好， 接着栈顶是 <code>f0110000</code></p>
+
+<h1 id="ex10">ex10</h1>
+
+<p><a href="./img/ex10.png">ex10</a></p>
+
+<h1 id="ex11">ex11</h1>
+
+<p><strong>!!!!lec2-note</strong></p>
+
+<p>这个实验没啥难的，只需要看看 lec2-note 就行了，</p>
+
+<p>x86 dictates that stack grows down:</p>
+
+<p>Example instruction What it does</p>
+
+<p><strong>pushl</strong>
+&gt;%eax   subl $4, %esp
+&gt;
+&gt;movl %eax, (%esp)</p>
+
+<p>popl %eax<br />
+&gt;movl (%esp), %eax
+&gt;
+&gt;addl $4, %esp</p>
+
+<p>call 0x12345</p>
+
+<blockquote>
+<p>pushl %eip (*)</p>
+
+<p>movl $0x12345, %eip (*)</p>
+</blockquote>
+
+<p><strong>ret</strong> popl %eip (*)</p>
+
+<p>注意栈帧 <code>esp,ebp</code> 表示的栈的范围是 闭区间所以</p>
+
+<p>然后仔细看看 栈帧的图:</p>
+
+<pre><code class="language-text">+------------+   |
+		       | arg 2      |   \
+		       +------------+    &gt;- previous function's stack frame
+		       | arg 1      |   /
+		       +------------+   |
+		       | ret %eip   |   /
+		       +============+   
+		       | saved %ebp |   \
+		%ebp-&gt; +------------+   |
+		       |            |   |
+		       |   local    |   \
+		       | variables, |    &gt;- current function's stack frame
+		       |    etc.    |   /
+		       |            |   |
+		       |            |   |
+		%esp-&gt; +------------+   /
+</code></pre>
+
+<h1 id="ex12">ex12</h1>
+
+<p>wa !!!</p>
+
+<pre><code class="language-cpp">**
+	// Search within [lline, rline] for the line number stab.
+	// If found, set info-&gt;eip_line to the right line number.
+	// If not found, return -1.
+**
+</code></pre>
+
+<p><strong>注意</strong>这里的right 不是 右的意思，:(,误导我半年&hellip;</p>
+
+<h1 id="完整代码">完整代码</h1>
+
+<h2 id="debuginfo-eip">debuginfo_eip</h2>
+
+<pre><code class="language-cpp">stab_binsearch(stabs,&amp;lline, &amp;rline, N_SLINE, addr);
+if(lline &gt; rline)return -1;
+info-&gt;eip_line = stabs[lline].n_desc; //这个可见上面stabs_binsearch 的样例解释
+	
+</code></pre>
+
+<h2 id="mon-bactrace">mon_bactrace</h2>
+
+<pre><code class="language-cpp">int
+mon_backtrace(int argc, char **argv, struct Trapframe *tf)
+{
+	// Your code here.ex11
+	uint32_t * ebp = (uint32_t *)read_ebp();
+	while(ebp !=0){
+		cprintf(&quot;ebp %08x&quot;,ebp);
+		uint32_t eip = ebp[1];
+		cprintf(&quot;  eip %08x  args&quot;,eip);
+		uint32_t *args = ebp+2;
+		for(int i = 0 ; i&lt;5 ; ++i)
+			cprintf(&quot;  %08x&quot;,args[i]);
+		cputchar('\n');
+		struct Eipdebuginfo info;
+		debuginfo_eip(eip,&amp;info);
+		cprintf(&quot;%s:%d: %.*s+%d\n&quot;,info.eip_file,info.eip_line,info.eip_fn_namelen,info.eip_fn_name,eip - info.eip_fn_addr);
+		ebp = (uint32_t *) ebp[0];
+	}
+	return 0;
+}
+</code></pre>
+
+<h1 id="最终成果">最终成果:</h1>
+
+<p><a href="./img/win.png">win</a></p>
+
+<p><strong>我没有做 challenge</strong></p>
+
+<h1 id="总结">总结</h1>
+
+<p>我做过 清华的ucore,也做过JOS 所以想在这里如实对比一下:</p>
+
+<ul>
+<li>JOS 更难,但探索的更仔细</li>
+<li>ucore 稍微简单一些，只包含7个ex左右</li>
+<li>但是我想说的是 ucore我没做出来，这个JOS我做出来了，我觉得主要原因是 JOS lab提示更直接，整个lab一气呵成，照着做一定能做出来，资源也是就附着在链接里，比 Ucore 更容易获取，而且概念解释更详细，没有涉及 GDT ldt 之类的一来就把人下跑了</li>
+</ul>
+
+<h1 id="ref">ref</h1>
+
+<p><a href="https://pdos.csail.mit.edu/6.828/2018/labs/lab1/">2018/lab1</a>
+[Xin Qiu - MIT 6.828 Lab1)(<a href="https://xinqiu.me/2016/10/15/MIT-6.828-1/">https://xinqiu.me/2016/10/15/MIT-6.828-1/</a>)</p>
+
+                        </div>
+                        
+
+                        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/posts/mit6.828-env/">MIT 6.828 环境配置，踩坑指南</a></li>
+        
+        <li><a href="/posts/uw-programing-language-parta-overview/">UW Programing Language PartA Overview</a></li>
+        
+        <li><a href="/about/">about</a></li>
+        
+        <li><a href="/archives/">archives</a></li>
+        
+        <li><a href="/posts/test/">blog test</a></li>
+        
+    </ul>
+</div>
+
+
+                        <div class="post-meta meta-tags">
+                            
+                            <ul class="clearfix">
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/os">OS</a></li>
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/mit6.828">MIT6.828</a></li>
+                                
+                            </ul>
+                            
+                        </div>
+                    </article>
+                    
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "zouzhitao-github-io" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+    
+                </div>
+            </div>
+            <div id="secondary">
+    <section class="widget">
+        <form id="search" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://zouzhitao.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/mit6.828os-lab1-note/" title="MIT6.828 OS lab1 note">MIT6.828 OS lab1 note</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/uw-programing-language-parta-overview/" title="UW Programing Language PartA Overview">UW Programing Language PartA Overview</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/mit6.828-env/" title="MIT 6.828 环境配置，踩坑指南">MIT 6.828 环境配置，踩坑指南</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/test/" title="blog test">blog test</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/operating-system/">Operating System(2)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/course/">course(1)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/programing-language/">programing language(1)</a>
+    </li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title">标签</h3>
+<div class="tagcloud">
+    
+    <a href="https://zouzhitao.github.io/tags/mit-6.828/">MIT 6.828</a>
+    
+    <a href="https://zouzhitao.github.io/tags/mit6.828/">MIT6.828</a>
+    
+    <a href="https://zouzhitao.github.io/tags/os/">OS</a>
+    
+    <a href="https://zouzhitao.github.io/tags/pl/">PL</a>
+    
+    <a href="https://zouzhitao.github.io/tags/uw-programing-language/">UW programing language</a>
+    
+    <a href="https://zouzhitao.github.io/tags/functional-programing/">functional programing</a>
+    
+    <a href="https://zouzhitao.github.io/tags/qemu/">qemu</a>
+    
+    <a href="https://zouzhitao.github.io/tags/sml/">sml</a>
+    
+</div>
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="https://blog.csdn.net/Dylan_Frank" title="以前的个人博客">dylanfrank@csdn</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://zouzhitao.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+        </div>
+    </div>
+</div>
+<footer id="footer">
+    <div class="container">
+        &copy; 2018 <a href="https://zouzhitao.github.io/">taotao never stoped By taotao</a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="http://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/rujews/maupassant-hugo" target="_blank">maupassant</a>.
+        
+    </div>
+</footer>
+
+
+    <script type="text/javascript" src="/js/prism.js" async="true"></script>
+    <script type="text/javascript">
+    window.MathJax = {
+        tex2jax: {
+            inlineMath: [ ['$','$'] ],
+            processEscapes: true
+        }
+    };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src="/js/totop.js?v=0.0.0" async=""></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-100944759-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+<script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+</body>
+</html>

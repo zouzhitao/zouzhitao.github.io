@@ -6,10 +6,22 @@
     <description>Recent content in Operating System on taotao never stoped</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Tue, 27 Nov 2018 08:32:56 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 05 Dec 2018 23:41:09 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/categories/operating-system/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>MIT6.828 OS lab1 note</title>
+      <link>https://zouzhitao.github.io/posts/mit6.828os-lab1-note/</link>
+      <pubDate>Wed, 05 Dec 2018 23:41:09 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/mit6.828os-lab1-note/</guid>
+      <description>这里是 MIT 6.828 OS lab1 笔记.
+课程链接
+简单记录一些有趣，和有意思的东西
+ex6  Exercise 6. We can examine memory using GDB&amp;rsquo;s x command. The GDB manual has full details, but for now, it is enough to know that the command x/Nx ADDR prints N words of memory at ADDR. (Note that both &amp;lsquo;x&amp;rsquo;s in the command are lowercase.) Warning: The size of a word is not a universal standard. In GNU assembly, a word is two bytes (the &amp;lsquo;w&amp;rsquo; in xorw, which stands for word, means 2 bytes).</description>
+    </item>
     
     <item>
       <title>MIT 6.828 环境配置，踩坑指南</title>
