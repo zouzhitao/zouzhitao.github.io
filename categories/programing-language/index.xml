@@ -19,7 +19,8 @@
       <guid>https://zouzhitao.github.io/posts/uw-programing-language-parta-overview/</guid>
       <description>作业仓库
 url: https://github.com/zouzhitao/CS_Learning/tree/master/PL%40Grossman
-这是 programing language part A 的一个简单回顾
+这是 UW programing language part A 的一个简单回顾.
+coursera 课程地址: https://www.coursera.org/learn/programming-languages
 思考 这门课程可以说非常棒，给了我很多在程序语言上的洞见，可以说是让我重新理解了编程，重新理解了程序语言，不过可能关于整个 程序语言(programing language,PL)的研究, 在工业界真正的用武之地是很少的，或者说不如真正的应用计算机科学(系统,机器学习,etc)来的那么直接。不过我却认为里面有很多迷人的哲学式的美感。这是我第一次用函数式语言，我被他的间接，以及逻辑上的清晰感给折服了。所有计算都是用函数解决的，可以说是非常接近于数学逻辑了。不过真要入这个程序语言的坑，可能还得稍后一些，彼时的我需要的更多的还是一些工业界的东西。(:( ,不然就要饿肚子了)。扯了这么多，感觉是在为不继续学习 Part B，找借口&amp;hellip;
 知识回顾 wk1 wk1 主要是讲一些 ML的基本用法和概念:
  variable binding function binding List immutable   但是最为主要的还是在最后的一节:,作者点出了程序语言的几个重要特征(不要忘了，这门课程的目的是叫我们如何学习所有程序语言)
