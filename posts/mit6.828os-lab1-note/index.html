@@ -83,6 +83,8 @@
                             
                                 <a href="https://zouzhitao.github.io/categories/operating-system">Operating System</a>
                             
+                                <a href="https://zouzhitao.github.io/categories/course">course</a>
+                            
                         </div>
                         
                         
@@ -164,11 +166,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
 <p>VMA 是(link addr),LMA 是 (load addr), 也就是说 kernel 的 .text 也就是代码段全都被加载到 LMA, 而对应的虚拟地址是 VMA, 即后面需将虚地址转化为实地址</p>
 
 <pre><code class="language-asm">entry:
-	movw	$0x1234,0x472			# warm boot
-f0100000:	02 b0 ad 1b 00 00    	add    0x1bad(%eax),%dh
-f0100006:	00 00                	add    %al,(%eax)
-f0100008:	fe 4f 52             	decb   0x52(%edi)
-f010000b:	e4                   	.byte 0xe4
+    movw    $0x1234,0x472           # warm boot
+f0100000:   02 b0 ad 1b 00 00       add    0x1bad(%eax),%dh
+f0100006:   00 00                   add    %al,(%eax)
+f0100008:   fe 4f 52                decb   0x52(%edi)
+f010000b:   e4                      .byte 0xe4
 
 </code></pre>
 
@@ -186,14 +188,14 @@ f010000b:	e4                   	.byte 0xe4
 cprintf(&quot;x %d, y %x, z %d\n&quot;, x, y, z);
 </code></pre>
 
-<pre><code class="language-asm">	int x = 1, y = 3, z = 4;
-	cprintf(&quot;x %d, y %x, z %d\n&quot;, x, y, z);
-f010089f:	6a 04                	push   $0x4 #z,y,x push in stack 
-f01008a1:	6a 03                	push   $0x3
-f01008a3:	6a 01                	push   $0x1
-f01008a5:	8d 83 66 0a ff ff    	lea    -0xf59a(%ebx),%eax # fmt pointer
-f01008ab:	50                   	push   %eax #fmt addr
-f01008ac:	e8 c9 01 00 00       	call   f0100a7a &lt;cprintf&gt;
+<pre><code class="language-asm">    int x = 1, y = 3, z = 4;
+    cprintf(&quot;x %d, y %x, z %d\n&quot;, x, y, z);
+f010089f:   6a 04                   push   $0x4 #z,y,x push in stack 
+f01008a1:   6a 03                   push   $0x3
+f01008a3:   6a 01                   push   $0x1
+f01008a5:   8d 83 66 0a ff ff       lea    -0xf59a(%ebx),%eax # fmt pointer
+f01008ab:   50                      push   %eax #fmt addr
+f01008ac:   e8 c9 01 00 00          call   f0100a7a &lt;cprintf&gt;
 
 </code></pre>
 
@@ -232,11 +234,11 @@ cprintf(&quot;H%x Wo%s&quot;, 57616, &amp;i);
 
 <pre><code class="language-asm">
 # kernel asm 54 ~ 58 line 
-f010002f:	bd 00 00 00 00       	mov    $0x0,%ebp
+f010002f:   bd 00 00 00 00          mov    $0x0,%ebp
 
-	# Set the stack pointer
-	movl	$(bootstacktop),%esp
-f0100034:	bc 00 00 11 f0       	mov    $0xf0110000,%esp
+    # Set the stack pointer
+    movl    $(bootstacktop),%esp
+f0100034:   bc 00 00 11 f0          mov    $0xf0110000,%esp
 </code></pre>
 
 <p>栈的最顶部是 放置的数是0(<strong>value</strong>),因此后面打印栈帧的时候只需要判断 ebp =0 结束就好， 接着栈顶是 <code>f0110000</code></p>
@@ -280,21 +282,21 @@ f0100034:	bc 00 00 11 f0       	mov    $0xf0110000,%esp
 <p>然后仔细看看 栈帧的图:</p>
 
 <pre><code class="language-text">+------------+   |
-		       | arg 2      |   \
-		       +------------+    &gt;- previous function's stack frame
-		       | arg 1      |   /
-		       +------------+   |
-		       | ret %eip   |   /
-		       +============+   
-		       | saved %ebp |   \
-		%ebp-&gt; +------------+   |
-		       |            |   |
-		       |   local    |   \
-		       | variables, |    &gt;- current function's stack frame
-		       |    etc.    |   /
-		       |            |   |
-		       |            |   |
-		%esp-&gt; +------------+   /
+               | arg 2      |   \
+               +------------+    &gt;- previous function's stack frame
+               | arg 1      |   /
+               +------------+   |
+               | ret %eip   |   /
+               +============+   
+               | saved %ebp |   \
+        %ebp-&gt; +------------+   |
+               |            |   |
+               |   local    |   \
+               | variables, |    &gt;- current function's stack frame
+               |    etc.    |   /
+               |            |   |
+               |            |   |
+        %esp-&gt; +------------+   /
 </code></pre>
 
 <h1 id="ex12">ex12</h1>
@@ -302,9 +304,9 @@ f0100034:	bc 00 00 11 f0       	mov    $0xf0110000,%esp
 <p>wa !!!</p>
 
 <pre><code class="language-cpp">**
-	// Search within [lline, rline] for the line number stab.
-	// If found, set info-&gt;eip_line to the right line number.
-	// If not found, return -1.
+    // Search within [lline, rline] for the line number stab.
+    // If found, set info-&gt;eip_line to the right line number.
+    // If not found, return -1.
 **
 </code></pre>
 
@@ -317,7 +319,7 @@ f0100034:	bc 00 00 11 f0       	mov    $0xf0110000,%esp
 <pre><code class="language-cpp">stab_binsearch(stabs,&amp;lline, &amp;rline, N_SLINE, addr);
 if(lline &gt; rline)return -1;
 info-&gt;eip_line = stabs[lline].n_desc; //这个可见上面stabs_binsearch 的样例解释
-	
+    
 </code></pre>
 
 <h2 id="mon-bactrace">mon_bactrace</h2>
@@ -325,22 +327,22 @@ info-&gt;eip_line = stabs[lline].n_desc; //这个可见上面stabs_binsearch 的
 <pre><code class="language-cpp">int
 mon_backtrace(int argc, char **argv, struct Trapframe *tf)
 {
-	// Your code here.ex11
-	uint32_t * ebp = (uint32_t *)read_ebp();
-	while(ebp !=0){
-		cprintf(&quot;ebp %08x&quot;,ebp);
-		uint32_t eip = ebp[1];
-		cprintf(&quot;  eip %08x  args&quot;,eip);
-		uint32_t *args = ebp+2;
-		for(int i = 0 ; i&lt;5 ; ++i)
-			cprintf(&quot;  %08x&quot;,args[i]);
-		cputchar('\n');
-		struct Eipdebuginfo info;
-		debuginfo_eip(eip,&amp;info);
-		cprintf(&quot;%s:%d: %.*s+%d\n&quot;,info.eip_file,info.eip_line,info.eip_fn_namelen,info.eip_fn_name,eip - info.eip_fn_addr);
-		ebp = (uint32_t *) ebp[0];
-	}
-	return 0;
+    // Your code here.ex11
+    uint32_t * ebp = (uint32_t *)read_ebp();
+    while(ebp !=0){
+        cprintf(&quot;ebp %08x&quot;,ebp);
+        uint32_t eip = ebp[1];
+        cprintf(&quot;  eip %08x  args&quot;,eip);
+        uint32_t *args = ebp+2;
+        for(int i = 0 ; i&lt;5 ; ++i)
+            cprintf(&quot;  %08x&quot;,args[i]);
+        cputchar('\n');
+        struct Eipdebuginfo info;
+        debuginfo_eip(eip,&amp;info);
+        cprintf(&quot;%s:%d: %.*s+%d\n&quot;,info.eip_file,info.eip_line,info.eip_fn_namelen,info.eip_fn_name,eip - info.eip_fn_addr);
+        ebp = (uint32_t *) ebp[0];
+    }
+    return 0;
 }
 </code></pre>
 
@@ -470,7 +472,7 @@ mon_backtrace(int argc, char **argv, struct Trapframe *tf)
     </li>
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/course/">course(1)</a>
+        <a href="https://zouzhitao.github.io/categories/course/">course(2)</a>
     </li>
     
     <li>
