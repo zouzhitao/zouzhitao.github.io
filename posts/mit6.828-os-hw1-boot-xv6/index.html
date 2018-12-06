@@ -7,20 +7,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>about | taotao never stoped</title>
-    <meta property="og:title" content="about - taotao never stoped">
+    <title>MIT6.828 OS hw1 boot xv6 | taotao never stoped</title>
+    <meta property="og:title" content="MIT6.828 OS hw1 boot xv6 - taotao never stoped">
     <meta property="og:type" content="article">
         
-    <meta property="article:published_time" content="2018-11-27T09:26:05&#43;08:00">
+    <meta property="article:published_time" content="2018-12-06T18:49:44&#43;08:00">
         
         
-    <meta property="article:modified_time" content="2018-11-27T09:26:05&#43;08:00">
+    <meta property="article:modified_time" content="2018-12-06T18:49:44&#43;08:00">
         
     <meta name="Keywords" content="computer science,computer system,algorithm,OS,distribute system,big data,算法，系统，分布式，大数据，推荐系统">
-    <meta name="description" content="about">
+    <meta name="description" content="MIT6.828 OS hw1 boot xv6">
         
     <meta name="author" content="taotao">
-    <meta property="og:url" content="https://zouzhitao.github.io/about/">
+    <meta property="og:url" content="https://zouzhitao.github.io/posts/mit6.828-os-hw1-boot-xv6/">
     <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="/css/normalize.css">
@@ -55,7 +55,7 @@
                     
                     <a  href="https://zouzhitao.github.io/archives/" title="archives">archives</a>
                     
-                    <a class="current" href="https://zouzhitao.github.io/about/" title="about">about</a>
+                    <a  href="https://zouzhitao.github.io/about/" title="about">about</a>
                     
                 </nav>
             </div>
@@ -72,11 +72,20 @@
                 <div class="res-cons">
                     <article class="post">
                         <header>
-                            <h1 class="post-title">about</h1>
+                            <h1 class="post-title">MIT6.828 OS hw1 boot xv6</h1>
                         </header>
                         <date class="post-meta meta-date">
-                            2018年11月27日
+                            2018年12月6日
                         </date>
+                        
+                        <div class="post-meta meta-category">
+                            |
+                            
+                                <a href="https://zouzhitao.github.io/categories/operating-system">Operating System</a>
+                            
+                                <a href="https://zouzhitao.github.io/categories/course">course</a>
+                            
+                        </div>
                         
                         
                         <div class="post-meta">
@@ -85,39 +94,81 @@
                         
                         
                         <aside id="toc" class="dismissed">
-                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
-<ul>
-<li><a href="#about-me">about me</a></li>
-<li><a href="#about-blog">about blog</a></li>
-<li><a href="#contact-me">contact me</a></li>
-</ul>
-</nav>
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> 
                         </aside><div class="post-content">
-                            
+                            <p><strong>完整内容可见</strong></p>
 
-<h1 id="about-me">about me</h1>
+<p><a href="https://github.com/zouzhitao/CS_Learning/blob/master/MIT6.828-fa18/README.md">MIT 6.828 note</a></p>
 
-<p>97 年生人，从上大学开始接触blog, 之前一直在 CSDN 上面写 <a href="https://blog.csdn.net/Dylan_Frank">dylanfrank</a>，后来转过一次 hexo,感觉太麻烦，弃坑，写了三年之后，内容逐渐增加啊，CSDN商业气息太重。</p>
+<p>这个任务就是检查 _start 开始的时候栈顶的所有值，</p>
 
-<p>个人关注点主要集中在 : algorithm, computer system(distributed system), 互联网数据挖掘，推荐系统，机器学习。目前还在学习中并没有太多个人输出</p>
+<blockquote>
+<p>进入 xv6, gdb 调试</p>
 
-<p>喜欢技术，喜欢探索，喜欢编程，喜欢跑步，读书，</p>
+<p>b *0x10000c (_start kernel start point)</p>
 
-<h1 id="about-blog">about blog</h1>
+<p>x /24x $esp</p>
+</blockquote>
 
-<p>这个blog 主要记录一些自己的技术见解，以及一些个人的学习经过，以及一些想法。这个blog 非常简陋，我甚至都没有做多少 SEO， 网上简单的找了一个主题就行了，我也不关心阅读数，我唯一关心的是我是否在认真的写blog，是否是必须要写，不得不写才去写的。目前的想法是</p>
+<p><img src="./img/hw2-esp.png" alt="hw1-esp.png" /></p>
 
-<ul>
-<li>course ： 这个目录主要访一些，网上学习的课程笔记</li>
-<li>tech ： 这里准备放一些个人的技术见解</li>
-<li>thought : 这里主要放一些个人的生活中的想法</li>
-</ul>
+<p>解释栈中的各个值，首先看 <code>0x7d8d,0x7c4d</code>, 这显然是某个地址，先去 <code>bootblock.asm</code> 中找到这两个地址</p>
 
-<h1 id="contact-me">contact me</h1>
+<pre><code class="language-asm"> # Set up the stack pointer and call into C.
+  movl    $start, %esp
+    7c43:	bc 00 7c 00 00       	mov    $0x7c00,%esp
+  call    bootmain
+    7c48:	e8 ee 00 00 00       	call   7d3b &lt;bootmain&gt;
 
-<p>如果您对我博文有一些想法想与我更快的交流可以联系</p>
+  # If bootmain returns (it shouldn't), trigger a Bochs
+  # breakpoint if running under Bochs, then loop.
+  movw    $0x8a00, %ax            # 0x8a00 -&gt; port 0x8a00
+    7c4d:	66 b8 00 8a          	mov    $0x8a00,%ax
+ 
+</code></pre>
 
-<p>e-mail : zhitaozou97@gmail.com</p>
+<p>这是栈建立的地方，也就是说栈顶在 <strong>0x7c00</strong>, <strong>0x7c4d</strong> 就是栈调用 bootmain 后的下面一条指令</p>
+
+<p>继续看 bootmain</p>
+
+<pre><code class="language-asm">
+00007d3b &lt;bootmain&gt;:
+{
+    7d3b:	55                   	push   %ebp
+    7d3c:	89 e5                	mov    %esp,%ebp
+    7d3e:	57                   	push   %edi
+    7d3f:	56                   	push   %esi
+    7d40:	53                   	push   %ebx
+    7d41:	83 ec 0c             	sub    $0xc,%esp
+  readseg((uchar*)elf, 4096, 0);
+    7d44:	6a 00                	push   $0x0
+    7d46:	68 00 10 00 00       	push   $0x1000
+    7d4b:	68 00 00 01 00       	push   $0x10000
+</code></pre>
+
+<p>栈建立好后压了很多 reg 值进去，就是那些 0</p>
+
+<p>然后
+我们在文件中搜索 7d8d,会发现是 <code>entry</code> 下面一条指令</p>
+
+<pre><code class="language-asm">//.bootblock.asm : line 322
+entry();
+    7d87:	ff 15 18 00 01 00    	call   *0x10018
+    7d8d:	eb d5                	jmp    7d64 &lt;bootmain+0x29&gt;
+</code></pre>
+
+<p>所以整个栈的值解释如下</p>
+
+<pre><code>ox7c00 : 0x00007c4d # bootmain hou mian yitiao dizhi
+       : 0x00000000 #
+       :
+       :
+       :
+       :
+       :
+       :
+0x7bdc : 0x00007d8d # kernel hou de dizhi
+</code></pre>
 
                         </div>
                         
@@ -128,11 +179,15 @@
     <h2>See Also</h2>
     <ul class="listing">
         
-        <li><a href="/archives/">archives</a></li>
+        <li><a href="/posts/mit6.828os-lab1-note/">MIT6.828 OS lab1 note</a></li>
         
         <li><a href="/posts/mit6.828-env/">MIT 6.828 环境配置，踩坑指南</a></li>
         
-        <li><a href="/posts/test/">blog test</a></li>
+        <li><a href="/posts/uw-programing-language-parta-overview/">UW Programing Language PartA Overview</a></li>
+        
+        <li><a href="/about/">about</a></li>
+        
+        <li><a href="/archives/">archives</a></li>
         
     </ul>
 </div>
@@ -140,7 +195,13 @@
 
                         <div class="post-meta meta-tags">
                             
-                            no tags
+                            <ul class="clearfix">
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/os">OS</a></li>
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/gdb">gdb</a></li>
+                                
+                            </ul>
                             
                         </div>
                     </article>

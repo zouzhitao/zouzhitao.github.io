@@ -6,10 +6,26 @@
     <description>Recent content on taotao never stoped</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 05 Dec 2018 23:41:09 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 06 Dec 2018 18:49:44 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>MIT6.828 OS hw1 boot xv6</title>
+      <link>https://zouzhitao.github.io/posts/mit6.828-os-hw1-boot-xv6/</link>
+      <pubDate>Thu, 06 Dec 2018 18:49:44 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/mit6.828-os-hw1-boot-xv6/</guid>
+      <description>完整内容可见
+MIT 6.828 note
+这个任务就是检查 _start 开始的时候栈顶的所有值，
+ 进入 xv6, gdb 调试
+b *0x10000c (_start kernel start point)
+x /24x $esp
+ 解释栈中的各个值，首先看 0x7d8d,0x7c4d, 这显然是某个地址，先去 bootblock.asm 中找到这两个地址
+# Set up the stack pointer and call into C. movl $start, %esp 7c43:	bc 00 7c 00 00 mov $0x7c00,%esp call bootmain 7c48:	e8 ee 00 00 00 call 7d3b &amp;lt;bootmain&amp;gt; # If bootmain returns (it shouldn&#39;t), trigger a Bochs # breakpoint if running under Bochs, then loop.</description>
+    </item>
     
     <item>
       <title>MIT6.828 OS lab1 note</title>

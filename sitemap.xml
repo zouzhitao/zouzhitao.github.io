@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://zouzhitao.github.io/posts/mit6.828-os-hw1-boot-xv6/</loc>
+    <lastmod>2018-12-06T18:49:44+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://zouzhitao.github.io/posts/mit6.828os-lab1-note/</loc>
     <lastmod>2018-12-05T23:41:09+08:00</lastmod>
   </url>
@@ -51,13 +56,13 @@
   
   <url>
     <loc>https://zouzhitao.github.io/tags/os/</loc>
-    <lastmod>2018-12-05T23:41:09+08:00</lastmod>
+    <lastmod>2018-12-06T18:49:44+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://zouzhitao.github.io/categories/operating-system/</loc>
-    <lastmod>2018-12-05T23:41:09+08:00</lastmod>
+    <lastmod>2018-12-06T18:49:44+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -69,7 +74,7 @@
   
   <url>
     <loc>https://zouzhitao.github.io/posts/</loc>
-    <lastmod>2018-12-05T23:41:09+08:00</lastmod>
+    <lastmod>2018-12-06T18:49:44+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -87,13 +92,19 @@
   
   <url>
     <loc>https://zouzhitao.github.io/categories/course/</loc>
-    <lastmod>2018-12-05T23:41:09+08:00</lastmod>
+    <lastmod>2018-12-06T18:49:44+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://zouzhitao.github.io/tags/functional-programing/</loc>
     <lastmod>2018-12-05T14:02:01+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://zouzhitao.github.io/tags/gdb/</loc>
+    <lastmod>2018-12-06T18:49:44+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -117,7 +128,7 @@
   
   <url>
     <loc>https://zouzhitao.github.io/</loc>
-    <lastmod>2018-12-05T23:41:09+08:00</lastmod>
+    <lastmod>2018-12-06T18:49:44+08:00</lastmod>
     <priority>0</priority>
   </url>
   

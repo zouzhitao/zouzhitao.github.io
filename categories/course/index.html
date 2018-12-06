@@ -78,6 +78,47 @@
                         <article class="post">
                             <header>
                                 <h1 class="post-title">
+                                    <a href="https://zouzhitao.github.io/posts/mit6.828-os-hw1-boot-xv6/">MIT6.828 OS hw1 boot xv6</a>
+                                </h1>
+                            </header>
+                            <date class="post-meta meta-date">
+                                2018年12月6日
+                            </date>
+                            
+                            <div class="post-meta meta-category">
+                                |
+                                
+                                    <a href="https://zouzhitao.github.io/categories/operating-system">Operating System</a>
+                                
+                                    <a href="https://zouzhitao.github.io/categories/course">course</a>
+                                
+                            </div>
+                            
+                            <div class="post-content">
+                                <p><strong>完整内容可见</strong></p>
+
+<p><a href="https://github.com/zouzhitao/CS_Learning/blob/master/MIT6.828-fa18/README.md">MIT 6.828 note</a></p>
+
+<p>这个任务就是检查 _start 开始的时候栈顶的所有值，</p>
+
+<blockquote>
+<p>进入 xv6, gdb 调试</p>
+
+<p>b *0x10000c (_start kernel start point)</p>
+
+<p>x /24x $esp</p>
+</blockquote>
+
+<p><img src="./img/hw2-esp.png" alt="hw1-esp.png" /></p>
+
+<p>解释栈中的各个值，首先看 <code>0x7d8d,0x7c4d</code>, 这显然是某个地址， …</p>
+                                <p class="readmore"><a href="https://zouzhitao.github.io/posts/mit6.828-os-hw1-boot-xv6/">阅读全文</a></p>
+                            </div>
+                        </article>
+                    
+                        <article class="post">
+                            <header>
+                                <h1 class="post-title">
                                     <a href="https://zouzhitao.github.io/posts/mit6.828os-lab1-note/">MIT6.828 OS lab1 note</a>
                                 </h1>
                             </header>
@@ -164,6 +205,10 @@
 <ul class="widget-list">
     
     <li>
+        <a href="https://zouzhitao.github.io/posts/mit6.828-os-hw1-boot-xv6/" title="MIT6.828 OS hw1 boot xv6">MIT6.828 OS hw1 boot xv6</a>
+    </li>
+    
+    <li>
         <a href="https://zouzhitao.github.io/posts/mit6.828os-lab1-note/" title="MIT6.828 OS lab1 note">MIT6.828 OS lab1 note</a>
     </li>
     
@@ -189,11 +234,11 @@
 <ul class="widget-list">
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/operating-system/">Operating System(2)</a>
+        <a href="https://zouzhitao.github.io/categories/operating-system/">Operating System(3)</a>
     </li>
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/course/">course(2)</a>
+        <a href="https://zouzhitao.github.io/categories/course/">course(3)</a>
     </li>
     
     <li>
@@ -218,6 +263,8 @@
     <a href="https://zouzhitao.github.io/tags/uw-programing-language/">UW programing language</a>
     
     <a href="https://zouzhitao.github.io/tags/functional-programing/">functional programing</a>
+    
+    <a href="https://zouzhitao.github.io/tags/gdb/">gdb</a>
     
     <a href="https://zouzhitao.github.io/tags/qemu/">qemu</a>
     

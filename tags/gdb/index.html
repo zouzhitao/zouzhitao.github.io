@@ -7,22 +7,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>sml | taotao never stoped</title>
-    <meta property="og:title" content="sml - taotao never stoped">
+    <title>gdb | taotao never stoped</title>
+    <meta property="og:title" content="gdb - taotao never stoped">
     <meta property="og:type" content="article">
         
         
     <meta name="Keywords" content="computer science,computer system,algorithm,OS,distribute system,big data,算法，系统，分布式，大数据，推荐系统">
-    <meta name="description" content="sml">
+    <meta name="description" content="gdb">
         
     <meta name="author" content="taotao">
-    <meta property="og:url" content="https://zouzhitao.github.io/tags/sml/">
+    <meta property="og:url" content="https://zouzhitao.github.io/tags/gdb/">
     <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="/css/normalize.css">
     
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="alternate" type="application/rss+xml+xml" href="https://zouzhitao.github.io/tags/sml/index.xml" title="taotao never stoped" />
+    <link rel="alternate" type="application/rss+xml+xml" href="https://zouzhitao.github.io/tags/gdb/index.xml" title="taotao never stoped" />
     <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 
     
@@ -69,7 +69,7 @@
                     
                     <h3 class="archive-title">
                         包含标签
-                        <span class="keyword">sml</span>
+                        <span class="keyword">gdb</span>
                         的文章
                     </h3>
                     
@@ -78,31 +78,41 @@
                         <article class="post">
                             <header>
                                 <h1 class="post-title">
-                                    <a href="https://zouzhitao.github.io/posts/uw-programing-language-parta-overview/">UW Programing Language PartA Overview</a>
+                                    <a href="https://zouzhitao.github.io/posts/mit6.828-os-hw1-boot-xv6/">MIT6.828 OS hw1 boot xv6</a>
                                 </h1>
                             </header>
                             <date class="post-meta meta-date">
-                                2018年12月5日
+                                2018年12月6日
                             </date>
                             
                             <div class="post-meta meta-category">
                                 |
                                 
-                                    <a href="https://zouzhitao.github.io/categories/course">course</a>
+                                    <a href="https://zouzhitao.github.io/categories/operating-system">Operating System</a>
                                 
-                                    <a href="https://zouzhitao.github.io/categories/programing-language">programing language</a>
+                                    <a href="https://zouzhitao.github.io/categories/course">course</a>
                                 
                             </div>
                             
                             <div class="post-content">
-                                <p><strong><a href="https://github.com/zouzhitao/CS_Learning/tree/master/PL%40Grossman">作业仓库</a></strong></p>
+                                <p><strong>完整内容可见</strong></p>
 
-<p><strong>url</strong>: <a href="https://github.com/zouzhitao/CS_Learning/tree/master/PL%40Grossman">https://github.com/zouzhitao/CS_Learning/tree/master/PL%40Grossman</a></p>
+<p><a href="https://github.com/zouzhitao/CS_Learning/blob/master/MIT6.828-fa18/README.md">MIT 6.828 note</a></p>
 
-<p>这是 UW programing language part A 的一个简单回顾.</p>
+<p>这个任务就是检查 _start 开始的时候栈顶的所有值，</p>
 
-<p><a href="https://www.coursera.org/learn/programming-languages">coursera 课程地址</a>: …</p>
-                                <p class="readmore"><a href="https://zouzhitao.github.io/posts/uw-programing-language-parta-overview/">阅读全文</a></p>
+<blockquote>
+<p>进入 xv6, gdb 调试</p>
+
+<p>b *0x10000c (_start kernel start point)</p>
+
+<p>x /24x $esp</p>
+</blockquote>
+
+<p><img src="./img/hw2-esp.png" alt="hw1-esp.png" /></p>
+
+<p>解释栈中的各个值，首先看 <code>0x7d8d,0x7c4d</code>, 这显然是某个地址， …</p>
+                                <p class="readmore"><a href="https://zouzhitao.github.io/posts/mit6.828-os-hw1-boot-xv6/">阅读全文</a></p>
                             </div>
                         </article>
                     
