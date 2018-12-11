@@ -7,22 +7,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>PL | taotao never stoped</title>
-    <meta property="og:title" content="PL - taotao never stoped">
+    <title>MSRA 明日之星实习生项目面试总结 | taotao never stoped</title>
+    <meta property="og:title" content="MSRA 明日之星实习生项目面试总结 - taotao never stoped">
     <meta property="og:type" content="article">
         
+    <meta property="article:published_time" content="2018-12-11T12:52:22&#43;08:00">
+        
+        
+    <meta property="article:modified_time" content="2018-12-11T12:52:22&#43;08:00">
         
     <meta name="Keywords" content="computer science,computer system,algorithm,OS,distribute system,big data,算法，系统，分布式，大数据，推荐系统">
-    <meta name="description" content="PL">
+    <meta name="description" content="MSRA 明日之星实习生项目面试总结">
         
     <meta name="author" content="taotao">
-    <meta property="og:url" content="https://zouzhitao.github.io/tags/pl/">
+    <meta property="og:url" content="https://zouzhitao.github.io/posts/msra-reasearch-intern-review/">
     <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="/css/normalize.css">
     
+        <link rel="stylesheet" href="/css/prism.css">
+    
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="alternate" type="application/rss+xml+xml" href="https://zouzhitao.github.io/tags/pl/index.xml" title="taotao never stoped" />
     <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 
     
@@ -31,7 +36,6 @@
     
     
 </head>
-
 
 <body>
 <header id="header" class="clearfix">
@@ -66,55 +70,124 @@
 
             <div class="col-8" id="main">
                 <div class="res-cons">
-                    
-                    <h3 class="archive-title">
-                        包含标签
-                        <span class="keyword">PL</span>
-                        的文章
-                    </h3>
-                    
-
-                    
-                        <article class="post">
-                            <header>
-                                <h1 class="post-title">
-                                    <a href="https://zouzhitao.github.io/posts/uw-programing-language-parta-overview/">UW Programing Language PartA Overview</a>
-                                </h1>
-                            </header>
-                            <date class="post-meta meta-date">
-                                2018年12月5日
-                            </date>
+                    <article class="post">
+                        <header>
+                            <h1 class="post-title">MSRA 明日之星实习生项目面试总结</h1>
+                        </header>
+                        <date class="post-meta meta-date">
+                            2018年12月11日
+                        </date>
+                        
+                        <div class="post-meta meta-category">
+                            |
                             
-                            <div class="post-meta meta-category">
-                                |
-                                
-                                    <a href="https://zouzhitao.github.io/categories/course">course</a>
-                                
-                                    <a href="https://zouzhitao.github.io/categories/programing-language">programing language</a>
-                                
-                            </div>
+                                <a href="https://zouzhitao.github.io/categories/interview">interview</a>
                             
-                            <div class="post-content">
-                                <p><strong><a href="https://github.com/zouzhitao/CS_Learning/tree/master/PL%40Grossman">作业仓库</a></strong></p>
+                        </div>
+                        
+                        
+                        <div class="post-meta">
+                            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span> 阅读</span></span>
+                        </div>
+                        
+                        
+                        <aside id="toc" class="dismissed">
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> 
+                        </aside><div class="post-content">
+                            <p><strong>写在前面</strong></p>
 
-<p><strong>url</strong>: <a href="https://github.com/zouzhitao/CS_Learning/tree/master/PL%40Grossman">https://github.com/zouzhitao/CS_Learning/tree/master/PL%40Grossman</a></p>
+<p>我觉得我的简历能被捞起来完全就是一个奇迹，这个微软亚洲研究院的明日之星实习项目，听知乎上说，没有top计算机学历，没有个ACM金牌，没有内推，基本很难进入，这里真的太感谢我命中的那位贵人了。我的简历应该是12.1 投的，距今已经一个周，期间我已经拿了商汤和头条的 offer 并且已经准备拒绝商汤去头条了，(因为头条给了 800/d :)),</p>
 
-<p>这是 UW programing language part A 的一个简单回顾.</p>
+<p>没想到昨天(<sup>12</sup>&frasl;<sub>11</sub>)在图书馆自习的时候，突然接到一个msra的研究员的面试邀约,就这样我在雨水中面试了一个多小时，期间由于没有稿子，很多东西面试官没有让我计算只是说了一些方法和过程。</p>
 
-<p><a href="https://www.coursera.org/learn/programming-languages">coursera 课程地址</a>: …</p>
-                                <p class="readmore"><a href="https://zouzhitao.github.io/posts/uw-programing-language-parta-overview/">阅读全文</a></p>
-                            </div>
-                        </article>
+<p>一面</p>
+
+<p>在雨中求了一个级数，说了矩阵求逆的复杂度，以及怎么计算矩阵逆说一种方法，算了一个概率，证明对称正定矩阵可以开根号，说了线性回归和逻辑回归的区别，为什么要选交叉熵作为逻辑回归的评估函数，他的物理意义是什么，最后问了我的一篇论文，问了算法和数据结构，他直接问我会吗，会就不做了，然后还问了我的工程能力，我说没有写过大型项目，不过代码能力很好，他说相信我就这样，我过了1面。
+之后二面打电话约我明天上午10:00的二面。</p>
+
+<p>二面</p>
+
+<p>感觉二面很年轻，应该是刚刚硕士或者博士毕业吧，二面告诉我就问算法，问了三个题目，由于不能去现场面试，就说了一下思路。简单说一下题目吧:</p>
+
+<ol>
+<li><p>$n$ 个房间 $n$ 盏灯，开始全部关闭，$n$ 个人，第 $i$ 个人将 $i,2i,3i,&hellip;,$ 即它倍数的灯开一下或者关一下，即原来关着就打开，原来开着就关闭，问最后有多少盏灯开着,时间复杂度$O(1)$</p></li>
+
+<li><p>$0$ 号路口与 $n$ 号路口之间有 $n-1$ 个加油站，一辆车从 $0$ 号路口开到 $n$ 号路口，给你一个数组 $A[0,&hellip;n]$ 表示每个路口距离 $0$ 号路口的距离，车的邮箱是 $c$ 表示最多能走 $c$ 公里，最后问 : 最后加几次油，证明你的做法是最优的</p></li>
+
+<li><p>接着上一个题，最优加油方案有多少种</p></li>
+
+<li><p>接着上一个题，如何输出所有最优加油方案</p></li>
+</ol>
+
+<p>二面说我已经过了，叫我等消息&hellip;</p>
+
+<p>等消息ing&hellip;.</p>
+
+<p>下午: 收到 msra offer</p>
+
+                        </div>
+                        
+
+                        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/posts/mit6.828-os-hw1-boot-xv6/">MIT6.828 OS hw1 boot xv6</a></li>
+        
+        <li><a href="/posts/mit6.828os-lab1-note/">MIT6.828 OS lab1 note</a></li>
+        
+        <li><a href="/posts/uw-programing-language-parta-overview/">UW Programing Language PartA Overview</a></li>
+        
+        <li><a href="/about/">about</a></li>
+        
+        <li><a href="/archives/">archives</a></li>
+        
+    </ul>
+</div>
+
+
+                        <div class="post-meta meta-tags">
+                            
+                            <ul class="clearfix">
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/msra">MSRA</a></li>
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/intern">intern</a></li>
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/interview">interview</a></li>
+                                
+                            </ul>
+                            
+                        </div>
+                    </article>
                     
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "zouzhitao-github-io" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-                    
-
-
-
-
+    
+    
                 </div>
             </div>
-
             <div id="secondary">
     <section class="widget">
         <form id="search" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
@@ -251,6 +324,17 @@
 </footer>
 
 
+    <script type="text/javascript" src="/js/prism.js" async="true"></script>
+    <script type="text/javascript">
+    window.MathJax = {
+        tex2jax: {
+            inlineMath: [ ['$','$'] ],
+            processEscapes: true
+        }
+    };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
 <a id="rocket" href="#top"></a>
 <script type="text/javascript" src="/js/totop.js?v=0.0.0" async=""></script>
 
@@ -268,7 +352,6 @@ if (!doNotTrack) {
 
 
 <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
-
 
 
 

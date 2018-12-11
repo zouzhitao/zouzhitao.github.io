@@ -6,10 +6,80 @@
     <description>Recent content on taotao never stoped</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 06 Dec 2018 18:49:44 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 11 Dec 2018 20:19:10 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>2018 秋招面试总结</title>
+      <link>https://zouzhitao.github.io/posts/2018-interview/</link>
+      <pubDate>Tue, 11 Dec 2018 20:19:10 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/2018-interview/</guid>
+      <description>就在刚刚，拿了msra 的offer 于此，我的秋招之路，就算结束了
+简要总结一下这一路走来的点点滴滴，说一下我从 7月份以来找未(keng)来(wei)的全过程
+ 7.5 面试 hit 夏令营，通过，拿到offer 回来后接着面试 seu 夏令营，通过，拿到offer  但是时间还长，我也不能确定到底能不能被保研，因为我的 gpa 处于 保研边缘，加上学校保研分 保内和保外，所以相当坑，我不得不早做准备，之后我就在学校准备考研，后来到了，8月份，我的一些学长说 读研没意思，读研就是去镀金的，如果本科就能进大厂，又不想读博完全没有必要去读研。就这样抱着try a try 的心态，投了几分简历， 我投了国内的几家大厂 : A,B,头条，网易，除了 A厂，其他都通过 了，头条是8.21 号面试的，面试经验，见头条后端开发工程师面试经验, 9.2 号就发了 offer, 薪资 20 * 15, 我觉得很ok，遂拒掉了其他几家，就这样到了9月中旬，我被保研了，去了 zju. 这个时候我打算在头条谋一份实习，以确定是否要去头条工作，哎！，怪我傻逼了，我跟头条说我被保研 了，就这样，hr一直以没有三方为由拖着不给我实习机会，之后我就在一家在线教育机构做线上 NOIP 教学找一些零花钱。就这样到了12月份初，我的学弟来找我，它跟我说，他也想来这里。我跟他说，你现在应该去找一个和你的为未来match 的实习工作，而不是去找钱，你现在最缺的不是钱。我跟他争论了一番，我发现他没被我劝服，但是我却被我劝服了，就这样，我又开始拿起简历希望在寒假到来之前找一份实习，这时我 先是选中了 msra,google, 这个时候google 的实习只招大三，于是我就去投msra 的明日之星实习项目，投了大数据挖掘组，我觉得我能过完全是个奇迹，详细面试经验见 msra-intern-review，等了一个周还是没有消息，我觉得已经凉了，后来我又开始投递，我投了国内一线 ai独角兽: sensetime,pony.ai,4P。sensetime 从面试到发offer只用了一天，薪资也说好了高于国内同等大厂&amp;hellip;,这时hr问我什么时候能去，我给他说，我还有个头条的offer，周末给他答复，就这样我再次问头条hr能否给个实习机会，如果不能我就去其他公司了，这时头条终于给我offer了，800/d 我已经很高兴了，拒绝sentime，并且拒掉了其他面试，准备去头条，我车票都买好了，又过了一周，在这周1，我正在图书管准备搞毕业设计，msra 的研究员给我打来了电话，问我愿不愿意去 msra 做 research intern，开始面试，面试经验见msra-intern-review,今天二面结束，msra给我打来电话，说我通过了，至此我的秋(shi)招(xi)面试结束
+感谢一路走来给我提供帮助的网友
+taotao，12.11
+写于去北京微软大厦前夕</description>
+    </item>
+    
+    <item>
+      <title>Bytedance 后台开发工程师面试总结</title>
+      <link>https://zouzhitao.github.io/posts/bytedance-backend-interview/</link>
+      <pubDate>Tue, 11 Dec 2018 19:34:34 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/bytedance-backend-interview/</guid>
+      <description>注 : 此篇博文最早于8/21/2018发于牛客网 https://www.nowcoder.com/discuss/95675 ，于12/11号整理于此
+今天10.刚到上海面的头条后端开发岗，这里写一下面经，回报社会，头条很迅速，3面全部一天解决，当然我应该挂了&amp;hellip;..
+一面 面试官非常和蔼，很好说话。他说面试流程是，1.项目，2.基础(OS,network,组成原理),3.算法，问我ok吗. 当然ok了啊~
+我先说了下项目，因为本科生还没干过啥，就说了一下和老师做的科研的项目，是一个关于算法的，感觉没加分&amp;hellip;
+然后问基础:
+ 假设一个大型游戏有10+G，内存仅有2G，怎么让它跑起来？   我说是虚存吗，我直接说虚存的设计吧，msg:嗯,ok~,
+wo: balabala ~&amp;hellip; 说了虚存，从一条CPU打过来的指令开始解释，感觉还不错，
+msg:紧接着又问了页表是每个进程都有的还是仅有一个。二级页表的作用，进程的逻辑空间大小看什么。反正问道你答不出来，或者他觉得ok了为止
+网络
+解释一下一个数据包从一个子网到另一个子网的过程，MAC地址，IP怎么转化的，说清楚
+算法题，写代码
+ 怎么判断一个有向无环图有没有环(topo) 一颗二叉树的直径，我跟他说两次bfs就好了，他不信，还让我证明了一下&amp;hellip;啊艰难的证明  还问了一下java基础，让我解释hashmap
+msg:ok,有什么想问我的？
+wo:可以给出一个评价吗？msg说还ok，说头条比较看重沟通，说我这部分干的还行。
+3分钟后2面通知就来了
+二面 1.看简历才知道我是本科生，说他从来没面过本科生。想让我介绍一下。
+说一个解决的ACM最难的题目
+wo: what???都退役一年了。说了个上次newcoder上做的。解释了好大半天
+语言
+ 说一下c++和java的区别 这里扯了一堆，
+ 从c++切到java要注意啥
+  wo： what？？？？没懂，能说详细点吗
+msg：student1=student2,java和c++有啥区别
+wo: 终于听懂了
+ 多太了解？？  class base{print} class supper exend base{。。。@override print()} base b = new supper(); b.printf();  输出哪个的.
+wo: supper</description>
+    </item>
+    
+    <item>
+      <title>MSRA 明日之星实习生项目面试总结</title>
+      <link>https://zouzhitao.github.io/posts/msra-reasearch-intern-review/</link>
+      <pubDate>Tue, 11 Dec 2018 12:52:22 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/msra-reasearch-intern-review/</guid>
+      <description>写在前面
+我觉得我的简历能被捞起来完全就是一个奇迹，这个微软亚洲研究院的明日之星实习项目，听知乎上说，没有top计算机学历，没有个ACM金牌，没有内推，基本很难进入，这里真的太感谢我命中的那位贵人了。我的简历应该是12.1 投的，距今已经一个周，期间我已经拿了商汤和头条的 offer 并且已经准备拒绝商汤去头条了，(因为头条给了 800/d :)),
+没想到昨天(12&amp;frasl;11)在图书馆自习的时候，突然接到一个msra的研究员的面试邀约,就这样我在雨水中面试了一个多小时，期间由于没有稿子，很多东西面试官没有让我计算只是说了一些方法和过程。
+一面
+在雨中求了一个级数，说了矩阵求逆的复杂度，以及怎么计算矩阵逆说一种方法，算了一个概率，证明对称正定矩阵可以开根号，说了线性回归和逻辑回归的区别，为什么要选交叉熵作为逻辑回归的评估函数，他的物理意义是什么，最后问了我的一篇论文，问了算法和数据结构，他直接问我会吗，会就不做了，然后还问了我的工程能力，我说没有写过大型项目，不过代码能力很好，他说相信我就这样，我过了1面。 之后二面打电话约我明天上午10:00的二面。
+二面
+感觉二面很年轻，应该是刚刚硕士或者博士毕业吧，二面告诉我就问算法，问了三个题目，由于不能去现场面试，就说了一下思路。简单说一下题目吧:
+ $n$ 个房间 $n$ 盏灯，开始全部关闭，$n$ 个人，第 $i$ 个人将 $i,2i,3i,&amp;hellip;,$ 即它倍数的灯开一下或者关一下，即原来关着就打开，原来开着就关闭，问最后有多少盏灯开着,时间复杂度$O(1)$
+ $0$ 号路口与 $n$ 号路口之间有 $n-1$ 个加油站，一辆车从 $0$ 号路口开到 $n$ 号路口，给你一个数组 $A[0,&amp;hellip;n]$ 表示每个路口距离 $0$ 号路口的距离，车的邮箱是 $c$ 表示最多能走 $c$ 公里，最后问 : 最后加几次油，证明你的做法是最优的
+ 接着上一个题，最优加油方案有多少种
+ 接着上一个题，如何输出所有最优加油方案
+  二面说我已经过了，叫我等消息&amp;hellip;
+等消息ing&amp;hellip;.
+下午: 收到 msra offer</description>
+    </item>
     
     <item>
       <title>MIT6.828 OS hw1 boot xv6</title>

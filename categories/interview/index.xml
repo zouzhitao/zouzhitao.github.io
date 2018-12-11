@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on taotao never stoped</title>
-    <link>https://zouzhitao.github.io/posts/</link>
-    <description>Recent content in Posts on taotao never stoped</description>
+    <title>interview on taotao never stoped</title>
+    <link>https://zouzhitao.github.io/categories/interview/</link>
+    <description>Recent content in interview on taotao never stoped</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Tue, 11 Dec 2018 20:19:10 +0800</lastBuildDate>
     
-	<atom:link href="https://zouzhitao.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://zouzhitao.github.io/categories/interview/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -79,74 +79,6 @@ wo: supper</description>
   二面说我已经过了，叫我等消息&amp;hellip;
 等消息ing&amp;hellip;.
 下午: 收到 msra offer</description>
-    </item>
-    
-    <item>
-      <title>MIT6.828 OS hw1 boot xv6</title>
-      <link>https://zouzhitao.github.io/posts/mit6.828-os-hw1-boot-xv6/</link>
-      <pubDate>Thu, 06 Dec 2018 18:49:44 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/posts/mit6.828-os-hw1-boot-xv6/</guid>
-      <description>完整内容可见
-MIT 6.828 note
-这个任务就是检查 _start 开始的时候栈顶的所有值，
- 进入 xv6, gdb 调试
-b *0x10000c (_start kernel start point)
-x /24x $esp
- 解释栈中的各个值，首先看 0x7d8d,0x7c4d, 这显然是某个地址，先去 bootblock.asm 中找到这两个地址
-# Set up the stack pointer and call into C. movl $start, %esp 7c43:	bc 00 7c 00 00 mov $0x7c00,%esp call bootmain 7c48:	e8 ee 00 00 00 call 7d3b &amp;lt;bootmain&amp;gt; # If bootmain returns (it shouldn&#39;t), trigger a Bochs # breakpoint if running under Bochs, then loop.</description>
-    </item>
-    
-    <item>
-      <title>MIT6.828 OS lab1 note</title>
-      <link>https://zouzhitao.github.io/posts/mit6.828os-lab1-note/</link>
-      <pubDate>Wed, 05 Dec 2018 23:41:09 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/posts/mit6.828os-lab1-note/</guid>
-      <description>这里是 MIT 6.828 OS lab1 笔记.
-课程链接
-简单记录一些有趣，和有意思的东西
-ex6  Exercise 6. We can examine memory using GDB&amp;rsquo;s x command. The GDB manual has full details, but for now, it is enough to know that the command x/Nx ADDR prints N words of memory at ADDR. (Note that both &amp;lsquo;x&amp;rsquo;s in the command are lowercase.) Warning: The size of a word is not a universal standard. In GNU assembly, a word is two bytes (the &amp;lsquo;w&amp;rsquo; in xorw, which stands for word, means 2 bytes).</description>
-    </item>
-    
-    <item>
-      <title>UW Programing Language PartA Overview</title>
-      <link>https://zouzhitao.github.io/posts/uw-programing-language-parta-overview/</link>
-      <pubDate>Wed, 05 Dec 2018 14:02:01 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/posts/uw-programing-language-parta-overview/</guid>
-      <description>作业仓库
-url: https://github.com/zouzhitao/CS_Learning/tree/master/PL%40Grossman
-这是 UW programing language part A 的一个简单回顾.
-coursera 课程地址: https://www.coursera.org/learn/programming-languages
-思考 这门课程可以说非常棒，给了我很多在程序语言上的洞见，可以说是让我重新理解了编程，重新理解了程序语言，不过可能关于整个 程序语言(programing language,PL)的研究, 在工业界真正的用武之地是很少的，或者说不如真正的应用计算机科学(系统,机器学习,etc)来的那么直接。不过我却认为里面有很多迷人的哲学式的美感。这是我第一次用函数式语言，我被他的间接，以及逻辑上的清晰感给折服了。所有计算都是用函数解决的，可以说是非常接近于数学逻辑了。不过真要入这个程序语言的坑，可能还得稍后一些，彼时的我需要的更多的还是一些工业界的东西。(:( ,不然就要饿肚子了)。扯了这么多，感觉是在为不继续学习 Part B，找借口&amp;hellip;
-知识回顾 wk1 wk1 主要是讲一些 ML的基本用法和概念:
- variable binding function binding List immutable   但是最为主要的还是在最后的一节:,作者点出了程序语言的几个重要特征(不要忘了，这门课程的目的是叫我们如何学习所有程序语言)
- Syntax: How do you write the various parts of the language? Semantics: What do the various language features mean? For example, how are expressions evaluated? Idioms: What are the common approaches to using the language features to express computations?</description>
-    </item>
-    
-    <item>
-      <title>MIT 6.828 环境配置，踩坑指南</title>
-      <link>https://zouzhitao.github.io/posts/mit6.828-env/</link>
-      <pubDate>Tue, 27 Nov 2018 08:32:56 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/posts/mit6.828-env/</guid>
-      <description>我的环境 :
- win10, git 2.19 Ubuntu 18.04 git 2.17 jos.git year : 2018  git clone err  SSL err  直接 git clone git clone https://pdos.csail.mit.edu/6.828/2018/jos.git lab
-可能会出现
-fatal: unable to access &#39;https://pdos.csail.mit.edu/6.828/2018/jos.git/&#39;: OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection to pdos.csail.mit.edu:443  解决方法
-添加两行就行了
-export GIT_CURL_VERBOSE=1 export GIT_TRACE_PACKET=2  注意 这个方法在win10 下能成功安装，但是 Ubuntu 下仅能 clone 2017 年的版本</description>
-    </item>
-    
-    <item>
-      <title>blog test</title>
-      <link>https://zouzhitao.github.io/posts/test/</link>
-      <pubDate>Mon, 26 Nov 2018 01:13:07 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/posts/test/</guid>
-      <description>这里什么都没有，这是一个博客测试页面
-11/27/18 功能  默认 数学公式支持， $$$$行间公式，$$行内 有一个从udpsec 处copy 的丑陋的目录。以后再做更改了，麻烦 分类，tag支持 disqus 支持  添加站点ico 在theme 对应的partials 页面下有一个 head.html 文件，找到 ico 文本，替换成你的 ico 路劲，我这里是将ico 放在了 static/img/favicon.ico</description>
     </item>
     
   </channel>

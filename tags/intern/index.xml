@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>intern on taotao never stoped</title>
+    <link>https://zouzhitao.github.io/tags/intern/</link>
+    <description>Recent content in intern on taotao never stoped</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 11 Dec 2018 12:52:22 +0800</lastBuildDate>
+    
+	<atom:link href="https://zouzhitao.github.io/tags/intern/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>MSRA 明日之星实习生项目面试总结</title>
+      <link>https://zouzhitao.github.io/posts/msra-reasearch-intern-review/</link>
+      <pubDate>Tue, 11 Dec 2018 12:52:22 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/msra-reasearch-intern-review/</guid>
+      <description>写在前面
+我觉得我的简历能被捞起来完全就是一个奇迹，这个微软亚洲研究院的明日之星实习项目，听知乎上说，没有top计算机学历，没有个ACM金牌，没有内推，基本很难进入，这里真的太感谢我命中的那位贵人了。我的简历应该是12.1 投的，距今已经一个周，期间我已经拿了商汤和头条的 offer 并且已经准备拒绝商汤去头条了，(因为头条给了 800/d :)),
+没想到昨天(12&amp;frasl;11)在图书馆自习的时候，突然接到一个msra的研究员的面试邀约,就这样我在雨水中面试了一个多小时，期间由于没有稿子，很多东西面试官没有让我计算只是说了一些方法和过程。
+一面
+在雨中求了一个级数，说了矩阵求逆的复杂度，以及怎么计算矩阵逆说一种方法，算了一个概率，证明对称正定矩阵可以开根号，说了线性回归和逻辑回归的区别，为什么要选交叉熵作为逻辑回归的评估函数，他的物理意义是什么，最后问了我的一篇论文，问了算法和数据结构，他直接问我会吗，会就不做了，然后还问了我的工程能力，我说没有写过大型项目，不过代码能力很好，他说相信我就这样，我过了1面。 之后二面打电话约我明天上午10:00的二面。
+二面
+感觉二面很年轻，应该是刚刚硕士或者博士毕业吧，二面告诉我就问算法，问了三个题目，由于不能去现场面试，就说了一下思路。简单说一下题目吧:
+ $n$ 个房间 $n$ 盏灯，开始全部关闭，$n$ 个人，第 $i$ 个人将 $i,2i,3i,&amp;hellip;,$ 即它倍数的灯开一下或者关一下，即原来关着就打开，原来开着就关闭，问最后有多少盏灯开着,时间复杂度$O(1)$
+ $0$ 号路口与 $n$ 号路口之间有 $n-1$ 个加油站，一辆车从 $0$ 号路口开到 $n$ 号路口，给你一个数组 $A[0,&amp;hellip;n]$ 表示每个路口距离 $0$ 号路口的距离，车的邮箱是 $c$ 表示最多能走 $c$ 公里，最后问 : 最后加几次油，证明你的做法是最优的
+ 接着上一个题，最优加油方案有多少种
+ 接着上一个题，如何输出所有最优加油方案
+  二面说我已经过了，叫我等消息&amp;hellip;
+等消息ing&amp;hellip;.
+下午: 收到 msra offer</description>
+    </item>
+    
+  </channel>
+</rss>

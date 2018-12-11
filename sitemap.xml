@@ -3,6 +3,21 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://zouzhitao.github.io/posts/2018-interview/</loc>
+    <lastmod>2018-12-11T20:19:10+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zouzhitao.github.io/posts/bytedance-backend-interview/</loc>
+    <lastmod>2018-12-11T19:34:34+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zouzhitao.github.io/posts/msra-reasearch-intern-review/</loc>
+    <lastmod>2018-12-11T12:52:22+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://zouzhitao.github.io/posts/mit6.828-os-hw1-boot-xv6/</loc>
     <lastmod>2018-12-06T18:49:44+08:00</lastmod>
   </url>
@@ -49,6 +64,12 @@
   </url>
   
   <url>
+    <loc>https://zouzhitao.github.io/tags/msra/</loc>
+    <lastmod>2018-12-11T12:52:22+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://zouzhitao.github.io/tags/os/</loc>
     <lastmod>2018-12-06T18:49:44+08:00</lastmod>
     <priority>0</priority>
@@ -68,7 +89,7 @@
   
   <url>
     <loc>https://zouzhitao.github.io/posts/</loc>
-    <lastmod>2018-12-06T18:49:44+08:00</lastmod>
+    <lastmod>2018-12-11T20:19:10+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -103,6 +124,24 @@
   </url>
   
   <url>
+    <loc>https://zouzhitao.github.io/tags/intern/</loc>
+    <lastmod>2018-12-11T12:52:22+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://zouzhitao.github.io/tags/interview/</loc>
+    <lastmod>2018-12-11T20:19:10+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://zouzhitao.github.io/categories/interview/</loc>
+    <lastmod>2018-12-11T20:19:10+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://zouzhitao.github.io/categories/programing-language/</loc>
     <lastmod>2018-12-05T14:02:01+08:00</lastmod>
     <priority>0</priority>
@@ -122,7 +161,7 @@
   
   <url>
     <loc>https://zouzhitao.github.io/</loc>
-    <lastmod>2018-12-06T18:49:44+08:00</lastmod>
+    <lastmod>2018-12-11T20:19:10+08:00</lastmod>
     <priority>0</priority>
   </url>
   
