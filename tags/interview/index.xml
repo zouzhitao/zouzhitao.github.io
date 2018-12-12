@@ -76,9 +76,10 @@ wo: supper</description>
  $0$ 号路口与 $n$ 号路口之间有 $n-1$ 个加油站，一辆车从 $0$ 号路口开到 $n$ 号路口，给你一个数组 $A[0,&amp;hellip;n]$ 表示每个路口距离 $0$ 号路口的距离，车的邮箱是 $c$ 表示最多能走 $c$ 公里，最后问 : 最后加几次油，证明你的做法是最优的
  接着上一个题，最优加油方案有多少种
  接着上一个题，如何输出所有最优加油方案
-  二面说我已经过了，叫我等消息&amp;hellip;
+  P.S. 中间会时不时叫你分析，cache,并发&amp;hellip;.
+二面说我已经过了，叫我等消息&amp;hellip;
 等消息ing&amp;hellip;.
-下午: 收到 msra offer</description>
+收到 msra offer</description>
     </item>
     
   </channel>
