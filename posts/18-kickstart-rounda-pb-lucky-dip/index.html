@@ -7,22 +7,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>MSRA | taotao never stoped</title>
-    <meta property="og:title" content="MSRA - taotao never stoped">
+    <title>18 Kickstart RoundA PB Lucky Dip 详细题解 | taotao never stoped</title>
+    <meta property="og:title" content="18 Kickstart RoundA PB Lucky Dip 详细题解 - taotao never stoped">
     <meta property="og:type" content="article">
         
+    <meta property="article:published_time" content="2018-12-25T15:21:27&#43;08:00">
+        
+        
+    <meta property="article:modified_time" content="2018-12-25T15:21:27&#43;08:00">
         
     <meta name="Keywords" content="computer system,algorithm,OS,distribute system,big data,ML,算法，系统，分布式，大数据，推荐系统">
-    <meta name="description" content="MSRA">
+    <meta name="description" content="18 Kickstart RoundA PB Lucky Dip 详细题解">
         
     <meta name="author" content="taotao">
-    <meta property="og:url" content="https://zouzhitao.github.io/tags/msra/">
+    <meta property="og:url" content="https://zouzhitao.github.io/posts/18-kickstart-rounda-pb-lucky-dip/">
     <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="/css/normalize.css">
     
+        <link rel="stylesheet" href="/css/prism.css">
+    
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="alternate" type="application/rss+xml+xml" href="https://zouzhitao.github.io/tags/msra/index.xml" title="taotao never stoped" />
     <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 
     
@@ -31,7 +36,6 @@
     
     
 </head>
-
 
 <body>
 <header id="header" class="clearfix">
@@ -66,51 +70,153 @@
 
             <div class="col-8" id="main">
                 <div class="res-cons">
-                    
-                    <h3 class="archive-title">
-                        包含标签
-                        <span class="keyword">MSRA</span>
-                        的文章
-                    </h3>
-                    
-
-                    
-                        <article class="post">
-                            <header>
-                                <h1 class="post-title">
-                                    <a href="https://zouzhitao.github.io/posts/msra-reasearch-intern-review/">MSRA 明日之星实习生项目面试总结</a>
-                                </h1>
-                            </header>
-                            <date class="post-meta meta-date">
-                                2018年12月11日
-                            </date>
+                    <article class="post">
+                        <header>
+                            <h1 class="post-title">18 Kickstart RoundA PB Lucky Dip 详细题解</h1>
+                        </header>
+                        <date class="post-meta meta-date">
+                            2018年12月25日
+                        </date>
+                        
+                        <div class="post-meta meta-category">
+                            |
                             
-                            <div class="post-meta meta-category">
-                                |
-                                
-                                    <a href="https://zouzhitao.github.io/categories/interview">interview</a>
-                                
-                            </div>
+                                <a href="https://zouzhitao.github.io/categories/competitive-programing">competitive-programing</a>
                             
-                            <div class="post-content">
-                                <p><strong>写在前面</strong></p>
+                        </div>
+                        
+                        
+                        <div class="post-meta">
+                            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span> 阅读</span></span>
+                        </div>
+                        
+                        
+                        <aside id="toc" class="dismissed">
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
+<ul>
+<li><a href="#官方链接">官方链接</a></li>
+<li><a href="#我的心路历程">我的心路历程</a></li>
+<li><a href="#官方题解详解">官方题解详解</a></li>
+<li><a href="#ac-code">AC code</a></li>
+</ul>
+</nav>
+                        </aside><div class="post-content">
+                            
 
-<p>我觉得我的简历能被捞起来完全就是一个奇迹，这个微软亚洲研究院的明日之星实习项目，听知乎上说，没有top计算机学历，没有个ACM金牌，没有内推，基本很难进入，这里真的太感谢我命中的那位贵人了。我的简历应该是12.1 投的，距今已经一个周，期间我已经拿了商汤和头条的 offer 并且已经准备拒绝商汤去头条了，(因为头条给了 800/d :)),</p>
+<h1 id="官方链接">官方链接</h1>
 
-<p>没 …</p>
-                                <p class="readmore"><a href="https://zouzhitao.github.io/posts/msra-reasearch-intern-review/">阅读全文</a></p>
-                            </div>
-                        </article>
+<ul>
+<li><a href="https://code.google.com/codejam/contest/9234486/dashboard#s=p1&amp;a=1">题目描述</a></li>
+<li><a href="https://code.google.com/codejam/contest/9234486/dashboard#s=a&amp;a=1">官方题解</a></li>
+</ul>
+
+<h1 id="我的心路历程">我的心路历程</h1>
+
+<p>首先不难想到，肯定要将 $v_i$ 排序，然后如果取到的是小的那部分值，那么我们肯定要将其放回，然后再取，不妨设 $i&lt;j$, 均要放回。因此所有的 $n$ 个item 就被分为了两个部分，一部分是要放回的，另外一部分是不放回的。</p>
+
+<p>最开始的时候，看样例的解释我以为是这样的,直接分别求两者的概率，则有</p>
+
+<p>放回的那部分 $p1 = (\frac{j}{n})^{k+1}$不放回的那部分为 $1-p1 = 1-(\frac{j}{n})^{k+1}$</p>
+
+<p>因此只要枚举 $j$ 就行了，然而样例通不过，果然在case 5 就错了。后来就看了官方题解，还是一脸懵逼，虽然感觉这样是对的然而并不清楚为什么这样是对的。因此我就重新推了一遍公式</p>
+
+<h1 id="官方题解详解">官方题解详解</h1>
+
+<p>首先 $k = 1$ 时， $p1$ 肯定是对的,因此我们有</p>
+
+<p>$$\begin{aligned}
+E[0] &amp;=\frac{\sum_{i=1}^nv_i}{n}\</p>
+
+<p>E[1] &amp;= \frac{j^2}{n^2}\frac{\sum_{k&lt;=j}v<em>i}{j} + \frac{(n-j)(n+j)}{n^2}\frac{\sum</em>{i&gt;j}v_i}{n-j}\</p>
+
+<p>&amp;= \frac{j\sum_{k&lt;=j}v<em>i}{n^2}+\frac{(n+j)\sum</em>{i&gt;j}v_i}{n^2}\</p>
+
+<p>&amp;= \frac{\sum_{i&gt;j}v_i}{n} + \frac{j\sum_iv_i}{n^2}\</p>
+
+<p>&amp;=\frac{\sum_{i&gt;j}v_i+jE[0]}{n}
+\end{aligned}$$</p>
+
+<p>很显然 $j = \arg \max_{i} v_i&lt;=E[0]$, 即</p>
+
+<p>$$
+E[1] = \frac{\sum \max{v_i,E[0]}}{n}
+$$</p>
+
+<p>得出了官方题解中的第一个公式，对于 $k=2$ 其实相当于将 所有 $v_i&lt;E[0]$ 的item 换成 $E[0]$ 之后，$k=1$ 的期望，这就回到了第一种情况</p>
+
+<h1 id="ac-code">AC code</h1>
+
+<blockquote>
+<p><strong>版权声明</strong></p>
+
+<p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
+
+<p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
+
+<p><strong>转载请保留此版权声明，并注明出处</strong></p>
+</blockquote>
+
+                        </div>
+                        
+
+                        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/posts/cpp-lib-function-note/">C&#43;&#43; 库函数笔记-不间断更新中</a></li>
+        
+        <li><a href="/posts/2018-interview/">2018 秋招面试总结</a></li>
+        
+        <li><a href="/posts/bytedance-backend-interview/">Bytedance 后台开发工程师面试总结</a></li>
+        
+        <li><a href="/posts/msra-reasearch-intern-review/">MSRA 明日之星实习生项目面试总结</a></li>
+        
+        <li><a href="/posts/mit6.828-os-hw1-boot-xv6/">MIT6.828 OS hw1 boot xv6</a></li>
+        
+    </ul>
+</div>
+
+
+                        <div class="post-meta meta-tags">
+                            
+                            <ul class="clearfix">
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/competitive-programing">competitive-programing</a></li>
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/kickstart">kickstart</a></li>
+                                
+                            </ul>
+                            
+                        </div>
+                    </article>
                     
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "zouzhitao-github-io" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-                    
-
-
-
-
+    
+    
                 </div>
             </div>
-
             <div id="secondary">
     <section class="widget">
         <form id="search" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
@@ -273,6 +379,17 @@
 </footer>
 
 
+    <script type="text/javascript" src="/js/prism.js" async="true"></script>
+    <script type="text/javascript">
+    window.MathJax = {
+        tex2jax: {
+            inlineMath: [ ['$','$'] ],
+            processEscapes: true
+        }
+    };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
 <a id="rocket" href="#top"></a>
 <script type="text/javascript" src="/js/totop.js?v=0.0.0" async=""></script>
 
@@ -290,7 +407,6 @@ if (!doNotTrack) {
 
 
 <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
-
 
 
 
