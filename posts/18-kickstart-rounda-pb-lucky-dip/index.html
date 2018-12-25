@@ -125,13 +125,13 @@
 <p>首先 $k = 1$ 时， $p1$ 肯定是对的,因此我们有</p>
 
 <p>$$
-\begin{aligned}
-E[0] &amp;=\frac{\sum_{i=1}^nv<em>i}{n}<br />
-E[1] &amp;= \frac{j^2}{n^2}\frac{\sum</em>{k&lt;=j}v<em>i}{j} + \frac{(n-j)(n+j)}{n^2}\frac{\sum</em>{i&gt;j}v<em>i}{n-j}<br />
-&amp;= \frac{j\sum</em>{k&lt;=j}v<em>i}{n^2}+\frac{(n+j)\sum</em>{i&gt;j}v<em>i}{n^2}<br />
-&amp;= \frac{\sum</em>{i&gt;j}v_i}{n} + \frac{j\sum_iv<em>i}{n^2}<br />
-&amp;=\frac{\sum</em>{i&gt;j}v_i+jE[0]}{n}<br />
-\end{aligned}
+\begin{align}
+E[0] &amp;=\frac{\sum_{i=1}^nv_i}{n}<br />
+E[1] &amp;= \frac{j^2}{n^2}\frac{\sum_{k&lt;=j}v_i}{j} + \frac{(n-j)(n+j)}{n^2}\frac{\sum_{i&gt;j}v_i}{n-j}<br />
+&amp;= \frac{j\sum_{k&lt;=j}v<em>i}{n^2}+\frac{(n+j)\sum</em>{i&gt;j}v_i}{n^2}<br />
+&amp;= \frac{\sum_{i&gt;j}v_i}{n} + \frac{j\sum_iv_i}{n^2}<br />
+&amp;=\frac{\sum_{i&gt;j}v_i+jE[0]}{n}<br />
+\end{align}
 $$</p>
 
 <p><img src="/img/18-12-25-1.png" alt="公式" /></p>
