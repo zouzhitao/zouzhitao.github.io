@@ -124,27 +124,27 @@
 
 <p>首先 $k = 1$ 时， $p1$ 肯定是对的,因此我们有</p>
 
-<p>$$\begin{aligned}
-E[0] &amp;=\frac{\sum_{i=1}^nv_i}{n}\</p>
-
-<p>E[1] &amp;= \frac{j^2}{n^2}\frac{\sum_{k&lt;=j}v<em>i}{j} + \frac{(n-j)(n+j)}{n^2}\frac{\sum</em>{i&gt;j}v_i}{n-j}\</p>
-
-<p>&amp;= \frac{j\sum_{k&lt;=j}v<em>i}{n^2}+\frac{(n+j)\sum</em>{i&gt;j}v_i}{n^2}\</p>
-
-<p>&amp;= \frac{\sum_{i&gt;j}v_i}{n} + \frac{j\sum_iv_i}{n^2}\</p>
-
-<p>&amp;=\frac{\sum_{i&gt;j}v_i+jE[0]}{n}
-\end{aligned}$$</p>
+<p>$$
+\begin{align}
+E[0] &amp;=\frac{\sum_{i=1}^nv<em>i}{n}<br />
+E[1] &amp;= \frac{j^2}{n^2}\frac{\sum</em>{k&lt;=j}v<em>i}{j} + \frac{(n-j)(n+j)}{n^2}\frac{\sum</em>{i&gt;j}v<em>i}{n-j}<br />
+&amp;= \frac{j\sum</em>{k&lt;=j}v<em>i}{n^2}+\frac{(n+j)\sum</em>{i&gt;j}v<em>i}{n^2}<br />
+&amp;= \frac{\sum</em>{i&gt;j}v_i}{n} + \frac{j\sum_iv<em>i}{n^2}<br />
+&amp;=\frac{\sum</em>{i&gt;j}v_i+jE[0]}{n}
+\end{align}
+$$</p>
 
 <p>很显然 $j = \arg \max_{i} v_i&lt;=E[0]$, 即</p>
 
 <p>$$
-E[1] = \frac{\sum \max{v_i,E[0]}}{n}
+E[1] = \frac{\sum_{i=1}^n \max\{v_i,E[0]\}}{n}
 $$</p>
 
 <p>得出了官方题解中的第一个公式，对于 $k=2$ 其实相当于将 所有 $v_i&lt;E[0]$ 的item 换成 $E[0]$ 之后，$k=1$ 的期望，这就回到了第一种情况</p>
 
 <h1 id="ac-code">AC code</h1>
+
+<p><a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/18-roundA-PB-Lucky%20Dip.cpp">github.com/zouzhitao/competitive-programing</a></p>
 
 <blockquote>
 <p><strong>版权声明</strong></p>
