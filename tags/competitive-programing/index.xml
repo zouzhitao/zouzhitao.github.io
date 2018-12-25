@@ -22,7 +22,12 @@
 放回的那部分 $p1 = (\frac{j}{n})^{k+1}$不放回的那部分为 $1-p1 = 1-(\frac{j}{n})^{k+1}$
 因此只要枚举 $j$ 就行了，然而样例通不过，果然在case 5 就错了。后来就看了官方题解，还是一脸懵逼，虽然感觉这样是对的然而并不清楚为什么这样是对的。因此我就重新推了一遍公式
 官方题解详解 首先 $k = 1$ 时， $p1$ 肯定是对的,因此我们有
-$$ \begin{align} E[0] &amp;amp;=\frac{\sum_{i=1}^nvi}{n} E[1] &amp;amp;= \frac{j^2}{n^2}\frac{\sum{k&amp;lt;=j}vi}{j} + \frac{(n-j)(n+j)}{n^2}\frac{\sum{i&amp;gt;j}vi}{n-j} &amp;amp;= \frac{j\sum{k&amp;lt;=j}vi}{n^2}+\frac{(n+j)\sum{i&amp;gt;j}vi}{n^2} &amp;amp;= \frac{\sum{i&amp;gt;j}v_i}{n} + \frac{j\sum_ivi}{n^2} &amp;amp;=\frac{\sum{i&amp;gt;j}v_i+jE[0]}{n} \end{align} $$
+$$ \begin{aligned} E[0] &amp;amp;=\frac{\sum_{i=1}^nvi}{n}
+E[1] &amp;amp;= \frac{j^2}{n^2}\frac{\sum{k&amp;lt;=j}vi}{j} + \frac{(n-j)(n+j)}{n^2}\frac{\sum{i&amp;gt;j}vi}{n-j}
+&amp;amp;= \frac{j\sum{k&amp;lt;=j}vi}{n^2}+\frac{(n+j)\sum{i&amp;gt;j}vi}{n^2}
+&amp;amp;= \frac{\sum{i&amp;gt;j}v_i}{n} + \frac{j\sum_ivi}{n^2}
+&amp;amp;=\frac{\sum{i&amp;gt;j}v_i+jE[0]}{n}
+\end{aligned} $$
 很显然 $j = \arg \max_{i} v_i&amp;lt;=E[0]$, 即
 $$ E[1] = \frac{\sum_{i=1}^n \max\{v_i,E[0]\}}{n} $$
 得出了官方题解中的第一个公式，对于 $k=2$ 其实相当于将 所有 $v_i&amp;lt;E[0]$ 的item 换成 $E[0]$ 之后，$k=1$ 的期望，这就回到了第一种情况</description>
