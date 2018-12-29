@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>competitive-programing on taotao never stoped</title>
+    <title>competitive-programing on taotao never stop</title>
     <link>https://zouzhitao.github.io/categories/competitive-programing/</link>
-    <description>Recent content in competitive-programing on taotao never stoped</description>
+    <description>Recent content in competitive-programing on taotao never stop</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Tue, 25 Dec 2018 15:21:27 +0800</lastBuildDate>
@@ -19,15 +19,15 @@
       <guid>https://zouzhitao.github.io/posts/18-kickstart-rounda-pb-lucky-dip/</guid>
       <description>官方链接  题目描述 官方题解  我的心路历程 首先不难想到，肯定要将 $v_i$ 排序，然后如果取到的是小的那部分值，那么我们肯定要将其放回，然后再取，不妨设 $i&amp;lt;j$, 均要放回。因此所有的 $n$ 个item 就被分为了两个部分，一部分是要放回的，另外一部分是不放回的。
 最开始的时候，看样例的解释我以为是这样的,直接分别求两者的概率，则有
-放回的那部分 $p1 = (\frac{j}{n})^{k+1}$不放回的那部分为 $1-p1 = 1-(\frac{j}{n})^{k+1}$
+放回的那部分 $p_1 = (\frac{j}{n})^{k+1}$不放回的那部分为 $1-p_1 = 1-(\frac{j}{n})^{k+1}$
 因此只要枚举 $j$ 就行了，然而样例通不过，果然在case 5 就错了。后来就看了官方题解，还是一脸懵逼，虽然感觉这样是对的然而并不清楚为什么这样是对的。因此我就重新推了一遍公式
 官方题解详解 首先 $k = 1$ 时， $p1$ 肯定是对的,因此我们有
-$$ \begin{align} E[0] &amp;amp;=\frac{\sum_{i=1}^nv_i}{n}
-E[1] &amp;amp;= \frac{j^2}{n^2}\frac{\sum_{k&amp;lt;=j}v_i}{j} + \frac{(n-j)(n+j)}{n^2}\frac{\sum_{i&amp;gt;j}v_i}{n-j}
-&amp;amp;= \frac{j\sum_{k&amp;lt;=j}vi}{n^2}+\frac{(n+j)\sum{i&amp;gt;j}v_i}{n^2}
-&amp;amp;= \frac{\sum_{i&amp;gt;j}v_i}{n} + \frac{j\sum_iv_i}{n^2}
-&amp;amp;=\frac{\sum_{i&amp;gt;j}v_i+jE[0]}{n}
-\end{align} $$
+$$ \begin{align*} E[0] &amp;amp;=\frac{\sum_{i=1}^nv_i}{n}\\
+E[1] &amp;amp;= \frac{j^2}{n^2}\frac{\sum_{k&amp;lt;=j}v_i}{j} + \frac{(n-j)(n+j)}{n^2}\frac{\sum_{i&amp;gt;j}v_i}{n-j}\\
+&amp;amp;= \frac{j\sum_{k&amp;lt;=j}v_i}{n^2}+\frac{(n+j)\sum_{i&amp;gt;j}v_i}{n^2}\\
+&amp;amp;= \frac{\sum_{i&amp;gt;j}v_i}{n} + \frac{j\sum_iv_i}{n^2}\\
+&amp;amp;=\frac{\sum_{i&amp;gt;j}v_i+jE[0]}{n}\\
+\end{align*} $$
 很显然 $j = \arg \max_{i} v_i&amp;lt;=E[0]$, 即
 $$ E[1] = \frac{\sum_{i=1}^n \max\{v_i,E[0]\}}{n} $$
 得出了官方题解中的第一个公式，对于 $k=2$ 其实相当于将 所有 $v_i&amp;lt;E[0]$ 的item 换成 $E[0]$ 之后，$k=1$ 的期望，这就回到了第一种情况</description>
