@@ -7,22 +7,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>course | taotao never stop</title>
-    <meta property="og:title" content="course - taotao never stop">
+    <title>商汤AI平台研发工程师面试总结 | taotao never stop</title>
+    <meta property="og:title" content="商汤AI平台研发工程师面试总结 - taotao never stop">
     <meta property="og:type" content="article">
         
+    <meta property="article:published_time" content="2019-01-02T09:33:45&#43;08:00">
+        
+        
+    <meta property="article:modified_time" content="2019-01-02T09:33:45&#43;08:00">
         
     <meta name="Keywords" content="computer system,algorithm,OS,distribute system,big data,ML,算法，系统，分布式，大数据，推荐系统">
-    <meta name="description" content="course">
+    <meta name="description" content="商汤AI平台研发工程师面试总结">
         
     <meta name="author" content="taotao">
-    <meta property="og:url" content="https://zouzhitao.github.io/categories/course/">
+    <meta property="og:url" content="https://zouzhitao.github.io/posts/sensetime-ai-platform-engineer-interview/">
     <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="/css/normalize.css">
     
+        <link rel="stylesheet" href="/css/prism.css">
+    
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="alternate" type="application/rss+xml+xml" href="https://zouzhitao.github.io/categories/course/index.xml" title="taotao never stop" />
     <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 
     
@@ -31,7 +36,6 @@
     
     
 </head>
-
 
 <body>
 <header id="header" class="clearfix">
@@ -66,130 +70,164 @@
 
             <div class="col-8" id="main">
                 <div class="res-cons">
-                    
-                    <h3 class="archive-title">
-                        分类
-                        <span class="keyword">course</span>
-                        中的文章
-                    </h3>
-                    
-
-                    
-                        <article class="post">
-                            <header>
-                                <h1 class="post-title">
-                                    <a href="https://zouzhitao.github.io/posts/mit6.828-os-hw1-boot-xv6/">MIT6.828 OS hw1 boot xv6</a>
-                                </h1>
-                            </header>
-                            <date class="post-meta meta-date">
-                                2018年12月6日
-                            </date>
+                    <article class="post">
+                        <header>
+                            <h1 class="post-title">商汤AI平台研发工程师面试总结</h1>
+                        </header>
+                        <date class="post-meta meta-date">
+                            2019年1月2日
+                        </date>
+                        
+                        <div class="post-meta meta-category">
+                            |
                             
-                            <div class="post-meta meta-category">
-                                |
-                                
-                                    <a href="https://zouzhitao.github.io/categories/operating-system">Operating System</a>
-                                
-                                    <a href="https://zouzhitao.github.io/categories/course">course</a>
-                                
-                            </div>
+                                <a href="https://zouzhitao.github.io/categories/interview">interview</a>
                             
-                            <div class="post-content">
-                                <p><strong>完整内容可见</strong></p>
+                        </div>
+                        
+                        
+                        <div class="post-meta">
+                            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span> 阅读</span></span>
+                        </div>
+                        
+                        
+                        <aside id="toc" class="dismissed">
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
+<ul>
+<li><a href="#一面">一面</a></li>
+<li><a href="#二面">二面</a></li>
+</ul>
+</nav>
+                        </aside><div class="post-content">
+                            
 
-<p><a href="https://github.com/zouzhitao/CS_Learning/blob/master/MIT6.828-fa18/README.md">MIT 6.828 note</a></p>
+<p>面试距今应该已经过去一个月了，一直没有总结，这里还是简单总结一下问题，其实感觉问的挺简单的.</p>
 
-<p>这个任务就是检查 _start 开始的时候栈顶的所有值，</p>
+<p>我面的是 AI平台开发工程师，就是做应用落地的，智能安防部门。做的是视频安防,</p>
+
+<p><strong>offer get</strong></p>
+
+<h1 id="一面">一面</h1>
+
+<p>一面先是简单聊了一下简历，问的相当简单,(PS:尽然被吐槽简历太简单了[捂脸..]),这边应该用的是 <code>c++</code> 为主，所以问了很多c++的东西。</p>
+
+<p>先问了一些<strong>计算机基础</strong>:</p>
+
+<ol>
+<li>并行与并发的区别</li>
+<li>进程通信的方法</li>
+<li>用过哪些并发手段</li>
+</ol>
+
+<p><strong>计算机网络</strong></p>
+
+<ol>
+<li>ICMP 在哪一层<br>
+这个我直接就说了，不清楚，不过可以猜一下，面试官人挺好了，也让我猜了一下，给我的提示就是<code>Ping</code> 命令</li>
+<li>说一下网络层次</li>
+<li>3次握手,4次挥手</li>
+<li>浏览器中输入一个网址到获取内容的过程</li>
+</ol>
+
+<p><strong>程序设计</strong></p>
+
+<ol>
+<li>你知道尾递归吗</li>
+<li>在什么情况下可以用尾递归，二叉树遍历能用吗？<br>
+关于尾递归这个，我只能说运气真的好，就在前一个周我正好再看 coursera 的<a href="https://zouzhitao.github.io/posts/uw-programing-language-parta-overview/">programing language</a> 所以就比较深入的了解过 <strong>尾递归</strong>这个东西</li>
+<li>虚函数</li>
+<li><code>switch</code> 与 <code>if</code> 的区别<br>
+这玩意儿是真步直到，下来之后看 csapp才发现 <code>switch</code> 会用 跳表优化</li>
+<li>问了一个 抽象类和接口的区别<br>
+说是说不出来了，给了一个具体的场景，终于说出来了</li>
+</ol>
+
+<p>一面结束，10分钟后二面，速度还是很快的</p>
+
+<h1 id="二面">二面</h1>
+
+<p>二面就是纯coding，20分钟 <code>c++ bug free</code>,加自己写测试代码</p>
+
+<ol>
+<li>$1,\dots,n$ 按字典序输出 $O(nlogn)$<br>
+直接用数位dp，遍历的方法就ok</li>
+<li>一个无序数组，找出每一个数右边第一个比他大的数<br>
+单调栈over</li>
+</ol>
+
+<p>总体来说相当简单</p>
 
 <blockquote>
-<p>进入 xv6, gdb 调试</p>
+<p><strong>版权声明</strong></p>
 
-<p>b *0x10000c (_start kernel start point)</p>
+<p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
 
-<p>x /24x $esp</p>
+<p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
+
+<p><strong>转载请保留此版权声明，并注明出处</strong></p>
 </blockquote>
 
-<p><img src="/img/hw2-esp.png" alt="hw1-esp.png" /></p>
+                        </div>
+                        
 
-<p>解释栈中的各个值，首先看 <code>0x7d8d,0x7c4d</code>, 这显然是某个地址， …</p>
-                                <p class="readmore"><a href="https://zouzhitao.github.io/posts/mit6.828-os-hw1-boot-xv6/">阅读全文</a></p>
-                            </div>
-                        </article>
-                    
-                        <article class="post">
-                            <header>
-                                <h1 class="post-title">
-                                    <a href="https://zouzhitao.github.io/posts/mit6.828os-lab1-note/">MIT6.828 OS lab1 note</a>
-                                </h1>
-                            </header>
-                            <date class="post-meta meta-date">
-                                2018年12月5日
-                            </date>
+                        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/posts/2018-interview/">2018 秋招面试总结</a></li>
+        
+        <li><a href="/posts/bytedance-backend-interview/">Bytedance 后台开发工程师面试总结</a></li>
+        
+        <li><a href="/posts/msra-reasearch-intern-review/">MSRA 明日之星实习生项目面试总结</a></li>
+        
+        <li><a href="/posts/ml-decision-tree-note/">机器学习笔记: 决策树</a></li>
+        
+        <li><a href="/posts/18-kickstart-rounda-pb-lucky-dip/">2018 google Kickstart RoundA PB Lucky Dip 详细题解</a></li>
+        
+    </ul>
+</div>
+
+
+                        <div class="post-meta meta-tags">
                             
-                            <div class="post-meta meta-category">
-                                |
+                            <ul class="clearfix">
                                 
-                                    <a href="https://zouzhitao.github.io/categories/operating-system">Operating System</a>
+                                <li><a href="https://zouzhitao.github.io/tags/interview">interview</a></li>
                                 
-                                    <a href="https://zouzhitao.github.io/categories/course">course</a>
+                                <li><a href="https://zouzhitao.github.io/tags/sensetime">senseTime</a></li>
                                 
-                            </div>
+                            </ul>
                             
-                            <div class="post-content">
-                                <p>这里是 MIT 6.828 OS lab1 笔记.</p>
-
-<p><a href="https://pdos.csail.mit.edu/6.828/2018/">课程链接</a></p>
-
-<p>简单记录一些有趣，和有意思的东西</p>
-
-<h1 id="ex6">ex6</h1>
-
-<blockquote>
-<p>Exercise 6. We can examine memory using GDB&rsquo;s x command. The GDB manual has full details, but for now, it is enough …</p></blockquote>
-                                <p class="readmore"><a href="https://zouzhitao.github.io/posts/mit6.828os-lab1-note/">阅读全文</a></p>
-                            </div>
-                        </article>
+                        </div>
+                    </article>
                     
-                        <article class="post">
-                            <header>
-                                <h1 class="post-title">
-                                    <a href="https://zouzhitao.github.io/posts/uw-programing-language-parta-overview/">UW Programing Language PartA Overview</a>
-                                </h1>
-                            </header>
-                            <date class="post-meta meta-date">
-                                2018年12月5日
-                            </date>
-                            
-                            <div class="post-meta meta-category">
-                                |
-                                
-                                    <a href="https://zouzhitao.github.io/categories/course">course</a>
-                                
-                                    <a href="https://zouzhitao.github.io/categories/programing-language">programing language</a>
-                                
-                            </div>
-                            
-                            <div class="post-content">
-                                <p><strong><a href="https://github.com/zouzhitao/CS_Learning/tree/master/PL%40Grossman">作业仓库</a></strong></p>
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "zouzhitao-github-io" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-<p><strong>url</strong>: <a href="https://github.com/zouzhitao/CS_Learning/tree/master/PL%40Grossman">https://github.com/zouzhitao/CS_Learning/tree/master/PL%40Grossman</a></p>
-
-<p>这是 UW programing language part A 的一个简单回顾.</p>
-
-<p><a href="https://www.coursera.org/learn/programming-languages">coursera 课程地址</a>: …</p>
-                                <p class="readmore"><a href="https://zouzhitao.github.io/posts/uw-programing-language-parta-overview/">阅读全文</a></p>
-                            </div>
-                        </article>
-                    
-
-                    
-
-
-
-
+    
+    
                 </div>
             </div>
-
             <div id="secondary">
     <section class="widget">
         <form id="search" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
@@ -362,6 +400,17 @@
 </footer>
 
 
+    <script type="text/javascript" src="/js/prism.js" async="true"></script>
+    <script type="text/javascript">
+    window.MathJax = {
+        tex2jax: {
+            inlineMath: [ ['$','$'] ],
+            processEscapes: true
+        }
+    };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
 <a id="rocket" href="#top"></a>
 <script type="text/javascript" src="/js/totop.js?v=0.0.0" async=""></script>
 
@@ -379,7 +428,6 @@ if (!doNotTrack) {
 
 
 <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
-
 
 
 

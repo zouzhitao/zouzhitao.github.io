@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>senseTime on taotao never stop</title>
+    <link>https://zouzhitao.github.io/tags/sensetime/</link>
+    <description>Recent content in senseTime on taotao never stop</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 02 Jan 2019 09:33:45 +0800</lastBuildDate>
+    
+	<atom:link href="https://zouzhitao.github.io/tags/sensetime/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>商汤AI平台研发工程师面试总结</title>
+      <link>https://zouzhitao.github.io/posts/sensetime-ai-platform-engineer-interview/</link>
+      <pubDate>Wed, 02 Jan 2019 09:33:45 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/sensetime-ai-platform-engineer-interview/</guid>
+      <description>面试距今应该已经过去一个月了，一直没有总结，这里还是简单总结一下问题，其实感觉问的挺简单的.
+我面的是 AI平台开发工程师，就是做应用落地的，智能安防部门。做的是视频安防,
+offer get
+一面 一面先是简单聊了一下简历，问的相当简单,(PS:尽然被吐槽简历太简单了[捂脸..]),这边应该用的是 c++ 为主，所以问了很多c++的东西。
+先问了一些计算机基础:
+ 并行与并发的区别 进程通信的方法 用过哪些并发手段  计算机网络
+ ICMP 在哪一层
+这个我直接就说了，不清楚，不过可以猜一下，面试官人挺好了，也让我猜了一下，给我的提示就是Ping 命令 说一下网络层次 3次握手,4次挥手 浏览器中输入一个网址到获取内容的过程  程序设计
+ 你知道尾递归吗 在什么情况下可以用尾递归，二叉树遍历能用吗？
+关于尾递归这个，我只能说运气真的好，就在前一个周我正好再看 coursera 的programing language 所以就比较深入的了解过 尾递归这个东西 虚函数 switch 与 if 的区别
+这玩意儿是真步直到，下来之后看 csapp才发现 switch 会用 跳表优化 问了一个 抽象类和接口的区别
+说是说不出来了，给了一个具体的场景，终于说出来了  一面结束，10分钟后二面，速度还是很快的
+二面 二面就是纯coding，20分钟 c++ bug free,加自己写测试代码
+ $1,\dots,n$ 按字典序输出 $O(nlogn)$
+直接用数位dp，遍历的方法就ok 一个无序数组，找出每一个数右边第一个比他大的数
+单调栈over  总体来说相当简单
+ 版权声明
+本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</description>
+    </item>
+    
+  </channel>
+</rss>
