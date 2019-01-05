@@ -6,10 +6,72 @@
     <description>Recent content in machine-learning on taotao never stop</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Mon, 31 Dec 2018 15:27:33 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 05 Jan 2019 19:58:38 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/categories/machine-learning/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>机器学习笔记:朴素贝叶斯</title>
+      <link>https://zouzhitao.github.io/posts/ml-note-naive-bayes/</link>
+      <pubDate>Sat, 05 Jan 2019 19:58:38 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/ml-note-naive-bayes/</guid>
+      <description>写在前面: 这是笔者学习CMU10601-ML机器学习的笔记
+ 引入 首先我们考虑学习一个基于贝叶斯规则的分类器,即我们希望学到 $P(Y|X)$
+那么我们有
+$$ P(Y|X)=\frac{P(Y)P(X|Y)}{P(X)} $$
+这里 $Y \in\{0,1\}$ 那么我们需要去估计的是这两个概率 $P(Y),P(X|Y)$
+假设 $X=&amp;lt;X_1,X_2,\dots,X_n&amp;gt;$, 即是一个 $n$ 维度的向量，其中$X_i \in \{0,1\}$
+我们需要估计的参数是 $P(X|Y)$ 有 $2(2^n-1)$种情况，$P(Y)$ 有 $1$ 个参数需要估计，因此总共需要估计的参数是 $2(2^n-1)+1$, 即是指数级的。
+这显然是不现实的，因此我们希望做出一些假设，以减少估计的参数，这是引入了 naive bayes
+naive bayes naive bayes 假设 given $Y$, 任意 $X_i,X_j$ 是条件独立(conditional independent)的，即
+$$ P(X_i|X_j,Y)=P(X_i|Y) $$
+也就是说,
+$$ \begin{align*} P(X_i,X_j|Y)&amp;amp;=P(X_i|Y)P(X_j|Y)\\
+P(X_1,X_2,\dots,X_n|Y)&amp;amp;=\prod_i P(X_i|Y) \end{align*} $$
+因此现在我们需要估计的参数由原来的 $2(2^n-1)+1$ 变为了 $2n+1$ 个
+derivation 简单搬运~
+naive bayse for discrete input 假设 $X_i$ 有 $J$ 种离散值，而 $Y$ 有$K$ 种离散值，那么由上面的推导我们需要估计的是</description>
+    </item>
+    
+    <item>
+      <title>机器学习笔记: 概率论基础</title>
+      <link>https://zouzhitao.github.io/posts/ml-note-probility/</link>
+      <pubDate>Sat, 05 Jan 2019 19:24:41 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/ml-note-probility/</guid>
+      <description>这是一个简单的概率论公式总结
+ bayes rule: $P(A|B) = \frac{P(A)P(B|A)}{P(B)}$   版权声明
+本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
+作者: taotao
+转载请保留此版权声明，并注明出处
+ </description>
+    </item>
+    
+    <item>
+      <title>机器学习笔记: MLE and MAP</title>
+      <link>https://zouzhitao.github.io/posts/ml-note-mle-and-map/</link>
+      <pubDate>Sat, 05 Jan 2019 19:20:46 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/ml-note-mle-and-map/</guid>
+      <description>  写在前面: 这是笔者学习CMU10601-ML机器学习的笔记
+ MLE 和 MAP ,是两种不同的估计概率的准则，可是他们的数学公式却是如此相似
+remark
+MLE 实际使用的过程中，通常会用LOG likelihood function,
+MAP 这里 $P(D)$ 是没用的，即
+$$ \hat{\theta}=\arg \max_{\theta} P(\theta)P(D|\theta) $$
+即比 MLE多了一个 $P(\theta)$ 的先验信息
+这里通常，来说 $P(\theta)$ 取与 $P(D|\theta)$ 相同的分布，称为共轭先验，个人以为这其实是为了好计算!
+参考文献给了一个总结,很有意思，我这里简单的总结两点东西
+ 如果知道联合概率分布，那么什么都能求，了，但是通常情况下，需要非常大的数据，这在实际情况下是不可能的，所以需要一些概率估计方法，MLE和MAP是其中一种  hw2 code code
+参考文献
+ Machine Learning, Tom M.Mitchell, ch2, estimating probabilities   版权声明
+本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
+作者: taotao
+转载请保留此版权声明，并注明出处
+ </description>
+    </item>
     
     <item>
       <title>机器学习笔记: 决策树</title>

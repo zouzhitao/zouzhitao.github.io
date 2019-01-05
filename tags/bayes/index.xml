@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>bayes on taotao never stop</title>
+    <link>https://zouzhitao.github.io/tags/bayes/</link>
+    <description>Recent content in bayes on taotao never stop</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 05 Jan 2019 19:58:38 +0800</lastBuildDate>
+    
+	<atom:link href="https://zouzhitao.github.io/tags/bayes/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>机器学习笔记:朴素贝叶斯</title>
+      <link>https://zouzhitao.github.io/posts/ml-note-naive-bayes/</link>
+      <pubDate>Sat, 05 Jan 2019 19:58:38 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/ml-note-naive-bayes/</guid>
+      <description>写在前面: 这是笔者学习CMU10601-ML机器学习的笔记
+ 引入 首先我们考虑学习一个基于贝叶斯规则的分类器,即我们希望学到 $P(Y|X)$
+那么我们有
+$$ P(Y|X)=\frac{P(Y)P(X|Y)}{P(X)} $$
+这里 $Y \in\{0,1\}$ 那么我们需要去估计的是这两个概率 $P(Y),P(X|Y)$
+假设 $X=&amp;lt;X_1,X_2,\dots,X_n&amp;gt;$, 即是一个 $n$ 维度的向量，其中$X_i \in \{0,1\}$
+我们需要估计的参数是 $P(X|Y)$ 有 $2(2^n-1)$种情况，$P(Y)$ 有 $1$ 个参数需要估计，因此总共需要估计的参数是 $2(2^n-1)+1$, 即是指数级的。
+这显然是不现实的，因此我们希望做出一些假设，以减少估计的参数，这是引入了 naive bayes
+naive bayes naive bayes 假设 given $Y$, 任意 $X_i,X_j$ 是条件独立(conditional independent)的，即
+$$ P(X_i|X_j,Y)=P(X_i|Y) $$
+也就是说,
+$$ \begin{align*} P(X_i,X_j|Y)&amp;amp;=P(X_i|Y)P(X_j|Y)\\
+P(X_1,X_2,\dots,X_n|Y)&amp;amp;=\prod_i P(X_i|Y) \end{align*} $$
+因此现在我们需要估计的参数由原来的 $2(2^n-1)+1$ 变为了 $2n+1$ 个
+derivation 简单搬运~
+naive bayse for discrete input 假设 $X_i$ 有 $J$ 种离散值，而 $Y$ 有$K$ 种离散值，那么由上面的推导我们需要估计的是</description>
+    </item>
+    
+  </channel>
+</rss>
