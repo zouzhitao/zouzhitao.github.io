@@ -101,6 +101,7 @@
 <ul>
 <li><a href="#derivation">derivation</a></li>
 <li><a href="#naive-bayse-for-discrete-input">naive bayse for discrete input</a></li>
+<li><a href="#gaussian-naive-bayes-gnb">gaussian naive bayes (GNB)</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -185,6 +186,36 @@ $$
 $$
 这是基于 Dirichlet distribution 的先验。
 其中 $l$ 控制光滑的强度，$l=1$ 就是laplace smooth</li>
+</ol>
+
+<h2 id="gaussian-naive-bayes-gnb">gaussian naive bayes (GNB)</h2>
+
+<p>如果 $X_i$ 是连续值呢?</p>
+
+<p>我们需要引入另外的一个假设: $P(X_i =x|Y=y_k) \sim N(u_{ik},\sigma_{ik})$</p>
+
+<p>即:</p>
+
+<p>$$
+P(X_i=x|Y=y_k)=\frac{1}{\sqrt{2\pi}\sigma_{ik
+}} \exp\{\frac{-(x-u_{ik})^2}{2\sigma_{ik}^2}\}
+$$</p>
+
+<p>用 MLE 估计 $u_{ik},\sigma_{ik}$</p>
+
+<p><img src="/img/ML-note-naive-bayes/GNB.png" alt="GNB" /></p>
+
+<p>(这很好计算，这里略去了&hellip;)</p>
+
+<p><strong>完整的算法总结</strong></p>
+
+<p><img src="/img/ML-note-naive-bayes/GNB-algo.png" alt="" /></p>
+
+<p><strong>Question</strong></p>
+
+<ol>
+<li>What does the decision surface of a Naïve Bayes classifier look like?</li>
+<li>What error will the classifier achieve if Naïve Bayes assumption is satisfied and we have infinite training data?</li>
 </ol>
 
 <p><strong>参考文献</strong></p>
