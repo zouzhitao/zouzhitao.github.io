@@ -6,10 +6,24 @@
     <description>Recent content in machine-learning on taotao never stop</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 05 Jan 2019 19:58:38 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 06 Jan 2019 14:38:13 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/categories/machine-learning/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>机器学习笔记:logistic regression</title>
+      <link>https://zouzhitao.github.io/posts/ml-note-lr/</link>
+      <pubDate>Sun, 06 Jan 2019 14:38:13 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/ml-note-lr/</guid>
+      <description> 写在前面: 这是笔者学习CMU10601-ML机器学习的笔记
+版权声明
+本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
+作者: taotao
+转载请保留此版权声明，并注明出处
+ </description>
+    </item>
     
     <item>
       <title>机器学习笔记:朴素贝叶斯</title>
