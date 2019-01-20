@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>optimization on taotao never stop</title>
+    <link>https://zouzhitao.github.io/tags/optimization/</link>
+    <description>Recent content in optimization on taotao never stop</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sun, 20 Jan 2019 22:34:21 +0800</lastBuildDate>
+    
+	<atom:link href="https://zouzhitao.github.io/tags/optimization/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Newton&#39;s Method</title>
+      <link>https://zouzhitao.github.io/posts/newton-method/</link>
+      <pubDate>Sun, 20 Jan 2019 22:34:21 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/newton-method/</guid>
+      <description>这里总结一个利用二价导数来求最优解的方法-牛顿法:
+设: $f(X)$ 是一个多维函数,由taylor 二阶展开，我们有,
+$$ f(X) \approx f(X_0)+(X-X_0)\nabla f(X_0) + \frac{(X-X_0)\nabla^2 f(X_0)(X-X_0)}{2} $$
+对 $X$ 求导，并设置为0，我们有
+$$ \begin{align*} 0&amp;amp;=\nabla f(X_0) + (X-X_0) \nabla ^2 f(X_0) (X- X_0)\\
+X&amp;amp;=-\frac{\nabla f(X_0)}{\nabla^2 f(X_0)} X_0 \end{align*} $$
+相当于将梯度下降的learning rate设置为 $(\nabla^2 f(X_0))^{-1}$
+ 版权声明
+本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
+作者: taotao
+转载请保留此版权声明，并注明出处
+ </description>
+    </item>
+    
+  </channel>
+</rss>
