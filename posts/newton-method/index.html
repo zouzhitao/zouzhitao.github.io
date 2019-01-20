@@ -92,9 +92,15 @@
                         
                         
                         <aside id="toc" class="dismissed">
-                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> 
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
+<ul>
+<li><a href="#note">note</a></li>
+</ul>
+</nav>
                         </aside><div class="post-content">
-                            <p>这里总结一个利用二价导数来求最优解的方法-牛顿法:</p>
+                            
+
+<p>这里总结一个利用二价导数来求最优解的方法-牛顿法:</p>
 
 <p>设: $f(X)$ 是一个多维函数,由taylor 二阶展开，我们有,</p>
 
@@ -112,6 +118,13 @@ X&amp;=-\frac{\nabla f(X_0)}{\nabla^2 f(X_0)} X_0
 $$</p>
 
 <p>相当于将梯度下降的learning rate设置为 $(\nabla^2 f(X_0))^{-1}$</p>
+
+<h1 id="note">note</h1>
+
+<ol>
+<li>显然牛顿法计算量更大，因为他需要计算 hessian矩阵，相对于梯度下降来说这是$n^2$ 的</li>
+<li>牛顿法收敛率更快 $O(t^(-2))$,梯度下降是 $O(t^(-1))$</li>
+</ol>
 
 <blockquote>
 <p><strong>版权声明</strong></p>
