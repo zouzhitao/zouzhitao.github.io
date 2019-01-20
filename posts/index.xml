@@ -24,7 +24,7 @@ $$ f(X) \approx f(X_0)+(X-X_0)\nabla f(X_0) + \frac{(X-X_0)\nabla^2 f(X_0)(X-X_0
 $$ \begin{align*} 0&amp;amp;=\nabla f(X_0) + (X-X_0) \nabla ^2 f(X_0) (X- X_0)\\
 X&amp;amp;=-\frac{\nabla f(X_0)}{\nabla^2 f(X_0)} X_0 \end{align*} $$
 相当于将梯度下降的learning rate设置为 $(\nabla^2 f(X_0))^{-1}$
-note  显然牛顿法计算量更大，因为他需要计算 hessian矩阵，相对于梯度下降来说这是$n^2$ 的 牛顿法收敛率更快 $O(t^(-2))$,梯度下降是 $O(t^(-1))$   版权声明
+note  显然牛顿法计算量更大，因为他需要计算 hessian矩阵，相对于梯度下降来说这是$n^2$ 的 牛顿法收敛率更快 $O(t^{-2})$,梯度下降是 $O(t^{-1})$   版权声明
 本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
 作者: taotao
 转载请保留此版权声明，并注明出处
