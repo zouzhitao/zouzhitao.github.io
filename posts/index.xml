@@ -6,10 +6,34 @@
     <description>Recent content in Posts on taotao never stop</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 20 Jan 2019 22:34:21 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 23 Jan 2019 00:47:54 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>点到超平面的距离计算简单笔记</title>
+      <link>https://zouzhitao.github.io/posts/math-distence-to-hyperplane/</link>
+      <pubDate>Wed, 23 Jan 2019 00:47:54 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/math-distence-to-hyperplane/</guid>
+      <description> 发现自己从大二开始就没有好好的学习数学了，最近看 SVM，发现好多推导和证明自己都不会，或者就要想很久，实在是太废材了。 :(. 以后决定对一些数学知识(特别是高等数学，分析和代数领域的一些东西，学点记点)
+ 这是正文
+这是一个简单的问题，定义如下:
+设， $y(X) = W^TX +b, X \in R^n,b \in R$, 是一个 affine function(这个不重要，是个函数就行),超平面为 $h:W^TX +b=0$, 证明: $R^n$ 中任意一点 $X$ 到 $h$ 的距离为 $\frac{|y(X)|}{||W||}$
+证明：
+如图:
+在超平面上任意取一点 $X&amp;rsquo;,s.t. y(X&amp;rsquo;)=0$ 距离
+$$ \begin{align} d&amp;amp;= ||(X&amp;rsquo;-X)||\cos \alpha \\
+&amp;amp;=\frac{|W^T(X&amp;rsquo;-X)|}{||W||}\\
+&amp;amp;=\frac{|W^TX&amp;rsquo;+b - (W^TX+b)|}{||W||}\\
+&amp;amp;=\frac{|y(X)|}{||W||} \end{align} $$
+ 版权声明
+本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
+作者: taotao
+转载请保留此版权声明，并注明出处
+ </description>
+    </item>
     
     <item>
       <title>Newton&#39;s Method</title>

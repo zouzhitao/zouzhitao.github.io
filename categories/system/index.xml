@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>system on taotao never stop</title>
+    <link>https://zouzhitao.github.io/categories/system/</link>
+    <description>Recent content in system on taotao never stop</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 06 Dec 2018 18:49:44 +0800</lastBuildDate>
+    
+	<atom:link href="https://zouzhitao.github.io/categories/system/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>MIT6.828 OS hw1 boot xv6</title>
+      <link>https://zouzhitao.github.io/posts/mit6.828-os-hw1-boot-xv6/</link>
+      <pubDate>Thu, 06 Dec 2018 18:49:44 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/mit6.828-os-hw1-boot-xv6/</guid>
+      <description>完整内容可见
+MIT 6.828 note
+这个任务就是检查 _start 开始的时候栈顶的所有值，
+ 进入 xv6, gdb 调试
+b *0x10000c (_start kernel start point)
+x /24x $esp
+ 解释栈中的各个值，首先看 0x7d8d,0x7c4d, 这显然是某个地址，先去 bootblock.asm 中找到这两个地址
+# Set up the stack pointer and call into C. movl $start, %esp 7c43:	bc 00 7c 00 00 mov $0x7c00,%esp call bootmain 7c48:	e8 ee 00 00 00 call 7d3b &amp;lt;bootmain&amp;gt; # If bootmain returns (it shouldn&#39;t), trigger a Bochs # breakpoint if running under Bochs, then loop.</description>
+    </item>
+    
+    <item>
+      <title>MIT6.828 OS lab1 note</title>
+      <link>https://zouzhitao.github.io/posts/mit6.828os-lab1-note/</link>
+      <pubDate>Wed, 05 Dec 2018 23:41:09 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/mit6.828os-lab1-note/</guid>
+      <description>这里是 MIT 6.828 OS lab1 笔记.
+课程链接
+简单记录一些有趣，和有意思的东西
+ex6  Exercise 6. We can examine memory using GDB&amp;rsquo;s x command. The GDB manual has full details, but for now, it is enough to know that the command x/Nx ADDR prints N words of memory at ADDR. (Note that both &amp;lsquo;x&amp;rsquo;s in the command are lowercase.) Warning: The size of a word is not a universal standard. In GNU assembly, a word is two bytes (the &amp;lsquo;w&amp;rsquo; in xorw, which stands for word, means 2 bytes).</description>
+    </item>
+    
+    <item>
+      <title>MIT 6.828 环境配置，踩坑指南</title>
+      <link>https://zouzhitao.github.io/posts/mit6.828-env/</link>
+      <pubDate>Tue, 27 Nov 2018 08:32:56 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/mit6.828-env/</guid>
+      <description> 我的环境 :
+ win10, git 2.19 Ubuntu 18.04 git 2.17 jos.git year : 2018  git clone err  SSL err  直接 git clone git clone https://pdos.csail.mit.edu/6.828/2018/jos.git lab
+可能会出现
+fatal: unable to access &#39;https://pdos.csail.mit.edu/6.828/2018/jos.git/&#39;: OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection to pdos.csail.mit.edu:443  解决方法
+添加两行就行了
+export GIT_CURL_VERBOSE=1 export GIT_TRACE_PACKET=2  注意 这个方法在win10 下能成功安装，但是 Ubuntu 下仅能 clone 2017 年的版本
+ 版权声明
+本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
+作者: taotao
+转载请保留此版权声明，并注明出处
+ </description>
+    </item>
+    
+  </channel>
+</rss>

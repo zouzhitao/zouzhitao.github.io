@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>programing language on taotao never stop</title>
+    <title>programing-language on taotao never stop</title>
     <link>https://zouzhitao.github.io/categories/programing-language/</link>
-    <description>Recent content in programing language on taotao never stop</description>
+    <description>Recent content in programing-language on taotao never stop</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 05 Dec 2018 14:02:01 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 24 Dec 2018 19:51:37 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/categories/programing-language/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>C&#43;&#43; 库函数笔记-不间断更新中</title>
+      <link>https://zouzhitao.github.io/posts/cpp-lib-function-note/</link>
+      <pubDate>Mon, 24 Dec 2018 19:51:37 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/cpp-lib-function-note/</guid>
+      <description> 这篇文章记录一些简单的c++库函数笔记，相当于把自己经常查的东西做一个缓存
+string string to int  c string,转换方法， char* -&amp;gt; int
+int atoi (const char * str);
+这些都是还有 atol,atof 都是类似的 默认base 10，
+ std::string
+int stoi (const string&amp;amp; str, size_t* idx = 0, int base = 10);
+第2, 个参数表示第一个非数值的位置
+  参考
+ c++ stoi c++ atoi   版权声明
+本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
+作者: taotao
+转载请保留此版权声明，并注明出处
+ </description>
+    </item>
     
     <item>
       <title>UW Programing Language PartA Overview</title>
