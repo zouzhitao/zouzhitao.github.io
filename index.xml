@@ -6,10 +6,28 @@
     <description>Recent content on taotao never stop</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 23 Jan 2019 00:47:54 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 23 Jan 2019 23:49:12 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>个人凸优化见到那学习笔记</title>
+      <link>https://zouzhitao.github.io/posts/math-convex-opt/</link>
+      <pubDate>Wed, 23 Jan 2019 23:49:12 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/math-convex-opt/</guid>
+      <description>本文来源于个人的凸优化学习笔记参考cs229 cvxoptnote,写成笔记的原因仅仅是想通过个人的笔记自己讲述与推导一下这些数学公式，内容可能会很简单，强力建议想得到一手资料的人好好学习文末参考资料
+ 凸集合 定义就直接跳过了，这里简单写一些常见的凸集
+ 凸集的交, 设 $C_i,i = 1,2,3,&amp;hellip;,n$ 是凸集，那么我们有$\cap _{i=0}^n C_i$ 也是凸集 affine subspace 即 $Ax+b=0,x \in R^n$, 这既是 convex,也是concave 凸函数的sublevel 即 $if \ f(x)\ is\ convex\ function,then \{f(x) &amp;lt;=\alpha\} is\ convex\ set$  凸函数 Define
+性质，两条重点
+ first-order-approximation
+$$ f(y)\ge f(x)+(\nabla f(x))^T(y-x) $$ 二阶导数大于0
+$$ \nabla_x^2 f(x) \ge 0 $$  一些简单的凸函数
+ Affine funciton
+$f(x) =A^Tx+b,x\in R^n$ quadratic function
+$f:R^n-&amp;gt;R,f(x) = 2^{-1}x^TAx+b^Tx+c,A\in S^n,b\in R^n,c\in R$</description>
+    </item>
     
     <item>
       <title>点到超平面的距离计算简单笔记</title>
