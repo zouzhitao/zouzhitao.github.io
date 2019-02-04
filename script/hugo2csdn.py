@@ -28,10 +28,9 @@ process = [matchpic,latex]
 
 def main(file_name):
     
-    with open(file_name,"rb") as f:
+    with open(file_name,"rb",encoding="utf-8") as f:
         skip = False
         for line in f:
-            line = line.decode('utf-8')
             # print(line)
             if line=='---\n':
                 if not skip:
