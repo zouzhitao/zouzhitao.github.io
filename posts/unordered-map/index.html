@@ -7,20 +7,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>机器学习笔记: 决策树 | taotao never stop</title>
-    <meta property="og:title" content="机器学习笔记: 决策树 - taotao never stop">
+    <title>kickstart: Scrambled-Words(hash&#43;complexity) | taotao never stop</title>
+    <meta property="og:title" content="kickstart: Scrambled-Words(hash&#43;complexity) - taotao never stop">
     <meta property="og:type" content="article">
         
-    <meta property="article:published_time" content="2018-12-31T15:27:33&#43;08:00">
+    <meta property="article:published_time" content="2019-02-21T22:33:57&#43;08:00">
         
         
-    <meta property="article:modified_time" content="2018-12-31T15:27:33&#43;08:00">
+    <meta property="article:modified_time" content="2019-02-21T22:33:57&#43;08:00">
         
     <meta name="Keywords" content="computer system,algorithm,OS,distribute system,big data,ML,算法，系统，分布式，大数据，推荐系统">
-    <meta name="description" content="机器学习笔记: 决策树">
+    <meta name="description" content="kickstart: Scrambled-Words(hash&#43;complexity)">
         
     <meta name="author" content="taotao">
-    <meta property="og:url" content="https://zouzhitao.github.io/posts/ml-decision-tree-note/">
+    <meta property="og:url" content="https://zouzhitao.github.io/posts/unordered-map/">
     <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="/css/normalize.css">
@@ -72,16 +72,18 @@
                 <div class="res-cons">
                     <article class="post">
                         <header>
-                            <h1 class="post-title">机器学习笔记: 决策树</h1>
+                            <h1 class="post-title">kickstart: Scrambled-Words(hash&#43;complexity)</h1>
                         </header>
                         <date class="post-meta meta-date">
-                            2018年12月31日
+                            2019年2月21日
                         </date>
                         
                         <div class="post-meta meta-category">
                             |
                             
-                                <a href="https://zouzhitao.github.io/categories/machine-learning">machine-learning</a>
+                                <a href="https://zouzhitao.github.io/categories/competitive-programing">competitive-programing</a>
+                            
+                                <a href="https://zouzhitao.github.io/categories/programing-language">programing-language</a>
                             
                         </div>
                         
@@ -94,129 +96,40 @@
                         <aside id="toc" class="dismissed">
                             <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
 <ul>
-<li><a href="#决策树算法框架">决策树算法框架</a></li>
-<li><a href="#属性划分方法">属性划分方法</a>
-<ul>
-<li><a href="#id3">ID3</a>
-<ul>
-<li><a href="#id3-的归纳偏置">ID3 的归纳偏置</a></li>
-</ul></li>
-<li><a href="#增益率">增益率</a></li>
-<li><a href="#剪枝策略">剪枝策略</a></li>
-</ul></li>
+<li><a href="#题目链接">题目链接</a></li>
+<li><a href="#分析">分析</a></li>
 <li><a href="#code">code</a></li>
+<li><a href="#参考文献">参考文献</a></li>
 </ul>
 </nav>
                         </aside><div class="post-content">
                             
 
 <blockquote>
-<p><strong>写在前面:</strong>
-这是笔者学习<a href="http://www.cs.cmu.edu/~ninamf/courses/601sp15/lectures.shtml">CMU10601-ML</a>机器学习的笔记</p>
+<p>以我面试多次大厂的经验，无论是笔试还是面试，大厂的算法题目都不会考非常难实现的数据结构或者算法模板，通常喜欢的还是偏思维的 hash, 复杂度，dp，这样一些简单算法</p>
 </blockquote>
 
-<h1 id="决策树算法框架">决策树算法框架</h1>
+<h1 id="题目链接">题目链接</h1>
 
-<p><img src="/img/ML-decision-tree-note/algorithm.png" alt="决策树算法" /></p>
+<p><a href="https://codingcompetitions.withgoogle.com/kickstart/round/0000000000050edf/0000000000051004">google kickstart 2018 Scrambled Words</a></p>
 
-<p><strong>适合问题的特点</strong></p>
+<h1 id="分析">分析</h1>
 
-<ol>
-<li>实例是由 $(attr,value)$, 表示的，并且 $value$ 是离散的 (<strong>remark:</strong> 能使用连续值，不过连续值其实也是在先将连续值转化为离散值，再使用的决策树)</li>
-<li>目标函数具有离散的输出值，或者说是一个分类问题</li>
-</ol>
+<p>分析在题目网站有，首先需要想到的就是不同串的长度只有 $O(\sqrt{\sum words_i})$ 种，那么枚举所有长度肯定是一种可行的方法，不过呢，即使枚举长度，对于每个枚举到的字串，我们仍然需要将他和所有具有此长度的串比较，太过浪费时间了，怎么做才能加速呢？ 对 <strong>hash</strong>, 将dict中的串 hash 一下，那么查找时间就变成了$O(1)$, 所以最终的时间复杂度就变成了 $O(1)$</p>
 
-<p>整个算法就是一个分治，核心的地方在于如何选择划分属性。后面的内容先简单总结几种属性划分准则，然后在讨论几种解决过拟合的方法，最后再给出我的简单的代码实现</p>
-
-<h1 id="属性划分方法">属性划分方法</h1>
-
-<h2 id="id3">ID3</h2>
-
-<p>这是一种基于 <strong>信息增益</strong> 的划分方法，首先，我们</p>
-
-<p>定义<strong>信息熵(entropy)</strong></p>
-
-<p>$$
-Entropy(\{p_1,p_2,\dots,p_n\}) = -\sum_i p_i\log p_i
-$$</p>
-
-<p>这里 $p_i$ 表示概率，并且 $\sum_i p_i =1$,同时我们定义数据集 $D$ 的信息商为</p>
-
-<p>$$
-Entropy(D) = Entropy(\{\frac{|D_1|}{|D|},\dots,\frac{|D_n|}{|D|} \})
-$$</p>
-
-<p>其中 $D_i$ 表示数据集 $D$ 中 $label=i$,的集合，即 $D_i = \{D|label=i\}$</p>
-
-<p><strong>remark:</strong> 这里的 $\log$ 的底数是多少是无关紧要的，因为两个不同的底之间只相差一个常数倍数</p>
-
-<p>然后信息增益是怎么算的呢？</p>
-
-<p>看图</p>
-
-<p><img src="/img/ML-decision-tree-note/ID3.png" alt="ID3" /></p>
-
-<p>假设对于某一个节点，处于这个节点的数据集合是 $D$,对于这个节点的属性 $attr_i$ 可以将数据集划分为 $D_v$, 每一个 $D_v$ 对应着 $attr_i$ 的一种取值，即 $D_v=\{D | attr_i = v\}$,我们定义信息增益为</p>
-
-<p>$$
-Gain(D,attr_i) = Entropy(D)-\sum_v \frac{|D_v|}{|D|}Entropy(D_v)
-$$</p>
-
-<p>因此最优属性就是</p>
-
-<p>$$
-attr^* = \arg \max_{attr_i} Gain(D,attr_i)
-$$</p>
-
-<h3 id="id3-的归纳偏置">ID3 的归纳偏置</h3>
-
-<p>需要注意的是 <strong>ID3</strong> 仅是一种<strong>启发式</strong> 的搜索策略，它的一个特点是有这样的一个<strong>归纳偏置或者说是喜好</strong>，<strong>它优先选择较短的决策树，即较短的树比较长的树优先，那些信息增益高的属性更靠近根节点的树优先</strong></p>
-
-<p>就好比他从一颗空的树开始，采用 bfs 的策略，先搜索所有的深度为 $1$,的树然后是 $2$,直到找到一颗能拟合训练数据的树</p>
-
-<p><strong>为什么短的假设优先呢</strong></p>
-
-<p>这是一个非常有趣的问题，在参考文献[2] 中提到了 <strong>奥坎母剃刀(Occam&rsquo;s razor)</strong>, 就是说优先选择较为简单的假设。这其实在科学和哲学上都非常显著的一种方法，当然也是我个人喜欢的一种简单的哲学。</p>
-
-<p>ID3 的归纳偏置很容易出现很荒谬的错误，比如，有某一个属性，它将所有的样例都分为不同的label，也就是参考文献[1] 中举的那个例子，考虑数据集的标号这一个属性，他会将整个数据全部分好类，产生一棵深度为 $1$ 的树。</p>
-
-<p>因此有人提出了另外的一种准则，<strong>增益率</strong></p>
-
-<h2 id="增益率">增益率</h2>
-
-<p>$$
-Gain_ratio(D,attr_i) = \frac{Gain(D,attr_i)}{splitInformation(D,attr_i)}
-$$</p>
-
-<p>其中</p>
-
-<p>$$
-splitInformation(D,attr_i) = -\sum_v \frac{|D_v|}{|D|}Entropy(D_v)
-$$</p>
-
-<p>用增益比率来替代增益会产生一些另外的问题就是当其中某个 $|D_v| \approx |D|$ 时会使得分裂信息非常小或者为0，由此增益比率会非常大或者未定义。</p>
-
-<p><strong>C4.5</strong> 采用了一种启发式的方法来分割，即先计算增益，对那些高于平均水平的用增益比率计算</p>
-
-<h2 id="剪枝策略">剪枝策略</h2>
-
-<p>这里给出两种剪枝策略</p>
-
-<ol>
-<li>用CV(cross-validation),一边生成决策树一边剪枝，即对于一个节点，如果在这个节点分割后产生的树在验证集上表现更好，那么我们就分割</li>
-<li><strong>后剪枝策略</strong>即先生成一棵完整的决策树，然后再从叶子节点开始评估在验证集上的表现，进行剪枝</li>
-</ol>
+<p>这里补充一些 hash 知识，其实这个在工业界用的非常多，所以基本上的程序语言都提供了丰富的类库，我用的是c++ 的unordered_map&lt;&gt;,当然，对于 个性化 的类还是需要自己写hash 函数以及 ==的，详见参考文献</p>
 
 <h1 id="code">code</h1>
 
-<p>待完善</p>
+<p><a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/Scrambled-Words.cpp">github</a></p>
 
-<p><strong>参考文献</strong></p>
+<h1 id="参考文献">参考文献</h1>
 
-<ol>
-<li>周志华,机器学习,ch4,决策树</li>
-<li>Tom M.Mitchell, 机器学习,ch3,机械工业出版社</li>
-</ol>
+<ul>
+<li><a href="https://stackoverflow.com/questions/17016175/c-unordered-map-using-a-custom-class-type-as-the-key">C++ unordered_map using a custom class type as the key</a></li>
+<li><a href="https://en.cppreference.com/w/cpp/utility/hash">hash - c++ reference</a></li>
+<li><a href="http://www.cplusplus.com/reference/unordered_map/unordered_map/?kw=unordered_map">unordered_map</a></li>
+</ul>
 
 <blockquote>
 <p><strong>版权声明</strong></p>
@@ -241,11 +154,11 @@ $$</p>
         
         <li><a href="/posts/cpp-lib-function-note/">C&#43;&#43; 库函数笔记-不间断更新中</a></li>
         
-        <li><a href="/posts/2018-interview/">2018 秋招面试总结</a></li>
+        <li><a href="/posts/internship-overview/">MSRA 实习一月小结</a></li>
         
-        <li><a href="/posts/bytedance-backend-interview/">Bytedance 后台开发工程师面试总结</a></li>
+        <li><a href="/posts/math-convex-opt/">个人凸优化简单学习笔记</a></li>
         
-        <li><a href="/posts/msra-reasearch-intern-review/">MSRA 明日之星实习生项目面试总结</a></li>
+        <li><a href="/posts/math-distence-to-hyperplane/">点到超平面的距离计算简单笔记</a></li>
         
     </ul>
 </div>
@@ -255,9 +168,11 @@ $$</p>
                             
                             <ul class="clearfix">
                                 
-                                <li><a href="https://zouzhitao.github.io/tags/machine-learning">machine-learning</a></li>
+                                <li><a href="https://zouzhitao.github.io/tags/unordered_map">unordered_map</a></li>
                                 
-                                <li><a href="https://zouzhitao.github.io/tags/decision-tree">decision-tree</a></li>
+                                <li><a href="https://zouzhitao.github.io/tags/c&#43;&#43;">c&#43;&#43;</a></li>
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/kickstart">kickstart</a></li>
                                 
                             </ul>
                             
