@@ -6,10 +6,19 @@
     <description>Recent content in Tags on taotao never stop</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 05 Dec 2018 23:41:09 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 04 Mar 2019 23:23:53 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GBDT</title>
+      <link>https://zouzhitao.github.io/tags/gbdt/</link>
+      <pubDate>Mon, 04 Mar 2019 23:23:53 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/gbdt/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>MIT6.828</title>
@@ -66,11 +75,29 @@
     </item>
     
     <item>
+      <title>adaboost</title>
+      <link>https://zouzhitao.github.io/tags/adaboost/</link>
+      <pubDate>Mon, 04 Mar 2019 23:23:53 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/adaboost/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>bayes</title>
       <link>https://zouzhitao.github.io/tags/bayes/</link>
       <pubDate>Sat, 05 Jan 2019 19:58:38 +0800</pubDate>
       
       <guid>https://zouzhitao.github.io/tags/bayes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>boosting</title>
+      <link>https://zouzhitao.github.io/tags/boosting/</link>
+      <pubDate>Mon, 04 Mar 2019 23:23:53 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/boosting/</guid>
       <description></description>
     </item>
     
@@ -125,6 +152,15 @@
       <pubDate>Thu, 06 Dec 2018 18:49:44 +0800</pubDate>
       
       <guid>https://zouzhitao.github.io/tags/gdb/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>gradient boosting</title>
+      <link>https://zouzhitao.github.io/tags/gradient-boosting/</link>
+      <pubDate>Mon, 04 Mar 2019 23:23:53 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/gradient-boosting/</guid>
       <description></description>
     </item>
     

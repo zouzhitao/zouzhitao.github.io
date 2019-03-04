@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="generator" content="Hugo 0.51" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>boosting : adaboost &amp; gradient boost | taotao never stop</title>
+    <meta property="og:title" content="boosting : adaboost &amp; gradient boost - taotao never stop">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content="2019-03-04T23:23:53&#43;08:00">
+        
+        
+    <meta property="article:modified_time" content="2019-03-04T23:23:53&#43;08:00">
+        
+    <meta name="Keywords" content="computer system,algorithm,OS,distribute system,big data,ML,算法，系统，分布式，大数据，推荐系统">
+    <meta name="description" content="boosting : adaboost &amp; gradient boost">
+        
+    <meta name="author" content="taotao">
+    <meta property="og:url" content="https://zouzhitao.github.io/posts/booosting/">
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="/css/normalize.css">
+    
+        <link rel="stylesheet" href="/css/prism.css">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+    
+
+
+    
+    
+</head>
+
+<body>
+<header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://zouzhitao.github.io/">
+                        taotao never stop
+                    </a>
+                
+                <p class="description">喜欢技术，喜欢探索</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://zouzhitao.github.io/">首页</a>
+                    
+                    <a  href="https://zouzhitao.github.io/archives/" title="archives">archives</a>
+                    
+                    <a  href="https://zouzhitao.github.io/about/" title="about">about</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div id="body">
+    <div class="container">
+        <div class="col-group">
+
+            <div class="col-8" id="main">
+                <div class="res-cons">
+                    <article class="post">
+                        <header>
+                            <h1 class="post-title">boosting : adaboost &amp; gradient boost</h1>
+                        </header>
+                        <date class="post-meta meta-date">
+                            2019年3月4日
+                        </date>
+                        
+                        <div class="post-meta meta-category">
+                            |
+                            
+                                <a href="https://zouzhitao.github.io/categories/machine-learning">machine-learning</a>
+                            
+                        </div>
+                        
+                        
+                        <div class="post-meta">
+                            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span> 阅读</span></span>
+                        </div>
+                        
+                        
+                        <aside id="toc" class="dismissed">
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
+<ul>
+<li><a href="#adaboost">Adaboost</a>
+<ul>
+<li><a href="#algorithm">algorithm</a></li>
+<li><a href="#training-error">training error</a></li>
+<li><a href="#generalize-error">generalize error</a></li>
+</ul></li>
+<li><a href="#gradient-boosting">Gradient Boosting</a></li>
+</ul>
+</nav>
+                        </aside><div class="post-content">
+                            
+
+<blockquote>
+<p>纸上得来终觉浅，觉知此事要躬行。综上，我什莫都不懂.这仅仅是个人的学习<strong>防忘笔记</strong></p>
+</blockquote>
+
+<h1 id="adaboost">Adaboost</h1>
+
+<p>关于 Adaboost 的算法描述其实很简单，有趣的是的它的误差分析:</p>
+
+<h2 id="algorithm">algorithm</h2>
+
+<p><img src="/img/boosting/adaboost.png" alt="adaboost" /></p>
+
+<p>其中</p>
+
+<p>$$
+\begin{align}
+\epsilon_t &amp;= Pr_{i\sim D_t}[h_t(x_i)\ne y_i]\\<br />
+&amp;=\sum D_t(i)I(h_t(x_i)\ne y_i)\\<br />
+\alpha_t &amp;= 2^{-1}\log (\frac{1-\epsilon_t}{\epsilon_t})
+\end{align}
+$$</p>
+
+<p>PS : 稍后会证明，为什么， $\alpha_t$ 取这个值</p>
+
+<h2 id="training-error">training error</h2>
+
+<p><img src="/img/boosting/trainingError.png" alt="" /></p>
+
+<p>第一个不等式就不说了，分析，equal 和not equal 两种情况就好，我们来看第二个等式。</p>
+
+<p>其实第二个等式非常简单，我们只需要将 $D_t$ 的递推式展开就好了:</p>
+
+<p>$$
+\begin{align}
+D_2(i)&amp;=\frac{m^{-1}\exp (-\alpha_1y_ih_1(x_i))}{Z_1},Z_t\ is\ normlize\ term,a \ const,for\ i \in {1,&hellip;,T}\\<br />
+D_3(i)&amp;=\frac{D_2(i)\exp(-\alpha_2y_ih_2(x_i))}{Z_2}\\<br />
+&amp;=\frac{m^{-1}\exp(-y_i(\alpha_1h_1(x_i)+\alpha_2h_2(x_i)))}{Z_1Z_2}\\\<br />
+D_{T+1}&amp;=\frac{m^{-1}\exp(-y_i(\sum \alpha_th_t(x_i)))}{\prod_t Z_t}\\<br />
+becouse \sum_i D_t(i)=1,&amp; sum\ at\ left\ term\ and\ right\ term\\<br />
+\prod_t Z_t&amp;=\sum_i m^{-1}\exp(-y_i(\sum \alpha_th_t(x_i)))
+\end{align}
+$$</p>
+
+<p>好这里表明这个 training 的error 的上界仅仅与 $Z_t$ 相关，而</p>
+
+<p>$Z_t=\sum D_t(i)\exp(-y_i\alpha_th_t(x_i))$</p>
+
+<p>因此我们相当于需要优化 $\alpha_t$,</p>
+
+<p>其实， $y_ih_t(x_i)={-1,1}$,因此我们可以对这个式子求个期望，由于$\epsilon_t = Pr_{i\sim D_t}[h_t(x_i)\ne y_i]$,所以</p>
+
+<p>$$
+\begin{align}
+Z_t&amp;=\sum D_t(i)(\epsilon_t\exp(\alpha_t)+(1-\epsilon_t)(\exp(-\alpha_t)))\\<br />
+&amp;=\epsilon_t\exp(\alpha_t)+(1-\epsilon_t)(\exp(-\alpha_t))
+\end{align}
+$$</p>
+
+<p>将 $Z_t$ 对 $\alpha_t$ 求导，并设为0，可得，$\alpha_t=2^{-1}\log(\frac{1-\epsilon_t}{\epsilon_t})$</p>
+
+<p>因此我们可以得到一个更有趣的bound</p>
+
+<p><img src="/img/boosting/zt.png" alt="" /></p>
+
+<p>其中 $\gamma_t=\frac{1}{2}-\epsilon_t$ , 假设这个base learner，比random 要好一些，那么 $\gamma_t \in[0,.5]$,也就是说 $\exists \gamma&gt;0,\gamma_t&gt;\gamma\ for\ t \in{1,&hellip;,T}$</p>
+
+<p>所以说 $\prod Z_t\le \exp(-2T\gamma^2)$</p>
+
+<p>也就是说，adaboost 的过程其实是在找一个 $f=\sum \alpha_t h_t$ 即若学习器的线性组合，其中找 $\alpha_t$ 的过程其实是 <strong>coordinate-descent</strong>，并且training error 一定会收敛</p>
+
+<h2 id="generalize-error">generalize error</h2>
+
+<p>接下来谈论over-fitting 的问题，这问题有趣的地方是作者证明了一个届，表明 adaboost 不会出现over fitting，至于怎么证明的我就没管了</p>
+
+<p><img src="/img/boosting/generalizedError.png" alt="" /></p>
+
+<h1 id="gradient-boosting">Gradient Boosting</h1>
+
+<p>我原本是想找一下，如何将 adaboost 方法运用到回归问题，结果就找到了这个 Gradient boosting,这其实是一种 framework</p>
+
+<p>可是我个人对它没有太多的intuition 和算法推导，所以这里就不写了，详细类容可见文末paper，以及我参考过的zhihu link</p>
+
+<p><strong>reference</strong></p>
+
+<ol>
+<li><a href="https://github.com/zouzhitao/CS_Learning/blob/master/CMU-ML/paper/schapire02boosting_schapire.pdf">The Boosting Approach to Machine Learning:An Overview</a></li>
+<li><a href="https://github.com/zouzhitao/CS_Learning/blob/master/CMU-ML/paper/trebst.pdf">Greedy Function Aprroximation: A Gradient Boosting Machine</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/25096501">从 AdaBoost 到 Gradient Boosting</a></li>
+</ol>
+
+<blockquote>
+<p><strong>版权声明</strong></p>
+
+<p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
+
+<p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
+
+<p><strong>转载请保留此版权声明，并注明出处</strong></p>
+</blockquote>
+
+                        </div>
+                        
+
+                        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/posts/unordered-map/">kickstart: Scrambled-Words(hash&#43;complexity)</a></li>
+        
+        <li><a href="/posts/internship-overview/">MSRA 实习一月小结</a></li>
+        
+        <li><a href="/posts/math-convex-opt/">个人凸优化简单学习笔记</a></li>
+        
+        <li><a href="/posts/math-distence-to-hyperplane/">点到超平面的距离计算简单笔记</a></li>
+        
+        <li><a href="/posts/newton-method/">Newton&#39;s Method</a></li>
+        
+    </ul>
+</div>
+
+
+                        <div class="post-meta meta-tags">
+                            
+                            <ul class="clearfix">
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/boosting">boosting</a></li>
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/adaboost">adaboost</a></li>
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/gbdt">GBDT</a></li>
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/gradient-boosting">gradient boosting</a></li>
+                                
+                            </ul>
+                            
+                        </div>
+                    </article>
+                    
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "zouzhitao-github-io" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+    
+                </div>
+            </div>
+            <div id="secondary">
+    <section class="widget">
+        <form id="search" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://zouzhitao.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/booosting/" title="boosting : adaboost &amp; gradient boost">boosting : adaboost &amp; gradient boost</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/unordered-map/" title="kickstart: Scrambled-Words(hash&#43;complexity)">kickstart: Scrambled-Words(hash&#43;complexity)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/internship-overview/" title="MSRA 实习一月小结">MSRA 实习一月小结</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/math-convex-opt/" title="个人凸优化简单学习笔记">个人凸优化简单学习笔记</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/math-distence-to-hyperplane/" title="点到超平面的距离计算简单笔记">点到超平面的距离计算简单笔记</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/newton-method/" title="Newton&#39;s Method">Newton&#39;s Method</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/ml-note-naive-bayes/" title="机器学习笔记:朴素贝叶斯">机器学习笔记:朴素贝叶斯</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/ml-note-probility/" title="机器学习笔记: 概率论基础">机器学习笔记: 概率论基础</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/ml-note-mle-and-map/" title="机器学习笔记: MLE and MAP">机器学习笔记: MLE and MAP</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/sensetime-ai-platform-engineer-interview/" title="商汤AI平台研发工程师面试总结">商汤AI平台研发工程师面试总结</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(2)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/interview/">interview(4)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(1)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/machine-learning/">machine-learning(5)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/math/">math(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/programing-language/">programing-language(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/system/">system(3)</a>
+    </li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title">标签</h3>
+<div class="tagcloud">
+    
+    <a href="https://zouzhitao.github.io/tags/gbdt/">GBDT</a>
+    
+    <a href="https://zouzhitao.github.io/tags/mit6.828/">MIT6.828</a>
+    
+    <a href="https://zouzhitao.github.io/tags/ml%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/">ML数学基础</a>
+    
+    <a href="https://zouzhitao.github.io/tags/msra/">MSRA</a>
+    
+    <a href="https://zouzhitao.github.io/tags/os/">OS</a>
+    
+    <a href="https://zouzhitao.github.io/tags/pl/">PL</a>
+    
+    <a href="https://zouzhitao.github.io/tags/uw-programing-language/">UW programing language</a>
+    
+    <a href="https://zouzhitao.github.io/tags/adaboost/">adaboost</a>
+    
+    <a href="https://zouzhitao.github.io/tags/bayes/">bayes</a>
+    
+    <a href="https://zouzhitao.github.io/tags/boosting/">boosting</a>
+    
+    <a href="https://zouzhitao.github.io/tags/c&#43;&#43;/">c&#43;&#43;</a>
+    
+    <a href="https://zouzhitao.github.io/tags/competitive-programing/">competitive-programing</a>
+    
+    <a href="https://zouzhitao.github.io/tags/convex/">convex</a>
+    
+    <a href="https://zouzhitao.github.io/tags/decision-tree/">decision-tree</a>
+    
+    <a href="https://zouzhitao.github.io/tags/functional-programing/">functional programing</a>
+    
+    <a href="https://zouzhitao.github.io/tags/gdb/">gdb</a>
+    
+    <a href="https://zouzhitao.github.io/tags/gradient-boosting/">gradient boosting</a>
+    
+    <a href="https://zouzhitao.github.io/tags/intern/">intern</a>
+    
+    <a href="https://zouzhitao.github.io/tags/interview/">interview</a>
+    
+    <a href="https://zouzhitao.github.io/tags/kickstart/">kickstart</a>
+    
+    <a href="https://zouzhitao.github.io/tags/linear-algebra/">linear-algebra</a>
+    
+    <a href="https://zouzhitao.github.io/tags/machine-learning/">machine learning</a>
+    
+    <a href="https://zouzhitao.github.io/tags/machine-learning/">machine-learning</a>
+    
+    <a href="https://zouzhitao.github.io/tags/optimization/">optimization</a>
+    
+    <a href="https://zouzhitao.github.io/tags/probability/">probability</a>
+    
+    <a href="https://zouzhitao.github.io/tags/qemu/">qemu</a>
+    
+    <a href="https://zouzhitao.github.io/tags/sensetime/">senseTime</a>
+    
+    <a href="https://zouzhitao.github.io/tags/sml/">sml</a>
+    
+    <a href="https://zouzhitao.github.io/tags/unordered_map/">unordered_map</a>
+    
+</div>
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="https://blog.csdn.net/Dylan_Frank" title="以前的个人博客">dylanfrank@csdn</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://traderforce.github.io/" title="银牌大佬交易者">trader</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://zouzhitao.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+        </div>
+    </div>
+</div>
+<footer id="footer">
+    <div class="container">
+        &copy; 2018 <a href="https://zouzhitao.github.io/">taotao never stop By taotao</a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="http://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/rujews/maupassant-hugo" target="_blank">maupassant</a>.
+        
+    </div>
+</footer>
+
+
+    <script type="text/javascript" src="/js/prism.js" async="true"></script>
+    <script type="text/javascript">
+    window.MathJax = {
+        tex2jax: {
+            inlineMath: [ ['$','$'] ],
+            processEscapes: true
+        }
+    };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src="/js/totop.js?v=0.0.0" async=""></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-100944759-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+<script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+</body>
+</html>
