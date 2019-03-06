@@ -7,22 +7,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>machine-learning | taotao never stop</title>
-    <meta property="og:title" content="machine-learning - taotao never stop">
+    <title>sampling-complexity | taotao never stop</title>
+    <meta property="og:title" content="sampling-complexity - taotao never stop">
     <meta property="og:type" content="article">
         
         
     <meta name="Keywords" content="computer system,algorithm,OS,distribute system,big data,ML,算法，系统，分布式，大数据，推荐系统">
-    <meta name="description" content="machine-learning">
+    <meta name="description" content="sampling-complexity">
         
     <meta name="author" content="taotao">
-    <meta property="og:url" content="https://zouzhitao.github.io/tags/machine-learning/">
+    <meta property="og:url" content="https://zouzhitao.github.io/tags/sampling-complexity/">
     <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="/css/normalize.css">
     
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="alternate" type="application/rss+xml+xml" href="https://zouzhitao.github.io/tags/machine-learning/index.xml" title="taotao never stop" />
+    <link rel="alternate" type="application/rss+xml+xml" href="https://zouzhitao.github.io/tags/sampling-complexity/index.xml" title="taotao never stop" />
     <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 
     
@@ -69,7 +69,7 @@
                     
                     <h3 class="archive-title">
                         包含标签
-                        <span class="keyword">machine-learning</span>
+                        <span class="keyword">sampling-complexity</span>
                         的文章
                     </h3>
                     
@@ -78,11 +78,11 @@
                         <article class="post">
                             <header>
                                 <h1 class="post-title">
-                                    <a href="https://zouzhitao.github.io/posts/ml-decision-tree-note/">机器学习笔记: 决策树</a>
+                                    <a href="https://zouzhitao.github.io/posts/pac/">PAC learning 与样本复杂度</a>
                                 </h1>
                             </header>
                             <date class="post-meta meta-date">
-                                2018年12月31日
+                                2019年3月6日
                             </date>
                             
                             <div class="post-meta meta-category">
@@ -94,23 +94,23 @@
                             
                             <div class="post-content">
                                 <blockquote>
-<p><strong>写在前面:</strong>
-这是笔者学习<a href="http://www.cs.cmu.edu/~ninamf/courses/601sp15/lectures.shtml">CMU10601-ML</a>机器学习的笔记</p>
+<p>这篇文章主要总结 PAC 学习框架以及样本复杂度相关的东西，大致来说就是:要保证以概率 $1-\delta$ 使得 generalized error 小于 $\epsilon$ 需要多大的样本复杂度，以及时间复杂度才是好的。</p>
 </blockquote>
 
-<h1 id="决策树算法框架">决策树算法框架</h1>
+<h1 id="问题及约定">问题及约定</h1>
 
-<p><img src="/img/ML-decision-tree-note/algorithm.png" alt="决策树算法" /></p>
+<p><img src="/img/problem.png" alt="f1" /></p>
 
-<p><strong>适合问题的特点</strong></p>
+<h2 id="符号约定">符号约定</h2>
 
-<ol>
-<li>实例是由 $(attr,value)$, 表示的，并且 $value$ 是离散的 (<strong>remark:</strong> 能使用连续值，不过连续值其实也是在先将连续值转化为离散值，再使用的决策树)</li>
-<li>目标函数具有离散的输出值，或者说是一个分类问题</li>
-</ol>
+<p><img src="/img/boosting/symbol.png" alt="symbol" /></p>
 
-<p>整个算法就是一个分治， …</p>
-                                <p class="readmore"><a href="https://zouzhitao.github.io/posts/ml-decision-tree-note/">阅读全文</a></p>
+<p>两个 error 符号</p>
+
+<p><img src="/img/error.png" alt="error" /></p>
+
+<p>就是我们常说的  train error 与 true …</p>
+                                <p class="readmore"><a href="https://zouzhitao.github.io/posts/pac/">阅读全文</a></p>
                             </div>
                         </article>
                     

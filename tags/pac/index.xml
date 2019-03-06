@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>PAC on taotao never stop</title>
+    <link>https://zouzhitao.github.io/tags/pac/</link>
+    <description>Recent content in PAC on taotao never stop</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 06 Mar 2019 22:05:16 +0800</lastBuildDate>
+    
+	<atom:link href="https://zouzhitao.github.io/tags/pac/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>PAC learning 与样本复杂度</title>
+      <link>https://zouzhitao.github.io/posts/pac/</link>
+      <pubDate>Wed, 06 Mar 2019 22:05:16 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/pac/</guid>
+      <description>这篇文章主要总结 PAC 学习框架以及样本复杂度相关的东西，大致来说就是:要保证以概率 $1-\delta$ 使得 generalized error 小于 $\epsilon$ 需要多大的样本复杂度，以及时间复杂度才是好的。
+ 问题及约定 符号约定 两个 error 符号
+就是我们常说的 train error 与 true error
+接下来是定义我们要研究的问题
+简单的来说就是 依赖于 $m,H,\epsilon,\delta$ 这四个东西，我们找到一个 样本复杂度以及计算复杂度的界.或者说找到他们的一些关系
+定义 consistent hypothesis:
+$consistent(h,S) |= h(x)=c(x),\forall (x,c(x))\in S$
+一个 假设称为是 consistent 的，if and only if, $\forall (x,c(x))\in S$ 都有，$h(x)=c(x)$
+Version Space:
+$VS_{H,S}:\{h \in H|consistent(h,S)\}$
+$\epsilon-exhausted$
+$VS_{H,S}$ 称为 $\epsilon-exhausted$,当且仅当,
+$\forall h\in H,error_D(h)&amp;lt;\epsilon$
+throme 这个定理的证明会在文末给出，接下来的核心就在于理解这个定理
+理解 这个定理的前提:
+ $H finite$ $c\in H$  注意这个定理说的是 not，将这个定理翻译一下就是</description>
+    </item>
+    
+  </channel>
+</rss>

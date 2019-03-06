@@ -7,22 +7,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>machine-learning | taotao never stop</title>
-    <meta property="og:title" content="machine-learning - taotao never stop">
+    <title>PAC learning 与样本复杂度 | taotao never stop</title>
+    <meta property="og:title" content="PAC learning 与样本复杂度 - taotao never stop">
     <meta property="og:type" content="article">
         
+    <meta property="article:published_time" content="2019-03-06T22:05:16&#43;08:00">
+        
+        
+    <meta property="article:modified_time" content="2019-03-06T22:05:16&#43;08:00">
         
     <meta name="Keywords" content="computer system,algorithm,OS,distribute system,big data,ML,算法，系统，分布式，大数据，推荐系统">
-    <meta name="description" content="machine-learning">
+    <meta name="description" content="PAC learning 与样本复杂度">
         
     <meta name="author" content="taotao">
-    <meta property="og:url" content="https://zouzhitao.github.io/tags/machine-learning/">
+    <meta property="og:url" content="https://zouzhitao.github.io/posts/pac/">
     <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="/css/normalize.css">
     
+        <link rel="stylesheet" href="/css/prism.css">
+    
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="alternate" type="application/rss+xml+xml" href="https://zouzhitao.github.io/tags/machine-learning/index.xml" title="taotao never stop" />
     <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 
     
@@ -31,7 +36,6 @@
     
     
 </head>
-
 
 <body>
 <header id="header" class="clearfix">
@@ -66,63 +70,229 @@
 
             <div class="col-8" id="main">
                 <div class="res-cons">
-                    
-                    <h3 class="archive-title">
-                        包含标签
-                        <span class="keyword">machine-learning</span>
-                        的文章
-                    </h3>
-                    
+                    <article class="post">
+                        <header>
+                            <h1 class="post-title">PAC learning 与样本复杂度</h1>
+                        </header>
+                        <date class="post-meta meta-date">
+                            2019年3月6日
+                        </date>
+                        
+                        <div class="post-meta meta-category">
+                            |
+                            
+                                <a href="https://zouzhitao.github.io/categories/machine-learning">machine-learning</a>
+                            
+                        </div>
+                        
+                        
+                        <div class="post-meta">
+                            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span> 阅读</span></span>
+                        </div>
+                        
+                        
+                        <aside id="toc" class="dismissed">
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
+<ul>
+<li><a href="#问题及约定">问题及约定</a>
+<ul>
+<li><a href="#符号约定">符号约定</a></li>
+</ul></li>
+<li><a href="#定义">定义</a></li>
+<li><a href="#throme">throme</a>
+<ul>
+<li><a href="#理解">理解</a></li>
+</ul></li>
+<li><a href="#pac-learnable">PAC learnable</a></li>
+<li><a href="#agnostic-learning">agnostic learning</a></li>
+<li><a href="#erm">erm</a></li>
+</ul>
+</nav>
+                        </aside><div class="post-content">
+                            
 
-                    
-                        <article class="post">
-                            <header>
-                                <h1 class="post-title">
-                                    <a href="https://zouzhitao.github.io/posts/ml-decision-tree-note/">机器学习笔记: 决策树</a>
-                                </h1>
-                            </header>
-                            <date class="post-meta meta-date">
-                                2018年12月31日
-                            </date>
-                            
-                            <div class="post-meta meta-category">
-                                |
-                                
-                                    <a href="https://zouzhitao.github.io/categories/machine-learning">machine-learning</a>
-                                
-                            </div>
-                            
-                            <div class="post-content">
-                                <blockquote>
-<p><strong>写在前面:</strong>
-这是笔者学习<a href="http://www.cs.cmu.edu/~ninamf/courses/601sp15/lectures.shtml">CMU10601-ML</a>机器学习的笔记</p>
+<blockquote>
+<p>这篇文章主要总结 PAC 学习框架以及样本复杂度相关的东西，大致来说就是:要保证以概率 $1-\delta$ 使得 generalized error 小于 $\epsilon$ 需要多大的样本复杂度，以及时间复杂度才是好的。</p>
 </blockquote>
 
-<h1 id="决策树算法框架">决策树算法框架</h1>
+<h1 id="问题及约定">问题及约定</h1>
 
-<p><img src="/img/ML-decision-tree-note/algorithm.png" alt="决策树算法" /></p>
+<p><img src="/img/problem.png" alt="f1" /></p>
 
-<p><strong>适合问题的特点</strong></p>
+<h2 id="符号约定">符号约定</h2>
+
+<p><img src="/img/boosting/symbol.png" alt="symbol" /></p>
+
+<p>两个 error 符号</p>
+
+<p><img src="/img/error.png" alt="error" /></p>
+
+<p>就是我们常说的  train error 与 true error</p>
+
+<p>接下来是定义我们要研究的问题</p>
+
+<p><img src="/img/symbol.png" alt="symbol" /></p>
+
+<p>简单的来说就是 依赖于 $m,H,\epsilon,\delta$ 这四个东西，我们找到一个 样本复杂度以及计算复杂度的界.或者说找到他们的一些关系</p>
+
+<h1 id="定义">定义</h1>
+
+<p><strong>consistent hypothesis</strong>:</p>
+
+<p>$consistent(h,S) |= h(x)=c(x),\forall (x,c(x))\in S$</p>
+
+<p>一个 假设称为是 consistent 的，if and only if, $\forall (x,c(x))\in S$ 都有，$h(x)=c(x)$</p>
+
+<p><strong>Version Space:</strong></p>
+
+<p>$VS_{H,S}:\{h \in H|consistent(h,S)\}$</p>
+
+<p><strong>$\epsilon-exhausted$</strong></p>
+
+<p>$VS_{H,S}$ 称为 $\epsilon-exhausted$,当且仅当,</p>
+
+<p>$\forall h\in H,error_D(h)&lt;\epsilon$</p>
+
+<h1 id="throme">throme</h1>
+
+<p><img src="/img/epsilon.png" alt="" /></p>
+
+<p>这个定理的证明会在文末给出，接下来的核心就在于理解这个定理</p>
+
+<h2 id="理解">理解</h2>
+
+<p>这个定理的<strong>前提</strong>:</p>
 
 <ol>
-<li>实例是由 $(attr,value)$, 表示的，并且 $value$ 是离散的 (<strong>remark:</strong> 能使用连续值，不过连续值其实也是在先将连续值转化为离散值，再使用的决策树)</li>
-<li>目标函数具有离散的输出值，或者说是一个分类问题</li>
+<li>$H finite$</li>
+<li>$c\in H$</li>
 </ol>
 
-<p>整个算法就是一个分治， …</p>
-                                <p class="readmore"><a href="https://zouzhitao.github.io/posts/ml-decision-tree-note/">阅读全文</a></p>
-                            </div>
-                        </article>
+<p>注意这个定理说的是 not，将这个定理翻译一下就是</p>
+
+<p>$\Pr(\exists h \in H,(error_S(h)=0)\And(error_D(h)&gt;\epsilon))&lt;|H|\exp^{-\epsilon m}$</p>
+
+<p>也就是说 如果 $error_S(h)=0$, 那么 $error_D(h)&lt;\epsilon$ 的概率至少是 $|H|\exp^{-\epsilon m}$</p>
+
+<p>如果我们想要让 $|H|\exp^{-\epsilon m} &lt; \delta$, 那么我们需要</p>
+
+<p>$m&gt;\epsilon^{-1}(\log(|H|)+\log(\delta^{-1}))$,这么多变量</p>
+
+<p>if $error_S(h)=0$ 那么 至少我们有 $1-\delta$ 的概率保证</p>
+
+<p>$error_D(h)\le m^{-1}(\log(|H|)+\log(\delta^{-1}))$</p>
+
+<h1 id="pac-learnable">PAC learnable</h1>
+
+<p><img src="/img/paclearning.png" alt="" /></p>
+
+<p>简单的说，一个算法是 PAC(Probability Approximation Correct) 可学习的，要满足，时间复杂度和样本复杂度都是多项式的</p>
+
+<h1 id="agnostic-learning">agnostic learning</h1>
+
+<p>上面都说的是 $c\in H$ ，那如果， $c\notin H$ 呢？</p>
+
+<p>根据  Hoeffding 不等式(see wiki)</p>
+
+<p>fix a $h$,</p>
+
+<p>$\Pr(error_D(h)-error_S(h)&gt;\epsilon)\le 2\exp^{-2m\epsilon^2}$</p>
+
+<p>修改前面的定理，</p>
+
+<p>$\Pr(\exists h\in H,error_D(h)-error_S(h)&gt;\epsilon)&lt;|H|2\exp^{-2m\epsilon^2}$</p>
+
+<p>因此在概率为 $\delta$ 的情况下，需要的样本 bound</p>
+
+<p>就可以很容易求解了</p>
+
+<h1 id="erm">erm</h1>
+
+<p>最后不加证明的给出</p>
+
+<p><img src="/img/erm.png" alt="" /></p>
+
+<p>即 如果我们知道 $err_S(h)$ 那么 $error_D(h)$ 的bound 在哪里?
+所有的证明和材料，都可见reference</p>
+
+<p><strong>reference</strong></p>
+
+<ol>
+<li><a href="https://www.cs.cmu.edu/~mgormley/courses/10701-f16/slides/lecture9-LT-annotated.pdf">10716 f16 Eric Xing</a></li>
+<li><a href="http://www.cs.cmu.edu/~10715-f18/lectures/Sample-complexity1-2018.pdf">10715 f18 Maria-Florina Balcan </a></li>
+</ol>
+
+<blockquote>
+<p><strong>版权声明</strong></p>
+
+<p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
+
+<p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
+
+<p><strong>转载请保留此版权声明，并注明出处</strong></p>
+</blockquote>
+
+                        </div>
+                        
+
+                        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/posts/booosting/">boosting : adaboost &amp; gradient boost</a></li>
+        
+        <li><a href="/posts/unordered-map/">kickstart: Scrambled-Words(hash&#43;complexity)</a></li>
+        
+        <li><a href="/posts/internship-overview/">MSRA 实习一月小结</a></li>
+        
+        <li><a href="/posts/math-convex-opt/">个人凸优化简单学习笔记</a></li>
+        
+        <li><a href="/posts/math-distence-to-hyperplane/">点到超平面的距离计算简单笔记</a></li>
+        
+    </ul>
+</div>
+
+
+                        <div class="post-meta meta-tags">
+                            
+                            <ul class="clearfix">
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/pac">PAC</a></li>
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/sampling-complexity">sampling-complexity</a></li>
+                                
+                            </ul>
+                            
+                        </div>
+                    </article>
                     
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "zouzhitao-github-io" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-                    
-
-
-
-
+    
+    
                 </div>
             </div>
-
             <div id="secondary">
     <section class="widget">
         <form id="search" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
@@ -323,6 +493,17 @@
 </footer>
 
 
+    <script type="text/javascript" src="/js/prism.js" async="true"></script>
+    <script type="text/javascript">
+    window.MathJax = {
+        tex2jax: {
+            inlineMath: [ ['$','$'] ],
+            processEscapes: true
+        }
+    };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
 <a id="rocket" href="#top"></a>
 <script type="text/javascript" src="/js/totop.js?v=0.0.0" async=""></script>
 
@@ -340,7 +521,6 @@ if (!doNotTrack) {
 
 
 <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
-
 
 
 
