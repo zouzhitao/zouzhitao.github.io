@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://zouzhitao.github.io/posts/kick-start-2019-rounda/</loc>
+    <lastmod>2019-04-03T00:09:24+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://zouzhitao.github.io/posts/generic-variance-in-scala/</loc>
     <lastmod>2019-03-26T23:38:34+08:00</lastmod>
   </url>
@@ -182,7 +187,7 @@
   
   <url>
     <loc>https://zouzhitao.github.io/posts/</loc>
-    <lastmod>2019-03-26T23:38:34+08:00</lastmod>
+    <lastmod>2019-04-03T00:09:24+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -211,6 +216,12 @@
   </url>
   
   <url>
+    <loc>https://zouzhitao.github.io/tags/binary-search/</loc>
+    <lastmod>2019-04-03T00:09:24+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://zouzhitao.github.io/tags/boosting/</loc>
     <lastmod>2019-03-04T23:23:53+08:00</lastmod>
     <priority>0</priority>
@@ -230,7 +241,7 @@
   
   <url>
     <loc>https://zouzhitao.github.io/categories/competitive-programing/</loc>
-    <lastmod>2019-02-21T22:33:57+08:00</lastmod>
+    <lastmod>2019-04-03T00:09:24+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -283,6 +294,12 @@
   </url>
   
   <url>
+    <loc>https://zouzhitao.github.io/tags/kick-start/</loc>
+    <lastmod>2019-04-03T00:09:24+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://zouzhitao.github.io/tags/kickstart/</loc>
     <lastmod>2019-02-21T22:33:57+08:00</lastmod>
     <priority>0</priority>
@@ -321,6 +338,12 @@
   <url>
     <loc>https://zouzhitao.github.io/categories/math/</loc>
     <lastmod>2019-01-23T23:49:12+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://zouzhitao.github.io/tags/muti-source-bfs/</loc>
+    <lastmod>2019-04-03T00:09:24+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -380,13 +403,25 @@
   
   <url>
     <loc>https://zouzhitao.github.io/</loc>
-    <lastmod>2019-03-26T23:38:34+08:00</lastmod>
+    <lastmod>2019-04-03T00:09:24+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://zouzhitao.github.io/tags/unordered_map/</loc>
     <lastmod>2019-02-21T22:33:57+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://zouzhitao.github.io/tags/%E5%88%87%E6%AF%94%E9%9B%AA%E5%A4%AB%E8%B7%9D%E7%A6%BB/</loc>
+    <lastmod>2019-04-03T00:09:24+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://zouzhitao.github.io/tags/%E6%9B%BC%E5%93%88%E9%A1%BF%E8%B7%9D%E7%A6%BB/</loc>
+    <lastmod>2019-04-03T00:09:24+08:00</lastmod>
     <priority>0</priority>
   </url>
   

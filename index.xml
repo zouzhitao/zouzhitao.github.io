@@ -6,10 +6,32 @@
     <description>Recent content on taotao never stop</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Tue, 26 Mar 2019 23:38:34 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 03 Apr 2019 00:09:24 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kick Start 2019 RoundA: 题解</title>
+      <link>https://zouzhitao.github.io/posts/kick-start-2019-rounda/</link>
+      <pubDate>Wed, 03 Apr 2019 00:09:24 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/kick-start-2019-rounda/</guid>
+      <description>题目链接
+A. Training 这题很简单，处理一下前缀和就完事儿，没什么好说的。当时就做出了这个题 :(
+code github
+B. parcel 这题还是很有意思的，正式赛没做出来，其实第一问暴力很容易求，不过 作为一名 ACMer，有一种惯性会忽略掉这种方式&amp;hellip;，下次一定要补上了。
+题解可以参考官方题解
+我这里就是将题解翻译一下，同时总结一下学到东西。
+分析 首先对于每一个没有 deliver 的位置，我们可以先求出它的最短距离。这个可以将整个地图看成一个 graph，然后，任意两个deliver之间的距离为 0，然后将 所有deliver 看做图上的一个节点，其他的点与点之间的距离为 曼哈顿距离，那么只需要对图做一个 bfs 就行了，这就是answer中说的 muti-source bfs，其实感觉与bfs 并没有什么区别。
+然后对于答案来说我们可以二分枚举，将优化问题转化为 满足性问题。
+也就是说 对于一个固定的 $K$, 我们判断，是否可以找到一个点使得，所有点到delivers的距离不会超过 $K$.
+判断这个是很容易的。
+这里涉及到一个 曼哈顿距离 到 切比雪夫距离 的转化
+关于曼哈顿距离与切比雪夫距离的转化，推荐参考 SGColin&amp;rsquo;s Space
+有了这个我们就可以得到，答案分析中的结果
+dist((x1, y1), (x2, y2)) = max(abs(x1 + y1 - (x2 + y2)), abs(x1 - y1 - (x2 - y2)))  那么固定一个点 ($x_2$,$y_2$) 我们只需要求出 $\min (x_i+y_i),\max (x_i+y_i),\min (x_i-y_i),\max (x_i - y_i), i \in dist(i)&amp;gt;K$</description>
+    </item>
     
     <item>
       <title>Generic Variance in Scala: 泛型变化 in scala</title>
