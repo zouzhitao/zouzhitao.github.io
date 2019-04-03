@@ -103,7 +103,14 @@
 <li><a href="#分析">分析</a></li>
 <li><a href="#code-1">code</a></li>
 </ul></li>
-<li><a href="#c-contention">C. contention</a></li>
+<li><a href="#c-contention">C. contention</a>
+<ul>
+<li><a href="#分析-1">分析</a></li>
+</ul></li>
+<li><a href="#o-qlog-n-版本">O(Qlog N) 版本</a>
+<ul>
+<li><a href="#code-2">code</a></li>
+</ul></li>
 </ul>
 </nav>
                         </aside><div class="post-content">
@@ -160,7 +167,150 @@
 
 <h1 id="c-contention">C. contention</h1>
 
-<p>这题还没补，待填坑。。。</p>
+<blockquote>
+<p>这题非常有意思，官方给的编程实在太麻烦，太难懂了，毕竟一个笔试题又不是算法竞赛，居然搞出 interval tree 这种东西实在是太可怕了，正式赛只有两人做出来，我参考了第一人的做法<a href="https://codingcompetitions.withgoogle.com/kickstart/submissions/0000000000050e01/TWFobW91ZGlhbg">Mahmoudian</a>。</p>
+</blockquote>
+
+<h2 id="分析-1">分析</h2>
+
+<p>首先我们可以观察到，对于一个 booking 来说，如果它放在最后，那么它能确定的seat 数目一定是固定的，与前面 booking 的顺序无关。</p>
+
+<p>同时我们 可以证明这样一个<strong>贪心的做法</strong>一定是正确的:</p>
+
+<blockquote>
+<p>倒着确定booking 的顺序，每次取能booking 到的seat 最多的去掉，然后在剩余集合中如法炮制</p>
+</blockquote>
+
+<p>伪代码</p>
+
+<pre><code>S : booking_set
+for i =0 : q
+    book_j = argmax(number_of_seat(S))
+    S = S/{book_j}
+</code></pre>
+
+<p>可以证明这个做法一定是正确的。</p>
+
+<p><strong>证明</strong></p>
+
+<p>设这样做不是最优的，也就是说 存在一种顺序 $p_1 \dots p_q, numberOfSeat(p_q)&lt;numberOfSeat(p_j)$ 比 $p_j$ 放在最后更优。我们总是可以将 $p_j$ 放在最后使得其<strong>不弱于</strong>序列$P_i$,即 构造顺序 $p_1,\dots ,p_{j-1},p_{j+1},\dots ,p_q,p_j$ 称为序列2</p>
+
+<p>首先， $ans1&lt;=number1(p_q),ans2&lt;=number2(p_j),number1(p_j)&gt;=number2(p_j)&gt;=number1(p_q)\ge ans1$ 因此 在序列 1中 $p_j$ 不是瓶颈。同时 $number2(p_i)\ge number1(p_i),\forall i\neq j$ (因为遮挡少了 $p_j$)</p>
+
+<p>ok。这就引出了一个朴素的算法，就是伪代码的做法，不过我们需要确定的是booking 放在最后能够book到多少seat。 这个可以用扫描线 $O(Q)$ 做出来，只有 $Q$ 条线段。</p>
+
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+
+using namespace std;
+
+#define INF 0x3f3f3f3f
+#define INF64 0x3f3f3f3f3f3f3f3f
+#define ms(x,v) memset(x,(v),sizeof(x))
+
+typedef long long LL;
+typedef pair&lt;int,int&gt; PII;
+typedef tuple&lt;int,int,int&gt; TIII;
+typedef pair&lt;PII,int&gt; PIII;
+const int MAXN = 1e6+10;
+
+int del(map&lt;PII,int&gt;&amp; seg){
+    int last = 0;
+    for(auto it = seg.begin(); it != seg.end();){
+        auto now = it;
+        const int st = now -&gt; first.first;
+        const int ed = -now -&gt; first.second;
+        int&amp; val = now -&gt;second=0;
+        if(ed &lt;= last){
+            ++it;
+            continue;
+        };
+        if(last&lt;st)last = st;
+        auto jt = ++it;
+        assert(now != it);
+        
+
+        assert(last &lt; ed);
+        assert(last &gt;=st);
+        int sweep_right = last;
+        for(;jt != seg.end() ; ++jt){
+            const int l = jt -&gt;first.first;
+            const int r = - jt -&gt;first.second;
+            if(sweep_right &gt;=ed || l &gt;= ed)break;
+            if(r &lt;= sweep_right)continue;
+            if(l &gt; sweep_right)val+= l - sweep_right;
+            sweep_right = r;
+        }
+        if(sweep_right &lt; ed) val += ed - sweep_right;
+        
+        // for next
+        last = max(ed,last);
+    }
+    // del max one
+    PIII p = *seg.begin();
+    for(auto it :seg){
+        if(it.second &gt; p.second)p = it;
+    }
+    // cout &lt;&lt; p.first.first &lt;&lt; &quot; &quot; &lt;&lt; p.first.second &lt;&lt; &quot; &quot; &lt;&lt; p.second&lt;&lt;&quot;\n&quot;;
+    seg.erase(p.first);
+    return p.second;
+}
+
+
+int solve(){
+    
+    int n,q;
+    cin &gt;&gt; n &gt;&gt; q;
+    map&lt;PII,int&gt;seg;
+    int ans =n+1;
+    for(int i=0; i&lt;q ; ++i){
+        int l,r;
+        cin &gt;&gt; l&gt;&gt;r;
+        seg.insert({{--l,-r},0});
+    }
+    if(seg.size() &lt; q)return 0;
+    while(!seg.empty() &amp;&amp; ans!=0){
+        
+        ans = min(ans,del(seg));
+    }
+    return ans;
+}
+
+int main(){
+
+    ios :: sync_with_stdio(0);
+    cin.tie(0);
+    std::cout.precision(8);
+    std::cout.setf( std::ios::fixed, std:: ios::floatfield );
+    TIII t;
+    int T;
+    cin &gt;&gt; T;
+    // cout &lt;&lt; &quot;T = &quot; &lt;&lt; T &lt;&lt; &quot;\n&quot;;
+    for(int t =1 ; t &lt;= T; ++t){
+        auto ans = solve();
+        cout &lt;&lt; &quot;Case #&quot;&lt;&lt;t&lt;&lt;&quot;: &quot;&lt;&lt;ans&lt;&lt;&quot;\n&quot;;
+    }
+    return 0;
+}
+
+</code></pre>
+
+<h1 id="o-qlog-n-版本">O(Qlog N) 版本</h1>
+
+<p>当然这样做无法通过大数据，这里我参考了 rank1 的做法，没有采用interval tree 的做法，而是用了二分。</p>
+
+<p>和 $B$ 题一样，我们将<strong>问题转化</strong>为: 给定一个 $k$ 能否找到一种方式使得答案 大于等于 $k$。</p>
+
+<p>参考上面的一些结论，很容易得到这样一个想法:</p>
+
+<blockquote>
+<p>对于每一个 booking 来说，我们可以在满足能够让其book到的seat 大于等于 $k$ 的情况下将其尽可能的往后放。</p>
+</blockquote>
+
+<p>具体可参见 code</p>
+
+<h2 id="code-2">code</h2>
+
+<p><a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-roundA-contention.cpp">github</a></p>
 
 <p><strong>reference</strong></p>
 
@@ -215,6 +365,8 @@
                                 <li><a href="https://zouzhitao.github.io/tags/%E6%9B%BC%E5%93%88%E9%A1%BF%E8%B7%9D%E7%A6%BB">曼哈顿距离</a></li>
                                 
                                 <li><a href="https://zouzhitao.github.io/tags/%E5%88%87%E6%AF%94%E9%9B%AA%E5%A4%AB%E8%B7%9D%E7%A6%BB">切比雪夫距离</a></li>
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/sweep-line">sweep-line</a></li>
                                 
                             </ul>
                             
@@ -413,6 +565,8 @@
     <a href="https://zouzhitao.github.io/tags/sensetime/">senseTime</a>
     
     <a href="https://zouzhitao.github.io/tags/sml/">sml</a>
+    
+    <a href="https://zouzhitao.github.io/tags/sweep-line/">sweep-line</a>
     
     <a href="https://zouzhitao.github.io/tags/unordered_map/">unordered_map</a>
     
