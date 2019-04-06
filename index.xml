@@ -6,10 +6,27 @@
     <description>Recent content on taotao never stop</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 03 Apr 2019 00:09:24 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 06 Apr 2019 00:30:41 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>MIT6.824 lab1:mapreduce 总结</title>
+      <link>https://zouzhitao.github.io/posts/mit6.824-lab1/</link>
+      <pubDate>Sat, 06 Apr 2019 00:30:41 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/mit6.824-lab1/</guid>
+      <description>这是 MIT 6.824 课程 lab1 的学习总结，记录我在学习过程中的收获和踩的坑。
+我的实验环境是 windows 10，所以对lab的code 做了一些环境上的修改，如果你仅仅对code 感兴趣，请移步 : github/zouzhitao
+ mapreduce overview  先大致看一下 mapreduce 到底是什么
+ 我个人的简单理解是这样的: mapreduce 就是一种分布式处理用户特定任务的系统。它大概是这样处理的。
+用户提供两个函数
+mapFunc(k1,v1)-&amp;gt; list(k2,v2) reduceFunc(k2,list(v2)) -&amp;gt; ans of k2  这个 分布式系统 将用户的任务做分布式处理，最终为每一个 k2 生成答案。下面我们就来描述一下，这个分布式系统是如何处理的。
+首先，他有一个 master 来做任务调度。
+master
+ 先调度 worker 做 map 任务，设总的 map 任务的数目为 $M$ , 将result 存储在 中间文件 m-i-j 中, $i \in {0,\dots ,M-1}, j \in {0,\dots,R-1}$ 调度 worker 做 reduce 任务，设总的 reduce 任务数目为 $R$, 将答案储存在 $$ 然后将所有的renduce 任务的ans merge起来作为答案放在一个文件中交给用户。  detail 都在实验中</description>
+    </item>
     
     <item>
       <title>Kick Start 2019 RoundA: 题解</title>

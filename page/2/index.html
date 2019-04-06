@@ -68,6 +68,45 @@
                         <article class="post">
                             <header>
                                 <h1 class="post-title">
+                                    <a href="https://zouzhitao.github.io/posts/ml-note-naive-bayes/" title="机器学习笔记:朴素贝叶斯" >机器学习笔记:朴素贝叶斯</a>
+                                </h1>
+                            </header>
+                            <date class="post-meta meta-date">
+                                2019年1月5日
+                            </date>
+                            
+                            <div class="post-meta meta-category">
+                                |
+                                
+                                    <a href="https://zouzhitao.github.io/categories/machine-learning">machine-learning</a>
+                                
+                            </div>
+                            
+                            <div class="post-content">
+                                <blockquote>
+<p><strong>写在前面:</strong>
+这是笔者学习<a href="http://www.cs.cmu.edu/~ninamf/courses/601sp15/lectures.shtml">CMU10601-ML</a>机器学习的笔记</p>
+</blockquote>
+
+<h1 id="引入">引入</h1>
+
+<p>首先我们考虑学习一个基于贝叶斯规则的分类器,即我们希望学到 $P(Y|X)$</p>
+
+<p>那么我们有</p>
+
+<p>$$
+P(Y|X)=\frac{P(Y)P(X|Y)}{P(X)}
+$$</p>
+
+<p>这里 $Y \in\{0,1\}$
+那么我们需要去估计的是这两个概率 $P(Y),P(X|Y)$ …</p>
+                            </div>
+                            <p class="readmore"><a href="https://zouzhitao.github.io/posts/ml-note-naive-bayes/">阅读全文</a></p>
+                        </article>
+                    
+                        <article class="post">
+                            <header>
+                                <h1 class="post-title">
                                     <a href="https://zouzhitao.github.io/posts/ml-note-probility/" title="机器学习笔记: 概率论基础" >机器学习笔记: 概率论基础</a>
                                 </h1>
                             </header>
@@ -373,45 +412,6 @@
                             <p class="readmore"><a href="https://zouzhitao.github.io/posts/msra-reasearch-intern-review/">阅读全文</a></p>
                         </article>
                     
-                        <article class="post">
-                            <header>
-                                <h1 class="post-title">
-                                    <a href="https://zouzhitao.github.io/posts/mit6.828-os-hw1-boot-xv6/" title="MIT6.828 OS hw1 boot xv6" >MIT6.828 OS hw1 boot xv6</a>
-                                </h1>
-                            </header>
-                            <date class="post-meta meta-date">
-                                2018年12月6日
-                            </date>
-                            
-                            <div class="post-meta meta-category">
-                                |
-                                
-                                    <a href="https://zouzhitao.github.io/categories/system">system</a>
-                                
-                            </div>
-                            
-                            <div class="post-content">
-                                <p><strong>完整内容可见</strong></p>
-
-<p><a href="https://github.com/zouzhitao/CS_Learning/blob/master/MIT6.828-fa18/README.md">MIT 6.828 note</a></p>
-
-<p>这个任务就是检查 _start 开始的时候栈顶的所有值，</p>
-
-<blockquote>
-<p>进入 xv6, gdb 调试</p>
-
-<p>b *0x10000c (_start kernel start point)</p>
-
-<p>x /24x $esp</p>
-</blockquote>
-
-<p><img src="/img/hw2-esp.png" alt="hw1-esp.png" /></p>
-
-<p>解释栈中的各个值，首先看 <code>0x7d8d,0x7c4d</code>, 这显然是某个地址， …</p>
-                            </div>
-                            <p class="readmore"><a href="https://zouzhitao.github.io/posts/mit6.828-os-hw1-boot-xv6/">阅读全文</a></p>
-                        </article>
-                    
 
                     
 
@@ -464,6 +464,10 @@
 <ul class="widget-list">
     
     <li>
+        <a href="https://zouzhitao.github.io/posts/mit6.824-lab1/" title="MIT6.824 lab1:mapreduce 总结">MIT6.824 lab1:mapreduce 总结</a>
+    </li>
+    
+    <li>
         <a href="https://zouzhitao.github.io/posts/kick-start-2019-rounda/" title="Kick Start 2019 RoundA: 题解">Kick Start 2019 RoundA: 题解</a>
     </li>
     
@@ -497,10 +501,6 @@
     
     <li>
         <a href="https://zouzhitao.github.io/posts/newton-method/" title="Newton&#39;s Method">Newton&#39;s Method</a>
-    </li>
-    
-    <li>
-        <a href="https://zouzhitao.github.io/posts/ml-note-naive-bayes/" title="机器学习笔记:朴素贝叶斯">机器学习笔记:朴素贝叶斯</a>
     </li>
     
 </ul>
@@ -537,7 +537,7 @@
     </li>
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/system/">system(3)</a>
+        <a href="https://zouzhitao.github.io/categories/system/">system(4)</a>
     </li>
     
 </ul>
@@ -581,6 +581,8 @@
     
     <a href="https://zouzhitao.github.io/tags/decision-tree/">decision-tree</a>
     
+    <a href="https://zouzhitao.github.io/tags/distributed-system/">distributed-system</a>
+    
     <a href="https://zouzhitao.github.io/tags/functional-programing/">functional programing</a>
     
     <a href="https://zouzhitao.github.io/tags/gdb/">gdb</a>
@@ -600,6 +602,8 @@
     <a href="https://zouzhitao.github.io/tags/machine-learning/">machine learning</a>
     
     <a href="https://zouzhitao.github.io/tags/machine-learning/">machine-learning</a>
+    
+    <a href="https://zouzhitao.github.io/tags/mapreduce/">mapreduce</a>
     
     <a href="https://zouzhitao.github.io/tags/muti-source-bfs/">muti-source-bfs</a>
     
