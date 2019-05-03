@@ -6,10 +6,28 @@
     <description>Recent content in life on taotao never stop</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 31 Jan 2019 11:43:49 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 18 Apr 2019 00:36:30 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/categories/life/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>隐藏的价值</title>
+      <link>https://zouzhitao.github.io/posts/value-buried/</link>
+      <pubDate>Thu, 18 Apr 2019 00:36:30 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/value-buried/</guid>
+      <description>丹棱街5号旁边有两栋大楼最为吸引人，1. 新东方，2. MSRA。这两栋大楼有一个非常显著的不同的地方。MSRA 两栋楼内部是相通的，但是新东方是没有链接的，所以通常能够观察到一个有趣的现象，新东方的人穿过楼宇会等红绿灯。看见这个现象的时候我会想，是建通道链接划算还是不建划算？
+咋一看这根本就不是个问题，不见通道肯定更加划算，可是你仔细想想，不见通道和建立通道对员工的影响是什么。MSRA的员工到达另外的楼宇不需要等红绿灯，xdf 会等。所以在效率问题上MSRA就更胜一筹了。员工效率高相当于单位时间内给公司创造的价值更多，而建造楼宇是一次性的，显然长久下去MSRA的做法更加划算。
+这就是隐匿的价值 有些价值不像表面上看到的那样简单，需要长远考虑才能发现其价值。
+最近 996 闹得很厉害，其实很多有远见的工程师都知道，996带来的价值其实是在杀鸡取卵。我在MSRA 实习，前面为了赶技术节，加了一些班。后来做research 的时候就发现结构很混乱，好多代码设计的不好，不能够很好的re-use。因此我又做了一些重构。其实如果给工程师足够多的时间我想设计的东西应该是更加优美的。闲会让人有更多的时间思考，如果你的产品要想有更多的智慧，你应该给工程师足够的时间思考。除非你承认你的东西不需要任何智慧只是简单的体力劳动。
+还有一些事情是在research 上，这也是个需要闲暇才能创造价值的地方。
+ 版权声明
+本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
+作者: taotao
+转载请保留此版权声明，并注明出处
+ </description>
+    </item>
     
     <item>
       <title>MSRA 实习一月小结</title>

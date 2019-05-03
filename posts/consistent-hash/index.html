@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="generator" content="Hugo 0.51" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Consistent Hash | taotao never stop</title>
+    <meta property="og:title" content="Consistent Hash - taotao never stop">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content="2019-05-04T00:56:55&#43;08:00">
+        
+        
+    <meta property="article:modified_time" content="2019-05-04T00:56:55&#43;08:00">
+        
+    <meta name="Keywords" content="computer system,algorithm,OS,distribute system,big data,ML,算法，系统，分布式，大数据，推荐系统">
+    <meta name="description" content="Consistent Hash">
+        
+    <meta name="author" content="taotao">
+    <meta property="og:url" content="https://zouzhitao.github.io/posts/consistent-hash/">
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="/css/normalize.css">
+    
+        <link rel="stylesheet" href="/css/prism.css">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+    
+
+
+    
+    
+</head>
+
+<body>
+<header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://zouzhitao.github.io/">
+                        taotao never stop
+                    </a>
+                
+                <p class="description">喜欢技术，喜欢探索</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://zouzhitao.github.io/">首页</a>
+                    
+                    <a  href="https://zouzhitao.github.io/archives/" title="archives">archives</a>
+                    
+                    <a  href="https://zouzhitao.github.io/about/" title="about">about</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div id="body">
+    <div class="container">
+        <div class="col-group">
+
+            <div class="col-8" id="main">
+                <div class="res-cons">
+                    <article class="post">
+                        <header>
+                            <h1 class="post-title">Consistent Hash</h1>
+                        </header>
+                        <date class="post-meta meta-date">
+                            2019年5月4日
+                        </date>
+                        
+                        <div class="post-meta meta-category">
+                            |
+                            
+                                <a href="https://zouzhitao.github.io/categories/algorithm">algorithm</a>
+                            
+                        </div>
+                        
+                        
+                        <div class="post-meta">
+                            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span> 阅读</span></span>
+                        </div>
+                        
+                        
+                        <aside id="toc" class="dismissed">
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
+<ul>
+<li><a href="#问题定义">问题定义</a></li>
+<li><a href="#简单实现">简单实现</a></li>
+<li><a href="#分析">分析</a></li>
+<li><a href="#reference">reference</a></li>
+</ul>
+</nav>
+                        </aside><div class="post-content">
+                            
+
+<blockquote>
+<p>记得我人生第一次参加bytedance 的面试的时候，面试官问我的就是这样一个问题: 你有很多台服务器，每台服务器上都存放着很多数据，现在要加一台服务器，如何才能让数据搬迁尽可能的少，同时能让每台服务器经可能的负载均衡。现在才发现，这就是可一致性hash 问题，当时我答了个hashMap中的rehash操作，给糊弄过去了&hellip;.</p>
+</blockquote>
+
+<p>具体的内容可见 reference，这里大致记录一下</p>
+
+<h1 id="问题定义">问题定义</h1>
+
+<p>简化问题如下:</p>
+
+<blockquote>
+<p>有 $m$ 个item，有 $n$ 台机器，将 $m$ 个item 尽量均匀的hash到每一台服务器，同时，当机器出现删减的时候应该能够保证数据移动足够小。</p>
+</blockquote>
+
+<h1 id="简单实现">简单实现</h1>
+
+<p>用两个hash函数，</p>
+
+<p>$hash_i(x)$, 对 item 做hash</p>
+
+<p>$hash_m(x)$, 对 machine 做hash</p>
+
+<p>hash的范围是一个单位圆(e.g. [0,1] float /[0,2^32-1] int)</p>
+
+<p><img src="/img/consitent/consistent-hash.png" alt="" /></p>
+
+<p>每个 item 的hash值所对应的顺时针找到的第一个server，存储这个item 对象，这就是 karger 论文中的<strong>核心思想</strong>。</p>
+
+<p>假设机器将圆平均分成 $m$ 段
+这样做很显然，每台机器的期望对象数目是 $O(\frac{n}{m})$ 同时，同时新加入一台机器的时候期望的移动数目是 $O(\frac{n}{m+1})$</p>
+
+<p>这样做已经是很好的解决我们的那个问题了。</p>
+
+<p>下面是用一个好的数据结构来维护查找一个item的时间，可以用一棵 BST 来维护这些机器
+(e.g. rb-tree )&lt;key: hash_m(server),value: (server)&gt; 他们的key是 server 的hash 值，value 是每一个server对象。</p>
+
+<p>看一下如下几个操作:</p>
+
+<ol>
+<li><strong>插入/delete item</strong></li>
+</ol>
+
+<p>这样插入一个 item 仅仅需要找到 hash(item) 在bst上的后继节点就好了。删除类似</p>
+
+<ol>
+<li><strong>insert/delete machine</strong></li>
+</ol>
+
+<p>找到这台机器 $Y$ 的 后继节点，将节点上 hash(item) 小于 $hash(Y)$ 移动到 Y上。</p>
+
+<h1 id="分析">分析</h1>
+
+<p><img src="/img/consitent/analysis.png" alt="" /></p>
+
+<h1 id="reference">reference</h1>
+
+<ol>
+<li><a href="https://people.csail.mit.edu/moitra/docs/6854lec3.pdf">MIT adv algorithm lecture note</a></li>
+<li><a href="http://web.stanford.edu/class/cs168/l/l1.pdf">stanford cs 168 lec note 1</a></li>
+<li><a href="https://www.akamai.com/us/en/multimedia/documents/technical-publication/consistent-hashing-and-random-trees-distributed-caching-protocols-for-relieving-hot-spots-on-the-world-wide-web-technical-publication.pdf">Karger, David, Eric Lehman, Tom Leighton, Rina Panigrahy, Matthew Levine, and Daniel Lewin. “Consistent hashing and random trees: Distributed caching protocols for relieving hot spots on the World Wide Web.” In Proceedings of the twenty-ninth annual ACM symposium on Theory of computing, pp. 654-663. ACM, 1997.</a></li>
+</ol>
+
+<blockquote>
+<p><strong>版权声明</strong></p>
+
+<p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
+
+<p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
+
+<p><strong>转载请保留此版权声明，并注明出处</strong></p>
+</blockquote>
+
+                        </div>
+                        
+
+                        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/posts/value-buried/">隐藏的价值</a></li>
+        
+        <li><a href="/posts/mit6.824-lab1/">MIT6.824 lab1:mapreduce 总结</a></li>
+        
+        <li><a href="/posts/kick-start-2019-rounda/">Kick Start 2019 RoundA: 题解</a></li>
+        
+        <li><a href="/posts/generic-variance-in-scala/">Generic Variance in Scala: 泛型变化 in scala</a></li>
+        
+        <li><a href="/posts/pac/">PAC learning 与样本复杂度</a></li>
+        
+    </ul>
+</div>
+
+
+                        <div class="post-meta meta-tags">
+                            
+                            <ul class="clearfix">
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/consistent-hash">consistent-hash</a></li>
+                                
+                            </ul>
+                            
+                        </div>
+                    </article>
+                    
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "zouzhitao-github-io" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+    
+                </div>
+            </div>
+            <div id="secondary">
+    <section class="widget">
+        <form id="search" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://zouzhitao.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/consistent-hash/" title="Consistent Hash">Consistent Hash</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/value-buried/" title="隐藏的价值">隐藏的价值</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/mit6.824-lab1/" title="MIT6.824 lab1:mapreduce 总结">MIT6.824 lab1:mapreduce 总结</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kick-start-2019-rounda/" title="Kick Start 2019 RoundA: 题解">Kick Start 2019 RoundA: 题解</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/generic-variance-in-scala/" title="Generic Variance in Scala: 泛型变化 in scala">Generic Variance in Scala: 泛型变化 in scala</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/pac/" title="PAC learning 与样本复杂度">PAC learning 与样本复杂度</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/booosting/" title="boosting : adaboost &amp; gradient boost">boosting : adaboost &amp; gradient boost</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/unordered-map/" title="kickstart: Scrambled-Words(hash&#43;complexity)">kickstart: Scrambled-Words(hash&#43;complexity)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/internship-overview/" title="MSRA 实习一月小结">MSRA 实习一月小结</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/math-convex-opt/" title="个人凸优化简单学习笔记">个人凸优化简单学习笔记</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(1)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/interview/">interview(4)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(2)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/machine-learning/">machine-learning(6)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/math/">math(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/programing-language/">programing-language(4)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/system/">system(4)</a>
+    </li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title">标签</h3>
+<div class="tagcloud">
+    
+    <a href="https://zouzhitao.github.io/tags/co-contra-in-variance/">(co-,contra-,in-)variance</a>
+    
+    <a href="https://zouzhitao.github.io/tags/gbdt/">GBDT</a>
+    
+    <a href="https://zouzhitao.github.io/tags/mit6.828/">MIT6.828</a>
+    
+    <a href="https://zouzhitao.github.io/tags/ml%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/">ML数学基础</a>
+    
+    <a href="https://zouzhitao.github.io/tags/msra/">MSRA</a>
+    
+    <a href="https://zouzhitao.github.io/tags/os/">OS</a>
+    
+    <a href="https://zouzhitao.github.io/tags/pac/">PAC</a>
+    
+    <a href="https://zouzhitao.github.io/tags/pl/">PL</a>
+    
+    <a href="https://zouzhitao.github.io/tags/uw-programing-language/">UW programing language</a>
+    
+    <a href="https://zouzhitao.github.io/tags/adaboost/">adaboost</a>
+    
+    <a href="https://zouzhitao.github.io/tags/bayes/">bayes</a>
+    
+    <a href="https://zouzhitao.github.io/tags/binary-search/">binary-search</a>
+    
+    <a href="https://zouzhitao.github.io/tags/boosting/">boosting</a>
+    
+    <a href="https://zouzhitao.github.io/tags/c&#43;&#43;/">c&#43;&#43;</a>
+    
+    <a href="https://zouzhitao.github.io/tags/competitive-programing/">competitive-programing</a>
+    
+    <a href="https://zouzhitao.github.io/tags/consistent-hash/">consistent-hash</a>
+    
+    <a href="https://zouzhitao.github.io/tags/convex/">convex</a>
+    
+    <a href="https://zouzhitao.github.io/tags/decision-tree/">decision-tree</a>
+    
+    <a href="https://zouzhitao.github.io/tags/distributed-system/">distributed-system</a>
+    
+    <a href="https://zouzhitao.github.io/tags/functional-programing/">functional programing</a>
+    
+    <a href="https://zouzhitao.github.io/tags/gdb/">gdb</a>
+    
+    <a href="https://zouzhitao.github.io/tags/gradient-boosting/">gradient boosting</a>
+    
+    <a href="https://zouzhitao.github.io/tags/intern/">intern</a>
+    
+    <a href="https://zouzhitao.github.io/tags/interview/">interview</a>
+    
+    <a href="https://zouzhitao.github.io/tags/kick-start/">kick-start</a>
+    
+    <a href="https://zouzhitao.github.io/tags/kickstart/">kickstart</a>
+    
+    <a href="https://zouzhitao.github.io/tags/linear-algebra/">linear-algebra</a>
+    
+    <a href="https://zouzhitao.github.io/tags/machine-learning/">machine learning</a>
+    
+    <a href="https://zouzhitao.github.io/tags/machine-learning/">machine-learning</a>
+    
+    <a href="https://zouzhitao.github.io/tags/mapreduce/">mapreduce</a>
+    
+    <a href="https://zouzhitao.github.io/tags/muti-source-bfs/">muti-source-bfs</a>
+    
+    <a href="https://zouzhitao.github.io/tags/optimization/">optimization</a>
+    
+    <a href="https://zouzhitao.github.io/tags/probability/">probability</a>
+    
+    <a href="https://zouzhitao.github.io/tags/qemu/">qemu</a>
+    
+    <a href="https://zouzhitao.github.io/tags/sampling-complexity/">sampling-complexity</a>
+    
+    <a href="https://zouzhitao.github.io/tags/scala/">scala</a>
+    
+    <a href="https://zouzhitao.github.io/tags/sensetime/">senseTime</a>
+    
+    <a href="https://zouzhitao.github.io/tags/sml/">sml</a>
+    
+    <a href="https://zouzhitao.github.io/tags/sweep-line/">sweep-line</a>
+    
+    <a href="https://zouzhitao.github.io/tags/thoughts/">thoughts</a>
+    
+    <a href="https://zouzhitao.github.io/tags/unordered_map/">unordered_map</a>
+    
+    <a href="https://zouzhitao.github.io/tags/%E5%88%87%E6%AF%94%E9%9B%AA%E5%A4%AB%E8%B7%9D%E7%A6%BB/">切比雪夫距离</a>
+    
+    <a href="https://zouzhitao.github.io/tags/%E6%9B%BC%E5%93%88%E9%A1%BF%E8%B7%9D%E7%A6%BB/">曼哈顿距离</a>
+    
+</div>
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="https://blog.csdn.net/Dylan_Frank" title="以前的个人博客">dylanfrank@csdn</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://traderforce.github.io/" title="银牌大佬交易者">trader</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://zouzhitao.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+        </div>
+    </div>
+</div>
+<footer id="footer">
+    <div class="container">
+        &copy; 2018 <a href="https://zouzhitao.github.io/">taotao never stop By taotao</a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="http://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/rujews/maupassant-hugo" target="_blank">maupassant</a>.
+        
+    </div>
+</footer>
+
+
+    <script type="text/javascript" src="/js/prism.js" async="true"></script>
+    <script type="text/javascript">
+    window.MathJax = {
+        tex2jax: {
+            inlineMath: [ ['$','$'] ],
+            processEscapes: true
+        }
+    };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src="/js/totop.js?v=0.0.0" async=""></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-100944759-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+<script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+</body>
+</html>

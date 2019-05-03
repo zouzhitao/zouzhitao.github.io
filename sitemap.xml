@@ -3,6 +3,16 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://zouzhitao.github.io/posts/consistent-hash/</loc>
+    <lastmod>2019-05-04T00:56:55+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zouzhitao.github.io/posts/value-buried/</loc>
+    <lastmod>2019-04-18T00:36:30+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://zouzhitao.github.io/posts/mit6.824-lab1/</loc>
     <lastmod>2019-04-06T00:30:41+08:00</lastmod>
   </url>
@@ -192,7 +202,7 @@
   
   <url>
     <loc>https://zouzhitao.github.io/posts/</loc>
-    <lastmod>2019-04-06T00:30:41+08:00</lastmod>
+    <lastmod>2019-05-04T00:56:55+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -211,6 +221,12 @@
   <url>
     <loc>https://zouzhitao.github.io/tags/adaboost/</loc>
     <lastmod>2019-03-04T23:23:53+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://zouzhitao.github.io/categories/algorithm/</loc>
+    <lastmod>2019-05-04T00:56:55+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -247,6 +263,12 @@
   <url>
     <loc>https://zouzhitao.github.io/categories/competitive-programing/</loc>
     <lastmod>2019-04-03T00:09:24+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://zouzhitao.github.io/tags/consistent-hash/</loc>
+    <lastmod>2019-05-04T00:56:55+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -318,7 +340,7 @@
   
   <url>
     <loc>https://zouzhitao.github.io/categories/life/</loc>
-    <lastmod>2019-01-31T11:43:49+08:00</lastmod>
+    <lastmod>2019-04-18T00:36:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -426,7 +448,13 @@
   
   <url>
     <loc>https://zouzhitao.github.io/</loc>
-    <lastmod>2019-04-06T00:30:41+08:00</lastmod>
+    <lastmod>2019-05-04T00:56:55+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://zouzhitao.github.io/tags/thoughts/</loc>
+    <lastmod>2019-04-18T00:36:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   

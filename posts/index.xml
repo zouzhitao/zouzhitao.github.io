@@ -6,10 +6,50 @@
     <description>Recent content in Posts on taotao never stop</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 06 Apr 2019 00:30:41 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 04 May 2019 00:56:55 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Consistent Hash</title>
+      <link>https://zouzhitao.github.io/posts/consistent-hash/</link>
+      <pubDate>Sat, 04 May 2019 00:56:55 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/consistent-hash/</guid>
+      <description>记得我人生第一次参加bytedance 的面试的时候，面试官问我的就是这样一个问题: 你有很多台服务器，每台服务器上都存放着很多数据，现在要加一台服务器，如何才能让数据搬迁尽可能的少，同时能让每台服务器经可能的负载均衡。现在才发现，这就是可一致性hash 问题，当时我答了个hashMap中的rehash操作，给糊弄过去了&amp;hellip;.
+ 具体的内容可见 reference，这里大致记录一下
+问题定义 简化问题如下:
+ 有 $m$ 个item，有 $n$ 台机器，将 $m$ 个item 尽量均匀的hash到每一台服务器，同时，当机器出现删减的时候应该能够保证数据移动足够小。
+ 简单实现 用两个hash函数，
+$hash_i(x)$, 对 item 做hash
+$hash_m(x)$, 对 machine 做hash
+hash的范围是一个单位圆(e.g. [0,1] float /[0,2^32-1] int)
+每个 item 的hash值所对应的顺时针找到的第一个server，存储这个item 对象，这就是 karger 论文中的核心思想。
+假设机器将圆平均分成 $m$ 段 这样做很显然，每台机器的期望对象数目是 $O(\frac{n}{m})$ 同时，同时新加入一台机器的时候期望的移动数目是 $O(\frac{n}{m+1})$
+这样做已经是很好的解决我们的那个问题了。
+下面是用一个好的数据结构来维护查找一个item的时间，可以用一棵 BST 来维护这些机器 (e.g. rb-tree )&amp;lt;key: hash_m(server),value: (server)&amp;gt; 他们的key是 server 的hash 值，value 是每一个server对象。
+看一下如下几个操作:
+ 插入/delete item  这样插入一个 item 仅仅需要找到 hash(item) 在bst上的后继节点就好了。删除类似</description>
+    </item>
+    
+    <item>
+      <title>隐藏的价值</title>
+      <link>https://zouzhitao.github.io/posts/value-buried/</link>
+      <pubDate>Thu, 18 Apr 2019 00:36:30 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/value-buried/</guid>
+      <description>丹棱街5号旁边有两栋大楼最为吸引人，1. 新东方，2. MSRA。这两栋大楼有一个非常显著的不同的地方。MSRA 两栋楼内部是相通的，但是新东方是没有链接的，所以通常能够观察到一个有趣的现象，新东方的人穿过楼宇会等红绿灯。看见这个现象的时候我会想，是建通道链接划算还是不建划算？
+咋一看这根本就不是个问题，不见通道肯定更加划算，可是你仔细想想，不见通道和建立通道对员工的影响是什么。MSRA的员工到达另外的楼宇不需要等红绿灯，xdf 会等。所以在效率问题上MSRA就更胜一筹了。员工效率高相当于单位时间内给公司创造的价值更多，而建造楼宇是一次性的，显然长久下去MSRA的做法更加划算。
+这就是隐匿的价值 有些价值不像表面上看到的那样简单，需要长远考虑才能发现其价值。
+最近 996 闹得很厉害，其实很多有远见的工程师都知道，996带来的价值其实是在杀鸡取卵。我在MSRA 实习，前面为了赶技术节，加了一些班。后来做research 的时候就发现结构很混乱，好多代码设计的不好，不能够很好的re-use。因此我又做了一些重构。其实如果给工程师足够多的时间我想设计的东西应该是更加优美的。闲会让人有更多的时间思考，如果你的产品要想有更多的智慧，你应该给工程师足够的时间思考。除非你承认你的东西不需要任何智慧只是简单的体力劳动。
+还有一些事情是在research 上，这也是个需要闲暇才能创造价值的地方。
+ 版权声明
+本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
+作者: taotao
+转载请保留此版权声明，并注明出处
+ </description>
+    </item>
     
     <item>
       <title>MIT6.824 lab1:mapreduce 总结</title>
