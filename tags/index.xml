@@ -120,6 +120,15 @@
     </item>
     
     <item>
+      <title>bloom-filter</title>
+      <link>https://zouzhitao.github.io/tags/bloom-filter/</link>
+      <pubDate>Wed, 08 May 2019 00:35:33 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/bloom-filter/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>boosting</title>
       <link>https://zouzhitao.github.io/tags/boosting/</link>
       <pubDate>Mon, 04 Mar 2019 23:23:53 +0800</pubDate>
@@ -165,6 +174,15 @@
     </item>
     
     <item>
+      <title>count-min-sketch</title>
+      <link>https://zouzhitao.github.io/tags/count-min-sketch/</link>
+      <pubDate>Wed, 08 May 2019 00:35:33 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/count-min-sketch/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>decision-tree</title>
       <link>https://zouzhitao.github.io/tags/decision-tree/</link>
       <pubDate>Mon, 31 Dec 2018 15:27:33 +0800</pubDate>
@@ -206,6 +224,15 @@
       <pubDate>Mon, 04 Mar 2019 23:23:53 +0800</pubDate>
       
       <guid>https://zouzhitao.github.io/tags/gradient-boosting/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>heavy-hitter</title>
+      <link>https://zouzhitao.github.io/tags/heavy-hitter/</link>
+      <pubDate>Wed, 08 May 2019 00:35:33 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/heavy-hitter/</guid>
       <description></description>
     </item>
     
@@ -350,6 +377,15 @@
       <pubDate>Wed, 05 Dec 2018 14:02:01 +0800</pubDate>
       
       <guid>https://zouzhitao.github.io/tags/sml/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>subline-algorithm</title>
+      <link>https://zouzhitao.github.io/tags/subline-algorithm/</link>
+      <pubDate>Wed, 08 May 2019 00:35:33 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/subline-algorithm/</guid>
       <description></description>
     </item>
     
