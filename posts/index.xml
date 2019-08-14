@@ -6,10 +6,36 @@
     <description>Recent content in Posts on taotao never stop</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 08 May 2019 00:35:33 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 14 Aug 2019 20:34:05 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>KM Algorithm--二分图最大权匹配</title>
+      <link>https://zouzhitao.github.io/posts/km-algorithm/</link>
+      <pubDate>Wed, 14 Aug 2019 20:34:05 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/km-algorithm/</guid>
+      <description>很久以前打ACM的时候学过这个算法，但到用的时候还是忘了，起因是来源于这样一个问题:
+ 给定任意一个矩阵 $nXn$, 选取其中 $n$ 个点，$s.t.$ 任意两个点 不在同一行，同一列，求这 $n$ 个点的和的最大值.
+ 这个问题可以很简单的转化为 最大流，或者最大权匹配问题来求解。
+可是难受的是这两个算法都忘了，不会敲，所以又重新拿起遗忘的知识，学了一波KM算法。
+我主要是参考这篇sengxian&amp;rsquo;s blog 个人认为其讲解的非常棒。
+这里简要概述其原理:
+主要的想法仍然是增广路(augumentation path). 核心思想是维系一个最大的相等子图，类似二分图匹配一样，每次找增广路去扩充.
+算法如下:
+设左边 顶点初始权重为 $lx[i] = max_j w[i][j]$ , 右边顶点初始权重为 $ry[i] =0$
+依次从左边顶点出发，寻找最大相等子图，即满足 $lx[i] + ry[j] == w[i][j]$ 的图，若遇到无法增广的点，一定存在链接当前最大子图的交错路，对于交错路上的顶点，设在左边X端的顶点集合为 $S$, 右端为 $T$, 则将$S$ 中的顶点权重全都加 $d$ ,右端加 $-d$. 此时原来的相等子图依旧保持不变同时，会产生增广路，从而使全图得到增广(前提是一定存在一个最大匹配)
+代码详见:
+https://github.com/zouzhitao/competitive-programing/blob/master/template/KM.cpp
+reference
+ sengxian&amp;rsquo;s blog. https://blog.sengxian.com/algorithms/km   版权声明
+本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
+作者: taotao
+转载请保留此版权声明，并注明出处
+ </description>
+    </item>
     
     <item>
       <title>Count Min Sketch: from Finding the Majority Element problem to heavy hitter problem,统计元素频率的利器</title>
