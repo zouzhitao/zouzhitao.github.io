@@ -7,20 +7,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>个人凸优化简单学习笔记 | taotao never stop</title>
-    <meta property="og:title" content="个人凸优化简单学习笔记 - taotao never stop">
+    <title>2019 1-8 实习总结[MSRA,face&#43;&#43;] | taotao never stop</title>
+    <meta property="og:title" content="2019 1-8 实习总结[MSRA,face&#43;&#43;] - taotao never stop">
     <meta property="og:type" content="article">
         
-    <meta property="article:published_time" content="2019-01-23T23:49:12&#43;08:00">
+    <meta property="article:published_time" content="2019-08-15T19:58:52&#43;08:00">
         
         
-    <meta property="article:modified_time" content="2019-01-23T23:49:12&#43;08:00">
+    <meta property="article:modified_time" content="2019-08-15T19:58:52&#43;08:00">
         
     <meta name="Keywords" content="computer system,algorithm,OS,distribute system,big data,ML,算法，系统，分布式，大数据，推荐系统">
-    <meta name="description" content="个人凸优化简单学习笔记">
+    <meta name="description" content="2019 1-8 实习总结[MSRA,face&#43;&#43;]">
         
     <meta name="author" content="taotao">
-    <meta property="og:url" content="https://zouzhitao.github.io/posts/math-convex-opt/">
+    <meta property="og:url" content="https://zouzhitao.github.io/posts/msra-internship-over/">
     <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="/css/normalize.css">
@@ -72,16 +72,16 @@
                 <div class="res-cons">
                     <article class="post">
                         <header>
-                            <h1 class="post-title">个人凸优化简单学习笔记</h1>
+                            <h1 class="post-title">2019 1-8 实习总结[MSRA,face&#43;&#43;]</h1>
                         </header>
                         <date class="post-meta meta-date">
-                            2019年1月23日
+                            2019年8月15日
                         </date>
                         
                         <div class="post-meta meta-category">
                             |
                             
-                                <a href="https://zouzhitao.github.io/categories/math">math</a>
+                                <a href="https://zouzhitao.github.io/categories/life">life</a>
                             
                         </div>
                         
@@ -92,235 +92,49 @@
                         
                         
                         <aside id="toc" class="dismissed">
-                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
-<ul>
-<li><a href="#凸集合">凸集合</a></li>
-<li><a href="#凸函数">凸函数</a></li>
-<li><a href="#凸优化问题">凸优化问题</a>
-<ul>
-<li><a href="#凸优化问题的局部最优解一定是全局最优解">凸优化问题的局部最优解一定是全局最优解</a></li>
-<li><a href="#一些机器学习的example">一些机器学习的example</a></li>
-</ul></li>
-<li><a href="#lagrange-kkt">lagrange &amp; KKT</a>
-<ul>
-<li><a href="#lagrange-mutiplier">lagrange mutiplier</a></li>
-<li><a href="#primal-dual-原问题与对偶问题">primal &amp; dual 原问题与对偶问题</a></li>
-<li><a href="#原问题的解释">原问题的解释</a></li>
-<li><a href="#弱对偶性-weak-duality">弱对偶性(weak duality)</a></li>
-<li><a href="#互补松弛-complementary-slackness">互补松弛(complementary slackness)</a></li>
-</ul></li>
-<li><a href="#kkt">KKT</a></li>
-<li><a href="#参考">参考</a></li>
-</ul>
-</nav>
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> 
                         </aside><div class="post-content">
-                            
-
-<blockquote>
-<p>本文来源于个人的凸优化学习笔记参考cs229 cvxoptnote,写成笔记的原因仅仅是想通过个人的笔记自己讲述与推导一下这些数学公式，内容可能会很简单，强力建议想得到一手资料的人好好学习文末参考资料</p>
+                            <blockquote>
+<p>好的地方就是你去过许多地方后依然会觉得还是它最好</p>
 </blockquote>
 
-<h1 id="凸集合">凸集合</h1>
+<p>在MSRA 的实习生涯结束了，我在这里整整待了5个月，我是19年的元旦过来的，5月末的时候走的.</p>
 
-<p>定义就直接跳过了，这里简单写一些常见的凸集</p>
+<p>我都没有想到我能在这里创新性的解决一个数学问题，创新性的提出了两种新的解决方案，独立的写完了整个模型的算法模块的所有代码(共计6k+行)。是的，我是真的没有想到，走的时候感觉自己提升很大。这里简单的回顾一下自己的实习生涯吧.</p>
 
-<ul>
-<li><strong>凸集的交</strong>, 设 $C_i,i = 1,2,3,&hellip;,n$ 是凸集，那么我们有$\cap _{i=0}^n C_i$ 也是凸集</li>
-<li><strong>affine subspace</strong> 即 $Ax+b=0,x \in R^n$, 这既是 convex,也是concave</li>
-<li><strong>凸函数的sublevel</strong> 即 $if \ f(x)\  is\  convex\ function,then \{f(x) &lt;=\alpha\} is\ convex\ set$</li>
-</ul>
+<p>一部分实习体验我写在了<a href="https://zouzhitao.github.io/posts/internship-overview/">这里</a></p>
 
-<h1 id="凸函数">凸函数</h1>
+<p>那是过年之前，回家写下的。</p>
 
-<p><strong>Define</strong></p>
+<p>mentor 人挺好，刚开始的时候有许多不适应，比如交流，这边的人由于习惯，会在中文中参杂一些英文，刚开始我经常一脸懵逼，完全不懂，只得连连答是，后来mentor好像发现我的这个问题了，开始适当的对一些英文单词做一些中译，让我明白。还有每天和mentor的sync，让我进步的特别块。这是一个我唯一感大声发出自己话语的地方(虽然MSRA倡导每个人都能发声，甚至可以在speaker还没有说完话的时候打断它，可是这个文化我还是没能感染上)</p>
 
-<p><img src="/img/math/convex.png" alt="convex" /></p>
+<p>还有就是一些解决问题的手段和方式，让我有了很大的改变。</p>
 
-<p><strong>性质</strong>，两条重点</p>
+<p>我以前以为这些人真的是什么都懂的，智商超级高的人。后来我才发现原来他们也很多不懂，无非是查 wiki，查paper，查书查的勤一些罢了。</p>
 
-<ol>
-<li><strong>first-order-approximation</strong><br>
-$$
-f(y)\ge f(x)+(\nabla f(x))^T(y-x)
-$$</li>
-<li><strong>二阶导数大于0</strong><br>
-$$
-\nabla_x^2 f(x) \ge 0
-$$</li>
-</ol>
+<p>这边学到了很多知识，虽然大部分都搞忘了。不过还是见识到了一些工程上的算法和学术上的差别.</p>
 
-<p><strong>一些简单的凸函数</strong></p>
+<p>比如 power iteration 求最大特征值和最大特征向量，nestrov acceleration 加速梯度</p>
 
-<ol>
-<li><strong>Affine funciton</strong><br>
-$f(x) =A^Tx+b,x\in R^n$</li>
-<li><strong>quadratic function</strong><br>
-$f:R^n-&gt;R,f(x) = 2^{-1}x^TAx+b^Tx+c,A\in S^n,b\in R^n,c\in R$<br>
-这里简单说一下 $\nabla^2 f(x)=A$, 因此如果 $A$ 是半正定(positive-semidefinite)的,那么$f(x)$ is <strong>convex</strong></li>
-<li><strong>Norm</strong>,e.g $f(x) = ||x||_2^2$</li>
-<li><strong>凸函数的非负权重和</strong><br>
-$f(x)=\sum_{i=0}^nc_if_i(x),f_i(x)\in convex\ function\ class$</li>
-<li><strong>凸函数集合的最大值函数</strong><br>
-$f(x) = \max f_i(x),f_i(x)\in convex\ function\ class$<br>
-证明:
-$$
-\begin{aligned}
-   f(\theta x + (1-\theta)y)&amp;= \max f_i(\theta x + (1-\theta)y)\\<br />
-   &amp;\le \max \theta f_i(x) +(1-\theta)f_i(y)\\<br />
-   &amp;\le \theta f(x) + (1-\theta)f(y)
-\end{aligned}
-$$</li>
-</ol>
+<p>以及很多的统计学知识，虽然大部分搞忘了&hellip;</p>
 
-<h1 id="凸优化问题">凸优化问题</h1>
+<p>最牵引我的是一些在软件和系统设计上的兴趣。因为整个算法模块是我一个人写的，刚开始的时候为了赶TechFest，我写的很粗糙，后来继续写发现很多可以复用的地方我又反复的重构，虽然没人知道我重构过，但是自己感觉重构后的代码比以前更可读，可重用，就会觉得特别有成就感&hellip;</p>
 
-<p><strong>define</strong></p>
+<p>还有就是有一个地方，两种算法明明算法A比算法B在数学上更优可是真正写出来的时候会发现算法B更快，这就用到了一些编译原理和系统结构的知识，让我感到有了学以致用的感觉</p>
 
-<p><img src="/img/math/convex-opt.png" alt="" /></p>
+<p>这是我第一次实习，做的是 interpretable Machine learning 相关的，其实就是找一些解释能力强的模型。不知道市面上的算法工程师是在干嘛，但是我知道个人在这些东西上其实还是很欠缺的(很多模型和算法都不清楚)，我原本拿到的offer 是bytedance 的后端开发，阴差阳错的来到了这儿.</p>
 
-<h2 id="凸优化问题的局部最优解一定是全局最优解">凸优化问题的局部最优解一定是全局最优解</h2>
+<p>临走的时候跟mentor 吃了个饭，又聊了许多，个人认为知识都会遗忘，思考问题的方式方法会得到迁移，topic也就不那么重要了，或许就是爱因斯坦说的，<code>教育就是离开学校后还剩下的东西</code></p>
 
-<p>接下来是凸优化问题最重要，也是最有趣的一个性质</p>
+<p>最后拿了个<code>明日之星</code> ( :)</p>
 
-<p><strong>证明</strong></p>
+<p>第二次实习是在 <strong>旷视研究院</strong>， 这里是一个做NAS(神经架构搜索) 的一个小组。这个方向在现在特别火，但是我个人并不是特别看好，理论支撑太缺乏了，本质上还是search space取胜而不是search algorithm。而且主要是在拼点，就是对比谁的性能会高出0.5个百分点，个人认为也很boring，干了两个月后就去学校了。</p>
 
-<p>我们用反证法，
-设 $x\in R^n,f(x) \in convex\ function\ class$,且， $x$ 是 凸优化问题 $f(x)$ 的一个局部最优解，那么我们有，<strong>在$x$ 的邻域中,i.e.$||x-z||_2 &lt;R$ ,不存在一个点 $z$,使得$f(z)&lt;f(x)$</strong>, 同时，假设 $x$ 不是全局最优解，那么我们有,在定义域中，存在一点 $y,s.t.\ f(y)&lt;f(x)$</p>
+<p>这里和MSRA有所不同的是，这里的人都特别年亲，年轻人有更多的话语，也没有那么多权威，所以更加敢言一些。但这也就导致另一个问题，导师的指路性不会那么强。我在这里3个人搞一个东西,&hellip;.感觉没有被利用好资源。还有就是硬件条件稍微差一些吧,..每人发了一台小笔记本，就没了&hellip;比起MSRA的两块显示屏加高性能主机还是有所欠缺的。</p>
 
-<p>设 $z=\theta y + (1-\theta)x,\theta=\frac{R}{2||x-y||_2}$,可以证明$||x-z||_2=2^{-1}R&lt;R$</p>
+<p>这两次实习都是做的研究型工作，个人都还是非常喜欢这种工作的，虽然topic不太一样，但是有一些是核心的，就是在不断的提出问题解决问题，个人是非常乐意的，而且做的页式自己喜欢的。</p>
 
-<p>同时,</p>
-
-<p>$$
-\begin{aligned}
-f(z)&amp;=f(\theta y + (1-\theta)x)\\<br />
-&amp;\le \theta f(y)+(1-\theta)f(x)\\<br />
-&amp;\le f(x)
-\end{aligned}
-$$</p>
-
-<p>矛盾</p>
-
-<h2 id="一些机器学习的example">一些机器学习的example</h2>
-
-<ol>
-<li><strong>线性回归</strong><br>
-$J(\theta) = ||W^T\Phi (X)-Y||_2^2=\sum (w^t\phi(x_i)-y_i)^2$
-因为 $f_i(w)=(w^t\phi(x_i)-y_i)^2$ 是一个复合affine 凸函数(i.e. x^2 是凸函数，而 $w^t\phi(x_i)-y_i$ 是对 $w$ 的affine function)</li>
-<li><strong>logistic reg</strong><br>
-$J(\theta)=-\sum y_i\log g(\theta x_i) + (1-y_i)\log 1- g(\theta x_i)$</li>
-<li><strong>SVM</strong><br>
-SVM 的目标函数是一个 QP(quadratic opt) 问题，$O(n^3)$
-这个问题还引出一些凸问题有趣的性质，比如lagrange duality 和 KKT,我们后面分析</li>
-</ol>
-
-<h1 id="lagrange-kkt">lagrange &amp; KKT</h1>
-
-<h2 id="lagrange-mutiplier">lagrange mutiplier</h2>
-
-<p>对于上面的凸优化问题来说，我们有它的lagrange function</p>
-
-<p>$$
-\begin{aligned}
-\mathcal{L}(x,\alpha,\beta)&amp;=f(x)+\sum \alpha_i g_i(x) + \sum \beta_i h_i(x)\\<br />
-&amp;s.t. \alpha_i &gt;=0
-\end{aligned}
-$$</p>
-
-<p>其中 $x$ 称为 primal variable, $\alpha,\beta$ 是dual variable</p>
-
-<p><strong>NOTE</strong> 其实可以将 $\alpha,\beta$ 理解成打破原来约束的代价</p>
-
-<h2 id="primal-dual-原问题与对偶问题">primal &amp; dual 原问题与对偶问题</h2>
-
-<p><img src="/img/math/primal-dual.png" alt="" /></p>
-
-<p>中间那段 english 不用看，直接看形式就行了</p>
-
-<p>我们下面试图证明这样一个弱对偶性(weak duality)</p>
-
-<p>即 $d^*=\theta_D(\alpha^*,\beta^*)\le p^*=\theta_P(x^*)$,反之(<strong>strong duality</strong>) 是说$d^*=p^*$</p>
-
-<h2 id="原问题的解释">原问题的解释</h2>
-
-<p>首先我们化简一下$\theta_P(x)$
-<img src="/img/math/thetap.png" alt="" /></p>
-
-<p>可以证明如下两个性质</p>
-
-<ol>
-<li>$\theta_P(x)$ 是一个凸函数<br>
-$f(x)$ 是凸函数，$g(x)$ 是凸函数， $h(x)$ 是affine function $\alpha_i\ge 0$, 所以， $\sum \alpha_i g(x) + \beta_i h(x)$ 也是凸函数,凸函数集合的最大值是凸函数，所以$\theta_P(x)$ 是一个凸函数</li>
-<li>$\theta_P(x)$ 的简化<br>
-<img src="/img/math/thetap-sample.png" alt="" />
-关于这一点，我们可以从上面化简后的例子得到</li>
-</ol>
-
-<h2 id="弱对偶性-weak-duality">弱对偶性(weak duality)</h2>
-
-<p>$$
-\begin{aligned}
-\theta_D(\alpha,\beta)&amp;=\min \mathcal{L}(x,\alpha,\beta)\\<br />
-&amp;\le \mathcal{L}(x^*,\alpha,\beta)\\<br />
-&amp;\le f(x^*) + \max \{\sum \alpha_ig(x^*) + \beta_i h(x^*)\}\\<br />
-&amp;=\theta_P (x^*)\\<br />
-&amp;\le p^*
-\end{aligned}
-$$</p>
-
-<p>即 对偶问题的最优解总是小于等于原问题的最优解</p>
-
-<p>当然<strong>强对偶性</strong>(strong duality) 指的就是 $d^*=p^*$ 了</p>
-
-<p>不过这要满足一些条件，参考文献中指出 一个 <strong>Slater&rsquo;s Condition</strong> ，指出如果存在一些可行解，严格满足所有的限制条件，即 $g_i(x)&lt;0$, 不过没有证明，同时指出几乎所有的图问题都满足 strong duility,这其实解释了为什么我们往往可以套用lagrange 乘数法求导解决这种限制性优化问题</p>
-
-<p>接下来还有一个重要的结论，互补松弛(complementary slackness)</p>
-
-<h2 id="互补松弛-complementary-slackness">互补松弛(complementary slackness)</h2>
-
-<p>这个定理是说，如果强对偶性满足，那么我们有 $a_i^*g_i(x^*)=0,i =1,2,\dots,m$</p>
-
-<p>简单证明一下</p>
-
-<p>$$
-\begin{aligned}
-p^*=d^*=\theta_D(\alpha^*,\beta^*)&amp;=\min \mathcal{L}(x,\alpha^*,\beta^*)\\<br />
-&amp;\le \mathcal{L}(x^*,\alpha^*,\beta^*)\\<br />
-&amp;=f(x^*) + \sum \alpha_i^*g(x^*) + \beta_i^* h(x^*)\\<br />
-&amp;\le f(x^*)\\<br />
-&amp;= p^* \\<br />
-\end{aligned}
-$$</p>
-
-<p>着意味着
-$$
-\begin{aligned}
-&amp;\sum \alpha_i^*g_i(x^*) + \beta_i^* h(x^*)\\<br />
-&amp;=\sum \alpha_i^*g_i(x^*)\\<br />
-&amp;=0
-\end{aligned}
-$$</p>
-
-<p>而我们有 $\alpha_i\ge 0, g_i(x)\le 0,\alpha_i^* g_i(x^*)\le 0$, 最终，他们的和等于0，因此 $\alpha_i^* g_i(x^*)=0$, 这意味着，</p>
-
-<p>$$
-if\ \alpha_i^* &gt;0,then,g_i(x^*)=0\\<br />
-or \\<br />
-if\ g_i(x^*)&gt;0,then,\alpha_i^* =0
-$$</p>
-
-<p>好，最后是 KKT条件，其实就是前几个性质的总结</p>
-
-<h1 id="kkt">KKT</h1>
-
-<p><img src="/img/math/KKT.png" alt="" /></p>
-
-<h1 id="参考">参考</h1>
-
-<ol>
-<li><a href="http://cs229.stanford.edu/section/cs229-cvxopt.pdf">cvxopt-note1</a></li>
-<li><a href="http://cs229.stanford.edu/section/cs229-cvxopt2.pdf">cvxopt-note2</a></li>
-</ol>
+<p>这两次实习之后如果可能的化自己还是愿意找一些研究型的实习岗位，或者流程比较规范的软件工程师的岗位，想好好提升一下自己的软件工程能力，对AI和系统底层比较感兴趣.</p>
 
 <blockquote>
 <p><strong>版权声明</strong></p>
@@ -341,15 +155,15 @@ $$</p>
     <h2>See Also</h2>
     <ul class="listing">
         
-        <li><a href="/posts/math-distence-to-hyperplane/">点到超平面的距离计算简单笔记</a></li>
+        <li><a href="/posts/kick-start-2019-roundb/">Kick Start 2019 RoundB</a></li>
         
-        <li><a href="/posts/newton-method/">Newton&#39;s Method</a></li>
+        <li><a href="/posts/km-algorithm/">KM Algorithm--二分图最大权匹配</a></li>
         
-        <li><a href="/posts/ml-note-naive-bayes/">机器学习笔记:朴素贝叶斯</a></li>
+        <li><a href="/posts/count-min-sketch/">Count Min Sketch: from Finding the Majority Element problem to heavy hitter problem,统计元素频率的利器</a></li>
         
-        <li><a href="/posts/ml-note-probility/">机器学习笔记: 概率论基础</a></li>
+        <li><a href="/posts/consistent-hash/">Consistent Hash</a></li>
         
-        <li><a href="/posts/ml-note-mle-and-map/">机器学习笔记: MLE and MAP</a></li>
+        <li><a href="/posts/value-buried/">隐藏的价值</a></li>
         
     </ul>
 </div>
@@ -359,9 +173,7 @@ $$</p>
                             
                             <ul class="clearfix">
                                 
-                                <li><a href="https://zouzhitao.github.io/tags/optimization">optimization</a></li>
-                                
-                                <li><a href="https://zouzhitao.github.io/tags/convex">convex</a></li>
+                                <li><a href="https://zouzhitao.github.io/tags/internship">internship</a></li>
                                 
                             </ul>
                             
