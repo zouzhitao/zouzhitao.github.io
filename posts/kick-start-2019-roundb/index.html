@@ -7,20 +7,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>UW Programing Language PartA Overview | taotao never stop</title>
-    <meta property="og:title" content="UW Programing Language PartA Overview - taotao never stop">
+    <title>Kick Start 2019 RoundB | taotao never stop</title>
+    <meta property="og:title" content="Kick Start 2019 RoundB - taotao never stop">
     <meta property="og:type" content="article">
         
-    <meta property="article:published_time" content="2018-12-05T14:02:01&#43;08:00">
+    <meta property="article:published_time" content="2019-08-14T21:04:33&#43;08:00">
         
         
-    <meta property="article:modified_time" content="2018-12-05T14:02:01&#43;08:00">
+    <meta property="article:modified_time" content="2019-08-14T21:04:33&#43;08:00">
         
     <meta name="Keywords" content="computer system,algorithm,OS,distribute system,big data,ML,算法，系统，分布式，大数据，推荐系统">
-    <meta name="description" content="UW Programing Language PartA Overview">
+    <meta name="description" content="Kick Start 2019 RoundB">
         
     <meta name="author" content="taotao">
-    <meta property="og:url" content="https://zouzhitao.github.io/posts/uw-programing-language-parta-overview/">
+    <meta property="og:url" content="https://zouzhitao.github.io/posts/kick-start-2019-roundb/">
     <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="/css/normalize.css">
@@ -72,16 +72,16 @@
                 <div class="res-cons">
                     <article class="post">
                         <header>
-                            <h1 class="post-title">UW Programing Language PartA Overview</h1>
+                            <h1 class="post-title">Kick Start 2019 RoundB</h1>
                         </header>
                         <date class="post-meta meta-date">
-                            2018年12月5日
+                            2019年8月14日
                         </date>
                         
                         <div class="post-meta meta-category">
                             |
                             
-                                <a href="https://zouzhitao.github.io/categories/programing-language">programing-language</a>
+                                <a href="https://zouzhitao.github.io/categories/competitive-programing">competitive-programing</a>
                             
                         </div>
                         
@@ -94,116 +94,143 @@
                         <aside id="toc" class="dismissed">
                             <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
 <ul>
-<li><a href="#思考">思考</a></li>
-<li><a href="#知识回顾">知识回顾</a>
+<li><a href="#a-building-palindromes">A. Building Palindromes</a></li>
+<li><a href="#b-energy-stones">B. Energy Stones</a>
 <ul>
-<li><a href="#wk1">wk1</a></li>
-<li><a href="#wk2">wk2</a></li>
-<li><a href="#wk3">wk3</a></li>
-<li><a href="#wk4">wk4</a></li>
+<li><a href="#个人小插曲">个人小插曲</a></li>
 </ul></li>
-<li><a href="#以后的路">以后的路</a></li>
+<li><a href="#c-diverse-subarray">C. Diverse Subarray</a></li>
 </ul>
 </nav>
                         </aside><div class="post-content">
                             
 
-<p><strong><a href="https://github.com/zouzhitao/CS_Learning/tree/master/PL%40Grossman">作业仓库</a></strong></p>
+<h1 id="a-building-palindromes">A. Building Palindromes</h1>
 
-<p><strong>url</strong>: <a href="https://github.com/zouzhitao/CS_Learning/tree/master/PL%40Grossman">https://github.com/zouzhitao/CS_Learning/tree/master/PL%40Grossman</a></p>
+<p>easy</p>
 
-<p>这是 UW programing language part A 的一个简单回顾.</p>
+<p><strong>code</strong> : <a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-B-A.cpp">https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-B-A.cpp</a></p>
 
-<p><a href="https://www.coursera.org/learn/programming-languages">coursera 课程地址</a>: <a href="https://www.coursera.org/learn/programming-languages">https://www.coursera.org/learn/programming-languages</a></p>
+<h1 id="b-energy-stones">B. Energy Stones</h1>
 
-<h1 id="思考">思考</h1>
+<p>knapstack 变种.</p>
 
-<p>这门课程可以说非常棒，给了我很多在程序语言上的洞见，可以说是让我重新理解了编程，重新理解了程序语言，不过可能关于整个 程序语言(programing language,PL)的研究, 在工业界真正的用武之地是很少的，或者说不如真正的应用计算机科学(系统,机器学习,etc)来的那么直接。不过我却认为里面有很多迷人的哲学式的美感。这是我第一次用函数式语言，我被他的间接，以及逻辑上的清晰感给折服了。所有计算都是用函数解决的，可以说是非常接近于数学逻辑了。不过真要入这个程序语言的坑，可能还得稍后一些，彼时的我需要的更多的还是一些工业界的东西。(:( ,不然就要饿肚子了)。扯了这么多，感觉是在为不继续学习 Part B，找借口&hellip;</p>
+<p><strong>题意</strong></p>
 
-<h1 id="知识回顾">知识回顾</h1>
+<blockquote>
+<p>$n$ 块石头，每块石头有 3 个参数， 初始能量 $e$, 每秒能量损失 $l$, 吃完所需要的时间 $s$, 若石头能量损失到0，或者负数，该石头能量为0. 求吃完说有石头所能够得到的最大能量值
+link ：<a href="https://codingcompetitions.withgoogle.com/kickstart/round/0000000000050eda/00000000001198c3">https://codingcompetitions.withgoogle.com/kickstart/round/0000000000050eda/00000000001198c3</a></p>
+</blockquote>
 
-<h2 id="wk1">wk1</h2>
+<p>这其实是一个背包问题，但是要推出是背包还是需要一些功夫的。</p>
 
-<p>wk1 主要是讲一些 ML的基本用法和概念:</p>
+<p>首先，能量值为0 的石头一定不会吃它，那我们考虑要吃的石头集合的次序，如果两块石头紧邻，那我们一定会先吃能量损失的少的石头。因此可以以这个顺序将所有石头拍个序，然后问题就变成了一个背包问题了。</p>
 
-<ul>
-<li>variable binding</li>
-<li>function binding</li>
-<li>List</li>
-<li>immutable
-<br /></li>
-</ul>
+<p><strong>以上是官方题解</strong></p>
 
-<p>但是最为主要的还是在最后的一节:,作者点出了程序语言的几个重要特征(不要忘了，这门课程的目的是叫我们如何学习所有程序语言)</p>
+<h2 id="个人小插曲">个人小插曲</h2>
 
-<ul>
-<li><strong>Syntax</strong>: How do you write the various parts of the language?</li>
-<li><strong>Semantics</strong>: What do the various language features mean? For example, how are expressions evaluated?</li>
-<li><strong>Idioms</strong>: What are the common approaches to using the language features to express computations?</li>
-<li><strong>Libraries</strong>: What has already been written for you? How do you do things you could not do without
-library support (like access les)?</li>
-<li><strong>Tools</strong>: What is available for manipulating programs in the language (compilers, read-eval-print loops,
-debuggers, &hellip;)</li>
-</ul>
+<p>在解决这个问题的时候，对于test set 1，我首先想到的是可以对每一个石头求解出次序为 $i$ 的时候它的能量值，然后在求解一个最优次序，这个问题等价与在一张 $nXn$ 的矩阵中，找不再同一列同一行的权值和最大的 $n$ 个数。这个问题等价与二分图的最大权值匹配，复杂度 $O(n^3)$</p>
 
-<p>其实学习语言最主要的是掌握语言的 特性，也就是第三点 (<strong>idoms</strong>),这很切合我的想法，所以我上了第一周后就信心满满的继续学了起来</p>
+<p>对于 Test set 2,个人并没能够想出。</p>
 
-<p>然后后面就是围绕ML的语言特性展开了，重点在于<strong>函数式编程</strong></p>
+<p>看了题解之后用了 dp的方法，这种dp还是很经典的。</p>
 
-<p>wk1 编程作业没什么好说的</p>
+<p>其中有一个小bug 让我调试了很久， <code>#define MAXN 100+3</code>(果然是很久没敲代码了)</p>
 
-<h2 id="wk2">wk2</h2>
+<p>code : <a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-B-B.cpp">https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-B-B.cpp</a></p>
 
-<p>wk2 的核心在于: <strong>datatype</strong>.</p>
+<h1 id="c-diverse-subarray">C. Diverse Subarray</h1>
 
-<p>围绕这个展开了如下几个点:</p>
+<p>对于小数据我们可以用暴力做，对每个 $l$ , 计算以$l$ 为左端点的最优的 $r$ 这个可以暴力统计每个 <code>type</code> 的frequency</p>
 
-<ul>
-<li>pattern match</li>
-<li>polymorphic datatype</li>
-<li>tail recursion</li>
-</ul>
+<p><strong>code</strong></p>
 
-<p>作业就是让你全部用pattern match 而不是用 <code>hd,tail,#</code>之类的内置函数</p>
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
 
-<p>作业编程作业就会发现<strong>pattern match</strong> 和tail recursion 实在是太好用了</p>
+using namespace std;
 
-<p><strong>tail recursion</strong> 应该是一个比较通用的概念，不仅仅是函数式里面才有的。因为从他的设计来说，非函数式也可以设计成这样。至于 <strong>pattern match</strong> 我确实在其他语言里没有使用过</p>
+#define ms(x,v) memset(x,(v), sizeof(x))
+#define msn(x,v,n) memset(x,(v),sizeof(x[0]) * n)
+#define INF 0x3f3f3f3f
 
-<p><strong>remark:</strong> 我对这些东西仅在理解是什么，怎么用的阶段，以及有什么好处的阶段，至于更深的地方，他的设计哲学在哪里，我变不清楚了。</p>
+typedef long long LL;
 
-<h2 id="wk3">wk3</h2>
 
-<p>wk3 可以说是整个函数式语言的核心了。</p>
+const int MAXN = 100 + 3;
 
-<ul>
-<li>fun as arguments and returned value</li>
-<li>lexical scope</li>
-<li>closures</li>
-<li>currying</li>
-<li>map,filter,fold</li>
-<li>Combining function</li>
-</ul>
+int a[MAXN];
+int S,n;
 
-<p>总之有了这些的 idiom 之后的特性是 : 代码更短，逻辑更强，语法糖更多</p>
+int main(int argc, char const *argv[])
+{   
+    ios :: sync_with_stdio(0);
+    cin.tie(0);
+    std::cout.precision(8);
+    std::cout.setf( std::ios::fixed, std:: ios::floatfield );
+    int T;
+    cin &gt;&gt; T;
 
-<p>当然我从不认为语言糖是语言的核心，<strong>其实个人认为语法糖在语言设计中最无足轻重</strong> 但是上面的那些特性，都是语言基于数学逻辑的自然表达，就算没有诱人的语法糖,那些特性也是必须有的。</p>
+    for(int t =1;  t &lt;= T ; ++t)
+    {
+        
+        cin &gt;&gt;n &gt;&gt; S;
+        for(int i=0 ; i&lt;n ; ++i)
+            cin &gt;&gt; a[i];
+        
+        int ans = 0;
+        for(int l=0 ; l &lt; n; ++l){
 
-<p>这周的作业难度要大一些，同时也更简洁一些，用了函数式语法后会发现作业表述起来非常简单。</p>
+            unordered_map&lt;int,int&gt; frq;
+            int cur_ans = 0;
+            for(int r = l; r &lt;n ; ++r){
+                auto f = frq[a[r]];
+                if(frq[a[r]]&lt;S){
+                    cur_ans++;
+                    ++frq[a[r]];
+                }else if(f==S)
+                {
+                    cur_ans -=S;
+                    ++frq[a[r]];
+                }
+                if(ans &lt; cur_ans)ans = cur_ans;
+            }
+        }
 
-<p>这周作业剩下最后一个 challenge 没有做，这个challenge是叫你去实现一个type-checker 系统.其他均为满分</p>
+        cout &lt;&lt; &quot;Case #&quot;&lt;&lt;t &lt;&lt; &quot;: &quot; &lt;&lt; ans &lt;&lt; &quot;\n&quot;;
+    }
 
-<h2 id="wk4">wk4</h2>
+    return 0;
+}
+</code></pre>
 
-<p>感觉我wk4 挺boring 的，就是将信息隐藏和表示不变性，这个其实我在 <a href="http://mit.edu/6.031">MIT 6.031 software construction</a> 中看过，所以了解的比较清楚，就没认真学这章了，</p>
+<p>对于大数据就不太行了，这里看了题解后明白了</p>
 
-<p>最后还好通过了 :)</p>
+<p>首先，从右统计每个type的频率，那么频率数组是可以继承的.</p>
 
-<h1 id="以后的路">以后的路</h1>
+<p><strong>example</strong></p>
 
-<p>学了这个以后准备把: Part B,Part C 学了，然后以后可能要深入了解一下程序语言，</p>
+<p>1,1,2,1,3,2,3,2,</p>
 
-<p><strong>programing language 还是很有意思的</strong></p>
+<p>设 $S=2$</p>
+
+<p>则仿照官方题解的做法，贡献如下:</p>
+
+<p>+1,+1,+1,-2,+1,+1+1,-2</p>
+
+<p>若此时左端又来了一个 1, 那么将变为</p>
+
+<p>+1,+1,-2,+1,0,+1,+1+1,-2</p>
+
+<p>若我们维护从 $l$ 到 $i$ 的浅醉和，我们会发现，此时[l,n] 全都+1,然后，[ptr[a[l]]+s,n] -(s+1),[ptr[a[l]+s+1,n]+s</p>
+
+<blockquote>
+<p>ptr 表示当前访问元素的下标。</p>
+</blockquote>
+
+<p>以上操作可以用线段树处理</p>
+
+<p><strong>code</strong> <a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-B-C.cpp">C</a></p>
 
 <blockquote>
 <p><strong>版权声明</strong></p>
@@ -224,13 +251,15 @@ debuggers, &hellip;)</li>
     <h2>See Also</h2>
     <ul class="listing">
         
-        <li><a href="/about/">about</a></li>
+        <li><a href="/posts/kick-start-2019-rounda/">Kick Start 2019 RoundA: 题解</a></li>
         
-        <li><a href="/archives/">archives</a></li>
+        <li><a href="/posts/km-algorithm/">KM Algorithm--二分图最大权匹配</a></li>
         
-        <li><a href="/posts/mit6.828-env/">MIT 6.828 环境配置，踩坑指南</a></li>
+        <li><a href="/posts/count-min-sketch/">Count Min Sketch: from Finding the Majority Element problem to heavy hitter problem,统计元素频率的利器</a></li>
         
-        <li><a href="/posts/test/">blog test</a></li>
+        <li><a href="/posts/consistent-hash/">Consistent Hash</a></li>
+        
+        <li><a href="/posts/value-buried/">隐藏的价值</a></li>
         
     </ul>
 </div>
@@ -240,13 +269,7 @@ debuggers, &hellip;)</li>
                             
                             <ul class="clearfix">
                                 
-                                <li><a href="https://zouzhitao.github.io/tags/uw-programing-language">UW programing language</a></li>
-                                
-                                <li><a href="https://zouzhitao.github.io/tags/pl">PL</a></li>
-                                
-                                <li><a href="https://zouzhitao.github.io/tags/functional-programing">functional programing</a></li>
-                                
-                                <li><a href="https://zouzhitao.github.io/tags/sml">sml</a></li>
+                                <li><a href="https://zouzhitao.github.io/tags/kick-start">kick-start</a></li>
                                 
                             </ul>
                             

@@ -6,10 +6,32 @@
     <description>Recent content in competitive-programing on taotao never stop</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 14 Aug 2019 20:34:05 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 14 Aug 2019 21:04:33 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/categories/competitive-programing/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kick Start 2019 RoundB</title>
+      <link>https://zouzhitao.github.io/posts/kick-start-2019-roundb/</link>
+      <pubDate>Wed, 14 Aug 2019 21:04:33 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/kick-start-2019-roundb/</guid>
+      <description>A. Building Palindromes easy
+code : https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-B-A.cpp
+B. Energy Stones knapstack 变种.
+题意
+ $n$ 块石头，每块石头有 3 个参数， 初始能量 $e$, 每秒能量损失 $l$, 吃完所需要的时间 $s$, 若石头能量损失到0，或者负数，该石头能量为0. 求吃完说有石头所能够得到的最大能量值 link ：https://codingcompetitions.withgoogle.com/kickstart/round/0000000000050eda/00000000001198c3
+ 这其实是一个背包问题，但是要推出是背包还是需要一些功夫的。
+首先，能量值为0 的石头一定不会吃它，那我们考虑要吃的石头集合的次序，如果两块石头紧邻，那我们一定会先吃能量损失的少的石头。因此可以以这个顺序将所有石头拍个序，然后问题就变成了一个背包问题了。
+以上是官方题解
+个人小插曲 在解决这个问题的时候，对于test set 1，我首先想到的是可以对每一个石头求解出次序为 $i$ 的时候它的能量值，然后在求解一个最优次序，这个问题等价与在一张 $nXn$ 的矩阵中，找不再同一列同一行的权值和最大的 $n$ 个数。这个问题等价与二分图的最大权值匹配，复杂度 $O(n^3)$
+对于 Test set 2,个人并没能够想出。
+看了题解之后用了 dp的方法，这种dp还是很经典的。
+其中有一个小bug 让我调试了很久， #define MAXN 100+3(果然是很久没敲代码了)
+code : https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-B-B.cpp
+C. Diverse Subarray 对于小数据我们可以用暴力做，对每个 $l$ , 计算以$l$ 为左端点的最优的 $r$ 这个可以暴力统计每个 type 的frequency</description>
+    </item>
     
     <item>
       <title>KM Algorithm--二分图最大权匹配</title>
