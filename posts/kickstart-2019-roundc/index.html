@@ -7,20 +7,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>MIT6.828 OS hw1 boot xv6 | taotao never stop</title>
-    <meta property="og:title" content="MIT6.828 OS hw1 boot xv6 - taotao never stop">
+    <title>Kickstart 2019 RoundC 题解 | taotao never stop</title>
+    <meta property="og:title" content="Kickstart 2019 RoundC 题解 - taotao never stop">
     <meta property="og:type" content="article">
         
-    <meta property="article:published_time" content="2018-12-06T18:49:44&#43;08:00">
+    <meta property="article:published_time" content="2019-08-17T12:58:56&#43;08:00">
         
         
-    <meta property="article:modified_time" content="2018-12-06T18:49:44&#43;08:00">
+    <meta property="article:modified_time" content="2019-08-17T12:58:56&#43;08:00">
         
     <meta name="Keywords" content="computer system,algorithm,OS,distribute system,big data,ML,算法，系统，分布式，大数据，推荐系统">
-    <meta name="description" content="MIT6.828 OS hw1 boot xv6">
+    <meta name="description" content="Kickstart 2019 RoundC 题解">
         
     <meta name="author" content="taotao">
-    <meta property="og:url" content="https://zouzhitao.github.io/posts/mit6.828-os-hw1-boot-xv6/">
+    <meta property="og:url" content="https://zouzhitao.github.io/posts/kickstart-2019-roundc/">
     <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="/css/normalize.css">
@@ -72,16 +72,16 @@
                 <div class="res-cons">
                     <article class="post">
                         <header>
-                            <h1 class="post-title">MIT6.828 OS hw1 boot xv6</h1>
+                            <h1 class="post-title">Kickstart 2019 RoundC 题解</h1>
                         </header>
                         <date class="post-meta meta-date">
-                            2018年12月6日
+                            2019年8月17日
                         </date>
                         
                         <div class="post-meta meta-category">
                             |
                             
-                                <a href="https://zouzhitao.github.io/categories/system">system</a>
+                                <a href="https://zouzhitao.github.io/categories/competitive-programing">competitive-programing</a>
                             
                         </div>
                         
@@ -92,81 +92,81 @@
                         
                         
                         <aside id="toc" class="dismissed">
-                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> 
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
+<ul>
+<li><a href="#a-wiggle-walk">A. Wiggle Walk</a></li>
+<li><a href="#b-circuit-board">B. Circuit Board</a></li>
+<li><a href="#c-catch-some">C. Catch Some</a></li>
+</ul>
+</nav>
                         </aside><div class="post-content">
-                            <p><strong>完整内容可见</strong></p>
+                            
 
-<p><a href="https://github.com/zouzhitao/CS_Learning/blob/master/MIT6.828-fa18/README.md">MIT 6.828 note</a></p>
+<h1 id="a-wiggle-walk">A. Wiggle Walk</h1>
 
-<p>这个任务就是检查 _start 开始的时候栈顶的所有值，</p>
+<p><strong>难度</strong> 模拟，编码，hashtable</p>
+
+<p>这个题比较简单，可以直接模拟，用一个 <code>hashtable</code> 维护 dp[x][y][dir]  [注意这里不是开数组]， 因为只有 $N \le 5e4$ 个点所以用hashtable维护就好，复杂度 $O(n)$</p>
+
+<p><strong>code</strong> : <a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-C-A.cpp">github</a></p>
+
+<h1 id="b-circuit-board">B. Circuit Board</h1>
+
+<p><strong>难度</strong> RMQ</p>
+
+<p>每一行都是独立的，因此可以枚举列</p>
+
+<pre><code class="language-c++">    for(int l = 0 ; l&lt; c ; ++l)
+        for(int r=l ; r &lt; c ; ++r)
+            compute best ans
+</code></pre>
+
+<p>这里需要判断每一行是否满足 $\max a_i[l,\dots,r] - \min a_i[l,\dots,r] &gt;k$ 因此需要快速求 [l,r] 的最大最小值，这个不就是经典的 RMQ 吗？</p>
+
+<p><strong>code</strong> : <a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-C-B.cpp">github</a></p>
+
+<h1 id="c-catch-some">C. Catch Some</h1>
+
+<p><strong>难度</strong> dp,0/1 knapstack</p>
+
+<p>这题是一个类似 0/1 背包的dp</p>
+
+<p>一点变化是最后不需要回到原点，因此最后观察的dog是一个关键，也就是对每个type来说最后一种type是有差别的，其他没差别。</p>
+
+<p>这里我借鉴了 No.1 大哥的是做法，</p>
+
+<p>对于 $M$ 种type $A_1,\dots,A_M$, 计算两个方向的dp</p>
 
 <blockquote>
-<p>进入 xv6, gdb 调试</p>
+<p>$ldp[i][k]$ 仅仅考虑前 $i$ 种类型，并且都是要回到原点，取 $k$ 个dog的最优解。$O(n^2)$ (注意这里复杂度计算还是有一些trick的，因为对于每一个dog仅仅会考虑一次，而总共有 $k$ 种观测，所以复杂度为 $O(n^2)$)</p>
 
-<p>b *0x10000c (_start kernel start point)</p>
-
-<p>x /24x $esp</p>
+<p>$rdp[i][k]$ 仅仅考虑后 $i$ 种类型，并且都回到原点，取 $k$ 个dog 的最优解</p>
 </blockquote>
 
-<p><img src="/img/hw2-esp.png" alt="hw1-esp.png" /></p>
+<p>最后考虑每一个dog作为终点的情款的最优解就好了</p>
 
-<p>解释栈中的各个值，首先看 <code>0x7d8d,0x7c4d</code>, 这显然是某个地址，先去 <code>bootblock.asm</code> 中找到这两个地址</p>
+<p>这里总结一个 离散化的模板</p>
 
-<pre><code class="language-asm"> # Set up the stack pointer and call into C.
-  movl    $start, %esp
-    7c43:	bc 00 7c 00 00       	mov    $0x7c00,%esp
-  call    bootmain
-    7c48:	e8 ee 00 00 00       	call   7d3b &lt;bootmain&gt;
-
-  # If bootmain returns (it shouldn't), trigger a Bochs
-  # breakpoint if running under Bochs, then loop.
-  movw    $0x8a00, %ax            # 0x8a00 -&gt; port 0x8a00
-    7c4d:	66 b8 00 8a          	mov    $0x8a00,%ax
- 
+<pre><code class="language-c++">// discretize a vector
+// 
+// example:
+// 1,10,3,5 -&gt; 0,3,1,2
+// NOTE: re-write parameter, not functional
+// return : number of non-duplicated elements
+int discretization(vector&lt;int&gt; &amp; raw){
+  
+    // discretization
+    vector&lt;int&gt; id = raw;
+    sort(id.begin(),id.end());
+    auto it_end = unique(id.begin() , id.end());
+    for(int i=0 ; i&lt;raw.size() ; ++i)
+        raw[i] = lower_bound(id.begin(),it_end,raw[i]) - id.begin();
+    
+    return it_end - id.begin();
+}
 </code></pre>
 
-<p>这是栈建立的地方，也就是说栈顶在 <strong>0x7c00</strong>, <strong>0x7c4d</strong> 就是栈调用 bootmain 后的下面一条指令</p>
-
-<p>继续看 bootmain</p>
-
-<pre><code class="language-asm">
-00007d3b &lt;bootmain&gt;:
-{
-    7d3b:	55                   	push   %ebp
-    7d3c:	89 e5                	mov    %esp,%ebp
-    7d3e:	57                   	push   %edi
-    7d3f:	56                   	push   %esi
-    7d40:	53                   	push   %ebx
-    7d41:	83 ec 0c             	sub    $0xc,%esp
-  readseg((uchar*)elf, 4096, 0);
-    7d44:	6a 00                	push   $0x0
-    7d46:	68 00 10 00 00       	push   $0x1000
-    7d4b:	68 00 00 01 00       	push   $0x10000
-</code></pre>
-
-<p>栈建立好后压了很多 reg 值进去，就是那些 0</p>
-
-<p>然后
-我们在文件中搜索 7d8d,会发现是 <code>entry</code> 下面一条指令</p>
-
-<pre><code class="language-asm">//.bootblock.asm : line 322
-entry();
-    7d87:	ff 15 18 00 01 00    	call   *0x10018
-    7d8d:	eb d5                	jmp    7d64 &lt;bootmain+0x29&gt;
-</code></pre>
-
-<p>所以整个栈的值解释如下</p>
-
-<pre><code>ox7c00 : 0x00007c4d # bootmain hou mian yitiao dizhi
-       : 0x00000000 #
-       :
-       :
-       :
-       :
-       :
-       :
-0x7bdc : 0x00007d8d # kernel hou de dizhi
-</code></pre>
+<p><strong>code</strong> <a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-C-C.cpp">github</a></p>
 
 <blockquote>
 <p><strong>版权声明</strong></p>
@@ -187,15 +187,15 @@ entry();
     <h2>See Also</h2>
     <ul class="listing">
         
-        <li><a href="/posts/mit6.828os-lab1-note/">MIT6.828 OS lab1 note</a></li>
+        <li><a href="/posts/unordered-map/">kickstart: Scrambled-Words(hash&#43;complexity)</a></li>
         
-        <li><a href="/posts/mit6.828-env/">MIT 6.828 环境配置，踩坑指南</a></li>
+        <li><a href="/posts/18-kickstart-rounda-pb-lucky-dip/">2018 google Kickstart RoundA PB Lucky Dip 详细题解</a></li>
         
-        <li><a href="/posts/uw-programing-language-parta-overview/">UW Programing Language PartA Overview</a></li>
+        <li><a href="/posts/msra-internship-over/">2019 1-8 实习总结[MSRA,face&#43;&#43;]</a></li>
         
-        <li><a href="/about/">about</a></li>
+        <li><a href="/posts/kick-start-2019-roundb/">Kick Start 2019 RoundB</a></li>
         
-        <li><a href="/archives/">archives</a></li>
+        <li><a href="/posts/km-algorithm/">KM Algorithm--二分图最大权匹配</a></li>
         
     </ul>
 </div>
@@ -205,9 +205,7 @@ entry();
                             
                             <ul class="clearfix">
                                 
-                                <li><a href="https://zouzhitao.github.io/tags/os">OS</a></li>
-                                
-                                <li><a href="https://zouzhitao.github.io/tags/gdb">gdb</a></li>
+                                <li><a href="https://zouzhitao.github.io/tags/kickstart">kickstart</a></li>
                                 
                             </ul>
                             

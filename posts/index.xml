@@ -6,10 +6,27 @@
     <description>Recent content in Posts on taotao never stop</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 15 Aug 2019 19:58:52 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 17 Aug 2019 12:58:56 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kickstart 2019 RoundC 题解</title>
+      <link>https://zouzhitao.github.io/posts/kickstart-2019-roundc/</link>
+      <pubDate>Sat, 17 Aug 2019 12:58:56 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/kickstart-2019-roundc/</guid>
+      <description>A. Wiggle Walk 难度 模拟，编码，hashtable
+这个题比较简单，可以直接模拟，用一个 hashtable 维护 dp[x][y][dir] [注意这里不是开数组]， 因为只有 $N \le 5e4$ 个点所以用hashtable维护就好，复杂度 $O(n)$
+code : github
+B. Circuit Board 难度 RMQ
+每一行都是独立的，因此可以枚举列
+for(int l = 0 ; l&amp;lt; c ; ++l) for(int r=l ; r &amp;lt; c ; ++r) compute best ans  这里需要判断每一行是否满足 $\max a_i[l,\dots,r] - \min a_i[l,\dots,r] &amp;gt;k$ 因此需要快速求 [l,r] 的最大最小值，这个不就是经典的 RMQ 吗？
+code : github
+C. Catch Some 难度 dp,0/1 knapstack
+这题是一个类似 0/1 背包的dp</description>
+    </item>
     
     <item>
       <title>2019 1-8 实习总结[MSRA,face&#43;&#43;]</title>
