@@ -7,22 +7,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>senseTime | taotao never stop</title>
-    <meta property="og:title" content="senseTime - taotao never stop">
+    <title>Kickstart 2019 RoundD | taotao never stop</title>
+    <meta property="og:title" content="Kickstart 2019 RoundD - taotao never stop">
     <meta property="og:type" content="article">
         
+    <meta property="article:published_time" content="2019-08-22T21:24:34&#43;08:00">
+        
+        
+    <meta property="article:modified_time" content="2019-08-22T21:24:34&#43;08:00">
         
     <meta name="Keywords" content="computer system,algorithm,OS,distribute system,big data,ML,算法，系统，分布式，大数据，推荐系统">
-    <meta name="description" content="senseTime">
+    <meta name="description" content="Kickstart 2019 RoundD">
         
     <meta name="author" content="taotao">
-    <meta property="og:url" content="https://zouzhitao.github.io/tags/sensetime/">
+    <meta property="og:url" content="https://zouzhitao.github.io/posts/kickstart-2019-roundd/">
     <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="/css/normalize.css">
     
+        <link rel="stylesheet" href="/css/prism.css">
+    
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="alternate" type="application/rss+xml+xml" href="https://zouzhitao.github.io/tags/sensetime/index.xml" title="taotao never stop" />
     <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 
     
@@ -31,7 +36,6 @@
     
     
 </head>
-
 
 <body>
 <header id="header" class="clearfix">
@@ -66,57 +70,271 @@
 
             <div class="col-8" id="main">
                 <div class="res-cons">
-                    
-                    <h3 class="archive-title">
-                        包含标签
-                        <span class="keyword">senseTime</span>
-                        的文章
-                    </h3>
-                    
-
-                    
-                        <article class="post">
-                            <header>
-                                <h1 class="post-title">
-                                    <a href="https://zouzhitao.github.io/posts/sensetime-ai-platform-engineer-interview/">商汤AI平台研发工程师面试总结</a>
-                                </h1>
-                            </header>
-                            <date class="post-meta meta-date">
-                                2019年1月2日
-                            </date>
+                    <article class="post">
+                        <header>
+                            <h1 class="post-title">Kickstart 2019 RoundD</h1>
+                        </header>
+                        <date class="post-meta meta-date">
+                            2019年8月22日
+                        </date>
+                        
+                        <div class="post-meta meta-category">
+                            |
                             
-                            <div class="post-meta meta-category">
-                                |
-                                
-                                    <a href="https://zouzhitao.github.io/categories/interview">interview</a>
-                                
-                            </div>
+                                <a href="https://zouzhitao.github.io/categories/competitive-programing">competitive-programing</a>
                             
-                            <div class="post-content">
-                                <p>面试距今应该已经过去一个月了，一直没有总结，这里还是简单总结一下问题，其实感觉问的挺简单的.</p>
+                        </div>
+                        
+                        
+                        <div class="post-meta">
+                            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span> 阅读</span></span>
+                        </div>
+                        
+                        
+                        <aside id="toc" class="dismissed">
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
+<ul>
+<li><a href="#a-x-or-what">A.X or What?</a></li>
+<li><a href="#b-latest-guests">B.Latest Guests</a></li>
+<li><a href="#c-food-stalls">C.Food Stalls</a></li>
+</ul>
+</nav>
+                        </aside><div class="post-content">
+                            
 
-<p>我面的是 AI平台开发工程师，就是做应用落地的，智能安防部门。做的是视频安防,</p>
+<p>整体来说这次的题不是很难，我都能自己想出来，并写完，但是这次马力有点大，C题写了2hrs&hellip;</p>
 
-<p><strong>offer get</strong></p>
+<h1 id="a-x-or-what">A.X or What?</h1>
 
-<h1 id="一面">一面</h1>
+<p>这题比较简单，重点在一个 xor的性质，与位的异或次序无关即两数$A,B$ 共 $K$ 位</p>
 
-<p>一面先是简单聊了一下简历，问的相当简单,(PS:尽然被吐槽简历太简单了[捂脸..]),这边应该用的是 <code>c++</code> 为主，所以问了很多c++的东西。</p>
+<p>$$
+\bigwedge_i A_i \wedge B_i = (\bigwedge_i A_i)\wedge (\bigwedge_i B_i)
+$$</p>
 
-<p>先问了 …</p>
-                                <p class="readmore"><a href="https://zouzhitao.github.io/posts/sensetime-ai-platform-engineer-interview/">阅读全文</a></p>
-                            </div>
-                        </article>
+<p><strong>code:</strong> <a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-D-A.cpp">github</a></p>
+
+<h1 id="b-latest-guests">B.Latest Guests</h1>
+
+<p>tips 1: $M&gt;N$ 是无效的，因为仅有最后被访问的才会被记录，所以如果对于 领地 $k$ 它访问了两次，那仅仅需要知道最后一次访问的时间就行了
+tips 2: 因为仅有最后一次被访问才会被记录，即时间戳越后的优先于时间戳越早的，因此我们可以倒过来模拟整个过程，即从 $G_i$ 项最后一次待的地方开始往前模拟。</p>
+
+<p>即有如下伪代码：</p>
+
+<pre><code>vis[] // 第 i 个东西最后被访问的时间戳
+
+g[i] // cur,当前位置，dir行动方向，ans,访问次数，
+
+for time = M to 0:
+    if(vis[g[i].cur] &lt;=time) // 还未被访问过
+        vis[g[i].cur] = time
+        g[i].ans ++
+    update g[i].cur
+
+</code></pre>
+
+<p>接下来就是优化模拟的过程了，</p>
+
+<p>tips 3: 任意的项 $G_i$ 仅由当前位置 $cur$ ,和行进方向 $dir$ 决定它的ans，因此可以合并所有 $cur$ 和 $dir$ 相同的项到一组。</p>
+
+<p>tips 4: 可以用一个 访问的位置数目$no_vis$ 来记录还有多少位置未访问，到了 0就退出.</p>
+
+<p>前4项技巧已经能够通过test 1和test 2 了，
+这是我原始的代码</p>
+
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+
+using namespace std;
+
+#define ms(x,v) memset(x,(v), sizeof(x))
+#define msn(x,v,n) memset(x,(v),sizeof(x[0]) * n)
+#define INF 0x3f3f3f3f
+
+typedef long long LL;
+typedef pair&lt;int,int&gt; PII;
+
+const int MAXN = 2e5 +10;
+
+struct Node{
+    int cur,dir,ans;
+    vector&lt;int&gt; ids;
+};
+
+
+void solve(){
+    int N,G,M;
+    cin &gt;&gt; N &gt;&gt; G&gt;&gt;M;
+    vector&lt;vector&lt;int&gt; &gt; guests(2*N);
+
+    for(int i=0 ; i&lt; G; ++i){
+        int s;
+        char x;
+        cin &gt;&gt; s&gt;&gt;x;
+        s--;// map to [0,N)
+        int dir = x == 'C' ? 1 : -1;
+        s = (s + dir * (M%N) +N) % N;
+        int idx = (s&lt;&lt;1) + (dir==1);
+        guests[idx].push_back(i);
+    }
+
+    vector&lt;Node&gt; gg;
+    for(int i=0 ; i&lt;guests.size() ; ++i){
+        if(guests[i].empty())continue;
+        Node tmp = {
+            i&gt;&gt;1,
+            i&amp;1 ? -1 : 1, // anti-dir
+            0,
+            guests[i],
+        };
+        gg.push_back(tmp);
+    }
+    vector&lt;int&gt; timep(N,-1);
+    int not_vis = N;
+    if(M &gt; N) M = N;
+    for(int time = M ; time &gt;= 0 &amp;&amp; not_vis&gt;0 ; --time)
+    {
+        for(int i=0 ; i&lt; gg.size() ; ++i){
+            int &amp; cur = gg[i].cur;
+            if(timep[cur]&lt;time){
+                not_vis--;
+                timep[cur] = time;
+            }//first access
+            if(timep[cur] &lt;=time){
+                gg[i].ans ++;
+            }
+            gg[i].cur= (cur + gg[i].dir + N) % N;
+        }
+    }
+    vector&lt;int&gt; ans(G);
+    for(auto e: gg){
+        for(auto id : e.ids)
+            ans[id] = e.ans;
+    }
+    for(int i=0 ; i &lt; ans.size(); ++i)
+            cout &lt;&lt; &quot; &quot; &lt;&lt; ans[i];
+    
+}
+
+int main(int argc, char const *argv[])
+{   
+    
+    ios :: sync_with_stdio(0);
+    cin.tie(0);
+    // cout.tie(0);
+    std::cout.precision(8);
+    std::cout.setf( std::ios::fixed, std:: ios::floatfield );
+    int T;
+    cin &gt;&gt; T;
+    
+    for(int kase =1;  kase &lt;= T ; ++kase)
+    {   
+        cout &lt;&lt; &quot;Case #&quot;&lt;&lt;kase &lt;&lt; &quot;:&quot;;
+
+        solve();
+        cout &lt;&lt; '\n';
+    }
+
+    return 0;
+}
+</code></pre>
+
+<p>(其实是可以被hack的&hellip;,最坏情况下仍旧需要 $O(M G)$) 不过估计这个比较随机</p>
+
+<p>tips 5: 延续tips 3的想法，任意一项它的访问路径仅仅由 $cur,dir$ 决定，因此如果某个状态 $cur,dir$ 已经出现过了，那么这一项就不会被记录了。用个array记录一个这个值，由于$dir$ 仅仅有 $2$
+因此,状态最多$2N$
+所以复杂度 $O(2N log(N))$ (实际中我用了set来记录还能更新的集合)</p>
+
+<p><strong>code</strong>: <a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-D-B.cpp">github</a></p>
+
+<h1 id="c-food-stalls">C.Food Stalls</h1>
+
+<p>这题也比较简单，只是编码有点复杂</p>
+
+<p>tips 1: 按 $X_i$ 的大小给这 $n$ 个点排序，如果固定warehouse 的位置 $i$， 那么选取 $X_j &gt; X_i$ 的点的花费是 $X_j - X_i + C_j$,选取 $X_j &lt; X_i$ 的花费是 $X_i - X_j + C_j$, 因此对于这 $n$ 个点，任意固定 warehouse 的位置后，计算上面的值，选前 $k$ 个求和就是答案。</p>
+
+<p>伪代码:</p>
+
+<pre><code>for warehouse = 0 to N:
+    for j = 0 to N:
+        计算每个点的花费
+    选取前 $k$ 个求和
+</code></pre>
+
+<p>这是 ok的只是复杂度太大了，$O(N^2)$,我们可以优化一下</p>
+
+<p>如果我们维护两个集合对于 $X_j &gt; X_i$ 计算 upper_set(X_j+C_j), 对于 $X_i &gt; X_j$ 的 计算 lower_set(-X_j+C_j) , 有了这两个集合后我们也能计算出答案。同时想象一下 warehouse 从i -&gt; i+1 的过程，显然，第 $i$ 项会从 upper_set 移到 lower,同时还需要维护一个第 $k$ 项的分界点(这个贡献意义上) 的位置，简单想一下，维护这个不可能每次都经过 $O(N)$ 次，虽然我不会算它的复杂度，但在平均意义上我觉得仅仅会移动 O(1) 次，因此复杂度是 $O(N logN)$ 左右一定能通过</p>
+
+<p><strong>code</strong> : <a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-D-C.cpp">github</a></p>
+
+<blockquote>
+<p><strong>版权声明</strong></p>
+
+<p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
+
+<p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
+
+<p><strong>转载请保留此版权声明，并注明出处</strong></p>
+</blockquote>
+
+                        </div>
+                        
+
+                        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/posts/kickstart-2019-roundc/">Kickstart 2019 RoundC 题解</a></li>
+        
+        <li><a href="/posts/unordered-map/">kickstart: Scrambled-Words(hash&#43;complexity)</a></li>
+        
+        <li><a href="/posts/18-kickstart-rounda-pb-lucky-dip/">2018 google Kickstart RoundA PB Lucky Dip 详细题解</a></li>
+        
+        <li><a href="/posts/msra-internship-over/">2019 1-8 实习总结[MSRA,face&#43;&#43;]</a></li>
+        
+        <li><a href="/posts/kick-start-2019-roundb/">Kick Start 2019 RoundB</a></li>
+        
+    </ul>
+</div>
+
+
+                        <div class="post-meta meta-tags">
+                            
+                            <ul class="clearfix">
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/kickstart">kickstart</a></li>
+                                
+                            </ul>
+                            
+                        </div>
+                    </article>
                     
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "zouzhitao-github-io" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-                    
-
-
-
-
+    
+    
                 </div>
             </div>
-
             <div id="secondary">
     <section class="widget">
         <form id="search" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
@@ -357,6 +575,17 @@
 </footer>
 
 
+    <script type="text/javascript" src="/js/prism.js" async="true"></script>
+    <script type="text/javascript">
+    window.MathJax = {
+        tex2jax: {
+            inlineMath: [ ['$','$'] ],
+            processEscapes: true
+        }
+    };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
 <a id="rocket" href="#top"></a>
 <script type="text/javascript" src="/js/totop.js?v=0.0.0" async=""></script>
 
@@ -374,7 +603,6 @@ if (!doNotTrack) {
 
 
 <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
-
 
 
 

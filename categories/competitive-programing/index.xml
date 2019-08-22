@@ -6,10 +6,26 @@
     <description>Recent content in competitive-programing on taotao never stop</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 17 Aug 2019 12:58:56 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 22 Aug 2019 21:24:34 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/categories/competitive-programing/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kickstart 2019 RoundD</title>
+      <link>https://zouzhitao.github.io/posts/kickstart-2019-roundd/</link>
+      <pubDate>Thu, 22 Aug 2019 21:24:34 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/kickstart-2019-roundd/</guid>
+      <description>整体来说这次的题不是很难，我都能自己想出来，并写完，但是这次马力有点大，C题写了2hrs&amp;hellip;
+A.X or What? 这题比较简单，重点在一个 xor的性质，与位的异或次序无关即两数$A,B$ 共 $K$ 位
+$$ \bigwedge_i A_i \wedge B_i = (\bigwedge_i A_i)\wedge (\bigwedge_i B_i) $$
+code: github
+B.Latest Guests tips 1: $M&amp;gt;N$ 是无效的，因为仅有最后被访问的才会被记录，所以如果对于 领地 $k$ 它访问了两次，那仅仅需要知道最后一次访问的时间就行了 tips 2: 因为仅有最后一次被访问才会被记录，即时间戳越后的优先于时间戳越早的，因此我们可以倒过来模拟整个过程，即从 $G_i$ 项最后一次待的地方开始往前模拟。
+即有如下伪代码：
+vis[] // 第 i 个东西最后被访问的时间戳 g[i] // cur,当前位置，dir行动方向，ans,访问次数， for time = M to 0: if(vis[g[i].cur] &amp;lt;=time) // 还未被访问过 vis[g[i].cur] = time g[i].ans ++ update g[i].cur  接下来就是优化模拟的过程了，
+tips 3: 任意的项 $G_i$ 仅由当前位置 $cur$ ,和行进方向 $dir$ 决定它的ans，因此可以合并所有 $cur$ 和 $dir$ 相同的项到一组。</description>
+    </item>
     
     <item>
       <title>Kickstart 2019 RoundC 题解</title>
