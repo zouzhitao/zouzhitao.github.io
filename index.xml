@@ -6,13 +6,35 @@
     <description>Recent content on taotao never stop</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 23 Aug 2019 14:42:36 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 25 Aug 2019 19:10:53 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>correct way to use Range Based for in Cpp11</title>
+      <title>Kickstart 2019 Round E</title>
+      <link>https://zouzhitao.github.io/posts/kickstart-2019-rounde/</link>
+      <pubDate>Sun, 25 Aug 2019 19:10:53 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/kickstart-2019-rounde/</guid>
+      <description> A. Cherries Mesh easy
+code : github
+B. Code-Eat Switcher 这题结束后想通了，可以贪心，将 $(c_i,e_i)$ 按照 $c_i / e_i$ 排序，然后贪心.
+codegithub
+C. Street Checkers 这题还是很容易的，
+首先翻译一下题意，对于一个数 $X$, 如果它的奇数因子和偶数因子之差不超过 2，这个数就ok，判断 [L,R] 中有多少个这样的数， $R-L \le 10^5,L,R \le 10^9$,
+首先，观察规律， 假设 $X=2*X&amp;rsquo;$(其中 $X&amp;rsquo;$ 是奇数) 的奇数因子为 $p_i$， 那么所有$2p_i$ 都是它的偶数因子 同理，如果 $X=2^2X&amp;rsquo;$, 那么所有的 $2p_i,4p_i$ 都为它的因子，此时，如果$X$ ok，那么 $4p_i$ 的个数要小于2，即 $X&amp;rsquo;$ 为素数或者$1$,其他情况也可推知，
+最后就变成判断质数的题目了，用miller-robin就ok了
+code github
+ 版权声明
+本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
+作者: taotao
+转载请保留此版权声明，并注明出处
+ </description>
+    </item>
+    
+    <item>
+      <title>correct way to use Range Based for in Cpp</title>
       <link>https://zouzhitao.github.io/posts/range-based-for-in-cpp11/</link>
       <pubDate>Fri, 23 Aug 2019 14:42:36 +0800</pubDate>
       
