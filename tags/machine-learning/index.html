@@ -7,13 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>machine learning | taotao never stop</title>
-    <meta property="og:title" content="machine learning - taotao never stop">
+    <title>machine-learning | taotao never stop</title>
+    <meta property="og:title" content="machine-learning - taotao never stop">
     <meta property="og:type" content="article">
         
         
     <meta name="Keywords" content="computer system,algorithm,OS,distribute system,big data,ML,算法，系统，分布式，大数据，推荐系统">
-    <meta name="description" content="machine learning">
+    <meta name="description" content="machine-learning">
         
     <meta name="author" content="taotao">
     <meta property="og:url" content="https://zouzhitao.github.io/tags/machine-learning/">
@@ -69,7 +69,7 @@
                     
                     <h3 class="archive-title">
                         包含标签
-                        <span class="keyword">machine learning</span>
+                        <span class="keyword">machine-learning</span>
                         的文章
                     </h3>
                     
@@ -78,11 +78,11 @@
                         <article class="post">
                             <header>
                                 <h1 class="post-title">
-                                    <a href="https://zouzhitao.github.io/posts/ml-note-mle-and-map/">机器学习笔记: MLE and MAP</a>
+                                    <a href="https://zouzhitao.github.io/posts/ml-decision-tree-note/">机器学习笔记: 决策树</a>
                                 </h1>
                             </header>
                             <date class="post-meta meta-date">
-                                2019年1月5日
+                                2018年12月31日
                             </date>
                             
                             <div class="post-meta meta-category">
@@ -98,19 +98,19 @@
 这是笔者学习<a href="http://www.cs.cmu.edu/~ninamf/courses/601sp15/lectures.shtml">CMU10601-ML</a>机器学习的笔记</p>
 </blockquote>
 
-<p>MLE 和 MAP ,是两种不同的估计概率的准则，可是他们的数学公式却是如此相似</p>
+<h1 id="决策树算法框架">决策树算法框架</h1>
 
-<p><img src="/img/ML-note-MLE-MAP/MLE&amp;MAP.png" alt="MLE and MAP" /></p>
+<p><img src="/img/ML-decision-tree-note/algorithm.png" alt="决策树算法" /></p>
 
-<p><strong>remark</strong></p>
+<p><strong>适合问题的特点</strong></p>
 
-<p><strong>MLE</strong> 实际使用的过程中，通常会用<strong>LOG</strong> likelihood function,</p>
+<ol>
+<li>实例是由 $(attr,value)$, 表示的，并且 $value$ 是离散的 (<strong>remark:</strong> 能使用连续值，不过连续值其实也是在先将连续值转化为离散值，再使用的决策树)</li>
+<li>目标函数具有离散的输出值，或者说是一个分类问题</li>
+</ol>
 
-<p><strong>MAP</strong> 这里 $P(D)$ 是没用的，即</p>
-
-<p>$$
-\hat{\theta}=\arg …</p>
-                                <p class="readmore"><a href="https://zouzhitao.github.io/posts/ml-note-mle-and-map/">阅读全文</a></p>
+<p>整个算法就是一个分治， …</p>
+                                <p class="readmore"><a href="https://zouzhitao.github.io/posts/ml-decision-tree-note/">阅读全文</a></p>
                             </div>
                         </article>
                     
@@ -384,14 +384,6 @@ if (!doNotTrack) {
 
 
 <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
-
-
-
-
-
-</body>
-</html>
-javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
 
 
 
