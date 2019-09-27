@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://zouzhitao.github.io/posts/svm/</loc>
+    <lastmod>2019-09-27T20:45:14+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://zouzhitao.github.io/posts/kickstart-2019-rounde/</loc>
     <lastmod>2019-08-25T19:10:53+08:00</lastmod>
   </url>
@@ -248,7 +253,7 @@
   
   <url>
     <loc>https://zouzhitao.github.io/posts/</loc>
-    <lastmod>2019-08-25T19:10:53+08:00</lastmod>
+    <lastmod>2019-09-27T20:45:14+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -440,7 +445,7 @@
   
   <url>
     <loc>https://zouzhitao.github.io/categories/machine-learning/</loc>
-    <lastmod>2019-03-06T22:05:16+08:00</lastmod>
+    <lastmod>2019-09-27T20:45:14+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -523,6 +528,12 @@
   </url>
   
   <url>
+    <loc>https://zouzhitao.github.io/tags/svm/</loc>
+    <lastmod>2019-09-27T20:45:14+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://zouzhitao.github.io/tags/sweep-line/</loc>
     <lastmod>2019-04-03T00:09:24+08:00</lastmod>
     <priority>0</priority>
@@ -536,7 +547,7 @@
   
   <url>
     <loc>https://zouzhitao.github.io/</loc>
-    <lastmod>2019-08-25T19:10:53+08:00</lastmod>
+    <lastmod>2019-09-27T20:45:14+08:00</lastmod>
     <priority>0</priority>
   </url>
   

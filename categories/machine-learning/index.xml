@@ -6,10 +6,47 @@
     <description>Recent content in machine-learning on taotao never stop</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 06 Mar 2019 22:05:16 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 27 Sep 2019 20:45:14 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/categories/machine-learning/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Support Vector Machine</title>
+      <link>https://zouzhitao.github.io/posts/svm/</link>
+      <pubDate>Fri, 27 Sep 2019 20:45:14 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/svm/</guid>
+      <description>简单总结一下SVM，以帮助ML相关面试
+SVM 是一种上古时代(90s) 的东西，其实我也不清楚他在工业界的用处到底几何。只是感觉算法特别慢，还意义不太大。
+ intuition 首先SVM的动机其实很简单。我们都知道对于分类问题(这里以二分类为例)，就是要找一个超平面将正例和负例分开，而SVM找的这个超平面相对比较特殊，他希望找到一个超平面，s.t最大化到两个类别的距离。
+如图，关于点到超平面的距离，可见我之前写的一篇文章点到超平面的距离计算
+设间距为 $c$ 于是，我们简化为以下数学形式，
+找到一个超平面(hyperplane)
+$w^Tx+b=0$
+s.t.
+$w^tx_i+b\geq c,\forall y_i=1$
+$w^tx_i+b\le -c, \forall y_i=-1$
+注意 这里的距离仅仅是一个单位，他到底是多少没有关系，仅仅关系到对超平面的缩放(scale)。
+可以得到如下的二阶规划的形式
+$$ \max \frac{C}{||w||}\\
+s.t\\
+y_i(w^tx_i+b) \ge c\\
+$$
+即,
+$$ \min ||w|| \rightarrow \min \frac{1}{2} w^Tw\\
+s.t\\
+y_i(w^tx_i+b) \ge 1\\
+$$
+到这里其实就完事儿了，用任意一个二阶规划求解器解一下就行了，然而为了说明 support vector 的由来，我们有必要继续探讨一下它的其他形式。
+Lagrangian 关于凸优化中的拉格朗日乘子与KKT条件详见，我的另外一篇文章 凸优化
+这里不见证明的直接用结论了。
+利用拉格朗日乘子，
+$\mathcal{L}(w,b,\alpha)=\frac{1}{2}w^Tw+\sum \alpha_i(1 - y_i(w^Tx_i +b)),\forall a_i\le 0$
+由拉格朗日对偶，
+原问题 : $\min_{w,b} \max_{\alpha} \mathcal{L}(w,b,\alpha)$
+对偶问题: $\max_{\alpha}\min_{w,b}\mathcal{L}(w,b,\alpha)$</description>
+    </item>
     
     <item>
       <title>PAC learning 与样本复杂度</title>

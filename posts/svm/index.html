@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="generator" content="Hugo 0.51" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Support Vector Machine | taotao never stop</title>
+    <meta property="og:title" content="Support Vector Machine - taotao never stop">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content="2019-09-27T20:45:14&#43;08:00">
+        
+        
+    <meta property="article:modified_time" content="2019-09-27T20:45:14&#43;08:00">
+        
+    <meta name="Keywords" content="computer system,algorithm,OS,distribute system,big data,ML,算法，系统，分布式，大数据，推荐系统">
+    <meta name="description" content="Support Vector Machine">
+        
+    <meta name="author" content="taotao">
+    <meta property="og:url" content="https://zouzhitao.github.io/posts/svm/">
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="/css/normalize.css">
+    
+        <link rel="stylesheet" href="/css/prism.css">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+    
+
+
+    
+    
+</head>
+
+<body>
+<header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://zouzhitao.github.io/">
+                        taotao never stop
+                    </a>
+                
+                <p class="description">喜欢技术，喜欢探索</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://zouzhitao.github.io/">首页</a>
+                    
+                    <a  href="https://zouzhitao.github.io/archives/" title="archives">archives</a>
+                    
+                    <a  href="https://zouzhitao.github.io/about/" title="about">about</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div id="body">
+    <div class="container">
+        <div class="col-group">
+
+            <div class="col-8" id="main">
+                <div class="res-cons">
+                    <article class="post">
+                        <header>
+                            <h1 class="post-title">Support Vector Machine</h1>
+                        </header>
+                        <date class="post-meta meta-date">
+                            2019年9月27日
+                        </date>
+                        
+                        <div class="post-meta meta-category">
+                            |
+                            
+                                <a href="https://zouzhitao.github.io/categories/machine-learning">machine-learning</a>
+                            
+                        </div>
+                        
+                        
+                        <div class="post-meta">
+                            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span> 阅读</span></span>
+                        </div>
+                        
+                        
+                        <aside id="toc" class="dismissed">
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
+<ul>
+<li><a href="#intuition">intuition</a></li>
+<li><a href="#lagrangian">Lagrangian</a></li>
+<li><a href="#补充">补充</a>
+<ul>
+<li><a href="#对于非线性可分">对于非线性可分</a></li>
+<li><a href="#soft-margin">soft margin</a></li>
+</ul></li>
+</ul>
+</nav>
+                        </aside><div class="post-content">
+                            
+
+<blockquote>
+<p>简单总结一下SVM，以帮助ML相关面试</p>
+
+<p>SVM 是一种上古时代(90s) 的东西，其实我也不清楚他在工业界的用处到底几何。只是感觉算法特别慢，还意义不太大。</p>
+</blockquote>
+
+<h1 id="intuition">intuition</h1>
+
+<p>首先SVM的动机其实很简单。我们都知道对于分类问题(这里以二分类为例)，就是要找一个超平面将正例和负例分开，而SVM找的这个超平面相对比较特殊，他希望找到一个超平面，s.t最大化到两个类别的距离。</p>
+
+<p><img src="/img/svm/svm1.PNG" alt="juli" /></p>
+
+<p>如图，关于点到超平面的距离，可见我之前写的一篇文章<a href="https://zouzhitao.github.io/posts/math-distence-to-hyperplane/">点到超平面的距离计算</a></p>
+
+<p>设间距为 $c$
+于是，我们简化为以下数学形式，</p>
+
+<p>找到一个超平面(hyperplane)</p>
+
+<p>$w^Tx+b=0$</p>
+
+<p>s.t.</p>
+
+<p>$w^tx_i+b\geq c,\forall y_i=1$</p>
+
+<p>$w^tx_i+b\le -c, \forall y_i=-1$</p>
+
+<p><strong>注意</strong> 这里的距离仅仅是一个<strong>单位</strong>，他到底是多少没有关系，仅仅关系到对超平面的缩放(scale)。</p>
+
+<p>可以得到如下的二阶规划的形式</p>
+
+<p>$$
+\max \frac{C}{||w||}\\<br />
+s.t\\<br />
+y_i(w^tx_i+b) \ge c\\<br />
+$$</p>
+
+<p>即,</p>
+
+<p>$$
+\min ||w|| \rightarrow \min \frac{1}{2} w^Tw\\<br />
+s.t\\<br />
+y_i(w^tx_i+b) \ge 1\\<br />
+$$</p>
+
+<p>到这里其实就完事儿了，用任意一个二阶规划求解器解一下就行了，然而为了说明 support vector 的由来，我们有必要继续探讨一下它的其他形式。</p>
+
+<h1 id="lagrangian">Lagrangian</h1>
+
+<p>关于凸优化中的拉格朗日乘子与KKT条件详见，我的另外一篇文章 <a href="https://zouzhitao.github.io/posts/math-convex-opt/">凸优化</a></p>
+
+<p>这里不见证明的直接用结论了。</p>
+
+<p>利用拉格朗日乘子，</p>
+
+<p>$\mathcal{L}(w,b,\alpha)=\frac{1}{2}w^Tw+\sum \alpha_i(1 - y_i(w^Tx_i +b)),\forall a_i\le 0$</p>
+
+<p>由拉格朗日对偶，</p>
+
+<p>原问题 : $\min_{w,b} \max_{\alpha} \mathcal{L}(w,b,\alpha)$</p>
+
+<p>对偶问题: $\max_{\alpha}\min_{w,b}\mathcal{L}(w,b,\alpha)$</p>
+
+<p>我们求解它的对偶问题(这个问题中对偶问题与原问题是等价的，详见凸优化笔记)，</p>
+
+<p>let,</p>
+
+<p>$\nabla \mathcal{L}_w =w+\sum \alpha_i y_i x_i=0\rightarrow w=\sum \alpha_i y_i x_i$</p>
+
+<p>$\nabla \mathcal{L}_b = \sum \alpha_i y_i=0$</p>
+
+<p>将这两个式子带入 $\mathcal{L}$, 它的对偶问题变为</p>
+
+<p>$$
+\max \mathcal{L}(\alpha) = \sum \alpha_i - \frac{1}{2}\sum \alpha_i \alpha_j y_i y_j(x_i^Tx_i) \\<br />
+s.t.\\<br />
+\alpha_i \ge 0 \\<br />
+\sum \alpha_i y_i = 0, \\<br />
+$$</p>
+
+<p>由 KKT 条件，我们有</p>
+
+<p>if $y_i(w^Tx_i+b) = 1$ (即在边界上)，$\rightarrow \alpha_i &gt;0$</p>
+
+<p>if $y_i(w^Tx_i+b) &gt; 1$ (即不在边界上)，$\rightarrow \alpha_i =0$</p>
+
+<p>其实这个问题并没有带来太大的简化，因为它仍旧是二阶规划问题，(我个人对此不太了解，看相关文献说要$O(n^3) n$,为变量个数)，有一些衍生出来的优化算法(e.g coordinate decent,SMO ..)，不过我也不太care了(lazy learning)</p>
+
+<h1 id="补充">补充</h1>
+
+<h2 id="对于非线性可分">对于非线性可分</h2>
+
+<p>kernel trick，or feature mapping</p>
+
+<h2 id="soft-margin">soft margin</h2>
+
+<p>让第二个等式变为 $y_i(w^tx_i+b) \ge 1 - \eta$</p>
+
+<blockquote>
+<p><strong>版权声明</strong></p>
+
+<p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
+
+<p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
+
+<p><strong>转载请保留此版权声明，并注明出处</strong></p>
+</blockquote>
+
+                        </div>
+                        
+
+                        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/posts/kickstart-2019-rounde/">Kickstart 2019 Round E</a></li>
+        
+        <li><a href="/posts/range-based-for-in-cpp11/">correct way to use Range Based for in Cpp</a></li>
+        
+        <li><a href="/posts/kickstart-2019-roundd/">Kickstart 2019 RoundD</a></li>
+        
+        <li><a href="/posts/kickstart-2019-roundc/">Kickstart 2019 RoundC 题解</a></li>
+        
+        <li><a href="/posts/msra-internship-over/">2019 1-8 实习总结[MSRA,face&#43;&#43;]</a></li>
+        
+    </ul>
+</div>
+
+
+                        <div class="post-meta meta-tags">
+                            
+                            <ul class="clearfix">
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/svm">svm</a></li>
+                                
+                            </ul>
+                            
+                        </div>
+                    </article>
+                    
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "zouzhitao-github-io" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+    
+                </div>
+            </div>
+            <div id="secondary">
+    <section class="widget">
+        <form id="search" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://zouzhitao.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/svm/" title="Support Vector Machine">Support Vector Machine</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kickstart-2019-rounde/" title="Kickstart 2019 Round E">Kickstart 2019 Round E</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/range-based-for-in-cpp11/" title="correct way to use Range Based for in Cpp">correct way to use Range Based for in Cpp</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kickstart-2019-roundd/" title="Kickstart 2019 RoundD">Kickstart 2019 RoundD</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kickstart-2019-roundc/" title="Kickstart 2019 RoundC 题解">Kickstart 2019 RoundC 题解</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/msra-internship-over/" title="2019 1-8 实习总结[MSRA,face&#43;&#43;]">2019 1-8 实习总结[MSRA,face&#43;&#43;]</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kick-start-2019-roundb/" title="Kick Start 2019 RoundB">Kick Start 2019 RoundB</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/km-algorithm/" title="KM Algorithm--二分图最大权匹配">KM Algorithm--二分图最大权匹配</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/count-min-sketch/" title="Count Min Sketch: from Finding the Majority Element problem to heavy hitter problem,统计元素频率的利器">Count Min Sketch: from Finding the Majority Element problem to heavy hitter problem,统计元素频率的利器</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/consistent-hash/" title="Consistent Hash">Consistent Hash</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(2)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(8)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/interview/">interview(4)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/machine-learning/">machine-learning(7)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/math/">math(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/programing-language/">programing-language(5)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/system/">system(4)</a>
+    </li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title">标签</h3>
+<div class="tagcloud">
+    
+    <a href="https://zouzhitao.github.io/tags/co-contra-in-variance/">(co-,contra-,in-)variance</a>
+    
+    <a href="https://zouzhitao.github.io/tags/gbdt/">GBDT</a>
+    
+    <a href="https://zouzhitao.github.io/tags/km/">KM</a>
+    
+    <a href="https://zouzhitao.github.io/tags/mit6.828/">MIT6.828</a>
+    
+    <a href="https://zouzhitao.github.io/tags/ml%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/">ML数学基础</a>
+    
+    <a href="https://zouzhitao.github.io/tags/msra/">MSRA</a>
+    
+    <a href="https://zouzhitao.github.io/tags/os/">OS</a>
+    
+    <a href="https://zouzhitao.github.io/tags/pac/">PAC</a>
+    
+    <a href="https://zouzhitao.github.io/tags/pl/">PL</a>
+    
+    <a href="https://zouzhitao.github.io/tags/uw-programing-language/">UW programing language</a>
+    
+    <a href="https://zouzhitao.github.io/tags/adaboost/">adaboost</a>
+    
+    <a href="https://zouzhitao.github.io/tags/bayes/">bayes</a>
+    
+    <a href="https://zouzhitao.github.io/tags/binary-search/">binary-search</a>
+    
+    <a href="https://zouzhitao.github.io/tags/bloom-filter/">bloom-filter</a>
+    
+    <a href="https://zouzhitao.github.io/tags/boosting/">boosting</a>
+    
+    <a href="https://zouzhitao.github.io/tags/c&#43;&#43;/">c&#43;&#43;</a>
+    
+    <a href="https://zouzhitao.github.io/tags/competitive-programing/">competitive-programing</a>
+    
+    <a href="https://zouzhitao.github.io/tags/consistent-hash/">consistent-hash</a>
+    
+    <a href="https://zouzhitao.github.io/tags/convex/">convex</a>
+    
+    <a href="https://zouzhitao.github.io/tags/count-min-sketch/">count-min-sketch</a>
+    
+    <a href="https://zouzhitao.github.io/tags/cpp11/">cpp11</a>
+    
+    <a href="https://zouzhitao.github.io/tags/decision-tree/">decision-tree</a>
+    
+    <a href="https://zouzhitao.github.io/tags/distributed-system/">distributed-system</a>
+    
+    <a href="https://zouzhitao.github.io/tags/functional-programing/">functional programing</a>
+    
+    <a href="https://zouzhitao.github.io/tags/gdb/">gdb</a>
+    
+    <a href="https://zouzhitao.github.io/tags/gradient-boosting/">gradient boosting</a>
+    
+    <a href="https://zouzhitao.github.io/tags/heavy-hitter/">heavy-hitter</a>
+    
+    <a href="https://zouzhitao.github.io/tags/intern/">intern</a>
+    
+    <a href="https://zouzhitao.github.io/tags/internship/">internship</a>
+    
+    <a href="https://zouzhitao.github.io/tags/interview/">interview</a>
+    
+    <a href="https://zouzhitao.github.io/tags/kick-start/">kick-start</a>
+    
+    <a href="https://zouzhitao.github.io/tags/kickstart/">kickstart</a>
+    
+    <a href="https://zouzhitao.github.io/tags/linear-algebra/">linear-algebra</a>
+    
+    <a href="https://zouzhitao.github.io/tags/machine-learning/">machine learning</a>
+    
+    <a href="https://zouzhitao.github.io/tags/machine-learning/">machine-learning</a>
+    
+    <a href="https://zouzhitao.github.io/tags/mapreduce/">mapreduce</a>
+    
+    <a href="https://zouzhitao.github.io/tags/muti-source-bfs/">muti-source-bfs</a>
+    
+    <a href="https://zouzhitao.github.io/tags/optimization/">optimization</a>
+    
+    <a href="https://zouzhitao.github.io/tags/probability/">probability</a>
+    
+    <a href="https://zouzhitao.github.io/tags/qemu/">qemu</a>
+    
+    <a href="https://zouzhitao.github.io/tags/range-based-for/">range-based-for</a>
+    
+    <a href="https://zouzhitao.github.io/tags/sampling-complexity/">sampling-complexity</a>
+    
+    <a href="https://zouzhitao.github.io/tags/scala/">scala</a>
+    
+    <a href="https://zouzhitao.github.io/tags/sensetime/">senseTime</a>
+    
+    <a href="https://zouzhitao.github.io/tags/sml/">sml</a>
+    
+    <a href="https://zouzhitao.github.io/tags/subline-algorithm/">subline-algorithm</a>
+    
+    <a href="https://zouzhitao.github.io/tags/svm/">svm</a>
+    
+    <a href="https://zouzhitao.github.io/tags/sweep-line/">sweep-line</a>
+    
+    <a href="https://zouzhitao.github.io/tags/thoughts/">thoughts</a>
+    
+    <a href="https://zouzhitao.github.io/tags/unordered_map/">unordered_map</a>
+    
+    <a href="https://zouzhitao.github.io/tags/%E5%88%87%E6%AF%94%E9%9B%AA%E5%A4%AB%E8%B7%9D%E7%A6%BB/">切比雪夫距离</a>
+    
+    <a href="https://zouzhitao.github.io/tags/%E6%9B%BC%E5%93%88%E9%A1%BF%E8%B7%9D%E7%A6%BB/">曼哈顿距离</a>
+    
+</div>
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="https://blog.csdn.net/Dylan_Frank" title="以前的个人博客">dylanfrank@csdn</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://traderforce.github.io/" title="银牌大佬交易者">trader</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://zouzhitao.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+        </div>
+    </div>
+</div>
+<footer id="footer">
+    <div class="container">
+        &copy; 2018 <a href="https://zouzhitao.github.io/">taotao never stop By taotao</a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="http://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/rujews/maupassant-hugo" target="_blank">maupassant</a>.
+        
+    </div>
+</footer>
+
+
+    <script type="text/javascript" src="/js/prism.js" async="true"></script>
+    <script type="text/javascript">
+    window.MathJax = {
+        tex2jax: {
+            inlineMath: [ ['$','$'] ],
+            processEscapes: true
+        }
+    };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src="/js/totop.js?v=0.0.0" async=""></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-100944759-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+<script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+</body>
+</html>
