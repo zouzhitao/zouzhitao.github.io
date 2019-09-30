@@ -6,27 +6,10 @@
     <description>Recent content on taotao never stop</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 29 Sep 2019 18:11:07 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 27 Sep 2019 20:45:14 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>头条搜索算法实习面经</title>
-      <link>https://zouzhitao.github.io/posts/toutiao-search-algorithm-interview/</link>
-      <pubDate>Sun, 29 Sep 2019 18:11:07 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/posts/toutiao-search-algorithm-interview/</guid>
-      <description> 近日参加了头条搜索算法实习生的面试，做一个简单记录。
-还是熟悉的风格和画面~，我个人称这种面试为外企风.
-一面 自我介绍，本以为后面他会让介绍项目，结果画风一转，好，我们先来做几个题目吧~
- 一个圆环上 $n$ 个扇形，用 $m$ 种颜色进行着色，请问有多少中不同的方式 $n$ 个整数，求一个长度不大于 $m$ 的区间([l,&amp;hellip;,r]) 使得他们的乘积最大(这里面试官人很好的给我做了一些简化处理，保证乘积不溢出&amp;hellip;，单调队列+前缀乘积可解) 求任意区间的最小值&amp;hellip;(sparse table) 介绍一个项目 LR模型的异常点检测 对传统的机器学习和深度学习了解多少 能实习多长时间  二面  开场先瞎聊了一下 亚研做的项目 逻辑回归的loss,为什么选这个loss，是直接定义的吗？还是有数学原理(这里必须要mark一下，这东西是有数学原理的，之前MSRA的老师也问过我，后来我去查过，不过经久不用就忘了，这告诫我不求甚解一定是不行的，特别是在原理层面) 树模型 传统的计算机知识问了一下  32位的计算机寻址空间多大 一个应用程序的寻址空间多大(vitual memory) 虚存如何解决应用程序过大的问题(按需调页) 二位数组两种访问方式的区别(cache)  对搜索了解多少 做个题吧，一颗完全二叉树，求最后一个节点  一些关于面试的想法 不得不说这种风格个人还是特别喜欢的，考察的是你的迁移能力，而不是考察你会撒，你知道撒这种很愚蠢苍白的中国应试题。前几天某卖猪的游戏公司就是后者，一上来就是，你知道xxx吗？向问小学生一样，要知道，知道一个东西并没有任何意义，能应用它才是最大的意义，否则，谁有计算机知道的多，计算机存储了世界上所有的知识，可是计算机仍旧没有人类聪明，这是为什么，不就是因为计算机不具有理解能力吗？关于学习这一块而我大致和yin神的想法一致
- 版权声明
-本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
-作者: taotao
-转载请保留此版权声明，并注明出处
- </description>
-    </item>
     
     <item>
       <title>Support Vector Machine</title>
