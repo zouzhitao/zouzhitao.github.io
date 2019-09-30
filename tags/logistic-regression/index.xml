@@ -17,12 +17,19 @@
       <pubDate>Sun, 06 Jan 2019 14:38:13 +0800</pubDate>
       
       <guid>https://zouzhitao.github.io/posts/ml-note-lr/</guid>
-      <description> 写在前面: 这是笔者学习CMU10601-ML机器学习的笔记
-版权声明
-本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
-作者: taotao
-转载请保留此版权声明，并注明出处
- </description>
+      <description>logistic regression (Log.Reg)是一种简单的 Discriminative(后面会简单的比较discriminative 与generative) 分类方法，和naive bayes不同的是，他假设了概率:
+$$ P(y=1|X) = \frac{1}{1+\exp(w_0+\sum w_i^TX_i)} =Sigmoid(x)\\
+P(y=0|X) = 1-P(y=1|X) $$
+那 $P_0 = 1-P$,所以最终得到 $w$ 以后，我们可以用
+$$ \frac{P(y=0|x)}{P(y=1|x)} &amp;gt;0 \rightarrow w_0+\sum w_i^TX_i &amp;lt;0 $$
+来进行分类。
+也就是说这是一个 parametric model, 引入了参数向量 $\theta$
+所以需要来解这个向量:
+loss 接下来我们来看看loss的求解
+$$ \begin{aligned} w &amp;amp;=\arg \max_{w}\prod P(Y_i|X_i,w)[max\ likelyhood]\\
+&amp;amp;=\arg \max \sum \ln P(Y_i|X_i,w)\\
+&amp;amp;=\arg \max \sum (Y_i\ln P(Y_i=1|X_i,w)+(1-Y_i)\ln P(Y_i=0|X_i,w)) \end{aligned} $$ 后面就是用一些优化方法进行求解
+$$ loss(w) = \sum (Y_i\ln P(Y_i=1|X_i,w)+(1-Y_i)\ln P(Y_i=0|X_i,w)) $$</description>
     </item>
     
   </channel>

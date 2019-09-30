@@ -113,6 +113,11 @@
   </url>
   
   <url>
+    <loc>https://zouzhitao.github.io/posts/ml-note-lr/</loc>
+    <lastmod>2019-01-06T14:38:13+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://zouzhitao.github.io/posts/ml-note-naive-bayes/</loc>
     <lastmod>2019-01-05T19:58:38+08:00</lastmod>
   </url>
@@ -281,14 +286,14 @@
   </url>
   
   <url>
-    <loc>https://zouzhitao.github.io/categories/algorithm/</loc>
-    <lastmod>2019-05-08T00:35:33+08:00</lastmod>
+    <loc>https://zouzhitao.github.io/tags/algorithm/</loc>
+    <lastmod>2019-09-29T18:11:07+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://zouzhitao.github.io/tags/algorithm/</loc>
-    <lastmod>2019-09-29T18:11:07+08:00</lastmod>
+    <loc>https://zouzhitao.github.io/categories/algorithm/</loc>
+    <lastmod>2019-05-08T00:35:33+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -323,14 +328,14 @@
   </url>
   
   <url>
-    <loc>https://zouzhitao.github.io/categories/competitive-programing/</loc>
-    <lastmod>2019-08-25T19:10:53+08:00</lastmod>
+    <loc>https://zouzhitao.github.io/tags/competitive-programing/</loc>
+    <lastmod>2018-12-25T15:21:27+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://zouzhitao.github.io/tags/competitive-programing/</loc>
-    <lastmod>2018-12-25T15:21:27+08:00</lastmod>
+    <loc>https://zouzhitao.github.io/categories/competitive-programing/</loc>
+    <lastmod>2019-08-25T19:10:53+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -377,6 +382,12 @@
   </url>
   
   <url>
+    <loc>https://zouzhitao.github.io/tags/gaussion/</loc>
+    <lastmod>2019-01-06T14:38:13+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://zouzhitao.github.io/tags/gdb/</loc>
     <lastmod>2018-12-06T18:49:44+08:00</lastmod>
     <priority>0</priority>
@@ -407,14 +418,14 @@
   </url>
   
   <url>
-    <loc>https://zouzhitao.github.io/categories/interview/</loc>
-    <lastmod>2019-09-29T18:11:07+08:00</lastmod>
+    <loc>https://zouzhitao.github.io/tags/interview/</loc>
+    <lastmod>2019-01-02T09:33:45+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://zouzhitao.github.io/tags/interview/</loc>
-    <lastmod>2019-01-02T09:33:45+08:00</lastmod>
+    <loc>https://zouzhitao.github.io/categories/interview/</loc>
+    <lastmod>2019-09-29T18:11:07+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -443,20 +454,26 @@
   </url>
   
   <url>
+    <loc>https://zouzhitao.github.io/tags/logistic-regression/</loc>
+    <lastmod>2019-01-06T14:38:13+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://zouzhitao.github.io/tags/machine-learning/</loc>
     <lastmod>2019-01-05T19:20:46+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://zouzhitao.github.io/categories/machine-learning/</loc>
-    <lastmod>2019-09-27T20:45:14+08:00</lastmod>
+    <loc>https://zouzhitao.github.io/tags/machine-learning/</loc>
+    <lastmod>2018-12-31T15:27:33+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://zouzhitao.github.io/tags/machine-learning/</loc>
-    <lastmod>2018-12-31T15:27:33+08:00</lastmod>
+    <loc>https://zouzhitao.github.io/categories/machine-learning/</loc>
+    <lastmod>2019-09-27T20:45:14+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -475,6 +492,12 @@
   <url>
     <loc>https://zouzhitao.github.io/tags/muti-source-bfs/</loc>
     <lastmod>2019-04-03T00:09:24+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://zouzhitao.github.io/tags/naive-bayes/</loc>
+    <lastmod>2019-01-06T14:38:13+08:00</lastmod>
     <priority>0</priority>
   </url>
   
