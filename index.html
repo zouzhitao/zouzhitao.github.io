@@ -68,6 +68,69 @@
                         <article class="post">
                             <header>
                                 <h1 class="post-title">
+                                    <a href="https://zouzhitao.github.io/posts/rank-model-based-prob/" title="信息检索(IR)笔记2: Rank: 基于概率的rank model" >信息检索(IR)笔记2: Rank: 基于概率的rank model</a>
+                                </h1>
+                            </header>
+                            <date class="post-meta meta-date">
+                                2019年10月6日
+                            </date>
+                            
+                            <div class="post-meta meta-category">
+                                |
+                                
+                                    <a href="https://zouzhitao.github.io/categories/ir">IR</a>
+                                
+                            </div>
+                            
+                            <div class="post-content">
+                                <blockquote>
+<p>这是<a href="https://web.stanford.edu/class/cs276/">cs276 information retrieval &amp; web search</a>的笔记2，这里总结关于IR 系统中，rank的一些<strong>概率</strong>模型，BIM，BM25</p>
+</blockquote>
+
+<h1 id="introduction">introduction</h1>
+
+<p>IR系统的核心就是ranking，也就是非常直观的任务，对于user的一个query $q$, IR系统希望给每个检索出来的文档一个分数 score，按 …</p>
+                            </div>
+                            <p class="readmore"><a href="https://zouzhitao.github.io/posts/rank-model-based-prob/">阅读全文</a></p>
+                        </article>
+                    
+                        <article class="post">
+                            <header>
+                                <h1 class="post-title">
+                                    <a href="https://zouzhitao.github.io/posts/inverted-index/" title="信息检索(IR)笔记1: 倒排索引(Inverted Index)" >信息检索(IR)笔记1: 倒排索引(Inverted Index)</a>
+                                </h1>
+                            </header>
+                            <date class="post-meta meta-date">
+                                2019年10月6日
+                            </date>
+                            
+                            <div class="post-meta meta-category">
+                                |
+                                
+                                    <a href="https://zouzhitao.github.io/categories/ir">IR</a>
+                                
+                            </div>
+                            
+                            <div class="post-content">
+                                <p>建立索引是 information retrieval 的一个核心问题，这一节简单记录关于index的相关笔记.
+所有内容均来自 <a href="https://web.stanford.edu/class/cs276/">stanford cs276 information retrieval &amp; web search</a></p>
+
+<h1 id="text-preprocessing">text preprocessing</h1>
+
+<p>一些术语</p>
+
+<ol>
+<li>tokenization
+
+<ol>
+<li>将文本编程token流， …</li></ol></li></ol>
+                            </div>
+                            <p class="readmore"><a href="https://zouzhitao.github.io/posts/inverted-index/">阅读全文</a></p>
+                        </article>
+                    
+                        <article class="post">
+                            <header>
+                                <h1 class="post-title">
                                     <a href="https://zouzhitao.github.io/posts/svm/" title="Support Vector Machine" >Support Vector Machine</a>
                                 </h1>
                             </header>
@@ -324,65 +387,6 @@
                             <p class="readmore"><a href="https://zouzhitao.github.io/posts/km-algorithm/">阅读全文</a></p>
                         </article>
                     
-                        <article class="post">
-                            <header>
-                                <h1 class="post-title">
-                                    <a href="https://zouzhitao.github.io/posts/count-min-sketch/" title="Count Min Sketch: from Finding the Majority Element problem to heavy hitter problem,统计元素频率的利器" >Count Min Sketch: from Finding the Majority Element problem to heavy hitter problem,统计元素频率的利器</a>
-                                </h1>
-                            </header>
-                            <date class="post-meta meta-date">
-                                2019年5月8日
-                            </date>
-                            
-                            <div class="post-meta meta-category">
-                                |
-                                
-                                    <a href="https://zouzhitao.github.io/categories/algorithm">algorithm</a>
-                                
-                            </div>
-                            
-                            <div class="post-content">
-                                <blockquote>
-<p>这是笔者学习 Stanford cs 168 课程的一些学习笔记
-lecture 2, 主要讲一个基于 hash 和独立试验思想，设计的一种数据结构 count min sketch，想法非常类似于 bloom filter，都是以牺牲准确率换空间和时间。</p>
-</blockquote>
-
-<h1 id="heavy-hitter-problem">heavy hitter problem</h1>
-
-<h2 id="find-majority-element">Find majority element</h2>
-
-<p>先来看 …</p>
-                            </div>
-                            <p class="readmore"><a href="https://zouzhitao.github.io/posts/count-min-sketch/">阅读全文</a></p>
-                        </article>
-                    
-                        <article class="post">
-                            <header>
-                                <h1 class="post-title">
-                                    <a href="https://zouzhitao.github.io/posts/consistent-hash/" title="Consistent Hash" >Consistent Hash</a>
-                                </h1>
-                            </header>
-                            <date class="post-meta meta-date">
-                                2019年5月4日
-                            </date>
-                            
-                            <div class="post-meta meta-category">
-                                |
-                                
-                                    <a href="https://zouzhitao.github.io/categories/algorithm">algorithm</a>
-                                
-                            </div>
-                            
-                            <div class="post-content">
-                                <blockquote>
-<p>记得我人生第一次参加bytedance 的面试的时候，面试官问我的就是这样一个问题: 你有很多台服务器，每台服务器上都存放着很多数据，现在要加一台服务器，如何才能让数据搬迁尽可能的少，同时能让每台服务器经可能的负载均衡。现在才发现，这就是可一致性hash 问题，当时我答了个hashMap中的rehash操作，给糊弄过去了&hellip;.</p>
-</blockquote>
-
-<p>具体的内容可 …</p>
-                            </div>
-                            <p class="readmore"><a href="https://zouzhitao.github.io/posts/consistent-hash/">阅读全文</a></p>
-                        </article>
-                    
 
                     
 
@@ -405,6 +409,10 @@ lecture 2, 主要讲一个基于 hash 和独立试验思想，设计的一种数
     
     <li >
         <a href="https://zouzhitao.github.io/page/4/">4</a>
+    </li>
+    
+    <li >
+        <a href="https://zouzhitao.github.io/page/5/">5</a>
     </li>
     
 
@@ -433,6 +441,14 @@ lecture 2, 主要讲一个基于 hash 和独立试验思想，设计的一种数
     <section class="widget">
         <h3 class="widget-title">最近文章</h3>
 <ul class="widget-list">
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/rank-model-based-prob/" title="信息检索(IR)笔记2: Rank: 基于概率的rank model">信息检索(IR)笔记2: Rank: 基于概率的rank model</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/inverted-index/" title="信息检索(IR)笔记1: 倒排索引(Inverted Index)">信息检索(IR)笔记1: 倒排索引(Inverted Index)</a>
+    </li>
     
     <li>
         <a href="https://zouzhitao.github.io/posts/svm/" title="Support Vector Machine">Support Vector Machine</a>
@@ -466,14 +482,6 @@ lecture 2, 主要讲一个基于 hash 和独立试验思想，设计的一种数
         <a href="https://zouzhitao.github.io/posts/km-algorithm/" title="KM Algorithm--二分图最大权匹配">KM Algorithm--二分图最大权匹配</a>
     </li>
     
-    <li>
-        <a href="https://zouzhitao.github.io/posts/count-min-sketch/" title="Count Min Sketch: from Finding the Majority Element problem to heavy hitter problem,统计元素频率的利器">Count Min Sketch: from Finding the Majority Element problem to heavy hitter problem,统计元素频率的利器</a>
-    </li>
-    
-    <li>
-        <a href="https://zouzhitao.github.io/posts/consistent-hash/" title="Consistent Hash">Consistent Hash</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -482,6 +490,10 @@ lecture 2, 主要讲一个基于 hash 和独立试验思想，设计的一种数
     <section class="widget">
         <h3 class="widget-title">分类</h3>
 <ul class="widget-list">
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">IR(2)</a>
+    </li>
     
     <li>
         <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(2)</a>
@@ -525,6 +537,10 @@ lecture 2, 主要讲一个基于 hash 和独立试验思想，设计的一种数
     <a href="https://zouzhitao.github.io/tags/co-contra-in-variance/">(co-,contra-,in-)variance</a>
     
     <a href="https://zouzhitao.github.io/tags/gbdt/">GBDT</a>
+    
+    <a href="https://zouzhitao.github.io/tags/ir/">IR</a>
+    
+    <a href="https://zouzhitao.github.io/tags/inverted-index/">Inverted Index</a>
     
     <a href="https://zouzhitao.github.io/tags/km/">KM</a>
     
@@ -609,6 +625,8 @@ lecture 2, 主要讲一个基于 hash 和独立试验思想，设计的一种数
     <a href="https://zouzhitao.github.io/tags/qemu/">qemu</a>
     
     <a href="https://zouzhitao.github.io/tags/range-based-for/">range-based-for</a>
+    
+    <a href="https://zouzhitao.github.io/tags/rank/">rank</a>
     
     <a href="https://zouzhitao.github.io/tags/sampling-complexity/">sampling-complexity</a>
     

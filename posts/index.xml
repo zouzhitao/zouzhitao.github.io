@@ -6,10 +6,42 @@
     <description>Recent content in Posts on taotao never stop</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 27 Sep 2019 20:45:14 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 06 Oct 2019 22:32:32 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>信息检索(IR)笔记2: Rank: 基于概率的rank model</title>
+      <link>https://zouzhitao.github.io/posts/rank-model-based-prob/</link>
+      <pubDate>Sun, 06 Oct 2019 22:32:32 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/rank-model-based-prob/</guid>
+      <description>这是cs276 information retrieval &amp;amp; web search的笔记2，这里总结关于IR 系统中，rank的一些概率模型，BIM，BM25
+ introduction IR系统的核心就是ranking，也就是非常直观的任务，对于user的一个query $q$, IR系统希望给每个检索出来的文档一个分数 score，按照score由高到低反馈给用户，而概率模型的核心就是对这个分数，用概率建模。
+ $P(R|q,d)$ 其中 $R$ 是一个binary事件变量，$R=1$ 表示相关，$R=0$ 表示不相关。$q$ 表示user的查询，而 $d$ 表示文档
+ 由于我们只care的是rank(相对大小)而不是 $Prob$ 绝对大小。因此在概率模型中我们使用的metric通常是
+ $Odd(R|q,d)=\frac{P(R=1|q,d)}{P(R=0|q,d)}$
+ 下面介绍两种概率模型，BIM，BM25，分别基于 二项分布和泊松分布
+BIM( binary independent model) 首先将document 向量化成 $x = (x_1,\dots ,x_i,\dots ,x_T ),T$ 表示 query 中 $term$ 的数量，$x_i =1 \iff term_i$ 在document $d$ 中
+那么 score
+$$ \begin{aligned} O(R|q,d) &amp;amp;= O(Q|q,x)\\
+&amp;amp;= \frac{\Pr(R=1|q,x)}{\Pr(R=0|q,x)}\\
+&amp;amp;= \frac{\frac{\Pr(R=1|q)\Pr(x|R=1,q)}{\Pr(x|q)}}{\frac{\Pr(R=0|q)\Pr(x|R=0,q)}{\Pr(x|q)}} (bayes\ rule)\\</description>
+    </item>
+    
+    <item>
+      <title>信息检索(IR)笔记1: 倒排索引(Inverted Index)</title>
+      <link>https://zouzhitao.github.io/posts/inverted-index/</link>
+      <pubDate>Sun, 06 Oct 2019 22:04:00 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/inverted-index/</guid>
+      <description>建立索引是 information retrieval 的一个核心问题，这一节简单记录关于index的相关笔记. 所有内容均来自 stanford cs276 information retrieval &amp;amp; web search
+text preprocessing 一些术语
+ tokenization  将文本编程token流，通常处理 &amp;ldquo;I&amp;rsquo;m &amp;ldquo;..  normalization  text 和query term 映射统一(e.g. U.S.A USA)  stemming  形式(中文通常没这个问题,e.g. authorize, authorization)  Stop words  omit 掉一些无用的，e.g a,an &amp;hellip;    inverted index term -&amp;gt; (frq,posting_list(docId))
+frq = len(posting_list)
+simple construction text -&amp;gt; tokenstream -&amp;gt; list ( term, docId) -&amp;gt; sort-&amp;gt;unique -&amp;gt; merge</description>
+    </item>
     
     <item>
       <title>Support Vector Machine</title>

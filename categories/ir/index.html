@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="generator" content="Hugo 0.51" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>IR | taotao never stop</title>
+    <meta property="og:title" content="IR - taotao never stop">
+    <meta property="og:type" content="article">
+        
+        
+    <meta name="Keywords" content="computer system,algorithm,OS,distribute system,big data,ML,算法，系统，分布式，大数据，推荐系统">
+    <meta name="description" content="IR">
+        
+    <meta name="author" content="taotao">
+    <meta property="og:url" content="https://zouzhitao.github.io/categories/ir/">
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="/css/normalize.css">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" type="application/rss+xml+xml" href="https://zouzhitao.github.io/categories/ir/index.xml" title="taotao never stop" />
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+    
+
+
+    
+    
+</head>
+
+
+<body>
+<header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://zouzhitao.github.io/">
+                        taotao never stop
+                    </a>
+                
+                <p class="description">喜欢技术，喜欢探索</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://zouzhitao.github.io/">首页</a>
+                    
+                    <a  href="https://zouzhitao.github.io/archives/" title="archives">archives</a>
+                    
+                    <a  href="https://zouzhitao.github.io/about/" title="about">about</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div id="body">
+    <div class="container">
+        <div class="col-group">
+
+            <div class="col-8" id="main">
+                <div class="res-cons">
+                    
+                    <h3 class="archive-title">
+                        分类
+                        <span class="keyword">IR</span>
+                        中的文章
+                    </h3>
+                    
+
+                    
+                        <article class="post">
+                            <header>
+                                <h1 class="post-title">
+                                    <a href="https://zouzhitao.github.io/posts/rank-model-based-prob/">信息检索(IR)笔记2: Rank: 基于概率的rank model</a>
+                                </h1>
+                            </header>
+                            <date class="post-meta meta-date">
+                                2019年10月6日
+                            </date>
+                            
+                            <div class="post-meta meta-category">
+                                |
+                                
+                                    <a href="https://zouzhitao.github.io/categories/ir">IR</a>
+                                
+                            </div>
+                            
+                            <div class="post-content">
+                                <blockquote>
+<p>这是<a href="https://web.stanford.edu/class/cs276/">cs276 information retrieval &amp; web search</a>的笔记2，这里总结关于IR 系统中，rank的一些<strong>概率</strong>模型，BIM，BM25</p>
+</blockquote>
+
+<h1 id="introduction">introduction</h1>
+
+<p>IR系统的核心就是ranking，也就是非常直观的任务，对于user的一个query $q$, IR系统希望给每个检索出来的文档一个分数 score，按 …</p>
+                                <p class="readmore"><a href="https://zouzhitao.github.io/posts/rank-model-based-prob/">阅读全文</a></p>
+                            </div>
+                        </article>
+                    
+                        <article class="post">
+                            <header>
+                                <h1 class="post-title">
+                                    <a href="https://zouzhitao.github.io/posts/inverted-index/">信息检索(IR)笔记1: 倒排索引(Inverted Index)</a>
+                                </h1>
+                            </header>
+                            <date class="post-meta meta-date">
+                                2019年10月6日
+                            </date>
+                            
+                            <div class="post-meta meta-category">
+                                |
+                                
+                                    <a href="https://zouzhitao.github.io/categories/ir">IR</a>
+                                
+                            </div>
+                            
+                            <div class="post-content">
+                                <p>建立索引是 information retrieval 的一个核心问题，这一节简单记录关于index的相关笔记.
+所有内容均来自 <a href="https://web.stanford.edu/class/cs276/">stanford cs276 information retrieval &amp; web search</a></p>
+
+<h1 id="text-preprocessing">text preprocessing</h1>
+
+<p>一些术语</p>
+
+<ol>
+<li>tokenization
+
+<ol>
+<li>将文本编程token流， …</li></ol></li></ol>
+                                <p class="readmore"><a href="https://zouzhitao.github.io/posts/inverted-index/">阅读全文</a></p>
+                            </div>
+                        </article>
+                    
+
+                    
+
+
+
+
+                </div>
+            </div>
+
+            <div id="secondary">
+    <section class="widget">
+        <form id="search" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://zouzhitao.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/rank-model-based-prob/" title="信息检索(IR)笔记2: Rank: 基于概率的rank model">信息检索(IR)笔记2: Rank: 基于概率的rank model</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/inverted-index/" title="信息检索(IR)笔记1: 倒排索引(Inverted Index)">信息检索(IR)笔记1: 倒排索引(Inverted Index)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/svm/" title="Support Vector Machine">Support Vector Machine</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kickstart-2019-rounde/" title="Kickstart 2019 Round E">Kickstart 2019 Round E</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/range-based-for-in-cpp11/" title="correct way to use Range Based for in Cpp">correct way to use Range Based for in Cpp</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kickstart-2019-roundd/" title="Kickstart 2019 RoundD">Kickstart 2019 RoundD</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kickstart-2019-roundc/" title="Kickstart 2019 RoundC 题解">Kickstart 2019 RoundC 题解</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/msra-internship-over/" title="2019 1-8 实习总结[MSRA,face&#43;&#43;]">2019 1-8 实习总结[MSRA,face&#43;&#43;]</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kick-start-2019-roundb/" title="Kick Start 2019 RoundB">Kick Start 2019 RoundB</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/km-algorithm/" title="KM Algorithm--二分图最大权匹配">KM Algorithm--二分图最大权匹配</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">IR(2)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(2)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(8)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/interview/">interview(4)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/machine-learning/">machine-learning(8)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/math/">math(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/programing-language/">programing-language(5)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/system/">system(4)</a>
+    </li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title">标签</h3>
+<div class="tagcloud">
+    
+    <a href="https://zouzhitao.github.io/tags/co-contra-in-variance/">(co-,contra-,in-)variance</a>
+    
+    <a href="https://zouzhitao.github.io/tags/gbdt/">GBDT</a>
+    
+    <a href="https://zouzhitao.github.io/tags/ir/">IR</a>
+    
+    <a href="https://zouzhitao.github.io/tags/inverted-index/">Inverted Index</a>
+    
+    <a href="https://zouzhitao.github.io/tags/km/">KM</a>
+    
+    <a href="https://zouzhitao.github.io/tags/mit6.828/">MIT6.828</a>
+    
+    <a href="https://zouzhitao.github.io/tags/ml%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/">ML数学基础</a>
+    
+    <a href="https://zouzhitao.github.io/tags/msra/">MSRA</a>
+    
+    <a href="https://zouzhitao.github.io/tags/os/">OS</a>
+    
+    <a href="https://zouzhitao.github.io/tags/pac/">PAC</a>
+    
+    <a href="https://zouzhitao.github.io/tags/pl/">PL</a>
+    
+    <a href="https://zouzhitao.github.io/tags/uw-programing-language/">UW programing language</a>
+    
+    <a href="https://zouzhitao.github.io/tags/adaboost/">adaboost</a>
+    
+    <a href="https://zouzhitao.github.io/tags/bayes/">bayes</a>
+    
+    <a href="https://zouzhitao.github.io/tags/binary-search/">binary-search</a>
+    
+    <a href="https://zouzhitao.github.io/tags/bloom-filter/">bloom-filter</a>
+    
+    <a href="https://zouzhitao.github.io/tags/boosting/">boosting</a>
+    
+    <a href="https://zouzhitao.github.io/tags/c&#43;&#43;/">c&#43;&#43;</a>
+    
+    <a href="https://zouzhitao.github.io/tags/competitive-programing/">competitive-programing</a>
+    
+    <a href="https://zouzhitao.github.io/tags/consistent-hash/">consistent-hash</a>
+    
+    <a href="https://zouzhitao.github.io/tags/convex/">convex</a>
+    
+    <a href="https://zouzhitao.github.io/tags/count-min-sketch/">count-min-sketch</a>
+    
+    <a href="https://zouzhitao.github.io/tags/cpp11/">cpp11</a>
+    
+    <a href="https://zouzhitao.github.io/tags/decision-tree/">decision-tree</a>
+    
+    <a href="https://zouzhitao.github.io/tags/distributed-system/">distributed-system</a>
+    
+    <a href="https://zouzhitao.github.io/tags/functional-programing/">functional programing</a>
+    
+    <a href="https://zouzhitao.github.io/tags/gaussion/">gaussion</a>
+    
+    <a href="https://zouzhitao.github.io/tags/gdb/">gdb</a>
+    
+    <a href="https://zouzhitao.github.io/tags/gradient-boosting/">gradient boosting</a>
+    
+    <a href="https://zouzhitao.github.io/tags/heavy-hitter/">heavy-hitter</a>
+    
+    <a href="https://zouzhitao.github.io/tags/intern/">intern</a>
+    
+    <a href="https://zouzhitao.github.io/tags/internship/">internship</a>
+    
+    <a href="https://zouzhitao.github.io/tags/interview/">interview</a>
+    
+    <a href="https://zouzhitao.github.io/tags/kick-start/">kick-start</a>
+    
+    <a href="https://zouzhitao.github.io/tags/kickstart/">kickstart</a>
+    
+    <a href="https://zouzhitao.github.io/tags/linear-algebra/">linear-algebra</a>
+    
+    <a href="https://zouzhitao.github.io/tags/logistic-regression/">logistic-regression</a>
+    
+    <a href="https://zouzhitao.github.io/tags/machine-learning/">machine learning</a>
+    
+    <a href="https://zouzhitao.github.io/tags/machine-learning/">machine-learning</a>
+    
+    <a href="https://zouzhitao.github.io/tags/mapreduce/">mapreduce</a>
+    
+    <a href="https://zouzhitao.github.io/tags/muti-source-bfs/">muti-source-bfs</a>
+    
+    <a href="https://zouzhitao.github.io/tags/naive-bayes/">naive-bayes</a>
+    
+    <a href="https://zouzhitao.github.io/tags/optimization/">optimization</a>
+    
+    <a href="https://zouzhitao.github.io/tags/probability/">probability</a>
+    
+    <a href="https://zouzhitao.github.io/tags/qemu/">qemu</a>
+    
+    <a href="https://zouzhitao.github.io/tags/range-based-for/">range-based-for</a>
+    
+    <a href="https://zouzhitao.github.io/tags/rank/">rank</a>
+    
+    <a href="https://zouzhitao.github.io/tags/sampling-complexity/">sampling-complexity</a>
+    
+    <a href="https://zouzhitao.github.io/tags/scala/">scala</a>
+    
+    <a href="https://zouzhitao.github.io/tags/sensetime/">senseTime</a>
+    
+    <a href="https://zouzhitao.github.io/tags/sml/">sml</a>
+    
+    <a href="https://zouzhitao.github.io/tags/subline-algorithm/">subline-algorithm</a>
+    
+    <a href="https://zouzhitao.github.io/tags/svm/">svm</a>
+    
+    <a href="https://zouzhitao.github.io/tags/sweep-line/">sweep-line</a>
+    
+    <a href="https://zouzhitao.github.io/tags/thoughts/">thoughts</a>
+    
+    <a href="https://zouzhitao.github.io/tags/unordered_map/">unordered_map</a>
+    
+    <a href="https://zouzhitao.github.io/tags/%E5%88%87%E6%AF%94%E9%9B%AA%E5%A4%AB%E8%B7%9D%E7%A6%BB/">切比雪夫距离</a>
+    
+    <a href="https://zouzhitao.github.io/tags/%E6%9B%BC%E5%93%88%E9%A1%BF%E8%B7%9D%E7%A6%BB/">曼哈顿距离</a>
+    
+</div>
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="https://blog.csdn.net/Dylan_Frank" title="以前的个人博客">dylanfrank@csdn</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://traderforce.github.io/" title="银牌大佬交易者">trader</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://zouzhitao.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+        </div>
+    </div>
+</div>
+<footer id="footer">
+    <div class="container">
+        &copy; 2018 <a href="https://zouzhitao.github.io/">taotao never stop By taotao</a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="http://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/rujews/maupassant-hugo" target="_blank">maupassant</a>.
+        
+    </div>
+</footer>
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src="/js/totop.js?v=0.0.0" async=""></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-100944759-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+<script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+
+</body>
+</html>
