@@ -11,7 +11,8 @@ def matchpic(line):
     ret = img_pat.match(line)
     if ret is not None:
         link = ret.groups()[0]
-        line =line.replace(link,url_head+link)
+        line = "<img src=\"{}\" width=\"60%\" />".format(url_head + link)
+        # line =line.replace(link,url_head+link)
     return line
     
 # math latex
@@ -28,23 +29,25 @@ process = [matchpic,latex]
 
 def main(file_name):
     
+    output_file = "tmp.md"
     with open(file_name,"rb") as f:
-        skip = False
-        for line in f:
-            # print(line)
-            line = line.decode("utf-8")
-            if line=='---\n':
-                if not skip:
-                    skip=True
-                else:
-                    skip =False
-                continue
-            
-            if skip:
-                continue
-            for func in process:
-                line = func(line)
-            print(line,end="")
+        with open(output_file,"w",encoding="utf-8") as out:
+            skip = False
+            for line in f:
+                # print(line)
+                line = line.decode("utf-8")
+                if line=='---\n':
+                    if not skip:
+                        skip=True
+                    else:
+                        skip =False
+                    continue
+                
+                if skip:
+                    continue
+                for func in process:
+                    line = func(line)
+                out.write(line)
 
 if __name__ == "__main__":
     

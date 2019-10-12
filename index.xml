@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>taotao never stop</title>
+    <title>taotao 码字的地方</title>
     <link>https://zouzhitao.github.io/</link>
-    <description>Recent content on taotao never stop</description>
+    <description>Recent content on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Sun, 06 Oct 2019 22:32:32 +0800</lastBuildDate>
@@ -791,11 +791,13 @@ coursera 课程地址: https://www.coursera.org/learn/programming-languages
       <pubDate>Tue, 27 Nov 2018 09:26:05 +0800</pubDate>
       
       <guid>https://zouzhitao.github.io/about/</guid>
-      <description>about me former Reaserch Intern @MSRA &amp;amp; @megvii(旷视) research,seeking for intern position
-cv
+      <description> about me 目前浙软一名砖工，计算机编程爱好者，以自学为主
 其他技术博客 :CSDN 博(copy)客(paste)专家
 e-mail : zhitaozou97@gmail.com
-github : taotao</description>
+github : taotao
+欢迎下方留言递交友链
+格式
+title = &amp;quot;以前的个人博客&amp;quot; name = &amp;quot;dylanfrank@csdn&amp;quot; url = &amp;quot;https://blog.csdn.net/Dylan_Frank&amp;quot;  </description>
     </item>
     
     <item>
