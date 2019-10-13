@@ -6,10 +6,25 @@
     <description>Recent content in Posts on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 06 Oct 2019 22:32:32 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 13 Oct 2019 18:25:18 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Dimension Reduction 降维: 随机投影与JL 变换</title>
+      <link>https://zouzhitao.github.io/posts/dimension-reduction/</link>
+      <pubDate>Sun, 13 Oct 2019 18:25:18 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/dimension-reduction/</guid>
+      <description>关于维度爆炸的问题，历来探讨的都很广泛。存在于很多真实的问题中，比如 nearest neighbor，最近邻问题，这里总结一种简单的技术，叫做随机投影(random projection)
+ 最近邻问题的简单描述如下:
+给定 $k$ 维空间 $R^k$ 中的 $n$ 个点 $x_1,x_2,\dots ,x_n$,找到每个点的最近邻居 $NN_i = \arg \min_j \mathcal{L_2}(x_i,x_j) = \arg \min_j ||x_i-x_j||_2^2$,
+朴素的算法复杂度为 $O(n^2 k)$, $k$ 为计算 $\mathcal{L_2}$ 的时间复杂度。通常 $k \le 20$ 非常小的情况下可以用 kd-tree (注 这里kd-tree 查询最近邻的复杂度问题，我看很多资料都写着会和dim成指数增长，然而原始论文写的是 $O(\log n)$ ,这里个人暂时并没有一个严格证明. 此处留待验证，和这个主题暂时无关).
+随机投影 随机投影的想法很简单，它的直观就是 ，想象我们在二维平面上找一个点 $p$ 的最近邻，如果在 $x$ 坐标上距离 $p$ 比较远的点，通常很难成为最终解。
+接下来我们用严格的数学语言表述一下:
+define $f_\mathbf{v}(\mathbf{x}) = \mathbf{x} \mathbf{v} = \sum x_i v_i, \mathbf{v} \in \mathcal{N(0,1)}$ 即将向量 $\mathbf{x}$ 在 $\mathbf{v}$ 上做一个投影</description>
+    </item>
     
     <item>
       <title>信息检索(IR)笔记2: Rank: 基于概率的rank model</title>
@@ -103,7 +118,7 @@ code github
     </item>
     
     <item>
-      <title>correct way to use Range Based for in Cpp</title>
+      <title>cpp 中Range Based for 的性能分析</title>
       <link>https://zouzhitao.github.io/posts/range-based-for-in-cpp11/</link>
       <pubDate>Fri, 23 Aug 2019 14:42:36 +0800</pubDate>
       
@@ -230,7 +245,7 @@ reference
     </item>
     
     <item>
-      <title>Count Min Sketch: from Finding the Majority Element problem to heavy hitter problem,统计元素频率的利器</title>
+      <title>Count Min Sketch:找最频繁元素</title>
       <link>https://zouzhitao.github.io/posts/count-min-sketch/</link>
       <pubDate>Wed, 08 May 2019 00:35:33 +0800</pubDate>
       

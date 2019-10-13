@@ -1,0 +1,583 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="generator" content="Hugo 0.51" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Dimension Reduction 降维: 随机投影与JL 变换 | taotao 码字的地方</title>
+    <meta property="og:title" content="Dimension Reduction 降维: 随机投影与JL 变换 - taotao 码字的地方">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content="2019-10-13T18:25:18&#43;08:00">
+        
+        
+    <meta property="article:modified_time" content="2019-10-13T18:25:18&#43;08:00">
+        
+    <meta name="Keywords" content="computer system,algorithm,OS,distribute system,big data,ML,算法，系统，分布式，大数据，推荐系统">
+    <meta name="description" content="Dimension Reduction 降维: 随机投影与JL 变换">
+        
+    <meta name="author" content="taotao">
+    <meta property="og:url" content="https://zouzhitao.github.io/posts/dimension-reduction/">
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="/css/normalize.css">
+    
+        <link rel="stylesheet" href="/css/prism.css">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+    
+
+
+    
+    
+</head>
+
+<body>
+<header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://zouzhitao.github.io/">
+                        taotao 码字的地方
+                    </a>
+                
+                <p class="description">喜欢技术，喜欢探索</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://zouzhitao.github.io/">首页</a>
+                    
+                    <a  href="https://zouzhitao.github.io/archives/" title="archives">archives</a>
+                    
+                    <a  href="https://zouzhitao.github.io/about/" title="about">about</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div id="body">
+    <div class="container">
+        <div class="col-group">
+
+            <div class="col-8" id="main">
+                <div class="res-cons">
+                    <article class="post">
+                        <header>
+                            <h1 class="post-title">Dimension Reduction 降维: 随机投影与JL 变换</h1>
+                        </header>
+                        <date class="post-meta meta-date">
+                            2019年10月13日
+                        </date>
+                        
+                        <div class="post-meta meta-category">
+                            |
+                            
+                                <a href="https://zouzhitao.github.io/categories/algorithm">algorithm</a>
+                            
+                        </div>
+                        
+                        
+                        <div class="post-meta">
+                            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span> 阅读</span></span>
+                        </div>
+                        
+                        
+                        <aside id="toc" class="dismissed">
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
+<ul>
+<li><a href="#随机投影">随机投影</a>
+<ul>
+<li><a href="#mathcal-l-2-距离的无偏估计">$\mathcal{L_2} 距离的无偏估计$</a></li>
+</ul></li>
+<li><a href="#jl-transform">JL Transform</a>
+<ul>
+<li><a href="#jl-变换的加速工作">JL 变换的加速工作</a>
+<ul>
+<li><a href="#改变变量分布">改变变量分布</a></li>
+<li><a href="#fast-jl-transform">Fast JL Transform</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#总结-beyond-jl">总结: beyond JL</a></li>
+<li><a href="#一些代码和实验">一些代码和实验</a></li>
+<li><a href="#ref">ref</a></li>
+</ul>
+</nav>
+                        </aside><div class="post-content">
+                            
+
+<blockquote>
+<p>关于维度爆炸的问题，历来探讨的都很广泛。存在于很多真实的问题中，比如 nearest neighbor，最近邻问题，这里总结一种简单的技术，叫做随机投影(random projection)</p>
+</blockquote>
+
+<p>最近邻问题的简单描述如下:</p>
+
+<p>给定 $k$ 维空间 $R^k$ 中的 $n$ 个点 $x_1,x_2,\dots ,x_n$,找到每个点的最近邻居 $NN_i = \arg \min_j \mathcal{L_2}(x_i,x_j) = \arg \min_j ||x_i-x_j||_2^2$,</p>
+
+<p>朴素的<strong>算法复杂度</strong>为 $O(n^2 k)$, $k$ 为计算 $\mathcal{L_2}$ 的时间复杂度。通常 $k \le 20$ 非常小的情况下可以用 <strong>kd-tree</strong> (<strong>注</strong> 这里kd-tree 查询最近邻的复杂度问题，我看很多资料都写着会和dim成指数增长，然而原始论文写的是 $O(\log n)$ ,这里个人暂时并没有一个严格证明. 此处留待验证，和这个主题暂时无关).</p>
+
+<h1 id="随机投影">随机投影</h1>
+
+<p>随机投影的想法很简单，它的直观就是 ，想象我们在二维平面上找一个点 $p$ 的最近邻，如果在 $x$ 坐标上距离 $p$ 比较远的点，通常很难成为最终解。</p>
+
+<p>接下来我们用严格的数学语言表述一下:</p>
+
+<p><strong>define</strong> $f_\mathbf{v}(\mathbf{x}) = \mathbf{x} \mathbf{v} = \sum x_i v_i, \mathbf{v} \in \mathcal{N(0,1)}$ 即将向量 $\mathbf{x}$ 在 $\mathbf{v}$ 上做一个投影</p>
+
+<p>接下来我们证明对于任意两个向量 $\mathbf{x},\mathbf{y} \in \mathcal{R}^k,\mathbf{v} \sim \mathcal{N}(0,1),(f_\mathbf{v}(\mathbf{x}) -f_\mathbf{v}(\mathbf{y}))^2$
+是 $|\mathbf{x}-\mathbf{y}|_2^2$ 的无偏估计</p>
+
+<h2 id="mathcal-l-2-距离的无偏估计">$\mathcal{L_2} 距离的无偏估计$</h2>
+
+<p>$f_\mathbf{v}(\mathbf{x}) - f_\mathbf{v}(\mathbf{x}) = \sum (x_i-y_i) v_i$</p>
+
+<p>其中 $v_i \sim \mathcal{N}(0,1)$,因此 $D = f_\mathbf{v}(\mathbf{x}) - f_\mathbf{v}(\mathbf{x}) \sim \mathcal{N}(0,\sum (x_i-y_i)^2)$</p>
+
+<p>由统计中的经典公式 $E[X^2] = E^2[X] + Var(X)$ 可知</p>
+
+<p>$$
+E[(f_\mathbf{v}(\mathbf{x}) - f_\mathbf{v}(\mathbf{x}))^2]=Var(f_\mathbf{v}(\mathbf{x}) - f_\mathbf{v}(\mathbf{x}))=|\mathbf{x}-\mathbf{y}|_2^2
+$$</p>
+
+<p>实际上采用独立实验的思想，也就是说，多选取几个随机向量 $\mathbf{v}$ 我们能够得到得到更加的结果，具体的，如果采用 $d$ 个随机向量，当$d$ 足够大的时候，我们能够得到任意估计的任意两个向量的距离不超过原有距离的 $\epsilon$</p>
+
+<h1 id="jl-transform">JL Transform</h1>
+
+<p>JL 变换就是应用随机独立实验的思想将随机投影从往一个线投变为往一个空间投</p>
+
+<p><strong>JL 变换</strong></p>
+
+<p>$$
+f(X) = \frac{1}{\sqrt{d}} X_{n\mathbb{x}k} A_{k\mathbb{x}d},f : \mathcal{R}^k \rightarrow \mathcal{R}^d
+$$</p>
+
+<p>然而这是有定理证明保证的</p>
+
+<p>(JL 定理[1]) 给定 $\epsilon &gt;0$,令 $d\ge d_0=\theta(\epsilon^{-2}\log n)$, 存在一个映射 $f: \mathcal{R}^k\rightarrowtail \mathcal{R}^d$ ,使得 $\forall \mathbf{x},\mathbf{y} \in P$, $P$ 是任意给定的 $n$ 个点的点集，满足</p>
+
+<p>$$
+(1-\epsilon)||\mathbf{x}-\mathbf{y}||_2^2\le ||f(\mathbf{x}) - \mathbf{y}||_2^2\le (1+\epsilon)||\mathbf{x}-\mathbf{y}||
+$$</p>
+
+<h2 id="jl-变换的加速工作">JL 变换的加速工作</h2>
+
+<p>JL 变化的加速工作有两个方式，一种是改变投影向量的分布[2],一种是引入类似 $\mathcal{FFT}$ 的思想构造一个特俗矩阵，加快JL变换的计算[3]</p>
+
+<h3 id="改变变量分布">改变变量分布</h3>
+
+<p><img src="/img/JL/JL.PNG" width="80%" /></p>
+
+<h3 id="fast-jl-transform">Fast JL Transform</h3>
+
+<p>这个方法是构造几个特俗矩阵 $\Phi = P H D$, 其中 $H$ 是 W-H 矩阵，D 是对角矩阵， $H$ 是一个sparse JL 矩阵，证明太过复杂带填坑。。。详见ref</p>
+
+<h1 id="总结-beyond-jl">总结: beyond JL</h1>
+
+<p>JL 变换本质上还是在降维，并没有改变 NN 问题复杂度的本质 $O(n^2 O(distance-metric))$,如果要解决 $n^2$ 的问题还是要从LSH(locality-sensitive-hash) 着手，详见后文</p>
+
+<p>不过<strong>独立实验</strong> 的思想，确实是一个非常简单美妙的思想</p>
+
+<h1 id="一些代码和实验">一些代码和实验</h1>
+
+<p><a href="https://github.com/zouzhitao/cs168-19-stanford/blob/master/min-project2/part2.ipynb">code</a></p>
+
+<h1 id="ref">ref</h1>
+
+<ol>
+<li>W.B. Johnson, J. Lindenstrauss, Extensions of Lipschitz mappings into a Hilbert space, Conference in modern analysis and probability, New Haven, CI, 1982, Amer. Math. Soc., Providence, RI, 1984, pp. 189–206</li>
+<li>D. Achlioptas. <a href="https://users.soe.ucsc.edu/~optas/papers/jl.pdf">Database-friendly random projections: Johnson-Lindenstrauss with binary coins</a>. Journal of Computer and System Sciences, 66(4):671–687, 2003</li>
+<li>N. Ailon and B. Chazelle. <a href="https://www.cs.princeton.edu/~chazelle/pubs/fasterdim-ac10.pdf">Faster dimension reduction</a>. Communications of the ACM,
+53(2):97–104, 2010</li>
+</ol>
+
+<blockquote>
+<p><strong>版权声明</strong></p>
+
+<p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
+
+<p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
+
+<p><strong>仅允许非商业转载，转载请保留此版权声明，并注明出处</strong></p>
+</blockquote>
+
+                        </div>
+                        
+
+                        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/posts/rank-model-based-prob/">信息检索(IR)笔记2: Rank: 基于概率的rank model</a></li>
+        
+        <li><a href="/posts/inverted-index/">信息检索(IR)笔记1: 倒排索引(Inverted Index)</a></li>
+        
+        <li><a href="/posts/svm/">Support Vector Machine</a></li>
+        
+        <li><a href="/posts/kickstart-2019-rounde/">Kickstart 2019 Round E</a></li>
+        
+        <li><a href="/posts/range-based-for-in-cpp11/">cpp 中Range Based for 的性能分析</a></li>
+        
+    </ul>
+</div>
+
+
+                        <div class="post-meta meta-tags">
+                            
+                            <ul class="clearfix">
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/big-data">big-data</a></li>
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/dimension-reduction">dimension-reduction</a></li>
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/nearest-neighbor">nearest-neighbor</a></li>
+                                
+                            </ul>
+                            
+                        </div>
+                    </article>
+                    
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "zouzhitao-github-io" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+    
+                </div>
+            </div>
+            <div id="secondary">
+    <section class="widget">
+        <form id="search" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://zouzhitao.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/dimension-reduction/" title="Dimension Reduction 降维: 随机投影与JL 变换">Dimension Reduction 降维: 随机投影与JL 变换</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/rank-model-based-prob/" title="信息检索(IR)笔记2: Rank: 基于概率的rank model">信息检索(IR)笔记2: Rank: 基于概率的rank model</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/inverted-index/" title="信息检索(IR)笔记1: 倒排索引(Inverted Index)">信息检索(IR)笔记1: 倒排索引(Inverted Index)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/svm/" title="Support Vector Machine">Support Vector Machine</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kickstart-2019-rounde/" title="Kickstart 2019 Round E">Kickstart 2019 Round E</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/range-based-for-in-cpp11/" title="cpp 中Range Based for 的性能分析">cpp 中Range Based for 的性能分析</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kickstart-2019-roundd/" title="Kickstart 2019 RoundD">Kickstart 2019 RoundD</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kickstart-2019-roundc/" title="Kickstart 2019 RoundC 题解">Kickstart 2019 RoundC 题解</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/msra-internship-over/" title="2019 1-8 实习总结[MSRA,face&#43;&#43;]">2019 1-8 实习总结[MSRA,face&#43;&#43;]</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kick-start-2019-roundb/" title="Kick Start 2019 RoundB">Kick Start 2019 RoundB</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">IR(2)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(8)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/interview/">interview(4)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/machine-learning/">machine-learning(8)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/math/">math(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/programing-language/">programing-language(5)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/system/">system(4)</a>
+    </li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title">标签</h3>
+<div class="tagcloud">
+    
+    <a href="https://zouzhitao.github.io/tags/co-contra-in-variance/">(co-,contra-,in-)variance</a>
+    
+    <a href="https://zouzhitao.github.io/tags/gbdt/">GBDT</a>
+    
+    <a href="https://zouzhitao.github.io/tags/ir/">IR</a>
+    
+    <a href="https://zouzhitao.github.io/tags/inverted-index/">Inverted Index</a>
+    
+    <a href="https://zouzhitao.github.io/tags/km/">KM</a>
+    
+    <a href="https://zouzhitao.github.io/tags/mit6.828/">MIT6.828</a>
+    
+    <a href="https://zouzhitao.github.io/tags/ml%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/">ML数学基础</a>
+    
+    <a href="https://zouzhitao.github.io/tags/msra/">MSRA</a>
+    
+    <a href="https://zouzhitao.github.io/tags/os/">OS</a>
+    
+    <a href="https://zouzhitao.github.io/tags/pac/">PAC</a>
+    
+    <a href="https://zouzhitao.github.io/tags/pl/">PL</a>
+    
+    <a href="https://zouzhitao.github.io/tags/uw-programing-language/">UW programing language</a>
+    
+    <a href="https://zouzhitao.github.io/tags/adaboost/">adaboost</a>
+    
+    <a href="https://zouzhitao.github.io/tags/bayes/">bayes</a>
+    
+    <a href="https://zouzhitao.github.io/tags/big-data/">big-data</a>
+    
+    <a href="https://zouzhitao.github.io/tags/binary-search/">binary-search</a>
+    
+    <a href="https://zouzhitao.github.io/tags/bloom-filter/">bloom-filter</a>
+    
+    <a href="https://zouzhitao.github.io/tags/boosting/">boosting</a>
+    
+    <a href="https://zouzhitao.github.io/tags/c&#43;&#43;/">c&#43;&#43;</a>
+    
+    <a href="https://zouzhitao.github.io/tags/competitive-programing/">competitive-programing</a>
+    
+    <a href="https://zouzhitao.github.io/tags/consistent-hash/">consistent-hash</a>
+    
+    <a href="https://zouzhitao.github.io/tags/convex/">convex</a>
+    
+    <a href="https://zouzhitao.github.io/tags/count-min-sketch/">count-min-sketch</a>
+    
+    <a href="https://zouzhitao.github.io/tags/cpp11/">cpp11</a>
+    
+    <a href="https://zouzhitao.github.io/tags/decision-tree/">decision-tree</a>
+    
+    <a href="https://zouzhitao.github.io/tags/dimension-reduction/">dimension-reduction</a>
+    
+    <a href="https://zouzhitao.github.io/tags/distributed-system/">distributed-system</a>
+    
+    <a href="https://zouzhitao.github.io/tags/functional-programing/">functional programing</a>
+    
+    <a href="https://zouzhitao.github.io/tags/gaussion/">gaussion</a>
+    
+    <a href="https://zouzhitao.github.io/tags/gdb/">gdb</a>
+    
+    <a href="https://zouzhitao.github.io/tags/gradient-boosting/">gradient boosting</a>
+    
+    <a href="https://zouzhitao.github.io/tags/heavy-hitter/">heavy-hitter</a>
+    
+    <a href="https://zouzhitao.github.io/tags/intern/">intern</a>
+    
+    <a href="https://zouzhitao.github.io/tags/internship/">internship</a>
+    
+    <a href="https://zouzhitao.github.io/tags/interview/">interview</a>
+    
+    <a href="https://zouzhitao.github.io/tags/kick-start/">kick-start</a>
+    
+    <a href="https://zouzhitao.github.io/tags/kickstart/">kickstart</a>
+    
+    <a href="https://zouzhitao.github.io/tags/linear-algebra/">linear-algebra</a>
+    
+    <a href="https://zouzhitao.github.io/tags/logistic-regression/">logistic-regression</a>
+    
+    <a href="https://zouzhitao.github.io/tags/machine-learning/">machine learning</a>
+    
+    <a href="https://zouzhitao.github.io/tags/machine-learning/">machine-learning</a>
+    
+    <a href="https://zouzhitao.github.io/tags/mapreduce/">mapreduce</a>
+    
+    <a href="https://zouzhitao.github.io/tags/muti-source-bfs/">muti-source-bfs</a>
+    
+    <a href="https://zouzhitao.github.io/tags/naive-bayes/">naive-bayes</a>
+    
+    <a href="https://zouzhitao.github.io/tags/nearest-neighbor/">nearest-neighbor</a>
+    
+    <a href="https://zouzhitao.github.io/tags/optimization/">optimization</a>
+    
+    <a href="https://zouzhitao.github.io/tags/probability/">probability</a>
+    
+    <a href="https://zouzhitao.github.io/tags/qemu/">qemu</a>
+    
+    <a href="https://zouzhitao.github.io/tags/range-based-for/">range-based-for</a>
+    
+    <a href="https://zouzhitao.github.io/tags/rank/">rank</a>
+    
+    <a href="https://zouzhitao.github.io/tags/sampling-complexity/">sampling-complexity</a>
+    
+    <a href="https://zouzhitao.github.io/tags/scala/">scala</a>
+    
+    <a href="https://zouzhitao.github.io/tags/sensetime/">senseTime</a>
+    
+    <a href="https://zouzhitao.github.io/tags/sml/">sml</a>
+    
+    <a href="https://zouzhitao.github.io/tags/subline-algorithm/">subline-algorithm</a>
+    
+    <a href="https://zouzhitao.github.io/tags/svm/">svm</a>
+    
+    <a href="https://zouzhitao.github.io/tags/sweep-line/">sweep-line</a>
+    
+    <a href="https://zouzhitao.github.io/tags/thoughts/">thoughts</a>
+    
+    <a href="https://zouzhitao.github.io/tags/unordered_map/">unordered_map</a>
+    
+    <a href="https://zouzhitao.github.io/tags/%E5%88%87%E6%AF%94%E9%9B%AA%E5%A4%AB%E8%B7%9D%E7%A6%BB/">切比雪夫距离</a>
+    
+    <a href="https://zouzhitao.github.io/tags/%E6%9B%BC%E5%93%88%E9%A1%BF%E8%B7%9D%E7%A6%BB/">曼哈顿距离</a>
+    
+</div>
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="https://blog.csdn.net/Dylan_Frank" title="以前的个人博客">dylanfrank@csdn</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://traderforce.github.io/" title="银牌大佬交易者">trader</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://bbkgl.github.io/" title="c&#43;&#43;技术大牛">坤坤</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://tawn0000.github.io" title="JNU ACMer,银牌大佬">tawn</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://zouzhitao.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+        </div>
+    </div>
+</div>
+<footer id="footer">
+    <div class="container">
+        &copy; 2018 <a href="https://zouzhitao.github.io/">taotao 码字的地方 By taotao</a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="http://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/rujews/maupassant-hugo" target="_blank">maupassant</a>.
+        
+    </div>
+</footer>
+
+
+    <script type="text/javascript" src="/js/prism.js" async="true"></script>
+    <script type="text/javascript">
+    window.MathJax = {
+        tex2jax: {
+            inlineMath: [ ['$','$'] ],
+            processEscapes: true
+        }
+    };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src="/js/totop.js?v=0.0.0" async=""></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-100944759-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+<script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+</body>
+</html>
