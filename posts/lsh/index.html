@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="generator" content="Hugo 0.51" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>找相似元素: LSH 局部敏感性hash | taotao 码字的地方</title>
+    <meta property="og:title" content="找相似元素: LSH 局部敏感性hash - taotao 码字的地方">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content="2019-10-14T19:19:18&#43;08:00">
+        
+        
+    <meta property="article:modified_time" content="2019-10-14T19:19:18&#43;08:00">
+        
+    <meta name="Keywords" content="computer system,algorithm,OS,distribute system,big data,ML,算法，系统，分布式，大数据，推荐系统">
+    <meta name="description" content="找相似元素: LSH 局部敏感性hash">
+        
+    <meta name="author" content="taotao">
+    <meta property="og:url" content="https://zouzhitao.github.io/posts/lsh/">
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="/css/normalize.css">
+    
+        <link rel="stylesheet" href="/css/prism.css">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+    
+
+
+    
+    
+</head>
+
+<body>
+<header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://zouzhitao.github.io/">
+                        taotao 码字的地方
+                    </a>
+                
+                <p class="description">喜欢技术，喜欢探索</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://zouzhitao.github.io/">首页</a>
+                    
+                    <a  href="https://zouzhitao.github.io/archives/" title="archives">archives</a>
+                    
+                    <a  href="https://zouzhitao.github.io/about/" title="about">about</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div id="body">
+    <div class="container">
+        <div class="col-group">
+
+            <div class="col-8" id="main">
+                <div class="res-cons">
+                    <article class="post">
+                        <header>
+                            <h1 class="post-title">找相似元素: LSH 局部敏感性hash</h1>
+                        </header>
+                        <date class="post-meta meta-date">
+                            2019年10月14日
+                        </date>
+                        
+                        <div class="post-meta meta-category">
+                            |
+                            
+                                <a href="https://zouzhitao.github.io/categories/algorithm">algorithm</a>
+                            
+                        </div>
+                        
+                        
+                        <div class="post-meta">
+                            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span> 阅读</span></span>
+                        </div>
+                        
+                        
+                        <aside id="toc" class="dismissed">
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
+<ul>
+<li><a href="#case-study">case study</a>
+<ul>
+<li><a href="#lsh">LSH</a></li>
+</ul></li>
+<li><a href="#lsh-theroy">LSH Theroy</a>
+<ul>
+<li><a href="#and-扩展">AND 扩展</a></li>
+<li><a href="#or-扩展">OR 扩展</a></li>
+</ul></li>
+<li><a href="#其他距离函数">其他距离函数</a>
+<ul>
+<li><a href="#cosine-similarity">cosine similarity</a></li>
+<li><a href="#l2-norm">L2 norm</a></li>
+</ul></li>
+<li><a href="#ref">ref</a></li>
+</ul>
+</nav>
+                        </aside><div class="post-content">
+                            
+
+<blockquote>
+<p>这篇博文简单总结一下局部敏感性hash(locality-sensetive-hash,LSH) 在找相似元素中的应用，这也是最近邻的另外一种解决方案</p>
+</blockquote>
+
+<p>LSH 的直觉非常简单，设想一下我们判断一个集合 $set$ 中是否存在一个元素 $e$ 的方法，通常是将集合中的所有元素hash到一个一个的桶中，同时将 $e$ hash到桶中，如果存在，那么一定能在 $hash(e)$ 的桶中找到 $e$ ，这样的均摊代价只有 $O(1)$</p>
+
+<p>不过如果我们要找在某种距离下，与元素 $e$ 仅有些许差别(i.e. $distance(e,x) \le \theta$),而不是完全相同时，上面这种通常的hash方案是一定不行的。如果，我们能够找到一个hash 函数 $s.t. \Pr[hash(x)= hash(y)] = sim(x,y),x\ne y$ 即，两个不同元素hash到一个桶的概率和衡量他们之间距离的函数有某种数学关系，那么在加上一些独立实验的trick就能够保证，hash到一个桶中的元素都是距离相近的元素了</p>
+
+<h1 id="case-study">case study</h1>
+
+<p>假设有 $n$ 个集合 $set_1,\dots,set_n$, 每个集合是一些数字(或者可以将每个集合看做bit vector)表示是否存在某个元素 $e$. 我们要寻找每个集合的相识集合。</p>
+
+<p><strong>Jaccard similarity</strong> $sim(A,B)=\frac{|A\cap B|}{|A\cup B|}$.</p>
+
+<p>定义hash 函数 $min-hash(A) =\arg \min_{x \in A} hash(x), \forall x \ne y, hash(x)\ne hash(y) $,(一般来说会选择排列 $\pi$ 作为这样的hash 函数，然而其实通常意义上任意的hash函数都是ok的)。我们会发现 $min-hash$ 的一个好处</p>
+
+<p>$$
+\Pr[min-hash(x)=min-hash(y)]= \frac{|A\cap B|}{|A\cup B|}
+$$</p>
+
+<p>那么这里我们也采用独立实验的思想，选择 $r$ 个这样的hash函数，计算min-hash。两个集合的相似度就可以简单的计算为 $\frac{\#min-hash(A)=min-hash(B)}{r}$.</p>
+
+<h2 id="lsh">LSH</h2>
+
+<p>将上述计算的 $r$ 个hash函数的值记作 $M_{A,i}$ : 集合 $A$ 在$min-hash_i$ 下的计算值，如果将每个集合的所有 $r$ 个hash值，在用一个 hash映射出去，假设 $A,B$ 两个集合的相似度为 $p$,我们来算算，他们最终进入一个桶的概率.</p>
+
+<p>第 $i$ 个min-hash值相同的概率为 $p$,</p>
+
+<p>最终hash到一个桶的概率为 $p^r$,</p>
+
+<p>没被hash到一个桶的概率为 $1-p^r$,</p>
+
+<p>同理采用独立实验的思想，扩展上面的操作 $b$ 次， 即设置 $b*r$ 个min-hash，分为 $b$ 个band，每个band $r$ 个min-hash，如上。如果有一个band是相同的，即认为他们相同(OR 系统)。</p>
+
+<p>这样他们最终hash到一个桶的概率为 $1 - (1-p^r)^b$,这是一条 $s$ 曲线，需要注意的是，这样做会产生 false positive，与false negtive，分别是曲线与 x轴和 $y=1$ 围成的面积</p>
+
+<p><img src="/img/s-curve.png" width="40%" /></p>
+
+<h1 id="lsh-theroy">LSH Theroy</h1>
+
+<p><img src="/img/lsh.PNG" width="40%" /></p>
+
+<h2 id="and-扩展">AND 扩展</h2>
+
+<p>也就是采用上面的 r 个函数扩展，可以证明， $r$ 个AND 扩展可以变为</p>
+
+<p>$$
+(d_1,d_2,p_1^r,p_2^r)-sensitive
+$$</p>
+
+<h2 id="or-扩展">OR 扩展</h2>
+
+<p>$$
+(d_1,d_2,1 - (1 - p_1)^b,1-(1-p_2)^b)-sensitive
+$$</p>
+
+<h1 id="其他距离函数">其他距离函数</h1>
+
+<h2 id="cosine-similarity">cosine similarity</h2>
+
+<p>random-hyperplane,: $sgn(f_v(x))$</p>
+
+<h2 id="l2-norm">L2 norm</h2>
+
+<p>random line projection ：$f_\mathbf{v}(\mathbf{x}) = \mathbf{x}\mathbf{v}=\sum x_iv_i$,等距离分桶</p>
+
+<p><strong><a href="https://github.com/zouzhitao/cs168-19-stanford/blob/master/min-project2/LSH.py">code</a></strong></p>
+
+<h1 id="ref">ref</h1>
+
+<ol>
+<li>Anand Rajaraman, Jure Leskovec, and Jeffrey D. Ullman. <a href="http://infolab.stanford.edu/~ullman/mmds/ch3.pdf">Mining of Massive Datasets</a>. ch3</li>
+</ol>
+
+<blockquote>
+<p><strong>版权声明</strong></p>
+
+<p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
+
+<p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
+
+<p><strong>仅允许非商业转载，转载请保留此版权声明，并注明出处</strong></p>
+</blockquote>
+
+                        </div>
+                        
+
+                        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/posts/dimension-reduction/">Dimension Reduction 降维: 随机投影与JL 变换</a></li>
+        
+        <li><a href="/posts/rank-model-based-prob/">信息检索(IR)笔记2: Rank: 基于概率的rank model</a></li>
+        
+        <li><a href="/posts/inverted-index/">信息检索(IR)笔记1: 倒排索引(Inverted Index)</a></li>
+        
+        <li><a href="/posts/svm/">Support Vector Machine</a></li>
+        
+        <li><a href="/posts/kickstart-2019-rounde/">Kickstart 2019 Round E</a></li>
+        
+    </ul>
+</div>
+
+
+                        <div class="post-meta meta-tags">
+                            
+                            <ul class="clearfix">
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/big-data">big-data</a></li>
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/lsh">lsh</a></li>
+                                
+                            </ul>
+                            
+                        </div>
+                    </article>
+                    
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "zouzhitao-github-io" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+    
+                </div>
+            </div>
+            <div id="secondary">
+    <section class="widget">
+        <form id="search" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://zouzhitao.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/lsh/" title="找相似元素: LSH 局部敏感性hash">找相似元素: LSH 局部敏感性hash</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/dimension-reduction/" title="Dimension Reduction 降维: 随机投影与JL 变换">Dimension Reduction 降维: 随机投影与JL 变换</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/rank-model-based-prob/" title="信息检索(IR)笔记2: Rank: 基于概率的rank model">信息检索(IR)笔记2: Rank: 基于概率的rank model</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/inverted-index/" title="信息检索(IR)笔记1: 倒排索引(Inverted Index)">信息检索(IR)笔记1: 倒排索引(Inverted Index)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/svm/" title="Support Vector Machine">Support Vector Machine</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kickstart-2019-rounde/" title="Kickstart 2019 Round E">Kickstart 2019 Round E</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/range-based-for-in-cpp11/" title="cpp 中Range Based for 的性能分析">cpp 中Range Based for 的性能分析</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kickstart-2019-roundd/" title="Kickstart 2019 RoundD">Kickstart 2019 RoundD</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kickstart-2019-roundc/" title="Kickstart 2019 RoundC 题解">Kickstart 2019 RoundC 题解</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/msra-internship-over/" title="2019 1-8 实习总结[MSRA,face&#43;&#43;]">2019 1-8 实习总结[MSRA,face&#43;&#43;]</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">IR(2)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(4)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(8)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/interview/">interview(4)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/machine-learning/">machine-learning(8)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/math/">math(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/programing-language/">programing-language(5)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/system/">system(4)</a>
+    </li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title">标签</h3>
+<div class="tagcloud">
+    
+    <a href="https://zouzhitao.github.io/tags/co-contra-in-variance/">(co-,contra-,in-)variance</a>
+    
+    <a href="https://zouzhitao.github.io/tags/gbdt/">GBDT</a>
+    
+    <a href="https://zouzhitao.github.io/tags/ir/">IR</a>
+    
+    <a href="https://zouzhitao.github.io/tags/inverted-index/">Inverted Index</a>
+    
+    <a href="https://zouzhitao.github.io/tags/km/">KM</a>
+    
+    <a href="https://zouzhitao.github.io/tags/mit6.828/">MIT6.828</a>
+    
+    <a href="https://zouzhitao.github.io/tags/ml%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/">ML数学基础</a>
+    
+    <a href="https://zouzhitao.github.io/tags/msra/">MSRA</a>
+    
+    <a href="https://zouzhitao.github.io/tags/os/">OS</a>
+    
+    <a href="https://zouzhitao.github.io/tags/pac/">PAC</a>
+    
+    <a href="https://zouzhitao.github.io/tags/pl/">PL</a>
+    
+    <a href="https://zouzhitao.github.io/tags/uw-programing-language/">UW programing language</a>
+    
+    <a href="https://zouzhitao.github.io/tags/adaboost/">adaboost</a>
+    
+    <a href="https://zouzhitao.github.io/tags/bayes/">bayes</a>
+    
+    <a href="https://zouzhitao.github.io/tags/big-data/">big-data</a>
+    
+    <a href="https://zouzhitao.github.io/tags/binary-search/">binary-search</a>
+    
+    <a href="https://zouzhitao.github.io/tags/bloom-filter/">bloom-filter</a>
+    
+    <a href="https://zouzhitao.github.io/tags/boosting/">boosting</a>
+    
+    <a href="https://zouzhitao.github.io/tags/c&#43;&#43;/">c&#43;&#43;</a>
+    
+    <a href="https://zouzhitao.github.io/tags/competitive-programing/">competitive-programing</a>
+    
+    <a href="https://zouzhitao.github.io/tags/consistent-hash/">consistent-hash</a>
+    
+    <a href="https://zouzhitao.github.io/tags/convex/">convex</a>
+    
+    <a href="https://zouzhitao.github.io/tags/count-min-sketch/">count-min-sketch</a>
+    
+    <a href="https://zouzhitao.github.io/tags/cpp11/">cpp11</a>
+    
+    <a href="https://zouzhitao.github.io/tags/decision-tree/">decision-tree</a>
+    
+    <a href="https://zouzhitao.github.io/tags/dimension-reduction/">dimension-reduction</a>
+    
+    <a href="https://zouzhitao.github.io/tags/distributed-system/">distributed-system</a>
+    
+    <a href="https://zouzhitao.github.io/tags/functional-programing/">functional programing</a>
+    
+    <a href="https://zouzhitao.github.io/tags/gaussion/">gaussion</a>
+    
+    <a href="https://zouzhitao.github.io/tags/gdb/">gdb</a>
+    
+    <a href="https://zouzhitao.github.io/tags/gradient-boosting/">gradient boosting</a>
+    
+    <a href="https://zouzhitao.github.io/tags/heavy-hitter/">heavy-hitter</a>
+    
+    <a href="https://zouzhitao.github.io/tags/intern/">intern</a>
+    
+    <a href="https://zouzhitao.github.io/tags/internship/">internship</a>
+    
+    <a href="https://zouzhitao.github.io/tags/interview/">interview</a>
+    
+    <a href="https://zouzhitao.github.io/tags/kick-start/">kick-start</a>
+    
+    <a href="https://zouzhitao.github.io/tags/kickstart/">kickstart</a>
+    
+    <a href="https://zouzhitao.github.io/tags/linear-algebra/">linear-algebra</a>
+    
+    <a href="https://zouzhitao.github.io/tags/logistic-regression/">logistic-regression</a>
+    
+    <a href="https://zouzhitao.github.io/tags/lsh/">lsh</a>
+    
+    <a href="https://zouzhitao.github.io/tags/machine-learning/">machine learning</a>
+    
+    <a href="https://zouzhitao.github.io/tags/machine-learning/">machine-learning</a>
+    
+    <a href="https://zouzhitao.github.io/tags/mapreduce/">mapreduce</a>
+    
+    <a href="https://zouzhitao.github.io/tags/muti-source-bfs/">muti-source-bfs</a>
+    
+    <a href="https://zouzhitao.github.io/tags/naive-bayes/">naive-bayes</a>
+    
+    <a href="https://zouzhitao.github.io/tags/nearest-neighbor/">nearest-neighbor</a>
+    
+    <a href="https://zouzhitao.github.io/tags/optimization/">optimization</a>
+    
+    <a href="https://zouzhitao.github.io/tags/probability/">probability</a>
+    
+    <a href="https://zouzhitao.github.io/tags/qemu/">qemu</a>
+    
+    <a href="https://zouzhitao.github.io/tags/range-based-for/">range-based-for</a>
+    
+    <a href="https://zouzhitao.github.io/tags/rank/">rank</a>
+    
+    <a href="https://zouzhitao.github.io/tags/sampling-complexity/">sampling-complexity</a>
+    
+    <a href="https://zouzhitao.github.io/tags/scala/">scala</a>
+    
+    <a href="https://zouzhitao.github.io/tags/sensetime/">senseTime</a>
+    
+    <a href="https://zouzhitao.github.io/tags/sml/">sml</a>
+    
+    <a href="https://zouzhitao.github.io/tags/subline-algorithm/">subline-algorithm</a>
+    
+    <a href="https://zouzhitao.github.io/tags/svm/">svm</a>
+    
+    <a href="https://zouzhitao.github.io/tags/sweep-line/">sweep-line</a>
+    
+    <a href="https://zouzhitao.github.io/tags/thoughts/">thoughts</a>
+    
+    <a href="https://zouzhitao.github.io/tags/unordered_map/">unordered_map</a>
+    
+    <a href="https://zouzhitao.github.io/tags/%E5%88%87%E6%AF%94%E9%9B%AA%E5%A4%AB%E8%B7%9D%E7%A6%BB/">切比雪夫距离</a>
+    
+    <a href="https://zouzhitao.github.io/tags/%E6%9B%BC%E5%93%88%E9%A1%BF%E8%B7%9D%E7%A6%BB/">曼哈顿距离</a>
+    
+</div>
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="https://blog.csdn.net/Dylan_Frank" title="以前的个人博客">dylanfrank@csdn</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://traderforce.github.io/" title="银牌大佬交易者">trader</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://bbkgl.github.io/" title="c&#43;&#43;技术大牛">坤坤</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://tawn0000.github.io" title="JNU ACMer,银牌大佬">tawn</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://zouzhitao.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+        </div>
+    </div>
+</div>
+<footer id="footer">
+    <div class="container">
+        &copy; 2018 <a href="https://zouzhitao.github.io/">taotao 码字的地方 By taotao</a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="http://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/rujews/maupassant-hugo" target="_blank">maupassant</a>.
+        
+    </div>
+</footer>
+
+
+    <script type="text/javascript" src="/js/prism.js" async="true"></script>
+    <script type="text/javascript">
+    window.MathJax = {
+        tex2jax: {
+            inlineMath: [ ['$','$'] ],
+            processEscapes: true
+        }
+    };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src="/js/totop.js?v=0.0.0" async=""></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-100944759-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+<script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+</body>
+</html>

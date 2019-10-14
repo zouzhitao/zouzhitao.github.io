@@ -6,10 +6,25 @@
     <description>Recent content in Posts on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 13 Oct 2019 18:25:18 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 14 Oct 2019 19:19:18 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>找相似元素: LSH 局部敏感性hash</title>
+      <link>https://zouzhitao.github.io/posts/lsh/</link>
+      <pubDate>Mon, 14 Oct 2019 19:19:18 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/lsh/</guid>
+      <description>这篇博文简单总结一下局部敏感性hash(locality-sensetive-hash,LSH) 在找相似元素中的应用，这也是最近邻的另外一种解决方案
+ LSH 的直觉非常简单，设想一下我们判断一个集合 $set$ 中是否存在一个元素 $e$ 的方法，通常是将集合中的所有元素hash到一个一个的桶中，同时将 $e$ hash到桶中，如果存在，那么一定能在 $hash(e)$ 的桶中找到 $e$ ，这样的均摊代价只有 $O(1)$
+不过如果我们要找在某种距离下，与元素 $e$ 仅有些许差别(i.e. $distance(e,x) \le \theta$),而不是完全相同时，上面这种通常的hash方案是一定不行的。如果，我们能够找到一个hash 函数 $s.t. \Pr[hash(x)= hash(y)] = sim(x,y),x\ne y$ 即，两个不同元素hash到一个桶的概率和衡量他们之间距离的函数有某种数学关系，那么在加上一些独立实验的trick就能够保证，hash到一个桶中的元素都是距离相近的元素了
+case study 假设有 $n$ 个集合 $set_1,\dots,set_n$, 每个集合是一些数字(或者可以将每个集合看做bit vector)表示是否存在某个元素 $e$. 我们要寻找每个集合的相识集合。
+Jaccard similarity $sim(A,B)=\frac{|A\cap B|}{|A\cup B|}$.
+定义hash 函数 $min-hash(A) =\arg \min_{x \in A} hash(x), \forall x \ne y, hash(x)\ne hash(y) $,(一般来说会选择排列 $\pi$ 作为这样的hash 函数，然而其实通常意义上任意的hash函数都是ok的)。我们会发现 $min-hash$ 的一个好处
+$$ \Pr[min-hash(x)=min-hash(y)]= \frac{|A\cap B|}{|A\cup B|} $$</description>
+    </item>
     
     <item>
       <title>Dimension Reduction 降维: 随机投影与JL 变换</title>
