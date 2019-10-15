@@ -6,10 +6,24 @@
     <description>Recent content in Posts on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Mon, 14 Oct 2019 19:19:18 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 15 Oct 2019 21:00:42 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kick Start 2019 RoundF</title>
+      <link>https://zouzhitao.github.io/posts/kick-start-2019-roundf/</link>
+      <pubDate>Tue, 15 Oct 2019 21:00:42 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/kick-start-2019-roundf/</guid>
+      <description>F round 题解
+ A.Flattening 这轮，这个A还是有点难，好多选手都挂了&amp;hellip;
+$O(N^3)$ 版本  计算 $num[i][j], interval[i,&amp;hellip;,j]$ 仅存在一块时需要改变的元素数目 $dp[i][k]$ 使得前 $i$ 块的石头中，$\# A_x \ne A_{x+1}\le k$ 需要改变的元素数目 易知，$dp[i][k] = \min_j dp[j][k-1]+num[j+1][i]$  github code
+一些小bug vector [] 操作， uncheck index out of size &amp;hellip;也就是说 out of size 返回的值是 未定义的(i.e. 可能是 segment fault，也有可能是很奇怪的值，可见源码)
+O(N^2logN) 版本 还没想通。。。
+B.Teach Me  skill[i] 表示拥有第 $i$ 项技能的人的集合(vector，递增顺序存储就好) ee[i], 第 $i$ 个人所具有的技能集合  那么对于每个人 $ee[i]$ 来说，它所不能交的人就是 $\bigcap_{s \in ee[i]} skill[s]$,注意由于 $|ee[i]|\le 5$, 上面的求解过程最坏是 $O(N)$,将ee去一下重，然后在暴力算就行了</description>
+    </item>
     
     <item>
       <title>找相似元素: LSH 局部敏感性hash</title>

@@ -7,20 +7,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Consistent Hash | taotao 码字的地方</title>
-    <meta property="og:title" content="Consistent Hash - taotao 码字的地方">
+    <title>Kick Start 2019 RoundF | taotao 码字的地方</title>
+    <meta property="og:title" content="Kick Start 2019 RoundF - taotao 码字的地方">
     <meta property="og:type" content="article">
         
-    <meta property="article:published_time" content="2019-05-04T00:56:55&#43;08:00">
+    <meta property="article:published_time" content="2019-10-15T21:00:42&#43;08:00">
         
         
-    <meta property="article:modified_time" content="2019-05-04T00:56:55&#43;08:00">
+    <meta property="article:modified_time" content="2019-10-15T21:00:42&#43;08:00">
         
     <meta name="Keywords" content="computer system,algorithm,OS,distribute system,big data,ML,算法，系统，分布式，大数据，推荐系统">
-    <meta name="description" content="Consistent Hash">
+    <meta name="description" content="Kick Start 2019 RoundF">
         
     <meta name="author" content="taotao">
-    <meta property="og:url" content="https://zouzhitao.github.io/posts/consistent-hash/">
+    <meta property="og:url" content="https://zouzhitao.github.io/posts/kick-start-2019-roundf/">
     <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="/css/normalize.css">
@@ -72,16 +72,16 @@
                 <div class="res-cons">
                     <article class="post">
                         <header>
-                            <h1 class="post-title">Consistent Hash</h1>
+                            <h1 class="post-title">Kick Start 2019 RoundF</h1>
                         </header>
                         <date class="post-meta meta-date">
-                            2019年5月4日
+                            2019年10月15日
                         </date>
                         
                         <div class="post-meta meta-category">
                             |
                             
-                                <a href="https://zouzhitao.github.io/categories/algorithm">algorithm</a>
+                                <a href="https://zouzhitao.github.io/categories/competitive-programing">competitive-programing</a>
                             
                         </div>
                         
@@ -94,76 +94,70 @@
                         <aside id="toc" class="dismissed">
                             <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
 <ul>
-<li><a href="#问题定义">问题定义</a></li>
-<li><a href="#简单实现">简单实现</a></li>
-<li><a href="#分析">分析</a></li>
-<li><a href="#reference">reference</a></li>
+<li><a href="#a-flattening">A.Flattening</a>
+<ul>
+<li><a href="#o-n-3-版本">$O(N^3)$ 版本</a></li>
+<li><a href="#一些小bug">一些小bug</a></li>
+<li><a href="#o-n-2logn-版本">O(N^2logN) 版本</a></li>
+</ul></li>
+<li><a href="#b-teach-me">B.Teach Me</a></li>
+<li><a href="#c-spectating-villages">C.Spectating Villages</a>
+<ul>
+<li><a href="#细节">细节</a></li>
+</ul></li>
 </ul>
 </nav>
                         </aside><div class="post-content">
                             
 
 <blockquote>
-<p>记得我人生第一次参加bytedance 的面试的时候，面试官问我的就是这样一个问题: 你有很多台服务器，每台服务器上都存放着很多数据，现在要加一台服务器，如何才能让数据搬迁尽可能的少，同时能让每台服务器经可能的负载均衡。现在才发现，这就是可一致性hash 问题，当时我答了个hashMap中的rehash操作，给糊弄过去了&hellip;.</p>
+<p>F round 题解</p>
 </blockquote>
 
-<p>具体的内容可见 reference，这里大致记录一下</p>
+<h1 id="a-flattening">A.Flattening</h1>
 
-<h1 id="问题定义">问题定义</h1>
+<p>这轮，这个A还是有点难，好多选手都挂了&hellip;</p>
 
-<p>简化问题如下:</p>
-
-<blockquote>
-<p>有 $m$ 个item，有 $n$ 台机器，将 $m$ 个item 尽量均匀的hash到每一台服务器，同时，当机器出现删减的时候应该能够保证数据移动足够小。</p>
-</blockquote>
-
-<h1 id="简单实现">简单实现</h1>
-
-<p>用两个hash函数，</p>
-
-<p>$hash_i(x)$, 对 item 做hash</p>
-
-<p>$hash_m(x)$, 对 machine 做hash</p>
-
-<p>hash的范围是一个单位圆(e.g. [0,1] float /[0,2^32-1] int)</p>
-
-<p><img src="/img/consitent/consistent-hash.png" alt="" /></p>
-
-<p>每个 item 的hash值所对应的顺时针找到的第一个server，存储这个item 对象，这就是 karger 论文中的<strong>核心思想</strong>。</p>
-
-<p>假设机器将圆平均分成 $m$ 段
-这样做很显然，每台机器的期望对象数目是 $O(\frac{n}{m})$ 同时，同时新加入一台机器的时候期望的移动数目是 $O(\frac{n}{m+1})$</p>
-
-<p>这样做已经是很好的解决我们的那个问题了。</p>
-
-<p>下面是用一个好的数据结构来维护查找一个item的时间，可以用一棵 BST 来维护这些机器
-(e.g. rb-tree )&lt;key: hash_m(server),value: (server)&gt; 他们的key是 server 的hash 值，value 是每一个server对象。</p>
-
-<p>看一下如下几个操作:</p>
+<h2 id="o-n-3-版本">$O(N^3)$ 版本</h2>
 
 <ol>
-<li><strong>插入/delete item</strong></li>
+<li>计算 $num[i][j], interval[i,&hellip;,j]$ 仅存在一块时需要改变的元素数目</li>
+<li>$dp[i][k]$ 使得前 $i$ 块的石头中，$\# A_x \ne A_{x+1}\le k$  需要改变的元素数目
+易知，$dp[i][k] = \min_j dp[j][k-1]+num[j+1][i]$</li>
 </ol>
 
-<p>这样插入一个 item 仅仅需要找到 hash(item) 在bst上的后继节点就好了。删除类似</p>
+<p><strong><a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-F-A.cpp">github code</a></strong></p>
 
-<ol>
-<li><strong>insert/delete machine</strong></li>
-</ol>
+<h2 id="一些小bug">一些小bug</h2>
 
-<p>找到这台机器 $Y$ 的 后继节点，将节点上 hash(item) 小于 $hash(Y)$ 移动到 Y上。</p>
+<p>vector [] 操作， uncheck index out of size &hellip;也就是说 out of size 返回的值是 <strong>未定义的</strong>(i.e. 可能是 segment fault，也有可能是很奇怪的值，可见源码)</p>
 
-<h1 id="分析">分析</h1>
+<h2 id="o-n-2logn-版本">O(N^2logN) 版本</h2>
 
-<p><img src="/img/consitent/analysis.png" alt="" /></p>
+<p>还没想通。。。</p>
 
-<h1 id="reference">reference</h1>
+<h1 id="b-teach-me">B.Teach Me</h1>
 
-<ol>
-<li><a href="https://people.csail.mit.edu/moitra/docs/6854lec3.pdf">MIT adv algorithm lecture note</a></li>
-<li><a href="http://web.stanford.edu/class/cs168/l/l1.pdf">stanford cs 168 lec note 1</a></li>
-<li><a href="https://www.akamai.com/us/en/multimedia/documents/technical-publication/consistent-hashing-and-random-trees-distributed-caching-protocols-for-relieving-hot-spots-on-the-world-wide-web-technical-publication.pdf">Karger, David, Eric Lehman, Tom Leighton, Rina Panigrahy, Matthew Levine, and Daniel Lewin. “Consistent hashing and random trees: Distributed caching protocols for relieving hot spots on the World Wide Web.” In Proceedings of the twenty-ninth annual ACM symposium on Theory of computing, pp. 654-663. ACM, 1997.</a></li>
-</ol>
+<ul>
+<li>skill[i] 表示拥有第 $i$ 项技能的人的集合(vector，递增顺序存储就好)</li>
+<li>ee[i], 第 $i$ 个人所具有的技能集合</li>
+</ul>
+
+<p>那么对于每个人 $ee[i]$ 来说，它所不能交的人就是 $\bigcap_{s \in ee[i]} skill[s]$,注意由于 $|ee[i]|\le 5$, 上面的求解过程最坏是 $O(N)$,将ee去一下重，然后在暴力算就行了</p>
+
+<p><strong><a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-F-B.cpp">github code</a></strong></p>
+
+<h1 id="c-spectating-villages">C.Spectating Villages</h1>
+
+<p>这波似乎全是dp..</p>
+
+<p>树形dp，挺简单的..不说了</p>
+
+<p><strong><a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-F-C.cpp">github code</a></strong></p>
+
+<h2 id="细节">细节</h2>
+
+<p>这题有个挺坑的地方，map,比 unordered_map 慢太多了，所以大数据就挂了，有时候能用unordered_map的还是就用unordered_map,比较好</p>
 
 <blockquote>
 <p><strong>版权声明</strong></p>
@@ -172,7 +166,7 @@
 
 <p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
 
-<p><strong>转载请保留此版权声明，并注明出处</strong></p>
+<p><strong>仅允许非商业转载，转载请保留此版权声明，并注明出处</strong></p>
 </blockquote>
 
                         </div>
@@ -184,15 +178,15 @@
     <h2>See Also</h2>
     <ul class="listing">
         
-        <li><a href="/posts/value-buried/">隐藏的价值</a></li>
-        
-        <li><a href="/posts/mit6.824-lab1/">MIT6.824 lab1:mapreduce 总结</a></li>
+        <li><a href="/posts/kick-start-2019-roundb/">Kick Start 2019 RoundB</a></li>
         
         <li><a href="/posts/kick-start-2019-rounda/">Kick Start 2019 RoundA: 题解</a></li>
         
-        <li><a href="/posts/generic-variance-in-scala/">Generic Variance in Scala: 泛型变化 in scala</a></li>
+        <li><a href="/posts/lsh/">找相似元素: LSH 局部敏感性hash</a></li>
         
-        <li><a href="/posts/pac/">PAC learning 与样本复杂度</a></li>
+        <li><a href="/posts/dimension-reduction/">Dimension Reduction 降维: 随机投影与JL 变换</a></li>
+        
+        <li><a href="/posts/rank-model-based-prob/">信息检索(IR)笔记2: Rank: 基于概率的rank model</a></li>
         
     </ul>
 </div>
@@ -202,7 +196,7 @@
                             
                             <ul class="clearfix">
                                 
-                                <li><a href="https://zouzhitao.github.io/tags/consistent-hash">consistent-hash</a></li>
+                                <li><a href="https://zouzhitao.github.io/tags/kick-start">kick-start</a></li>
                                 
                             </ul>
                             
