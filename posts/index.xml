@@ -6,13 +6,34 @@
     <description>Recent content in Posts on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Tue, 15 Oct 2019 21:00:42 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 20 Oct 2019 11:28:03 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Kick Start 2019 RoundF</title>
+      <title>Kickstart 2019 Round G</title>
+      <link>https://zouzhitao.github.io/posts/kickstart-2019-g/</link>
+      <pubDate>Sun, 20 Oct 2019 11:28:03 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/kickstart-2019-g/</guid>
+      <description>人生第一次 AK!
+ 这次的题目似乎比以前要简单一些
+A. Book Reading 这题是说，有 $N\le 1e5$ 页书，有 $M$ 页是坏的，有 $Q$ 个人分别从 $q_i\le N$ 开始读，只读 $q_i$ 的倍数，坏的不读， 求共读了多少页
+题解 直接暴力就行了，类似埃筛(complexity $O(n\log n)$))注意将相同 $q_i$ 存一下
+code code
+B.The Equation 这题的意思是，找一个最大的 $k\ge0\ s.t.\ \sum k\land A_i \le M, M\le 10^{15},A_i\le 10^{15}$
+分析 从最高位开始，如果那一位能够置为 $1$， 那就置为 $1$, 否则放 $0$
+最高位能置为 $1$ 的条件是，后续和的最小值 $\le M-val(highest\ bit =1)$
+complexity $O(\log M)$
+code code
+C.Shifts 这题就更简单了，直接暴力枚举 $3^{20}$ 种状态就行了
+code
+ 版权声明</description>
+    </item>
+    
+    <item>
+      <title>Kick Start 2019 Round F</title>
       <link>https://zouzhitao.github.io/posts/kick-start-2019-roundf/</link>
       <pubDate>Tue, 15 Oct 2019 21:00:42 +0800</pubDate>
       
