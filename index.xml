@@ -62,7 +62,7 @@ complexity $O(\log M)$
 code code
 C.Shifts 这题就更简单了，直接暴力枚举 $3^{20}$ 种状态就行了
 code
- 版权声明</description>
+更新了一个 $O(3^{N/2})$ 的做法</description>
     </item>
     
     <item>
