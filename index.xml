@@ -6,10 +6,30 @@
     <description>Recent content on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 20 Oct 2019 11:28:03 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 21 Oct 2019 21:58:26 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</title>
+      <link>https://zouzhitao.github.io/posts/dm-association-rule/</link>
+      <pubDate>Mon, 21 Oct 2019 21:58:26 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/dm-association-rule/</guid>
+      <description>这篇博文主要总结数据挖掘 find frequent item set 的 两个个有趣的算法: Apriori,FP-Growth Tree
+ introduction 关联规则，简单的说就是在一个数据集中，通常我们如果看见 A，同时也会看见 B。就称他们是关联的，用一个经典例子解释就是:
+ market-basket,你在超市买东西，通常买面包，同时也会买牛奶。关联规则就是要在一堆数据中找&amp;rsquo;这种&amp;rsquo;东西
+ 当然一切问题只有当他有数学描述的时候才好定量衡量，下面就是几个关于关联规则的衡量方法
+假设数据是 horizontal 的。
+即
+   TID Items     id1 i1,i2    Support : 集合 $A$ 的支撑，$sp(A):= \# A$
+Confidence: $conf(A\rightarrow B) = \Pr(B|A)=\frac{sp(A\cup B)}{sp(A)}$，注意 conf 衡量并不对称
+lift: $lift(A\rightarrow B)=\frac{\Pr(A\cup B)}{\Pr(A)\Pr(B)}$
+interest: $intere(A\rightarrow B) = |conf(A\rightarrow B) - \Pr(B)|$
+可以看到要计算这些东西最核心的问题就是就算suport，也就是考虑集合的计数问题
+通常我们需要挖掘的是那些 $sp(S) \ge TH$ 其中 $TH$ 是个常数最小支撑界限</description>
+    </item>
     
     <item>
       <title>Kick Start 2019 Round G</title>

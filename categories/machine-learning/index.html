@@ -96,12 +96,7 @@
                                 <blockquote>
 <p>简单总结一下SVM，以帮助ML相关面试</p>
 
-<p>SVM 是一种上古时代(90s) 的东西，其实我也不清楚他在工业界的用处到底几何。只是感觉算法特别慢，还意义不太大。</p>
-</blockquote>
-
-<h1 id="intuition">intuition</h1>
-
-<p>首先SVM的动机其实很简单。我们都知道对于分类问题(这里以二分类为例)，就是要找一个超平面将正例和负例分开，而SVM找的这个超平面相对比较特殊，他希望找到一个超平面，s.t …</p>
+<p>SVM 是一种上古时代(90s) 的东西，其实我也不清楚 …</p></blockquote>
                                 <p class="readmore"><a href="https://zouzhitao.github.io/posts/svm/">阅读全文</a></p>
                             </div>
                         </article>
@@ -125,22 +120,7 @@
                             
                             <div class="post-content">
                                 <blockquote>
-<p>这篇文章主要总结 PAC 学习框架以及样本复杂度相关的东西，大致来说就是:要保证以概率 $1-\delta$ 使得 generalized error 小于 $\epsilon$ 需要多大的样本复杂度，以及时间复杂度才是好的。</p>
-</blockquote>
-
-<h1 id="问题及约定">问题及约定</h1>
-
-<p><img src="/img/problem.png" alt="f1" /></p>
-
-<h2 id="符号约定">符号约定</h2>
-
-<p><img src="/img/boosting/symbol.png" alt="symbol" /></p>
-
-<p>两个 error 符号</p>
-
-<p><img src="/img/error.png" alt="error" /></p>
-
-<p>就是我们常说的  train error 与 true …</p>
+<p>这篇文章主要总结 PAC 学习框架以及样本复杂度相关的东西，大致来说就是: …</p></blockquote>
                                 <p class="readmore"><a href="https://zouzhitao.github.io/posts/pac/">阅读全文</a></p>
                             </div>
                         </article>
@@ -164,22 +144,7 @@
                             
                             <div class="post-content">
                                 <blockquote>
-<p>纸上得来终觉浅，觉知此事要躬行。综上，我什莫都不懂.这仅仅是个人的学习<strong>防忘笔记</strong></p>
-</blockquote>
-
-<h1 id="adaboost">Adaboost</h1>
-
-<p>关于 Adaboost 的算法描述其实很简单，有趣的是的它的误差分析:</p>
-
-<h2 id="algorithm">algorithm</h2>
-
-<p><img src="/img/boosting/adaboost.png" alt="adaboost" /></p>
-
-<p>其中</p>
-
-<p>$$
-\begin{align}
-\epsilon_t &amp;= Pr_{i\sim D_t}[h_t(x_i)\ne y_i]\\ …</p>
+<p>纸上得来终觉浅，觉知此事要躬行。综上，我什莫都不懂. …</p></blockquote>
                                 <p class="readmore"><a href="https://zouzhitao.github.io/posts/booosting/">阅读全文</a></p>
                             </div>
                         </article>
@@ -202,10 +167,7 @@
                             </div>
                             
                             <div class="post-content">
-                                <p>logistic regression (Log.Reg)是一种简单的 Discriminative(后面会简单的比较discriminative 与generative) 分类方法，和naive bayes不同的是，他假设了概率:</p>
-
-<p>$$
-P(y=1|X) = \frac{1}{1+\exp(w_0+\sum w_i^TX_i)} …</p>
+                                <p>logistic regression (Log.Reg) …</p>
                                 <p class="readmore"><a href="https://zouzhitao.github.io/posts/ml-note-lr/">阅读全文</a></p>
                             </div>
                         </article>
@@ -235,16 +197,7 @@ P(y=1|X) = \frac{1}{1+\exp(w_0+\sum w_i^TX_i)} …</p>
 
 <h1 id="引入">引入</h1>
 
-<p>首先我们考虑学习一个基于贝叶斯规则的分类器,即我们希望学到 $P(Y|X)$</p>
-
-<p>那么我们有</p>
-
-<p>$$
-P(Y|X)=\frac{P(Y)P(X|Y)}{P(X)}
-$$</p>
-
-<p>这里 $Y \in\{0,1\}$
-那么我们需要去估计的是这两个概率 $P(Y),P(X|Y)$ …</p>
+<p>首先我们考虑学习一个基于 …</p>
                                 <p class="readmore"><a href="https://zouzhitao.github.io/posts/ml-note-naive-bayes/">阅读全文</a></p>
                             </div>
                         </article>
@@ -270,19 +223,7 @@ $$</p>
                                 <p>这是一个简单的概率论公式总结</p>
 
 <ul>
-<li><strong>bayes rule:</strong> $P(A|B) = \frac{P(A)P(B|A)}{P(B)}$</li>
-</ul>
-
-<blockquote>
-<p><strong>版权声明</strong></p>
-
-<p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
-
-<p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
-
-<p><strong>转载请保留此版权声明，并注明出处</strong></p>
-</blockquote>
-
+<li><strong>bayes rule:</strong> $P(A|B) = …</li></ul>
                                 <p class="readmore"><a href="https://zouzhitao.github.io/posts/ml-note-probility/">阅读全文</a></p>
                             </div>
                         </article>
@@ -310,18 +251,7 @@ $$</p>
 这是笔者学习<a href="http://www.cs.cmu.edu/~ninamf/courses/601sp15/lectures.shtml">CMU10601-ML</a>机器学习的笔记</p>
 </blockquote>
 
-<p>MLE 和 MAP ,是两种不同的估计概率的准则，可是他们的数学公式却是如此相似</p>
-
-<p><img src="/img/ML-note-MLE-MAP/MLE&amp;MAP.png" alt="MLE and MAP" /></p>
-
-<p><strong>remark</strong></p>
-
-<p><strong>MLE</strong> 实际使用的过程中，通常会用<strong>LOG</strong> likelihood function,</p>
-
-<p><strong>MAP</strong> 这里 $P(D)$ 是没用的，即</p>
-
-<p>$$
-\hat{\theta}=\arg …</p>
+<p>MLE 和 MAP ,是两种不同 …</p>
                                 <p class="readmore"><a href="https://zouzhitao.github.io/posts/ml-note-mle-and-map/">阅读全文</a></p>
                             </div>
                         </article>
@@ -353,14 +283,7 @@ $$</p>
 
 <p><img src="/img/ML-decision-tree-note/algorithm.png" alt="决策树算法" /></p>
 
-<p><strong>适合问题的特点</strong></p>
-
-<ol>
-<li>实例是由 $(attr,value)$, 表示的，并且 $value$ 是离散的 (<strong>remark:</strong> 能使用连续值，不过连续值其实也是在先将连续值转化为离散值，再使用的决策树)</li>
-<li>目标函数具有离散的输出值，或者说是一个分类问题</li>
-</ol>
-
-<p>整个算法就是一个分治， …</p>
+<p><strong>适合问题的 …</strong></p>
                                 <p class="readmore"><a href="https://zouzhitao.github.io/posts/ml-decision-tree-note/">阅读全文</a></p>
                             </div>
                         </article>
@@ -387,6 +310,10 @@ $$</p>
     <section class="widget">
         <h3 class="widget-title">最近文章</h3>
 <ul class="widget-list">
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
+    </li>
     
     <li>
         <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
@@ -424,10 +351,6 @@ $$</p>
         <a href="https://zouzhitao.github.io/posts/range-based-for-in-cpp11/" title="cpp 中Range Based for 的性能分析">cpp 中Range Based for 的性能分析</a>
     </li>
     
-    <li>
-        <a href="https://zouzhitao.github.io/posts/kickstart-2019-roundd/" title="Kickstart 2019 RoundD">Kickstart 2019 RoundD</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -442,7 +365,7 @@ $$</p>
     </li>
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(4)</a>
+        <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(5)</a>
     </li>
     
     <li>
@@ -481,6 +404,10 @@ $$</p>
 <div class="tagcloud">
     
     <a href="https://zouzhitao.github.io/tags/co-contra-in-variance/">(co-,contra-,in-)variance</a>
+    
+    <a href="https://zouzhitao.github.io/tags/apriori/">Apriori</a>
+    
+    <a href="https://zouzhitao.github.io/tags/fp-growth/">FP-Growth</a>
     
     <a href="https://zouzhitao.github.io/tags/gbdt/">GBDT</a>
     
