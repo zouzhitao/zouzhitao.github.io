@@ -7,27 +7,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>MIT6.828 OS hw1 boot xv6 | taotao 码字的地方</title>
-    <meta property="og:title" content="MIT6.828 OS hw1 boot xv6 - taotao 码字的地方">
+    <title>Data-Mining | taotao 码字的地方</title>
+    <meta property="og:title" content="Data-Mining - taotao 码字的地方">
     <meta property="og:type" content="article">
         
-    <meta property="article:published_time" content="2018-12-06T18:49:44&#43;08:00">
-        
-        
-    <meta property="article:modified_time" content="2018-12-06T18:49:44&#43;08:00">
         
     <meta name="Keywords" content="computer system,algorithm,OS,distribute system,big data,ML,算法，系统，分布式，大数据，推荐系统">
-    <meta name="description" content="MIT6.828 OS hw1 boot xv6">
+    <meta name="description" content="Data-Mining">
         
     <meta name="author" content="taotao">
-    <meta property="og:url" content="https://zouzhitao.github.io/posts/mit6.828-os-hw1-boot-xv6/">
+    <meta property="og:url" content="https://zouzhitao.github.io/tags/data-mining/">
     <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="/css/normalize.css">
     
-        <link rel="stylesheet" href="/css/prism.css">
-    
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" type="application/rss+xml+xml" href="https://zouzhitao.github.io/tags/data-mining/index.xml" title="taotao 码字的地方" />
     <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 
     
@@ -36,6 +31,7 @@
     
     
 </head>
+
 
 <body>
 <header id="header" class="clearfix">
@@ -70,175 +66,48 @@
 
             <div class="col-8" id="main">
                 <div class="res-cons">
-                    <article class="post">
-                        <header>
-                            <h1 class="post-title">MIT6.828 OS hw1 boot xv6</h1>
-                        </header>
-                        <date class="post-meta meta-date">
-                            2018年12月6日
-                        </date>
-                        
-                        <div class="post-meta meta-category">
-                            |
-                            
-                                <a href="https://zouzhitao.github.io/categories/system">system</a>
-                            
-                        </div>
-                        
-                        
-                        <div class="post-meta">
-                            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span> 阅读</span></span>
-                        </div>
-                        
-                        
-                        <aside id="toc" class="dismissed">
-                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> 
-                        </aside><div class="post-content">
-                            <p><strong>完整内容可见</strong></p>
-
-<p><a href="https://github.com/zouzhitao/CS_Learning/blob/master/MIT6.828-fa18/README.md">MIT 6.828 note</a></p>
-
-<p>这个任务就是检查 _start 开始的时候栈顶的所有值，</p>
-
-<blockquote>
-<p>进入 xv6, gdb 调试</p>
-
-<p>b *0x10000c (_start kernel start point)</p>
-
-<p>x /24x $esp</p>
-</blockquote>
-
-<p><img src="/img/hw2-esp.png" alt="hw1-esp.png" /></p>
-
-<p>解释栈中的各个值，首先看 <code>0x7d8d,0x7c4d</code>, 这显然是某个地址，先去 <code>bootblock.asm</code> 中找到这两个地址</p>
-
-<pre><code class="language-asm"> # Set up the stack pointer and call into C.
-  movl    $start, %esp
-    7c43:	bc 00 7c 00 00       	mov    $0x7c00,%esp
-  call    bootmain
-    7c48:	e8 ee 00 00 00       	call   7d3b &lt;bootmain&gt;
-
-  # If bootmain returns (it shouldn't), trigger a Bochs
-  # breakpoint if running under Bochs, then loop.
-  movw    $0x8a00, %ax            # 0x8a00 -&gt; port 0x8a00
-    7c4d:	66 b8 00 8a          	mov    $0x8a00,%ax
- 
-</code></pre>
-
-<p>这是栈建立的地方，也就是说栈顶在 <strong>0x7c00</strong>, <strong>0x7c4d</strong> 就是栈调用 bootmain 后的下面一条指令</p>
-
-<p>继续看 bootmain</p>
-
-<pre><code class="language-asm">
-00007d3b &lt;bootmain&gt;:
-{
-    7d3b:	55                   	push   %ebp
-    7d3c:	89 e5                	mov    %esp,%ebp
-    7d3e:	57                   	push   %edi
-    7d3f:	56                   	push   %esi
-    7d40:	53                   	push   %ebx
-    7d41:	83 ec 0c             	sub    $0xc,%esp
-  readseg((uchar*)elf, 4096, 0);
-    7d44:	6a 00                	push   $0x0
-    7d46:	68 00 10 00 00       	push   $0x1000
-    7d4b:	68 00 00 01 00       	push   $0x10000
-</code></pre>
-
-<p>栈建立好后压了很多 reg 值进去，就是那些 0</p>
-
-<p>然后
-我们在文件中搜索 7d8d,会发现是 <code>entry</code> 下面一条指令</p>
-
-<pre><code class="language-asm">//.bootblock.asm : line 322
-entry();
-    7d87:	ff 15 18 00 01 00    	call   *0x10018
-    7d8d:	eb d5                	jmp    7d64 &lt;bootmain+0x29&gt;
-</code></pre>
-
-<p>所以整个栈的值解释如下</p>
-
-<pre><code>ox7c00 : 0x00007c4d # bootmain hou mian yitiao dizhi
-       : 0x00000000 #
-       :
-       :
-       :
-       :
-       :
-       :
-0x7bdc : 0x00007d8d # kernel hou de dizhi
-</code></pre>
-
-<blockquote>
-<p><strong>版权声明</strong></p>
-
-<p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
-
-<p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
-
-<p><strong>转载请保留此版权声明，并注明出处</strong></p>
-</blockquote>
-
-                        </div>
-                        
-
-                        
-
-<div class="post-archive">
-    <h2>See Also</h2>
-    <ul class="listing">
-        
-        <li><a href="/posts/mit6.828os-lab1-note/">MIT6.828 OS lab1 note</a></li>
-        
-        <li><a href="/posts/mit6.828-env/">MIT 6.828 环境配置，踩坑指南</a></li>
-        
-        <li><a href="/posts/uw-programing-language-parta-overview/">UW Programing Language PartA Overview</a></li>
-        
-        <li><a href="/about/">about</a></li>
-        
-        <li><a href="/archives/">archives</a></li>
-        
-    </ul>
-</div>
-
-
-                        <div class="post-meta meta-tags">
-                            
-                            <ul class="clearfix">
-                                
-                                <li><a href="https://zouzhitao.github.io/tags/os">OS</a></li>
-                                
-                                <li><a href="https://zouzhitao.github.io/tags/gdb">gdb</a></li>
-                                
-                            </ul>
-                            
-                        </div>
-                    </article>
                     
-    <div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "zouzhitao-github-io" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                    <h3 class="archive-title">
+                        包含标签
+                        <span class="keyword">Data-Mining</span>
+                        的文章
+                    </h3>
+                    
 
-    
-    
+                    
+                        <article class="post">
+                            <header>
+                                <h1 class="post-title">
+                                    <a href="https://zouzhitao.github.io/posts/dm-association-rule/">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
+                                </h1>
+                            </header>
+                            <date class="post-meta meta-date">
+                                2019年10月21日
+                            </date>
+                            
+                            <div class="post-meta meta-category">
+                                |
+                                
+                                    <a href="https://zouzhitao.github.io/categories/algorithm">algorithm</a>
+                                
+                            </div>
+                            
+                            <div class="post-content">
+                                <blockquote>
+<p>这篇博文主要总结数据挖掘 find frequent item set 的 两个个有趣的算法: …</p></blockquote>
+                                <p class="readmore"><a href="https://zouzhitao.github.io/posts/dm-association-rule/">阅读全文</a></p>
+                            </div>
+                        </article>
+                    
+
+                    
+
+
+
+
                 </div>
             </div>
+
             <div id="secondary">
     <section class="widget">
         <form id="search" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
@@ -392,17 +261,6 @@ entry();
 </footer>
 
 
-    <script type="text/javascript" src="/js/prism.js" async="true"></script>
-    <script type="text/javascript">
-    window.MathJax = {
-        tex2jax: {
-            inlineMath: [ ['$','$'] ],
-            processEscapes: true
-        }
-    };
-    </script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
-
 <a id="rocket" href="#top"></a>
 <script type="text/javascript" src="/js/totop.js?v=0.0.0" async=""></script>
 
@@ -420,6 +278,7 @@ if (!doNotTrack) {
 
 
 <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
 
 
 
