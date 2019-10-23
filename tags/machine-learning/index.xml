@@ -1,42 +1,33 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>machine learning on taotao 码字的地方</title>
+    <title>machine-learning on taotao 码字的地方</title>
     <link>https://zouzhitao.github.io/tags/machine-learning/</link>
-    <description>Recent content in machine learning on taotao 码字的地方</description>
+    <description>Recent content in machine-learning on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 05 Jan 2019 19:20:46 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 31 Dec 2018 15:27:33 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>机器学习笔记: MLE and MAP</title>
-      <link>https://zouzhitao.github.io/posts/ml-note-mle-and-map/</link>
-      <pubDate>Sat, 05 Jan 2019 19:20:46 +0800</pubDate>
+      <title>机器学习笔记: 决策树</title>
+      <link>https://zouzhitao.github.io/posts/ml-decision-tree-note/</link>
+      <pubDate>Mon, 31 Dec 2018 15:27:33 +0800</pubDate>
       
-      <guid>https://zouzhitao.github.io/posts/ml-note-mle-and-map/</guid>
-      <description>  写在前面: 这是笔者学习CMU10601-ML机器学习的笔记
- MLE 和 MAP ,是两种不同的估计概率的准则，可是他们的数学公式却是如此相似
-remark
-MLE 实际使用的过程中，通常会用LOG likelihood function,
-MAP 这里 $P(D)$ 是没用的，即
-$$ \hat{\theta}=\arg \max_{\theta} P(\theta)P(D|\theta) $$
-即比 MLE多了一个 $P(\theta)$ 的先验信息
-这里通常，来说 $P(\theta)$ 取与 $P(D|\theta)$ 相同的分布，称为共轭先验，个人以为这其实是为了好计算!
-参考文献给了一个总结,很有意思，我这里简单的总结两点东西
- 如果知道联合概率分布，那么什么都能求，了，但是通常情况下，需要非常大的数据，这在实际情况下是不可能的，所以需要一些概率估计方法，MLE和MAP是其中一种  hw2 code code
-参考文献
- Machine Learning, Tom M.Mitchell, ch2, estimating probabilities   版权声明
-本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
-作者: taotao
-转载请保留此版权声明，并注明出处
- </description>
-    </item>
-    
-  </channel>
-</rss>益是怎么算的呢？
+      <guid>https://zouzhitao.github.io/posts/ml-decision-tree-note/</guid>
+      <description>写在前面: 这是笔者学习CMU10601-ML机器学习的笔记
+ 决策树算法框架 适合问题的特点
+ 实例是由 $(attr,value)$, 表示的，并且 $value$ 是离散的 (remark: 能使用连续值，不过连续值其实也是在先将连续值转化为离散值，再使用的决策树) 目标函数具有离散的输出值，或者说是一个分类问题  整个算法就是一个分治，核心的地方在于如何选择划分属性。后面的内容先简单总结几种属性划分准则，然后在讨论几种解决过拟合的方法，最后再给出我的简单的代码实现
+属性划分方法 ID3 这是一种基于 信息增益 的划分方法，首先，我们
+定义信息熵(entropy)
+$$ Entropy(\{p_1,p_2,\dots,p_n\}) = -\sum_i p_i\log p_i $$
+这里 $p_i$ 表示概率，并且 $\sum_i p_i =1$,同时我们定义数据集 $D$ 的信息商为
+$$ Entropy(D) = Entropy(\{\frac{|D_1|}{|D|},\dots,\frac{|D_n|}{|D|} \}) $$
+其中 $D_i$ 表示数据集 $D$ 中 $label=i$,的集合，即 $D_i = \{D|label=i\}$
+remark: 这里的 $\log$ 的底数是多少是无关紧要的，因为两个不同的底之间只相差一个常数倍数
+然后信息增益是怎么算的呢？
 看图
 假设对于某一个节点，处于这个节点的数据集合是 $D$,对于这个节点的属性 $attr_i$ 可以将数据集划分为 $D_v$, 每一个 $D_v$ 对应着 $attr_i$ 的一种取值，即 $D_v=\{D | attr_i = v\}$,我们定义信息增益为</description>
     </item>

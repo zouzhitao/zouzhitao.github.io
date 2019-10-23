@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>PCA on taotao 码字的地方</title>
+    <link>https://zouzhitao.github.io/tags/pca/</link>
+    <description>Recent content in PCA on taotao 码字的地方</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 23 Oct 2019 14:20:43 +0800</lastBuildDate>
+    
+	<atom:link href="https://zouzhitao.github.io/tags/pca/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Dimension Reduction: PCA and SVD</title>
+      <link>https://zouzhitao.github.io/posts/dm-reduction-pca-svd/</link>
+      <pubDate>Wed, 23 Oct 2019 14:20:43 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/dm-reduction-pca-svd/</guid>
+      <description>这篇博文简要总结关于数据降维的另外两种方法，PCA与SVD。之前讲过用JL变换和随机投影的方式做降维，那种方式的出发点是从计算效率出发的，所以计算方式会更快同时也是数据透明(data-oblivious)的,也就是不关心数据的特点，而今天要讲的两种方式都关心数据的特点。同时这里给出了一些PCA的相关直观性解释
+ PCA 首先我们说降维的目标始终都是用一个低维空间($\mathcal{R}^m$) 来近似的表示高维空间 $\mathcal{R}^n,m\ll n$ 中的向量。
+也就是说 PCA的目标就是
+ 将 $m$ 个 $n$ 维空间中的向量 $\mathbf{x}_1,\dots,\mathbf{x}_m$ 用 $k$ 个$n$ 维空间中的向量来近似表示：
+ $$ \mathbf{x}_i\approx \sum_{j=1}^k a_{ij}\mathbf{v}_j,\forall l,m\le k,l\neq m,\mathbf{v}_l^T\mathbf{v}_m=0,||\mathbf{v}_j||=1 $$ 也就是说将 每个n维向量往 $k$ 个正交向量张成的空间投影。
+因此PCA的目的就是找到这 $k$ 正交向量。怎么找我们留在后面(注意在随即投影中，这几个向量都是random选择的)
+与linear regression 的关系 也就是说最大的不同在于 线性回归找到的线是使得说有点到线的竖直距离最小，而pca是让找到线到说有点的垂直距离(perpendicular) 距离最小。
+问题的严格定义 1维情况 我们的目标就是要:
+$$ \mathbf{v} = \arg \min_{||v||=1} \sum_i dist(\mathbf{x}_i\leftrightarrow v)^2 $$
+很显然这个目标等价于
+$$ \mathbf{v} = \arg \max_{||v||=1} \sum_i &amp;lt;\mathbf{x}_i,v&amp;gt;^2\tag{1} $$
+detail
+ 很显然这个投影距离是shift，和scale敏感的，所以做pca前通常需要0均值化，以及去scale  多维 定义 $n$ 维空间中 $k$ 个正交向量，所张成的子空间 $S=span\{\mathbf{v}_1,\dots,\mathbf{v}_k\}$，很显然，多为情况就是</description>
+    </item>
+    
+  </channel>
+</rss>
