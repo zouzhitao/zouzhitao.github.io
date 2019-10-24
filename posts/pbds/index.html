@@ -102,6 +102,10 @@
 <li><a href="#静态范围查询的一个例子">静态范围查询的一个例子</a></li>
 </ul></li>
 </ul></li>
+<li><a href="#priority-queue">priority_queue</a>
+<ul>
+<li><a href="#基于对优化的dijkstra-单源最短路算法测试">基于对优化的dijkstra 单源最短路算法测试</a></li>
+</ul></li>
 <li><a href="#reference">reference</a></li>
 </ul>
 </nav>
@@ -320,12 +324,124 @@ int main(){
 }
 </code></pre>
 
+<h1 id="priority-queue">priority_queue</h1>
+
+<p>pbds 里面的 priority_queue 实在是太强了，居然支持对元素的访问和修改。简直是解决了STL里面的PQ的痛点。想想当初写对优化的dijkstra的痛点，由于STL不支持节点修改，只好每次都把val从新仍到堆了，导致了很多额外的开销，甚至还有高中生在算法竞赛中专门研究hack这个东西的算法&hellip;</p>
+
+<pre><code class="language-c++">template&lt;
+    typename Value_Type,
+    typename Cmp_Fn = std::less&lt;Value_Type&gt;,
+    typename Tag = pairing_heap_tag,
+    typename Allocator = std::allocator&lt;char&gt; &gt;
+class priority_queue;
+</code></pre>
+
+<p>除了STL里面优先队列的 <code>push</code> 与 <code>pop</code> 之外，pbds还支持了 <code>modify(iterator,val)</code>,与<code>erase</code></p>
+
+<p>同时它的底层实现了几种堆<code>tag</code>,</p>
+
+<pre><code> pairing_heap_tag, 
+ binary_heap_tag, 
+ binomial_heap_tag, 
+ rc_binomial_heap_tag, 
+ thin_heap_tag,
+</code></pre>
+
+<p>thin_heap 是一种const 比 斐波那契堆还小堆，pairing_heap,几乎是最常用的，复杂度和常数都足够小</p>
+
+<p>具体复杂度见 官网ref</p>
+
+<p><img src="/img/pbds/heap.PNG" width="110%" /></p>
+
+<h2 id="基于对优化的dijkstra-单源最短路算法测试">基于对优化的dijkstra 单源最短路算法测试</h2>
+
+<p><strong><a href="luogu.org/problem/P4779">题目链接 luogu P4779</a></strong></p>
+
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+#include&lt;ext/pb_ds/priority_queue.hpp&gt;
+#define ms(x,v) memset((x),v,sizeof(x))
+#define INF 0x3f3f3f3f
+#define pbds __gnu_pbds
+using namespace std;
+ 
+const int MAXN = 1000+10;
+typedef long long LL;
+const LL MOD = 1e9+7;
+
+typedef __gnu_pbds::priority_queue&lt;
+pair&lt;int,int&gt;,
+greater&lt;pair&lt;int,int&gt;&gt;,
+__gnu_pbds::pairing_heap_tag
+&gt; PQ_pair;
+
+
+void dijstra(vector&lt;int&gt;&amp;dist,const vector&lt;vector&lt;pair&lt;int,int&gt; &gt; &gt; &amp;G,int S =0){
+    // node idx base 0,...,G.size() -1
+    dist.resize(G.size());
+    fill(dist.begin(),dist.end(),INF);
+
+    PQ_pair Q;
+    vector&lt;PQ_pair::point_iterator&gt; it(G.size(),NULL);
+    dist[S] =0;
+    Q.push(make_pair(0,S));
+
+    while (!Q.empty())
+    {
+        const auto &amp; top = Q.top();
+        int u = top.second;
+        int dis = top.first;
+        Q.pop();
+        for(const auto &amp; edge : G[u]){
+            int v = edge.first;
+            int dv= dis + edge.second;
+            if(dv &lt; dist[v]){
+                dist[v] = dv;
+                if(it[v] == NULL)it[v] = Q.push(make_pair(dv,v));
+                else Q.modify(it[v],make_pair(dv,v));// assert it[v] in Q
+            }
+        }
+    }
+}
+
+void solve(){
+    int N,M,S;
+    cin &gt;&gt; N &gt;&gt; M &gt;&gt; S;S--;
+    vector&lt;vector&lt;pair&lt;int,int&gt; &gt; &gt; G(N);
+    for(int i=0 ; i&lt;M ; ++i){
+        int u,v,w;
+        cin &gt;&gt; u &gt;&gt; v &gt;&gt; w;
+        u --;
+        v --;
+        G[u].push_back({v,w});
+    }
+    vector&lt;int&gt; dist;
+    dijstra(dist,G,S);
+    cout &lt;&lt; dist[0];
+    for(int i=1 ; i&lt;N ; ++i)
+        cout &lt;&lt; &quot; &quot; &lt;&lt; dist[i];
+}
+
+int main(){
+    ios :: sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    std::cout.precision(10);
+    std::cout.setf( std::ios::fixed, std:: ios::floatfield );
+    
+    solve();
+    return 0;
+}
+</code></pre>
+
+<p>我测了各种不同的堆tag，除了 binary_heap 外其他堆均可以通过这个题目，其中pairing_heap 最快，总共用时 450ms, thin_heap 次之，可见分摊复杂度的常数可能还是pairing_heap 小一些。thin_heap 暂时还没研究过，虽然提供了 modify的嘴啊坏复杂度保证，但是分摊复杂度的常数还是比 pairing_heap 小了一些。</p>
+
 <h1 id="reference">reference</h1>
 
 <ol>
 <li><a href="https://gcc.gnu.org/onlinedocs/libstdc++/manual/policy_data_structures.html">Chapter 21. Policy-Based Data Structures</a></li>
 <li>Chanis 的博客.<a href="https://www.luogu.org/blog/Chanis/gnu-pbds">比STL还STL？——平板电视</a></li>
 <li>codeforces.<a href="https://codeforces.com/blog/entry/11080">C++ STL: Policy based data structures</a></li>
+<li><a href="https://gcc.gnu.org/onlinedocs/libstdc++/ext/pb_ds/pq_performance_tests.html">GNU priority_queue</a></li>
 </ol>
 
 <blockquote>
@@ -489,7 +605,7 @@ int main(){
     </li>
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/programing-language/">programing-language(6)</a>
+        <a href="https://zouzhitao.github.io/categories/programing-language/">programing-language(5)</a>
     </li>
     
     <li>
