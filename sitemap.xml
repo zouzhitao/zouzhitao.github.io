@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://zouzhitao.github.io/posts/pagerank/</loc>
+    <lastmod>2019-11-03T22:02:12+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://zouzhitao.github.io/posts/dm-reduction-pca-svd/</loc>
     <lastmod>2019-10-23T14:20:43+08:00</lastmod>
   </url>
@@ -265,13 +270,13 @@
   
   <url>
     <loc>https://zouzhitao.github.io/tags/ir/</loc>
-    <lastmod>2019-10-06T22:32:32+08:00</lastmod>
+    <lastmod>2019-11-03T22:02:12+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://zouzhitao.github.io/categories/ir/</loc>
-    <lastmod>2019-10-06T22:32:32+08:00</lastmod>
+    <lastmod>2019-11-03T22:02:12+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -330,8 +335,14 @@
   </url>
   
   <url>
+    <loc>https://zouzhitao.github.io/tags/pagerank/</loc>
+    <lastmod>2019-11-03T22:02:12+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://zouzhitao.github.io/posts/</loc>
-    <lastmod>2019-10-23T14:20:43+08:00</lastmod>
+    <lastmod>2019-11-03T22:02:12+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -679,7 +690,7 @@
   
   <url>
     <loc>https://zouzhitao.github.io/</loc>
-    <lastmod>2019-10-23T14:20:43+08:00</lastmod>
+    <lastmod>2019-11-03T22:02:12+08:00</lastmod>
     <priority>0</priority>
   </url>
   

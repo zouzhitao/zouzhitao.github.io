@@ -6,10 +6,34 @@
     <description>Recent content in Posts on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 23 Oct 2019 14:20:43 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 03 Nov 2019 22:02:12 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>PageRank 算法简介</title>
+      <link>https://zouzhitao.github.io/posts/pagerank/</link>
+      <pubDate>Sun, 03 Nov 2019 22:02:12 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/pagerank/</guid>
+      <description>这篇文章总结 PageRank 相关内容
+ PageRank 在搜索引擎中用来对网页做特征评估(为网页重要性打分)，Google当年就是靠它，拿到互联网时代的门票，进而成就今天的霸主地位。同时，这也是 技术+商业 变现的例子。这边博文就在这里简要总结PageRank算法，揭开它的神秘面纱。
+intuition pagerank的直观非常简单:
+ 整个 web 是一个是一个有向图，一个页面包含的链接，表示这个页面指向另外一个页面 重要的页面被访问的频率越高 被访问的频率(次数) 代表page的重要性  那么剩下的就是一个问题，如何评估页面被访问的次数？当然，直接统计是一种方式，不过这种方式有一个问题，最开始的时候(无人访问的时候)怎么评估？因此我们要想出一个替代的办法
+这里采用的模型就是随机游走(random walk)。假设一个人在这个web上随机游走，每个链接指向的边($A\rightarrow B$) 表示从页面 $A$ 到达 $B$ 的权重，其权重为 $\frac{1}{deg-out_{A}}$。即将它自己的pagerank等概率的分给所有出边指向的链接.
+最终每个页面的极限概率 就是每个页面的pagerank。
+表达成数学模型就是一个markov chain模型。
+markov chain 转移矩阵为$M$,其中 $M_{ij}$ 表示页面$j\rightarrow i$ 的转移概率，$\mathbf{r}$ 表示rank向量长度为 $n$,表示每个页面的pagerank，也就是每个页面的极限概率,其和为1.则
+$$ \begin{aligned} \mathbf{r}&amp;amp;=M\mathbf{r}\\
+\sum_{i=1}^n &amp;amp; r_i=1
+\end{aligned} $$
+即
+$$ r_i=\sum_j M_{ij}r_j\tag{1} $$
+求解 求解这个很简单，可以将上式看做固定点迭代，从任意一个随机的r(和为1)开始不停迭代，当 $||r&amp;rsquo;-r||\le \epsilon$,类似于power iteration。不过这种方法是非常naive的，在数据很大，首先matrix纯不下来，后面我们再讨论pagerank的高效计算。
+现在先来看这样一个问题。一个非常核心的问题，一定有解吗？解唯一吗？
+解的唯一性 基于markov chain的相关知识我们知道，markov chain要能够收敛必须要保证 &amp;lsquo;irreducible&amp;rsquo; 和 &amp;lsquo;recurrent&amp;rsquo; 也就是任意两点可达，且非周期。因此我们需要解决两个问题</description>
+    </item>
     
     <item>
       <title>Dimension Reduction: PCA and SVD</title>
