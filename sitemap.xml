@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://zouzhitao.github.io/posts/parrallel-computer-arch/</loc>
+    <lastmod>2019-11-10T21:49:30+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://zouzhitao.github.io/posts/pagerank/</loc>
     <lastmod>2019-11-03T22:02:12+08:00</lastmod>
   </url>
@@ -342,7 +347,7 @@
   
   <url>
     <loc>https://zouzhitao.github.io/posts/</loc>
-    <lastmod>2019-11-03T22:02:12+08:00</lastmod>
+    <lastmod>2019-11-10T21:49:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -587,6 +592,12 @@
   </url>
   
   <url>
+    <loc>https://zouzhitao.github.io/tags/multicore/</loc>
+    <lastmod>2019-11-10T21:49:30+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://zouzhitao.github.io/tags/muti-source-bfs/</loc>
     <lastmod>2019-04-03T00:09:24+08:00</lastmod>
     <priority>0</priority>
@@ -684,13 +695,13 @@
   
   <url>
     <loc>https://zouzhitao.github.io/categories/system/</loc>
-    <lastmod>2019-04-06T00:30:41+08:00</lastmod>
+    <lastmod>2019-11-10T21:49:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://zouzhitao.github.io/</loc>
-    <lastmod>2019-11-03T22:02:12+08:00</lastmod>
+    <lastmod>2019-11-10T21:49:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
