@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://zouzhitao.github.io/posts/kickstart-2019-round-h/</loc>
+    <lastmod>2019-11-21T20:46:21+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://zouzhitao.github.io/posts/parrallel-computer-arch/</loc>
     <lastmod>2019-11-10T21:49:30+08:00</lastmod>
   </url>
@@ -347,7 +352,7 @@
   
   <url>
     <loc>https://zouzhitao.github.io/posts/</loc>
-    <lastmod>2019-11-10T21:49:30+08:00</lastmod>
+    <lastmod>2019-11-21T20:46:21+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -425,7 +430,7 @@
   
   <url>
     <loc>https://zouzhitao.github.io/categories/competitive-programing/</loc>
-    <lastmod>2019-10-20T11:28:03+08:00</lastmod>
+    <lastmod>2019-11-21T20:46:21+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -533,7 +538,7 @@
   
   <url>
     <loc>https://zouzhitao.github.io/tags/kickstart/</loc>
-    <lastmod>2019-08-25T19:10:53+08:00</lastmod>
+    <lastmod>2019-11-21T20:46:21+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -701,7 +706,7 @@
   
   <url>
     <loc>https://zouzhitao.github.io/</loc>
-    <lastmod>2019-11-10T21:49:30+08:00</lastmod>
+    <lastmod>2019-11-21T20:46:21+08:00</lastmod>
     <priority>0</priority>
   </url>
   

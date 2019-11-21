@@ -6,10 +6,33 @@
     <description>Recent content on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 10 Nov 2019 21:49:30 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 21 Nov 2019 20:46:21 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kickstart 2019 Round H</title>
+      <link>https://zouzhitao.github.io/posts/kickstart-2019-round-h/</link>
+      <pubDate>Thu, 21 Nov 2019 20:46:21 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/kickstart-2019-round-h/</guid>
+      <description>kickstart 2019 round H, 2019 年最后一场kickstart，被打回原型了
+ 感觉还是应该莽一发小数据的&amp;hellip; 前天已经接到了google的实习申请通知了，得抓紧时间刷题了，近期准备把 2018，2017都刷一遍
+A H-index easy， H，是递增的，因此有很多种解决方案
+ 维护一个 $citation \ge h$ 的优先队列，h变化过程中动态删减 (from lls) 维护从 [0,l]以来citation的顺序，移动过程中动态计算  code
+B. Diagonal Puzzle 题目链接 https://codingcompetitions.withgoogle.com/kickstart/round/0000000000050edd/00000000001a2835
+这题很像棋盘翻转，不过是在对角线上的版本，
+考虑一下，如果任意一跳对角线只有翻转与不反转两种情况，重复翻转无效，因此，对于两条大对角线，枚举两种情况，之后对于其上的点，如果为 &amp;lsquo;.&amp;rsquo; 则必翻转，由此求解
+不过写起来真麻烦，代码参考了 lls的解决方案
+将每条对角线想象成一个点，每个点想成边，则对于每个点 $C_{ij}$, 表示一条从 $(i+j) -&amp;gt; (i-j)$ 的边，(注意重编码)其颜色为 $C$, 对于任意一个连通分量，翻转一条对角线就能决定所有翻转，dfs就行了
+code
+C. Elevanagram 题目链接 https://codingcompetitions.withgoogle.com/kickstart/round/0000000000050edd/00000000001a286d
+题意 对于一个数字(很大，数字 $i,1\le i\le 9$, 有 $A[i]\le 10^9$ 个)，是否存在一种排列方式，s.t.它能够被 11 整除
+对于 test1其实很好解决，直接dp就行了，这里有很多种dp姿势，我写的有点搓
+我的方法如下:
+ 首先，设数字 $i$ 选择的正数为 $k_i$, 则他对答案的贡献为 $\sum (k_i - (A_i-k_i)) i \% 11$ 因此设 $dp[i][j]$ 表示前 $i$ 个数中 最终 mod 11为 $j$ 的正数的个数情况</description>
+    </item>
     
     <item>
       <title>现代多核计算机体系结构简介</title>
