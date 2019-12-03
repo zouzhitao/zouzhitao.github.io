@@ -7,20 +7,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>个人凸优化简单学习笔记 | taotao 码字的地方</title>
-    <meta property="og:title" content="个人凸优化简单学习笔记 - taotao 码字的地方">
+    <title>2019 冬季找实习总结 | taotao 码字的地方</title>
+    <meta property="og:title" content="2019 冬季找实习总结 - taotao 码字的地方">
     <meta property="og:type" content="article">
         
-    <meta property="article:published_time" content="2019-01-23T23:49:12&#43;08:00">
+    <meta property="article:published_time" content="2019-11-27T16:22:19&#43;08:00">
         
         
-    <meta property="article:modified_time" content="2019-01-23T23:49:12&#43;08:00">
+    <meta property="article:modified_time" content="2019-11-27T16:22:19&#43;08:00">
         
     <meta name="Keywords" content="computer system,algorithm,OS,distribute system,big data,ML,算法，系统，分布式，大数据，推荐系统">
-    <meta name="description" content="个人凸优化简单学习笔记">
+    <meta name="description" content="2019 冬季找实习总结">
         
     <meta name="author" content="taotao">
-    <meta property="og:url" content="https://zouzhitao.github.io/posts/math-convex-opt/">
+    <meta property="og:url" content="https://zouzhitao.github.io/posts/2019-find-intern-overview/">
     <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="/css/normalize.css">
@@ -72,16 +72,16 @@
                 <div class="res-cons">
                     <article class="post">
                         <header>
-                            <h1 class="post-title">个人凸优化简单学习笔记</h1>
+                            <h1 class="post-title">2019 冬季找实习总结</h1>
                         </header>
                         <date class="post-meta meta-date">
-                            2019年1月23日
+                            2019年11月27日
                         </date>
                         
                         <div class="post-meta meta-category">
                             |
                             
-                                <a href="https://zouzhitao.github.io/categories/math">math</a>
+                                <a href="https://zouzhitao.github.io/categories/life">life</a>
                             
                         </div>
                         
@@ -94,232 +94,78 @@
                         <aside id="toc" class="dismissed">
                             <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
 <ul>
-<li><a href="#凸集合">凸集合</a></li>
-<li><a href="#凸函数">凸函数</a></li>
-<li><a href="#凸优化问题">凸优化问题</a>
-<ul>
-<li><a href="#凸优化问题的局部最优解一定是全局最优解">凸优化问题的局部最优解一定是全局最优解</a></li>
-<li><a href="#一些机器学习的example">一些机器学习的example</a></li>
-</ul></li>
-<li><a href="#lagrange-kkt">lagrange &amp; KKT</a>
-<ul>
-<li><a href="#lagrange-mutiplier">lagrange mutiplier</a></li>
-<li><a href="#primal-dual-原问题与对偶问题">primal &amp; dual 原问题与对偶问题</a></li>
-<li><a href="#原问题的解释">原问题的解释</a></li>
-<li><a href="#弱对偶性-weak-duality">弱对偶性(weak duality)</a></li>
-<li><a href="#互补松弛-complementary-slackness">互补松弛(complementary slackness)</a></li>
-</ul></li>
-<li><a href="#kkt">KKT</a></li>
-<li><a href="#参考">参考</a></li>
+<li><a href="#流水账">流水账</a></li>
+<li><a href="#技巧总结">技巧总结</a></li>
+<li><a href="#之外的思考">之外的思考</a></li>
 </ul>
 </nav>
                         </aside><div class="post-content">
                             
 
 <blockquote>
-<p>本文来源于个人的凸优化学习笔记参考cs229 cvxoptnote,写成笔记的原因仅仅是想通过个人的笔记自己讲述与推导一下这些数学公式，内容可能会很简单，强力建议想得到一手资料的人好好学习文末参考资料</p>
+<p>这里记录一下个人研一上期找实习工作的相关经历.</p>
 </blockquote>
 
-<h1 id="凸集合">凸集合</h1>
+<p>主要分为两个部分，第一个部分是流水帐记录，第二部分是技巧的总结和思考</p>
 
-<p>定义就直接跳过了，这里简单写一些常见的凸集</p>
+<p>我主要投递两种岗位:机器学习算法工程师，机器学习平台开发(偏高性能,c++,分布式)</p>
 
-<ul>
-<li><strong>凸集的交</strong>, 设 $C_i,i = 1,2,3,&hellip;,n$ 是凸集，那么我们有$\cap _{i=0}^n C_i$ 也是凸集</li>
-<li><strong>affine subspace</strong> 即 $Ax+b=0,x \in R^n$, 这既是 convex,也是concave</li>
-<li><strong>凸函数的sublevel</strong> 即 $if \ f(x)\  is\  convex\ function,then \{f(x) &lt;=\alpha\} is\ convex\ set$</li>
-</ul>
+<h1 id="流水账">流水账</h1>
 
-<h1 id="凸函数">凸函数</h1>
+<p>我投的比较早，预计11.20就能出去实习，因此，9.20就开始了第一次投递(PS:事实证明投的太早会有问题，后续解答。)，大致是9.25投递了头条的搜索算法组，一二面都挺正常的，三面就问的我有点儿无语了.总结起来两方面原因吧:
+1. 很多知识不扎实(忘记复习一下了，很多公式都忘记了，主要是当时个人没判断清楚，想着在半年前未准备任何知识的情况下能进亚研，同样的事情应该不难，忘记了考察方向不一样，当时的考察主要是偏数学，毕竟是研究院，这种偏业务的部门搬砖能力是第一的)
+2. 时运不济，三面在国庆后第一天，面试官甚至把时间的忘了，我等了5分钟，介绍项目和自己的时候面试官也根本没听。&hellip;(面试官的这个态度一度令我非常生气，直接把头条拉黑了，导致我后面的另外一个部门我也不想在面了&hellip;，后来想着这个做法不好，不能因为一颗耗子屎而嫉恨一锅粥，同时当时也没分清企业与员工的关系，就是雇佣与被雇佣的关系)</p>
 
-<p><strong>Define</strong></p>
-
-<p><img src="/img/math/convex.png" alt="convex" /></p>
-
-<p><strong>性质</strong>，两条重点</p>
+<p>不过这里也加深了我一些值得取的地方:</p>
 
 <ol>
-<li><strong>first-order-approximation</strong><br>
-$$
-f(y)\ge f(x)+(\nabla f(x))^T(y-x)
-$$</li>
-<li><strong>二阶导数大于0</strong><br>
-$$
-\nabla_x^2 f(x) \ge 0
-$$</li>
+<li>个人的代码能力还是挺过硬的(leetcode等常见的面试算法题是能够解答的，3次面试中都bug-free的解决了)</li>
+<li>个人的系统知识基础还是挺扎实的</li>
 </ol>
 
-<p><strong>一些简单的凸函数</strong></p>
+<p>第二次是阿里的research intern(时间大概是11月初)，这个部门是做系统优化和机器学习模型加速的，有点不对口，一面主要是简单的问了项目，以及coding还有一些编程基础。后来就没有了。感觉这里浪费了一次机会，该多面几家小的准备好了再来的，当时还是太年轻了。，失败原因个人总结如下:</p>
 
 <ol>
-<li><strong>Affine funciton</strong><br>
-$f(x) =A^Tx+b,x\in R^n$</li>
-<li><strong>quadratic function</strong><br>
-$f:R^n-&gt;R,f(x) = 2^{-1}x^TAx+b^Tx+c,A\in S^n,b\in R^n,c\in R$<br>
-这里简单说一下 $\nabla^2 f(x)=A$, 因此如果 $A$ 是半正定(positive-semidefinite)的,那么$f(x)$ is <strong>convex</strong></li>
-<li><strong>Norm</strong>,e.g $f(x) = ||x||_2^2$</li>
-<li><strong>凸函数的非负权重和</strong><br>
-$f(x)=\sum_{i=0}^nc_if_i(x),f_i(x)\in convex\ function\ class$</li>
-<li><strong>凸函数集合的最大值函数</strong><br>
-$f(x) = \max f_i(x),f_i(x)\in convex\ function\ class$<br>
-证明:
-$$
-\begin{aligned}
-   f(\theta x + (1-\theta)y)&amp;= \max f_i(\theta x + (1-\theta)y)\\<br />
-   &amp;\le \max \theta f_i(x) +(1-\theta)f_i(y)\\<br />
-   &amp;\le \theta f(x) + (1-\theta)f(y)
-\end{aligned}
-$$</li>
+<li>知识上: (主要是项目经历没有准备好，答的时候有点怕说错，就很多次答了不知道，其实仔细想想这还不如乱答，白卷一定0分，但是答了可能会有分，<strong>不用紧张</strong>)</li>
+<li>多线程，当面试官问道相关知识的时候个人答了不熟悉，其实我是熟悉的，我仅仅是不熟练接口，这让我丧失了后续对话的可能。后面专门准备了这两方面的内容，写了个线程池任务调度系统。</li>
+<li>面试技巧:可能是中国学生的通病，习惯性谦虚，10分说成6分，然而面试是需要让面试官了解最好的你，也就是真实的你 != 面试官眼中的你，所以你需要做的是将面试官眼中的你展现的更好就行，10分说成12分就行了(因为据面试官的经验大部分人都会把10-&gt;12,如果你把10说成8，那你在面试官眼中可能就只有6了)，</li>
 </ol>
 
-<h1 id="凸优化问题">凸优化问题</h1>
+<p>后面我认认真真的总结了一些面试技巧与知识(主要是机器学习相关的算法模型，推一推)，开始了新一轮的投递。</p>
 
-<p><strong>define</strong></p>
+<p>准备先拿百度试一下:</p>
 
-<p><img src="/img/math/convex-opt.png" alt="" /></p>
+<p>一面基础知识，coding，二面项目，这次问了我40分钟，几乎可以确认我的准备已经到位了；coding，写了个大整数&hellip;，easy;三面就聊了会儿人生. 就这样通过了</p>
 
-<h2 id="凸优化问题的局部最优解一定是全局最优解">凸优化问题的局部最优解一定是全局最优解</h2>
+<p>在面百度二面的时候，我又接到了JD的面试邀请，所以同时面了JD</p>
 
-<p>接下来是凸优化问题最重要，也是最有趣的一个性质</p>
+<p>一面coding，有点难，不过还好通过了；二面机器学习基础，问的非常难非常深，你需要对传统机器学习(GDBT，xgboost. etc)非常熟悉，还问了深度学习相关的，这个我有点弱，问了项目，还问了一个open question。二面问了我两个多小时，后面基本上记不清楚它前面问了撒了。三面就比较容易了，基本上就是看看你能不能搬砖.</p>
 
-<p><strong>证明</strong></p>
+<h1 id="技巧总结">技巧总结</h1>
 
-<p>我们用反证法，
-设 $x\in R^n,f(x) \in convex\ function\ class$,且， $x$ 是 凸优化问题 $f(x)$ 的一个局部最优解，那么我们有，<strong>在$x$ 的邻域中,i.e.$||x-z||_2 &lt;R$ ,不存在一个点 $z$,使得$f(z)&lt;f(x)$</strong>, 同时，假设 $x$ 不是全局最优解，那么我们有,在定义域中，存在一点 $y,s.t.\ f(y)&lt;f(x)$</p>
-
-<p>设 $z=\theta y + (1-\theta)x,\theta=\frac{R}{2||x-y||_2}$,可以证明$||x-z||_2=2^{-1}R&lt;R$</p>
-
-<p>同时,</p>
-
-<p>$$
-\begin{aligned}
-f(z)&amp;=f(\theta y + (1-\theta)x)\\<br />
-&amp;\le \theta f(y)+(1-\theta)f(x)\\<br />
-&amp;\le f(x)
-\end{aligned}
-$$</p>
-
-<p>矛盾</p>
-
-<h2 id="一些机器学习的example">一些机器学习的example</h2>
+<p>公司面试人是为了你能够向它证明你能够搬砖，也就是说，你得向面试官证明你能够搬砖。总结起来得有以下几条考察的方向:</p>
 
 <ol>
-<li><strong>线性回归</strong><br>
-$J(\theta) = ||W^T\Phi (X)-Y||_2^2=\sum (w^t\phi(x_i)-y_i)^2$
-因为 $f_i(w)=(w^t\phi(x_i)-y_i)^2$ 是一个复合affine 凸函数(i.e. x^2 是凸函数，而 $w^t\phi(x_i)-y_i$ 是对 $w$ 的affine function)</li>
-<li><strong>logistic reg</strong><br>
-$J(\theta)=-\sum y_i\log g(\theta x_i) + (1-y_i)\log 1- g(\theta x_i)$</li>
-<li><strong>SVM</strong><br>
-SVM 的目标函数是一个 QP(quadratic opt) 问题，$O(n^3)$
-这个问题还引出一些凸问题有趣的性质，比如lagrange duality 和 KKT,我们后面分析</li>
+<li>基础知识(沟通的基础)</li>
+<li>coding，能够用搬砖的工具</li>
+<li>项目经验(你搬过类似的砖)</li>
 </ol>
 
-<h1 id="lagrange-kkt">lagrange &amp; KKT</h1>
-
-<h2 id="lagrange-mutiplier">lagrange mutiplier</h2>
-
-<p>对于上面的凸优化问题来说，我们有它的lagrange function</p>
-
-<p>$$
-\begin{aligned}
-\mathcal{L}(x,\alpha,\beta)&amp;=f(x)+\sum \alpha_i g_i(x) + \sum \beta_i h_i(x)\\<br />
-&amp;s.t. \alpha_i &gt;=0
-\end{aligned}
-$$</p>
-
-<p>其中 $x$ 称为 primal variable, $\alpha,\beta$ 是dual variable</p>
-
-<p><strong>NOTE</strong> 其实可以将 $\alpha,\beta$ 理解成打破原来约束的代价</p>
-
-<h2 id="primal-dual-原问题与对偶问题">primal &amp; dual 原问题与对偶问题</h2>
-
-<p><img src="/img/math/primal-dual.png" alt="" /></p>
-
-<p>中间那段 english 不用看，直接看形式就行了</p>
-
-<p>我们下面试图证明这样一个弱对偶性(weak duality)</p>
-
-<p>即 $d^*=\theta_D(\alpha^*,\beta^*)\le p^*=\theta_P(x^*)$,反之(<strong>strong duality</strong>) 是说$d^*=p^*$</p>
-
-<h2 id="原问题的解释">原问题的解释</h2>
-
-<p>首先我们化简一下$\theta_P(x)$
-<img src="/img/math/thetap.png" alt="" /></p>
-
-<p>可以证明如下两个性质</p>
+<p>以下是个人面试过程总结的一些经验:</p>
 
 <ol>
-<li>$\theta_P(x)$ 是一个凸函数<br>
-$f(x)$ 是凸函数，$g(x)$ 是凸函数， $h(x)$ 是affine function $\alpha_i\ge 0$, 所以， $\sum \alpha_i g(x) + \beta_i h(x)$ 也是凸函数,凸函数集合的最大值是凸函数，所以$\theta_P(x)$ 是一个凸函数</li>
-<li>$\theta_P(x)$ 的简化<br>
-<img src="/img/math/thetap-sample.png" alt="" />
-关于这一点，我们可以从上面化简后的例子得到</li>
+<li>知识扎实</li>
+<li>项目经验(这点有些企业不在乎，比如头条)</li>
+<li>面试企业建议先面一些不太想去的，涨点经验(前提的没有把握的情形下)</li>
+<li>面试过程切忌答不知道，能扯上一点是一点，实在完全没听说过，再答不知道！</li>
+<li>10-&gt;12分</li>
 </ol>
 
-<h2 id="弱对偶性-weak-duality">弱对偶性(weak duality)</h2>
-
-<p>$$
-\begin{aligned}
-\theta_D(\alpha,\beta)&amp;=\min \mathcal{L}(x,\alpha,\beta)\\<br />
-&amp;\le \mathcal{L}(x^*,\alpha,\beta)\\<br />
-&amp;\le f(x^*) + \max \{\sum \alpha_ig(x^*) + \beta_i h(x^*)\}\\<br />
-&amp;=\theta_P (x^*)\\<br />
-&amp;\le p^*
-\end{aligned}
-$$</p>
-
-<p>即 对偶问题的最优解总是小于等于原问题的最优解</p>
-
-<p>当然<strong>强对偶性</strong>(strong duality) 指的就是 $d^*=p^*$ 了</p>
-
-<p>不过这要满足一些条件，参考文献中指出 一个 <strong>Slater&rsquo;s Condition</strong> ，指出如果存在一些可行解，严格满足所有的限制条件，即 $g_i(x)&lt;0$, 不过没有证明，同时指出几乎所有的图问题都满足 strong duility,这其实解释了为什么我们往往可以套用lagrange 乘数法求导解决这种限制性优化问题</p>
-
-<p>接下来还有一个重要的结论，互补松弛(complementary slackness)</p>
-
-<h2 id="互补松弛-complementary-slackness">互补松弛(complementary slackness)</h2>
-
-<p>这个定理是说，如果强对偶性满足，那么我们有 $a_i^*g_i(x^*)=0,i =1,2,\dots,m$</p>
-
-<p>简单证明一下</p>
-
-<p>$$
-\begin{aligned}
-p^*=d^*=\theta_D(\alpha^*,\beta^*)&amp;=\min \mathcal{L}(x,\alpha^*,\beta^*)\\<br />
-&amp;\le \mathcal{L}(x^*,\alpha^*,\beta^*)\\<br />
-&amp;=f(x^*) + \sum \alpha_i^*g(x^*) + \beta_i^* h(x^*)\\<br />
-&amp;\le f(x^*)\\<br />
-&amp;= p^* \\<br />
-\end{aligned}
-$$</p>
-
-<p>着意味着
-$$
-\begin{aligned}
-&amp;\sum \alpha_i^*g_i(x^*) + \beta_i^* h(x^*)\\<br />
-&amp;=\sum \alpha_i^*g_i(x^*)\\<br />
-&amp;=0
-\end{aligned}
-$$</p>
-
-<p>而我们有 $\alpha_i\ge 0, g_i(x)\le 0,\alpha_i^* g_i(x^*)\le 0$, 最终，他们的和等于0，因此 $\alpha_i^* g_i(x^*)=0$, 这意味着，</p>
-
-<p>$$
-if\ \alpha_i^* &gt;0,then,g_i(x^*)=0\\<br />
-or \\<br />
-if\ g_i(x^*)&gt;0,then,\alpha_i^* =0
-$$</p>
-
-<p>好，最后是 KKT条件，其实就是前几个性质的总结</p>
-
-<h1 id="kkt">KKT</h1>
-
-<p><img src="/img/math/KKT.png" alt="" /></p>
-
-<h1 id="参考">参考</h1>
+<h1 id="之外的思考">之外的思考</h1>
 
 <ol>
-<li><a href="http://cs229.stanford.edu/section/cs229-cvxopt.pdf">cvxopt-note1</a></li>
-<li><a href="http://cs229.stanford.edu/section/cs229-cvxopt2.pdf">cvxopt-note2</a></li>
+<li>工作就是工作没有高低贵贱之分，不要什么算法瞧不起开发&hellip;</li>
+<li>企业和员工的关系永远是雇佣与被雇佣，不要因为你在A公司干过就一定能在B公司干，能够雇佣你,是因为你能够搬砖,(自此我再也不会以自己所处的公司为荣了)</li>
 </ol>
 
 <blockquote>
@@ -329,7 +175,7 @@ $$</p>
 
 <p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
 
-<p><strong>转载请保留此版权声明，并注明出处</strong></p>
+<p><strong>仅允许非商业转载，转载请保留此版权声明，并注明出处</strong></p>
 </blockquote>
 
                         </div>
@@ -341,15 +187,15 @@ $$</p>
     <h2>See Also</h2>
     <ul class="listing">
         
-        <li><a href="/posts/math-distence-to-hyperplane/">点到超平面的距离计算简单笔记</a></li>
+        <li><a href="/posts/msra-reasearch-intern-review/">MSRA 明日之星实习生项目面试总结</a></li>
         
-        <li><a href="/posts/newton-method/">Newton&#39;s Method</a></li>
+        <li><a href="/posts/kickstart-2019-round-h/">Kickstart 2019 Round H</a></li>
         
-        <li><a href="/posts/ml-note-lr/">机器学习笔记:logistic regression</a></li>
+        <li><a href="/posts/parrallel-computer-arch/">现代多核计算机体系结构简介</a></li>
         
-        <li><a href="/posts/ml-note-naive-bayes/">机器学习笔记:朴素贝叶斯</a></li>
+        <li><a href="/posts/pagerank/">PageRank 算法简介</a></li>
         
-        <li><a href="/posts/ml-note-probility/">机器学习笔记: 概率论基础</a></li>
+        <li><a href="/posts/dm-reduction-pca-svd/">Dimension Reduction: PCA and SVD</a></li>
         
     </ul>
 </div>
@@ -359,9 +205,7 @@ $$</p>
                             
                             <ul class="clearfix">
                                 
-                                <li><a href="https://zouzhitao.github.io/tags/optimization">optimization</a></li>
-                                
-                                <li><a href="https://zouzhitao.github.io/tags/convex">convex</a></li>
+                                <li><a href="https://zouzhitao.github.io/tags/intern">intern</a></li>
                                 
                             </ul>
                             
