@@ -68,38 +68,6 @@
                         <article class="post">
                             <header>
                                 <h1 class="post-title">
-                                    <a href="https://zouzhitao.github.io/posts/count-min-sketch/" title="Count Min Sketch:找最频繁元素" >Count Min Sketch:找最频繁元素</a>
-                                </h1>
-                            </header>
-                            <date class="post-meta meta-date">
-                                2019年5月8日
-                            </date>
-                            
-                            <div class="post-meta meta-category">
-                                |
-                                
-                                    <a href="https://zouzhitao.github.io/categories/algorithm">algorithm</a>
-                                
-                            </div>
-                            
-                            <div class="post-content">
-                                <blockquote>
-<p>这是笔者学习 Stanford cs 168 课程的一些学习笔记
-lecture 2, 主要讲一个基于 hash 和独立试验思想，设计的一种数据结构 count min sketch，想法非常类似于 bloom filter，都是以牺牲准确率换空间和时间。</p>
-</blockquote>
-
-<h1 id="heavy-hitter-problem">heavy hitter problem</h1>
-
-<h2 id="find-majority-element">Find majority element</h2>
-
-<p>先来看 …</p>
-                            </div>
-                            <p class="readmore"><a href="https://zouzhitao.github.io/posts/count-min-sketch/">阅读全文</a></p>
-                        </article>
-                    
-                        <article class="post">
-                            <header>
-                                <h1 class="post-title">
                                     <a href="https://zouzhitao.github.io/posts/consistent-hash/" title="Consistent Hash" >Consistent Hash</a>
                                 </h1>
                             </header>
@@ -122,31 +90,6 @@ lecture 2, 主要讲一个基于 hash 和独立试验思想，设计的一种数
 <p>具体的内容可 …</p>
                             </div>
                             <p class="readmore"><a href="https://zouzhitao.github.io/posts/consistent-hash/">阅读全文</a></p>
-                        </article>
-                    
-                        <article class="post">
-                            <header>
-                                <h1 class="post-title">
-                                    <a href="https://zouzhitao.github.io/posts/value-buried/" title="隐藏的价值" >隐藏的价值</a>
-                                </h1>
-                            </header>
-                            <date class="post-meta meta-date">
-                                2019年4月18日
-                            </date>
-                            
-                            <div class="post-meta meta-category">
-                                |
-                                
-                                    <a href="https://zouzhitao.github.io/categories/life">life</a>
-                                
-                            </div>
-                            
-                            <div class="post-content">
-                                <p>丹棱街5号旁边有两栋大楼最为吸引人，1. 新东方，2. MSRA。这两栋大楼有一个非常显著的不同的地方。MSRA 两栋楼内部是相通的，但是新东方是没有链接的，所以通常能够观察到一个有趣的现象，新东方的人穿过楼宇会等红绿灯。看见这个现象的时候我会想，是建通道链接划算还是不建划算？</p>
-
-<p>咋一看这根本就不是个问题，不见通道肯定更加划算，可是你仔细想想，不见通道和建立 …</p>
-                            </div>
-                            <p class="readmore"><a href="https://zouzhitao.github.io/posts/value-buried/">阅读全文</a></p>
                         </article>
                     
                         <article class="post">
@@ -345,17 +288,13 @@ lecture 2, 主要讲一个基于 hash 和独立试验思想，设计的一种数
                             </div>
                             
                             <div class="post-content">
-                                <blockquote>
-<p>以我面试多次大厂的经验，无论是笔试还是面试，大厂的算法题目都不会考非常难实现的数据结构或者算法模板，通常喜欢的还是偏思维的 hash, 复杂度，dp，这样一些简单算法</p>
-</blockquote>
-
-<h1 id="题目链接">题目链接</h1>
+                                <h1 id="题目链接">题目链接</h1>
 
 <p><a href="https://codingcompetitions.withgoogle.com/kickstart/round/0000000000050edf/0000000000051004">google kickstart 2018 Scrambled Words</a></p>
 
 <h1 id="分析">分析</h1>
 
-<p>分析在题目网站有，首先需要想到的就是不同串的长度只有 $O(\sqrt{\sum …</p>
+<p>分析在题目网站有，首先需要想到的就是不同串的长度只有 $O(\sqrt{\sum words_i})$ 种，那么枚举所有长度肯定是一种可行的方法，不过呢，即使枚举长度，对于每个枚举到的字串，我们仍然需要将他和所有具有此长度的串比较，太过浪费时间了，怎么做才能加速 …</p>
                             </div>
                             <p class="readmore"><a href="https://zouzhitao.github.io/posts/unordered-map/">阅读全文</a></p>
                         </article>
@@ -363,28 +302,99 @@ lecture 2, 主要讲一个基于 hash 和独立试验思想，设计的一种数
                         <article class="post">
                             <header>
                                 <h1 class="post-title">
-                                    <a href="https://zouzhitao.github.io/posts/internship-overview/" title="MSRA 实习一月小结" >MSRA 实习一月小结</a>
+                                    <a href="https://zouzhitao.github.io/posts/math-convex-opt/" title="个人凸优化简单学习笔记" >个人凸优化简单学习笔记</a>
                                 </h1>
                             </header>
                             <date class="post-meta meta-date">
-                                2019年1月31日
+                                2019年1月23日
                             </date>
                             
                             <div class="post-meta meta-category">
                                 |
                                 
-                                    <a href="https://zouzhitao.github.io/categories/life">life</a>
+                                    <a href="https://zouzhitao.github.io/categories/math">math</a>
                                 
                             </div>
                             
                             <div class="post-content">
-                                <p>转眼来这里实习已经有1月了，干了一些活，也有了一些感悟，准备简单小结一下</p>
+                                <blockquote>
+<p>本文来源于个人的凸优化学习笔记参考cs229 cvxoptnote,写成笔记的原因仅仅是想通过个人的笔记自己讲述与推导一下这些数学公式，内容可能会很简单，强力建议想得到一手资料的人好好学习文末参考资料</p>
+</blockquote>
 
-<h1 id="life">life</h1>
+<h1 id="凸集合">凸集合</h1>
 
-<p>这边的生活还是很轻松的，mentor手下就我和一个北大的研究生 两个intern, 我两做的东西不一样，虽然大方向是一样的，做的都是 interpretable ML 方面的东西(PS:其实这就是换了一个名字，具体来说就是用weak的model，能看懂数学形态或者数学表达 …</p>
+<p>定义就直接跳过了，这里简单写一些常见的凸集</p>
+
+<ul>
+<li><strong>凸集的交</strong>, 设 $C_i,i = 1,2,3,&hellip;,n$ 是凸集，那么我们 …</li></ul>
                             </div>
-                            <p class="readmore"><a href="https://zouzhitao.github.io/posts/internship-overview/">阅读全文</a></p>
+                            <p class="readmore"><a href="https://zouzhitao.github.io/posts/math-convex-opt/">阅读全文</a></p>
+                        </article>
+                    
+                        <article class="post">
+                            <header>
+                                <h1 class="post-title">
+                                    <a href="https://zouzhitao.github.io/posts/math-distence-to-hyperplane/" title="点到超平面的距离计算简单笔记" >点到超平面的距离计算简单笔记</a>
+                                </h1>
+                            </header>
+                            <date class="post-meta meta-date">
+                                2019年1月23日
+                            </date>
+                            
+                            <div class="post-meta meta-category">
+                                |
+                                
+                                    <a href="https://zouzhitao.github.io/categories/math">math</a>
+                                
+                            </div>
+                            
+                            <div class="post-content">
+                                <blockquote>
+<p>发现自己从大二开始就没有好好的学习数学了，最近看 SVM，发现好多推导和证明自己都不会，或者就要想很久，实在是太废材了。 :(. 以后决定对一些数学知识(特别是高等数学，分析和代数领域的一些东西，学点记点)</p>
+</blockquote>
+
+<hr />
+
+<p><strong>这是正文</strong></p>
+
+<p>这是一个简单的问题，定义如下:</p>
+
+<p>设， $y(X) = W^TX +b, X \in R^n,b \in R$, …</p>
+                            </div>
+                            <p class="readmore"><a href="https://zouzhitao.github.io/posts/math-distence-to-hyperplane/">阅读全文</a></p>
+                        </article>
+                    
+                        <article class="post">
+                            <header>
+                                <h1 class="post-title">
+                                    <a href="https://zouzhitao.github.io/posts/newton-method/" title="Newton&#39;s Method" >Newton&#39;s Method</a>
+                                </h1>
+                            </header>
+                            <date class="post-meta meta-date">
+                                2019年1月20日
+                            </date>
+                            
+                            <div class="post-meta meta-category">
+                                |
+                                
+                                    <a href="https://zouzhitao.github.io/categories/math">math</a>
+                                
+                            </div>
+                            
+                            <div class="post-content">
+                                <p>这里总结一个利用二价导数来求最优解的方法-牛顿法:</p>
+
+<p>设: $f(X)$ 是一个多维函数,由taylor 二阶展开，我们有,</p>
+
+<p>$$
+f(X) \approx f(X_0)+(X-X_0)\nabla f(X_0) + \frac{(X-X_0)\nabla^2 f(X_0)(X-X_0)}{2}
+$$</p>
+
+<p>对 $X$ 求导，并设置为0，我们有</p>
+
+<p>$$ …</p>
+                            </div>
+                            <p class="readmore"><a href="https://zouzhitao.github.io/posts/newton-method/">阅读全文</a></p>
                         </article>
                     
 
@@ -505,14 +515,6 @@ lecture 2, 主要讲一个基于 hash 和独立试验思想，设计的一种数
     
     <li>
         <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(11)</a>
-    </li>
-    
-    <li>
-        <a href="https://zouzhitao.github.io/categories/interview/">interview(1)</a>
-    </li>
-    
-    <li>
-        <a href="https://zouzhitao.github.io/categories/life/">life(3)</a>
     </li>
     
     <li>

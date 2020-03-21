@@ -88,11 +88,6 @@
   </url>
   
   <url>
-    <loc>https://zouzhitao.github.io/posts/msra-internship-over/</loc>
-    <lastmod>2019-08-15T19:58:52+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://zouzhitao.github.io/posts/kick-start-2019-roundb/</loc>
     <lastmod>2019-08-14T21:04:33+08:00</lastmod>
   </url>
@@ -110,11 +105,6 @@
   <url>
     <loc>https://zouzhitao.github.io/posts/consistent-hash/</loc>
     <lastmod>2019-05-04T00:56:55+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://zouzhitao.github.io/posts/value-buried/</loc>
-    <lastmod>2019-04-18T00:36:30+08:00</lastmod>
   </url>
   
   <url>
@@ -145,11 +135,6 @@
   <url>
     <loc>https://zouzhitao.github.io/posts/unordered-map/</loc>
     <lastmod>2019-02-21T22:33:57+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://zouzhitao.github.io/posts/internship-overview/</loc>
-    <lastmod>2019-01-31T11:43:49+08:00</lastmod>
   </url>
   
   <url>
@@ -195,11 +180,6 @@
   <url>
     <loc>https://zouzhitao.github.io/posts/18-kickstart-rounda-pb-lucky-dip/</loc>
     <lastmod>2018-12-25T15:21:27+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://zouzhitao.github.io/posts/msra-reasearch-intern-review/</loc>
-    <lastmod>2018-12-11T12:52:22+08:00</lastmod>
   </url>
   
   <url>
@@ -279,13 +259,13 @@
   </url>
   
   <url>
-    <loc>https://zouzhitao.github.io/categories/ir/</loc>
+    <loc>https://zouzhitao.github.io/tags/ir/</loc>
     <lastmod>2019-11-03T22:02:12+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://zouzhitao.github.io/tags/ir/</loc>
+    <loc>https://zouzhitao.github.io/categories/ir/</loc>
     <lastmod>2019-11-03T22:02:12+08:00</lastmod>
     <priority>0</priority>
   </url>
@@ -311,12 +291,6 @@
   <url>
     <loc>https://zouzhitao.github.io/tags/ml%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/</loc>
     <lastmod>2019-01-23T00:47:54+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://zouzhitao.github.io/tags/msra/</loc>
-    <lastmod>2019-01-31T11:43:49+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -423,14 +397,14 @@
   </url>
   
   <url>
-    <loc>https://zouzhitao.github.io/categories/competitive-programing/</loc>
-    <lastmod>2019-11-21T20:46:21+08:00</lastmod>
+    <loc>https://zouzhitao.github.io/tags/competitive-programing/</loc>
+    <lastmod>2018-12-25T15:21:27+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://zouzhitao.github.io/tags/competitive-programing/</loc>
-    <lastmod>2018-12-25T15:21:27+08:00</lastmod>
+    <loc>https://zouzhitao.github.io/categories/competitive-programing/</loc>
+    <lastmod>2019-11-21T20:46:21+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -507,30 +481,6 @@
   </url>
   
   <url>
-    <loc>https://zouzhitao.github.io/tags/intern/</loc>
-    <lastmod>2018-12-11T12:52:22+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://zouzhitao.github.io/tags/internship/</loc>
-    <lastmod>2019-08-15T19:58:52+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://zouzhitao.github.io/categories/interview/</loc>
-    <lastmod>2018-12-11T12:52:22+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://zouzhitao.github.io/tags/interview/</loc>
-    <lastmod>2018-12-11T12:52:22+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://zouzhitao.github.io/tags/kick-start/</loc>
     <lastmod>2019-10-20T11:28:03+08:00</lastmod>
     <priority>0</priority>
@@ -539,12 +489,6 @@
   <url>
     <loc>https://zouzhitao.github.io/tags/kickstart/</loc>
     <lastmod>2019-11-21T20:46:21+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://zouzhitao.github.io/categories/life/</loc>
-    <lastmod>2019-08-15T19:58:52+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -573,14 +517,14 @@
   </url>
   
   <url>
-    <loc>https://zouzhitao.github.io/categories/machine-learning/</loc>
-    <lastmod>2019-09-27T20:45:14+08:00</lastmod>
+    <loc>https://zouzhitao.github.io/tags/machine-learning/</loc>
+    <lastmod>2018-12-31T15:27:33+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://zouzhitao.github.io/tags/machine-learning/</loc>
-    <lastmod>2018-12-31T15:27:33+08:00</lastmod>
+    <loc>https://zouzhitao.github.io/categories/machine-learning/</loc>
+    <lastmod>2019-09-27T20:45:14+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -707,12 +651,6 @@
   <url>
     <loc>https://zouzhitao.github.io/</loc>
     <lastmod>2019-11-21T20:46:21+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://zouzhitao.github.io/tags/thoughts/</loc>
-    <lastmod>2019-04-18T00:36:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
