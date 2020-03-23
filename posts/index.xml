@@ -6,10 +6,34 @@
     <description>Recent content in Posts on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 21 Nov 2019 20:46:21 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 23 Mar 2020 17:19:35 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kick Start 2020 Round A 题解</title>
+      <link>https://zouzhitao.github.io/posts/kick-start-2020-round-a/</link>
+      <pubDate>Mon, 23 Mar 2020 17:19:35 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/kick-start-2020-round-a/</guid>
+      <description>这次的题挺简单的,可惜了当时没做，错过一次好机会
+ A.Allocation 有 $N$ 个房子，每个房子单价为 $a_i$ 你共有 $B$ 块钱，求最多可以买多少个房子
+分析 贪心
+每个房子的收益都是 1，因此如果有两个房子 $A,B$, 一定是买价格低的最好
+code
+B.Plates $N$ 堆盘子，每堆有 $K$ 个, 每个盘子的收益是 $a_{ij}$, 你可以取 $P$ 个盘子，不过限制是，如果你取了盘子 $A$, 必须要取走它上面的所有盘子，问最大收益，
+分析 01背包的变种，相当于每堆盘子仅取一次，只需确定每堆盘子取的最大位置就好，
+code
+C.Workout $N$ 个连续的数字，$a_{i+1}&amp;gt;ai$, 这个序列的收益是 $\max {a{i+1}-a_i}$, 你可以至多添加 $K$ 个新的数字，使得最小化这个序列的收益，问最小值
+分析 二分
+code
+D.Bundling $N$ 个字符串(仅包含大写),将他们分成 $N/K$ 个组，每个组 $K$ 个字符串，每个组的score是该组字符串的最长公共前缀
+求最大化每个组的score的和
+分析 这题很简单，建一棵trie 树 (前缀树), 每一个节点 记录这个节点的包含此节点的前缀个数(记为 $cnt$).
+遍历这颗trie树，对每个节点($u-&amp;gt;v$) 统计它的子树收益($ans$)以及需要使用的字符串个数($used$)
+因此节点 $u$ 个收益为 $\sum v.ans +(u.cnt - v.</description>
+    </item>
     
     <item>
       <title>Kickstart 2019 Round H</title>
