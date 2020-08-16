@@ -6,10 +6,103 @@
     <description>Recent content in interview on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Tue, 11 Dec 2018 12:52:22 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 27 Sep 2019 08:09:51 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/tags/interview/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>About Interview</title>
+      <link>https://zouzhitao.github.io/posts/about-interview/</link>
+      <pubDate>Fri, 27 Sep 2019 08:09:51 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/about-interview/</guid>
+      <description> 版权声明
+本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
+作者: taotao
+转载请保留此版权声明，并注明出处
+ </description>
+    </item>
+    
+    <item>
+      <title>商汤AI平台研发工程师面试总结</title>
+      <link>https://zouzhitao.github.io/posts/sensetime-ai-platform-engineer-interview/</link>
+      <pubDate>Wed, 02 Jan 2019 09:33:45 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/sensetime-ai-platform-engineer-interview/</guid>
+      <description>面试距今应该已经过去一个月了，一直没有总结，这里还是简单总结一下问题，其实感觉问的挺简单的.
+我面的是 AI平台开发工程师，就是做应用落地的，智能安防部门。做的是视频安防,
+offer get
+一面 一面先是简单聊了一下简历，问的相当简单,(PS:尽然被吐槽简历太简单了[捂脸..]),这边应该用的是 c++ 为主，所以问了很多c++的东西。
+先问了一些计算机基础:
+ 并行与并发的区别 进程通信的方法 用过哪些并发手段  计算机网络
+ ICMP 在哪一层
+这个我直接就说了，不清楚，不过可以猜一下，面试官人挺好了，也让我猜了一下，给我的提示就是Ping 命令 说一下网络层次 3次握手,4次挥手 浏览器中输入一个网址到获取内容的过程  程序设计
+ 你知道尾递归吗 在什么情况下可以用尾递归，二叉树遍历能用吗？
+关于尾递归这个，我只能说运气真的好，就在前一个周我正好再看 coursera 的programing language 所以就比较深入的了解过 尾递归这个东西 虚函数 switch 与 if 的区别
+这玩意儿是真步直到，下来之后看 csapp才发现 switch 会用 跳表优化 问了一个 抽象类和接口的区别
+说是说不出来了，给了一个具体的场景，终于说出来了  一面结束，10分钟后二面，速度还是很快的
+二面 二面就是纯coding，20分钟 c++ bug free,加自己写测试代码
+ $1,\dots,n$ 按字典序输出 $O(nlogn)$
+直接用数位dp，遍历的方法就ok 一个无序数组，找出每一个数右边第一个比他大的数
+单调栈over  总体来说相当简单
+ 版权声明
+本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</description>
+    </item>
+    
+    <item>
+      <title>2018 面试总结</title>
+      <link>https://zouzhitao.github.io/posts/2018-interview/</link>
+      <pubDate>Tue, 11 Dec 2018 20:19:10 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/2018-interview/</guid>
+      <description>就在刚刚，拿了msra 的offer 于此，我的秋招之路，就算结束了
+简要总结一下这一路走来的点点滴滴，说一下我从 7月份以来找未(keng)来(wei)的全过程
+但是时间还长，我也不能确定到底能不能被保研，因为我的 gpa 处于 保研边缘，加上学校保研分 保内和保外，所以相当坑，我不得不早做准备，之后我就在学校准备考研，后来到了，8月份，我的一些学长说 读研没意思，读研就是去镀金的，如果本科就能进大厂，又不想读博完全没有必要去读研。就这样抱着try a try 的心态，投了几分简历， 我投了国内的几家大厂 : A,B,头条，网易，除了 A厂，其他都通过 了，头条是8.21 号面试的，面试经验，见头条后端开发工程师面试经验, 9.2 号就发了 offer, 薪资 20 * 15, 我觉得很ok，遂拒掉了其他几家，就这样到了9月中旬，我被保研了，去了 zju. 这个时候我打算在头条谋一份实习，以确定是否要去头条工作，哎！，怪我傻逼了，我跟头条说我被保研 了，就这样，hr一直以没有三方为由拖着不给我实习机会，之后我就在一家在线教育机构做线上 NOIP 教学找一些零花钱。就这样到了12月份初，我的学弟来找我，它跟我说，他也想来这里。我跟他说，你现在应该去找一个和你的为未来match 的实习工作，而不是去找钱，你现在最缺的不是钱。我跟他争论了一番，我发现他没被我劝服，但是我却被我劝服了，就这样，我又开始拿起简历希望在寒假到来之前找一份实习，这时我 先是选中了 msra,google, 这个时候google 的实习只招大三，于是我就去投msra 的明日之星实习项目，投了大数据挖掘组，我觉得我能过完全是个奇迹，详细面试经验见 msra-intern-review，等了一个周还是没有消息，我觉得已经凉了，后来我又开始投递，我投了国内一线 ai独角兽: sensetime,pony.ai,4P。sensetime 从面试到发offer只用了一天，薪资也说好了高于国内同等大厂&amp;hellip;,这时hr问我什么时候能去，我给他说，我还有个头条的offer，周末给他答复，就这样我再次问头条hr能否给个实习机会，如果不能我就去其他公司了，这时头条终于给我offer了，800/d 我已经很高兴了，拒绝sentime，并且拒掉了其他面试，准备去头条，我车票都买好了，又过了一周，在这周1，我正在图书管准备搞毕业设计，msra 的研究员给我打来了电话，问我愿不愿意去 msra 做 research intern，开始面试，面试经验见msra-intern-review,今天二面结束，msra给我打来电话，说我通过了，至此我的秋(shi)招(xi)面试结束
+感谢一路走来给我提供帮助的所有人
+taotao，12.11
+ 版权声明
+本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
+作者: taotao
+转载请保留此版权声明，并注明出处
+ </description>
+    </item>
+    
+    <item>
+      <title>Bytedance 后台开发工程师面试总结</title>
+      <link>https://zouzhitao.github.io/posts/bytedance-backend-interview/</link>
+      <pubDate>Tue, 11 Dec 2018 19:34:34 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/bytedance-backend-interview/</guid>
+      <description>8/18号10.到上海面的头条后端开发岗，这里写一下面经，回报社会，头条很迅速，3面全部一天解决.
+offer get
+一面 面试官非常和蔼，很好说话。他说面试流程是，1.项目，2.基础(OS,network,组成原理),3.算法，问我ok吗. 当然ok了啊~
+我先说了下项目，因为本科生还没干过啥，就说了一下和老师做的科研的项目，是一个关于算法的，感觉没加分&amp;hellip;
+然后问基础:
+ 假设一个大型游戏有10+G，内存仅有2G，怎么让它跑起来？   我说是虚存吗，我直接说虚存的设计吧，msg:嗯,ok~,
+wo: balabala ~&amp;hellip; 说了虚存，从一条CPU打过来的指令开始解释，感觉还不错，
+msg:紧接着又问了页表是每个进程都有的还是仅有一个。二级页表的作用，进程的逻辑空间大小看什么。反正问道你答不出来，或者他觉得ok了为止
+网络
+解释一下一个数据包从一个子网到另一个子网的过程，MAC地址，IP怎么转化的，说清楚
+算法题，写代码
+ 怎么判断一个有向无环图有没有环(topo) 一颗二叉树的直径，我跟他说两次bfs就好了，他不信，还让我证明了一下&amp;hellip;啊艰难的证明  还问了一下java基础，让我解释hashmap
+msg:ok,有什么想问我的？
+wo:可以给出一个评价吗？msg说还ok，说头条比较看重沟通，说我这部分干的还行。
+3分钟后2面通知就来了
+二面 1.看简历才知道我是本科生，说他从来没面过本科生。想让我介绍一下。
+说一个解决的ACM最难的题目
+wo: what???都退役一年了。说了个上次newcoder上做的。解释了好大半天
+语言
+ 说一下c++和java的区别 这里扯了一堆，
+ 从c++切到java要注意啥
+  wo： what？？？？没懂，能说详细点吗
+msg：student1=student2,java和c++有啥区别
+wo: 终于听懂了
+ 多太了解？？  class base{print} class supper exend base{。。。@override print()} base b = new supper(); b.printf();  输出哪个的.
+wo: supper
+msg:为什么？
+不太清楚</description>
+    </item>
     
     <item>
       <title>MSRA 明日之星实习生项目面试总结</title>

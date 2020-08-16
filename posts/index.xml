@@ -6,10 +6,30 @@
     <description>Recent content in Posts on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 15 Jul 2020 23:07:48 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 16 Aug 2020 20:46:35 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Cache Friendly Binary Search: cache 友好的二分搜索</title>
+      <link>https://zouzhitao.github.io/posts/cache-friendly-binary-search/</link>
+      <pubDate>Sun, 16 Aug 2020 20:46:35 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/cache-friendly-binary-search/</guid>
+      <description>前段时间面试，一面试官问我一个问题。写一个二分搜索。我一分钟以内就切完了，面试官让我在x86平台下将代码优化到极致. 我一下子就懵了。感觉多年的计算机白学了。
+ 众所周知二分查找的主要瓶颈在 cache miss. 因为查找过程中第一次可能在 数组的 $\frac{1}{2}$ 处，第二次可能就跑到了数组的 $\frac{3}{4}$ 或者 $\frac{1}{4}$ 处，如果数组够长，那前面的几次查找几乎都会miss。
+因此优化二分查找的效率，主要就在于优化 cache miss
+我上网找了两天资料，确实找到了一种方法可以优化二分查找eytzinger binary search，可是限制条件是十分昂贵的:
+ 需要对数组布局做一个重排(单次二分查找不会有任何优势) 只有在对数组做多次静态二分查找的情形下会带来cache优化。  我们先来详细看一下算法。再来仔细分析这个算法
+eytzinger binary search eytzinger memory layout 先来看一下eytzinger 内存布局。
+先举一个例子，一个有序数组的[1,&amp;hellip;,15] 所对应的完全二分查找树如下
+如果我们将这颗树保存为 pointer-free 的完全二叉树的形式，可以得到下面的数组形式 记为 $b$, base-1,也就是
+ $b[1]$ 为根节点 $b[2k]$ 为 $b[k]$ 的左孩子，且 $b[2k] &amp;lt;= b[k]$ $b[2k+1]$ 为 $b[k]$ 的右孩子，且 $b[2k +1] &amp;gt;=b[k]$  也就是说
+对于一个有序数组的eytzinger 内存布局定义为它的完全二分搜索树的数组形式，类似表示在计算机世界中并不少见，比如 binary-heap就是这样表示的。
+如何将有序数组改为eytzinger形式 其实不难发现 原数组是这颗完全二分搜索树的中序遍历，而eytzinger布局是这颗完全二分搜索树的层序遍历
+const int n = 1e5; int a[n], b[n+1]; int eytzinger(int i = 0, int k = 1) { if (k &amp;lt;= n) { i = eytzinger(i, 2 * k); b[k] = a[i++]; i = eytzinger(i, 2 * k + 1); } return i; }  在eytzinger 布局上的二分搜索实现 原理很简单了，</description>
+    </item>
     
     <item>
       <title>梯度下降优化算法简单总结</title>

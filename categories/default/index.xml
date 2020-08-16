@@ -6,10 +6,23 @@
     <description>Recent content in default on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 15 Jul 2020 23:07:48 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 16 Aug 2020 20:46:35 +0800</lastBuildDate>
     
 	<atom:link href="https://zouzhitao.github.io/categories/default/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Cache Friendly Binary Search</title>
+      <link>https://zouzhitao.github.io/posts/cache-friendly-binary-search/</link>
+      <pubDate>Sun, 16 Aug 2020 20:46:35 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/cache-friendly-binary-search/</guid>
+      <description> 版权声明
+本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
+作者: taotao
+仅允许非商业转载，转载请保留此版权声明，并注明出处
+ </description>
+    </item>
     
     <item>
       <title>梯度下降优化算法简单总结</title>

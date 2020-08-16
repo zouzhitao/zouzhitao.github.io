@@ -291,15 +291,6 @@
     </item>
     
     <item>
-      <title>default</title>
-      <link>https://zouzhitao.github.io/tags/default/</link>
-      <pubDate>Wed, 15 Jul 2020 23:07:48 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/default/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>dimension-reduction</title>
       <link>https://zouzhitao.github.io/tags/dimension-reduction/</link>
       <pubDate>Sun, 13 Oct 2019 18:25:18 +0800</pubDate>
@@ -354,11 +345,29 @@
     </item>
     
     <item>
+      <title>gridient descent</title>
+      <link>https://zouzhitao.github.io/tags/gridient-descent/</link>
+      <pubDate>Wed, 15 Jul 2020 23:07:48 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/gridient-descent/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>heavy-hitter</title>
       <link>https://zouzhitao.github.io/tags/heavy-hitter/</link>
       <pubDate>Wed, 08 May 2019 00:35:33 +0800</pubDate>
       
       <guid>https://zouzhitao.github.io/tags/heavy-hitter/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>hpc</title>
+      <link>https://zouzhitao.github.io/tags/hpc/</link>
+      <pubDate>Sun, 16 Aug 2020 20:46:35 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/hpc/</guid>
       <description></description>
     </item>
     
@@ -473,7 +482,7 @@
     <item>
       <title>optimization</title>
       <link>https://zouzhitao.github.io/tags/optimization/</link>
-      <pubDate>Wed, 23 Jan 2019 23:49:12 +0800</pubDate>
+      <pubDate>Wed, 15 Jul 2020 23:07:48 +0800</pubDate>
       
       <guid>https://zouzhitao.github.io/tags/optimization/</guid>
       <description></description>
