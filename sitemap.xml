@@ -3,42 +3,12 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://zouzhitao.github.io/categories/</loc>
-    <lastmod>2020-11-10T00:32:29+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://zouzhitao.github.io/tags/life/</loc>
-    <lastmod>2020-11-10T00:32:29+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://zouzhitao.github.io/categories/life/</loc>
-    <lastmod>2020-11-10T00:32:29+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://zouzhitao.github.io/posts/</loc>
-    <lastmod>2020-11-10T00:32:29+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://zouzhitao.github.io/tags/</loc>
-    <lastmod>2020-11-10T00:32:29+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://zouzhitao.github.io/</loc>
-    <lastmod>2020-11-10T00:32:29+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://zouzhitao.github.io/posts/finding-jobs/</loc>
-    <lastmod>2020-11-10T00:32:29+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://zouzhitao.github.io/posts/cache-friendly-binary-search/</loc>
+    <lastmod>2020-08-16T20:46:35+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zouzhitao.github.io/categories/</loc>
     <lastmod>2020-08-16T20:46:35+08:00</lastmod>
   </url>
   
@@ -48,7 +18,22 @@
   </url>
   
   <url>
+    <loc>https://zouzhitao.github.io/posts/</loc>
+    <lastmod>2020-08-16T20:46:35+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://zouzhitao.github.io/categories/system/</loc>
+    <lastmod>2020-08-16T20:46:35+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zouzhitao.github.io/tags/</loc>
+    <lastmod>2020-08-16T20:46:35+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zouzhitao.github.io/</loc>
     <lastmod>2020-08-16T20:46:35+08:00</lastmod>
   </url>
   
