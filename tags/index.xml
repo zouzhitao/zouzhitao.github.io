@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on taotao 码字的地方</title>
@@ -6,341 +6,22 @@
     <description>Recent content in Tags on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Tue, 26 Mar 2019 23:38:34 +0800</lastBuildDate>
-    
-	<atom:link href="https://zouzhitao.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Tue, 10 Nov 2020 00:32:29 +0800</lastBuildDate><atom:link href="https://zouzhitao.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>(co-,contra-,in-)variance</title>
-      <link>https://zouzhitao.github.io/tags/co-contra-in-variance/</link>
-      <pubDate>Tue, 26 Mar 2019 23:38:34 +0800</pubDate>
+      <title>life</title>
+      <link>https://zouzhitao.github.io/tags/life/</link>
+      <pubDate>Tue, 10 Nov 2020 00:32:29 +0800</pubDate>
       
-      <guid>https://zouzhitao.github.io/tags/co-contra-in-variance/</guid>
+      <guid>https://zouzhitao.github.io/tags/life/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Apriori</title>
-      <link>https://zouzhitao.github.io/tags/apriori/</link>
-      <pubDate>Mon, 21 Oct 2019 21:58:26 +0800</pubDate>
+      <title>hpc</title>
+      <link>https://zouzhitao.github.io/tags/hpc/</link>
+      <pubDate>Sun, 16 Aug 2020 20:46:35 +0800</pubDate>
       
-      <guid>https://zouzhitao.github.io/tags/apriori/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Data-Mining</title>
-      <link>https://zouzhitao.github.io/tags/data-mining/</link>
-      <pubDate>Mon, 21 Oct 2019 21:58:26 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/data-mining/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Dimension-reduction</title>
-      <link>https://zouzhitao.github.io/tags/dimension-reduction/</link>
-      <pubDate>Wed, 23 Oct 2019 14:20:43 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/dimension-reduction/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>FP-Growth</title>
-      <link>https://zouzhitao.github.io/tags/fp-growth/</link>
-      <pubDate>Mon, 21 Oct 2019 21:58:26 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/fp-growth/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>GBDT</title>
-      <link>https://zouzhitao.github.io/tags/gbdt/</link>
-      <pubDate>Mon, 04 Mar 2019 23:23:53 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/gbdt/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>IR</title>
-      <link>https://zouzhitao.github.io/tags/ir/</link>
-      <pubDate>Sun, 03 Nov 2019 22:02:12 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/ir/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Inverted Index</title>
-      <link>https://zouzhitao.github.io/tags/inverted-index/</link>
-      <pubDate>Sun, 06 Oct 2019 22:04:00 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/inverted-index/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>KM</title>
-      <link>https://zouzhitao.github.io/tags/km/</link>
-      <pubDate>Wed, 14 Aug 2019 20:34:05 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/km/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>MIT6.828</title>
-      <link>https://zouzhitao.github.io/tags/mit6.828/</link>
-      <pubDate>Wed, 05 Dec 2018 23:41:09 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/mit6.828/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>ML数学基础</title>
-      <link>https://zouzhitao.github.io/tags/ml%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/</link>
-      <pubDate>Wed, 23 Jan 2019 00:47:54 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/ml%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>OS</title>
-      <link>https://zouzhitao.github.io/tags/os/</link>
-      <pubDate>Thu, 06 Dec 2018 18:49:44 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/os/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>PAC</title>
-      <link>https://zouzhitao.github.io/tags/pac/</link>
-      <pubDate>Wed, 06 Mar 2019 22:05:16 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/pac/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>PCA</title>
-      <link>https://zouzhitao.github.io/tags/pca/</link>
-      <pubDate>Wed, 23 Oct 2019 14:20:43 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/pca/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>PL</title>
-      <link>https://zouzhitao.github.io/tags/pl/</link>
-      <pubDate>Wed, 05 Dec 2018 14:02:01 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/pl/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>PageRank</title>
-      <link>https://zouzhitao.github.io/tags/pagerank/</link>
-      <pubDate>Sun, 03 Nov 2019 22:02:12 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/pagerank/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>SVD</title>
-      <link>https://zouzhitao.github.io/tags/svd/</link>
-      <pubDate>Wed, 23 Oct 2019 14:20:43 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/svd/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>UW programing language</title>
-      <link>https://zouzhitao.github.io/tags/uw-programing-language/</link>
-      <pubDate>Wed, 05 Dec 2018 14:02:01 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/uw-programing-language/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>adaboost</title>
-      <link>https://zouzhitao.github.io/tags/adaboost/</link>
-      <pubDate>Mon, 04 Mar 2019 23:23:53 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/adaboost/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>bayes</title>
-      <link>https://zouzhitao.github.io/tags/bayes/</link>
-      <pubDate>Sat, 05 Jan 2019 19:58:38 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/bayes/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>big-data</title>
-      <link>https://zouzhitao.github.io/tags/big-data/</link>
-      <pubDate>Mon, 14 Oct 2019 19:19:18 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/big-data/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>binary-search</title>
-      <link>https://zouzhitao.github.io/tags/binary-search/</link>
-      <pubDate>Wed, 03 Apr 2019 00:09:24 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/binary-search/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>bloom-filter</title>
-      <link>https://zouzhitao.github.io/tags/bloom-filter/</link>
-      <pubDate>Wed, 08 May 2019 00:35:33 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/bloom-filter/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>boosting</title>
-      <link>https://zouzhitao.github.io/tags/boosting/</link>
-      <pubDate>Mon, 04 Mar 2019 23:23:53 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/boosting/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>c&#43;&#43;</title>
-      <link>https://zouzhitao.github.io/tags/c&#43;&#43;/</link>
-      <pubDate>Thu, 21 Feb 2019 22:33:57 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/c&#43;&#43;/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>competitive-programing</title>
-      <link>https://zouzhitao.github.io/tags/competitive-programing/</link>
-      <pubDate>Tue, 25 Dec 2018 15:21:27 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/competitive-programing/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>consistent-hash</title>
-      <link>https://zouzhitao.github.io/tags/consistent-hash/</link>
-      <pubDate>Sat, 04 May 2019 00:56:55 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/consistent-hash/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>convex</title>
-      <link>https://zouzhitao.github.io/tags/convex/</link>
-      <pubDate>Wed, 23 Jan 2019 23:49:12 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/convex/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>count-min-sketch</title>
-      <link>https://zouzhitao.github.io/tags/count-min-sketch/</link>
-      <pubDate>Wed, 08 May 2019 00:35:33 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/count-min-sketch/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>cpp11</title>
-      <link>https://zouzhitao.github.io/tags/cpp11/</link>
-      <pubDate>Fri, 23 Aug 2019 14:42:36 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/cpp11/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>decision-tree</title>
-      <link>https://zouzhitao.github.io/tags/decision-tree/</link>
-      <pubDate>Mon, 31 Dec 2018 15:27:33 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/decision-tree/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>dimension-reduction</title>
-      <link>https://zouzhitao.github.io/tags/dimension-reduction/</link>
-      <pubDate>Sun, 13 Oct 2019 18:25:18 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/dimension-reduction/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>distributed-system</title>
-      <link>https://zouzhitao.github.io/tags/distributed-system/</link>
-      <pubDate>Sat, 06 Apr 2019 00:30:41 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/distributed-system/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>functional programing</title>
-      <link>https://zouzhitao.github.io/tags/functional-programing/</link>
-      <pubDate>Wed, 05 Dec 2018 14:02:01 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/functional-programing/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>gaussion</title>
-      <link>https://zouzhitao.github.io/tags/gaussion/</link>
-      <pubDate>Sun, 06 Jan 2019 14:38:13 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/gaussion/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>gdb</title>
-      <link>https://zouzhitao.github.io/tags/gdb/</link>
-      <pubDate>Thu, 06 Dec 2018 18:49:44 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/gdb/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>gradient boosting</title>
-      <link>https://zouzhitao.github.io/tags/gradient-boosting/</link>
-      <pubDate>Mon, 04 Mar 2019 23:23:53 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/gradient-boosting/</guid>
+      <guid>https://zouzhitao.github.io/tags/hpc/</guid>
       <description></description>
     </item>
     
@@ -354,20 +35,11 @@
     </item>
     
     <item>
-      <title>heavy-hitter</title>
-      <link>https://zouzhitao.github.io/tags/heavy-hitter/</link>
-      <pubDate>Wed, 08 May 2019 00:35:33 +0800</pubDate>
+      <title>optimization</title>
+      <link>https://zouzhitao.github.io/tags/optimization/</link>
+      <pubDate>Wed, 15 Jul 2020 23:07:48 +0800</pubDate>
       
-      <guid>https://zouzhitao.github.io/tags/heavy-hitter/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>hpc</title>
-      <link>https://zouzhitao.github.io/tags/hpc/</link>
-      <pubDate>Sun, 16 Aug 2020 20:46:35 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/hpc/</guid>
+      <guid>https://zouzhitao.github.io/tags/optimization/</guid>
       <description></description>
     </item>
     
@@ -390,60 +62,6 @@
     </item>
     
     <item>
-      <title>linear-algebra</title>
-      <link>https://zouzhitao.github.io/tags/linear-algebra/</link>
-      <pubDate>Wed, 23 Jan 2019 00:47:54 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/linear-algebra/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>logistic-regression</title>
-      <link>https://zouzhitao.github.io/tags/logistic-regression/</link>
-      <pubDate>Sun, 06 Jan 2019 14:38:13 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/logistic-regression/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>lsh</title>
-      <link>https://zouzhitao.github.io/tags/lsh/</link>
-      <pubDate>Mon, 14 Oct 2019 19:19:18 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/lsh/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>machine learning</title>
-      <link>https://zouzhitao.github.io/tags/machine-learning/</link>
-      <pubDate>Sat, 05 Jan 2019 19:20:46 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/machine-learning/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>machine-learning</title>
-      <link>https://zouzhitao.github.io/tags/machine-learning/</link>
-      <pubDate>Mon, 31 Dec 2018 15:27:33 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/machine-learning/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>mapreduce</title>
-      <link>https://zouzhitao.github.io/tags/mapreduce/</link>
-      <pubDate>Sat, 06 Apr 2019 00:30:41 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/mapreduce/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>multicore</title>
       <link>https://zouzhitao.github.io/tags/multicore/</link>
       <pubDate>Sun, 10 Nov 2019 21:49:30 +0800</pubDate>
@@ -453,38 +71,47 @@
     </item>
     
     <item>
-      <title>muti-source-bfs</title>
-      <link>https://zouzhitao.github.io/tags/muti-source-bfs/</link>
-      <pubDate>Wed, 03 Apr 2019 00:09:24 +0800</pubDate>
+      <title>IR</title>
+      <link>https://zouzhitao.github.io/tags/ir/</link>
+      <pubDate>Sun, 03 Nov 2019 22:02:12 +0800</pubDate>
       
-      <guid>https://zouzhitao.github.io/tags/muti-source-bfs/</guid>
+      <guid>https://zouzhitao.github.io/tags/ir/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>naive-bayes</title>
-      <link>https://zouzhitao.github.io/tags/naive-bayes/</link>
-      <pubDate>Sun, 06 Jan 2019 14:38:13 +0800</pubDate>
+      <title>PageRank</title>
+      <link>https://zouzhitao.github.io/tags/pagerank/</link>
+      <pubDate>Sun, 03 Nov 2019 22:02:12 +0800</pubDate>
       
-      <guid>https://zouzhitao.github.io/tags/naive-bayes/</guid>
+      <guid>https://zouzhitao.github.io/tags/pagerank/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>nearest-neighbor</title>
-      <link>https://zouzhitao.github.io/tags/nearest-neighbor/</link>
-      <pubDate>Sun, 13 Oct 2019 18:25:18 +0800</pubDate>
+      <title>dimension-reduction</title>
+      <link>https://zouzhitao.github.io/tags/dimension-reduction/</link>
+      <pubDate>Wed, 23 Oct 2019 14:20:43 +0800</pubDate>
       
-      <guid>https://zouzhitao.github.io/tags/nearest-neighbor/</guid>
+      <guid>https://zouzhitao.github.io/tags/dimension-reduction/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>optimization</title>
-      <link>https://zouzhitao.github.io/tags/optimization/</link>
-      <pubDate>Wed, 15 Jul 2020 23:07:48 +0800</pubDate>
+      <title>PCA</title>
+      <link>https://zouzhitao.github.io/tags/pca/</link>
+      <pubDate>Wed, 23 Oct 2019 14:20:43 +0800</pubDate>
       
-      <guid>https://zouzhitao.github.io/tags/optimization/</guid>
+      <guid>https://zouzhitao.github.io/tags/pca/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SVD</title>
+      <link>https://zouzhitao.github.io/tags/svd/</link>
+      <pubDate>Wed, 23 Oct 2019 14:20:43 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/svd/</guid>
       <description></description>
     </item>
     
@@ -498,29 +125,56 @@
     </item>
     
     <item>
-      <title>probability</title>
-      <link>https://zouzhitao.github.io/tags/probability/</link>
-      <pubDate>Sat, 05 Jan 2019 19:24:41 +0800</pubDate>
+      <title>Apriori</title>
+      <link>https://zouzhitao.github.io/tags/apriori/</link>
+      <pubDate>Mon, 21 Oct 2019 21:58:26 +0800</pubDate>
       
-      <guid>https://zouzhitao.github.io/tags/probability/</guid>
+      <guid>https://zouzhitao.github.io/tags/apriori/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>qemu</title>
-      <link>https://zouzhitao.github.io/tags/qemu/</link>
-      <pubDate>Tue, 27 Nov 2018 08:32:56 +0800</pubDate>
+      <title>Data-Mining</title>
+      <link>https://zouzhitao.github.io/tags/data-mining/</link>
+      <pubDate>Mon, 21 Oct 2019 21:58:26 +0800</pubDate>
       
-      <guid>https://zouzhitao.github.io/tags/qemu/</guid>
+      <guid>https://zouzhitao.github.io/tags/data-mining/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>range-based-for</title>
-      <link>https://zouzhitao.github.io/tags/range-based-for/</link>
-      <pubDate>Fri, 23 Aug 2019 14:42:36 +0800</pubDate>
+      <title>FP-Growth</title>
+      <link>https://zouzhitao.github.io/tags/fp-growth/</link>
+      <pubDate>Mon, 21 Oct 2019 21:58:26 +0800</pubDate>
       
-      <guid>https://zouzhitao.github.io/tags/range-based-for/</guid>
+      <guid>https://zouzhitao.github.io/tags/fp-growth/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>big-data</title>
+      <link>https://zouzhitao.github.io/tags/big-data/</link>
+      <pubDate>Mon, 14 Oct 2019 19:19:18 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/big-data/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>lsh</title>
+      <link>https://zouzhitao.github.io/tags/lsh/</link>
+      <pubDate>Mon, 14 Oct 2019 19:19:18 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/lsh/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>nearest-neighbor</title>
+      <link>https://zouzhitao.github.io/tags/nearest-neighbor/</link>
+      <pubDate>Sun, 13 Oct 2019 18:25:18 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/nearest-neighbor/</guid>
       <description></description>
     </item>
     
@@ -534,38 +188,11 @@
     </item>
     
     <item>
-      <title>sampling-complexity</title>
-      <link>https://zouzhitao.github.io/tags/sampling-complexity/</link>
-      <pubDate>Wed, 06 Mar 2019 22:05:16 +0800</pubDate>
+      <title>Inverted Index</title>
+      <link>https://zouzhitao.github.io/tags/inverted-index/</link>
+      <pubDate>Sun, 06 Oct 2019 22:04:00 +0800</pubDate>
       
-      <guid>https://zouzhitao.github.io/tags/sampling-complexity/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>scala</title>
-      <link>https://zouzhitao.github.io/tags/scala/</link>
-      <pubDate>Tue, 26 Mar 2019 23:38:34 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/scala/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>sml</title>
-      <link>https://zouzhitao.github.io/tags/sml/</link>
-      <pubDate>Wed, 05 Dec 2018 14:02:01 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/sml/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>subline-algorithm</title>
-      <link>https://zouzhitao.github.io/tags/subline-algorithm/</link>
-      <pubDate>Wed, 08 May 2019 00:35:33 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/subline-algorithm/</guid>
+      <guid>https://zouzhitao.github.io/tags/inverted-index/</guid>
       <description></description>
     </item>
     
@@ -579,20 +206,119 @@
     </item>
     
     <item>
+      <title>cpp11</title>
+      <link>https://zouzhitao.github.io/tags/cpp11/</link>
+      <pubDate>Fri, 23 Aug 2019 14:42:36 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/cpp11/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>range-based-for</title>
+      <link>https://zouzhitao.github.io/tags/range-based-for/</link>
+      <pubDate>Fri, 23 Aug 2019 14:42:36 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/range-based-for/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>KM</title>
+      <link>https://zouzhitao.github.io/tags/km/</link>
+      <pubDate>Wed, 14 Aug 2019 20:34:05 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/km/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>bloom-filter</title>
+      <link>https://zouzhitao.github.io/tags/bloom-filter/</link>
+      <pubDate>Wed, 08 May 2019 00:35:33 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/bloom-filter/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>count-min-sketch</title>
+      <link>https://zouzhitao.github.io/tags/count-min-sketch/</link>
+      <pubDate>Wed, 08 May 2019 00:35:33 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/count-min-sketch/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>heavy-hitter</title>
+      <link>https://zouzhitao.github.io/tags/heavy-hitter/</link>
+      <pubDate>Wed, 08 May 2019 00:35:33 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/heavy-hitter/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>subline-algorithm</title>
+      <link>https://zouzhitao.github.io/tags/subline-algorithm/</link>
+      <pubDate>Wed, 08 May 2019 00:35:33 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/subline-algorithm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>consistent-hash</title>
+      <link>https://zouzhitao.github.io/tags/consistent-hash/</link>
+      <pubDate>Sat, 04 May 2019 00:56:55 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/consistent-hash/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>distributed-system</title>
+      <link>https://zouzhitao.github.io/tags/distributed-system/</link>
+      <pubDate>Sat, 06 Apr 2019 00:30:41 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/distributed-system/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mapreduce</title>
+      <link>https://zouzhitao.github.io/tags/mapreduce/</link>
+      <pubDate>Sat, 06 Apr 2019 00:30:41 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/mapreduce/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>binary-search</title>
+      <link>https://zouzhitao.github.io/tags/binary-search/</link>
+      <pubDate>Wed, 03 Apr 2019 00:09:24 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/binary-search/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>muti-source-bfs</title>
+      <link>https://zouzhitao.github.io/tags/muti-source-bfs/</link>
+      <pubDate>Wed, 03 Apr 2019 00:09:24 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/muti-source-bfs/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>sweep-line</title>
       <link>https://zouzhitao.github.io/tags/sweep-line/</link>
       <pubDate>Wed, 03 Apr 2019 00:09:24 +0800</pubDate>
       
       <guid>https://zouzhitao.github.io/tags/sweep-line/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>unordered_map</title>
-      <link>https://zouzhitao.github.io/tags/unordered_map/</link>
-      <pubDate>Thu, 21 Feb 2019 22:33:57 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/tags/unordered_map/</guid>
       <description></description>
     </item>
     
@@ -611,6 +337,267 @@
       <pubDate>Wed, 03 Apr 2019 00:09:24 +0800</pubDate>
       
       <guid>https://zouzhitao.github.io/tags/%E6%9B%BC%E5%93%88%E9%A1%BF%E8%B7%9D%E7%A6%BB/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>(co-,contra-,in-)variance</title>
+      <link>https://zouzhitao.github.io/tags/co-contra-in-variance/</link>
+      <pubDate>Tue, 26 Mar 2019 23:38:34 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/co-contra-in-variance/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>scala</title>
+      <link>https://zouzhitao.github.io/tags/scala/</link>
+      <pubDate>Tue, 26 Mar 2019 23:38:34 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/scala/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>PAC</title>
+      <link>https://zouzhitao.github.io/tags/pac/</link>
+      <pubDate>Wed, 06 Mar 2019 22:05:16 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/pac/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>sampling-complexity</title>
+      <link>https://zouzhitao.github.io/tags/sampling-complexity/</link>
+      <pubDate>Wed, 06 Mar 2019 22:05:16 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/sampling-complexity/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>adaboost</title>
+      <link>https://zouzhitao.github.io/tags/adaboost/</link>
+      <pubDate>Mon, 04 Mar 2019 23:23:53 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/adaboost/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>boosting</title>
+      <link>https://zouzhitao.github.io/tags/boosting/</link>
+      <pubDate>Mon, 04 Mar 2019 23:23:53 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/boosting/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>GBDT</title>
+      <link>https://zouzhitao.github.io/tags/gbdt/</link>
+      <pubDate>Mon, 04 Mar 2019 23:23:53 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/gbdt/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>gradient boosting</title>
+      <link>https://zouzhitao.github.io/tags/gradient-boosting/</link>
+      <pubDate>Mon, 04 Mar 2019 23:23:53 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/gradient-boosting/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>c&#43;&#43;</title>
+      <link>https://zouzhitao.github.io/tags/c&#43;&#43;/</link>
+      <pubDate>Thu, 21 Feb 2019 22:33:57 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/c&#43;&#43;/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>unordered_map</title>
+      <link>https://zouzhitao.github.io/tags/unordered_map/</link>
+      <pubDate>Thu, 21 Feb 2019 22:33:57 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/unordered_map/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>convex</title>
+      <link>https://zouzhitao.github.io/tags/convex/</link>
+      <pubDate>Wed, 23 Jan 2019 23:49:12 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/convex/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>linear-algebra</title>
+      <link>https://zouzhitao.github.io/tags/linear-algebra/</link>
+      <pubDate>Wed, 23 Jan 2019 00:47:54 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/linear-algebra/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ML数学基础</title>
+      <link>https://zouzhitao.github.io/tags/ml%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/</link>
+      <pubDate>Wed, 23 Jan 2019 00:47:54 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/ml%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>gaussion</title>
+      <link>https://zouzhitao.github.io/tags/gaussion/</link>
+      <pubDate>Sun, 06 Jan 2019 14:38:13 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/gaussion/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>logistic-regression</title>
+      <link>https://zouzhitao.github.io/tags/logistic-regression/</link>
+      <pubDate>Sun, 06 Jan 2019 14:38:13 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/logistic-regression/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>naive-bayes</title>
+      <link>https://zouzhitao.github.io/tags/naive-bayes/</link>
+      <pubDate>Sun, 06 Jan 2019 14:38:13 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/naive-bayes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>bayes</title>
+      <link>https://zouzhitao.github.io/tags/bayes/</link>
+      <pubDate>Sat, 05 Jan 2019 19:58:38 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/bayes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>probability</title>
+      <link>https://zouzhitao.github.io/tags/probability/</link>
+      <pubDate>Sat, 05 Jan 2019 19:24:41 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/probability/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>machine-learning</title>
+      <link>https://zouzhitao.github.io/tags/machine-learning/</link>
+      <pubDate>Sat, 05 Jan 2019 19:20:46 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/machine-learning/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>decision-tree</title>
+      <link>https://zouzhitao.github.io/tags/decision-tree/</link>
+      <pubDate>Mon, 31 Dec 2018 15:27:33 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/decision-tree/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>competitive-programing</title>
+      <link>https://zouzhitao.github.io/tags/competitive-programing/</link>
+      <pubDate>Tue, 25 Dec 2018 15:21:27 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/competitive-programing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>gdb</title>
+      <link>https://zouzhitao.github.io/tags/gdb/</link>
+      <pubDate>Thu, 06 Dec 2018 18:49:44 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/gdb/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>OS</title>
+      <link>https://zouzhitao.github.io/tags/os/</link>
+      <pubDate>Thu, 06 Dec 2018 18:49:44 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/os/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>MIT6.828</title>
+      <link>https://zouzhitao.github.io/tags/mit6.828/</link>
+      <pubDate>Wed, 05 Dec 2018 23:41:09 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/mit6.828/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>functional programing</title>
+      <link>https://zouzhitao.github.io/tags/functional-programing/</link>
+      <pubDate>Wed, 05 Dec 2018 14:02:01 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/functional-programing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>PL</title>
+      <link>https://zouzhitao.github.io/tags/pl/</link>
+      <pubDate>Wed, 05 Dec 2018 14:02:01 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/pl/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>sml</title>
+      <link>https://zouzhitao.github.io/tags/sml/</link>
+      <pubDate>Wed, 05 Dec 2018 14:02:01 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/sml/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>UW programing language</title>
+      <link>https://zouzhitao.github.io/tags/uw-programing-language/</link>
+      <pubDate>Wed, 05 Dec 2018 14:02:01 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/uw-programing-language/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>qemu</title>
+      <link>https://zouzhitao.github.io/tags/qemu/</link>
+      <pubDate>Tue, 27 Nov 2018 08:32:56 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/tags/qemu/</guid>
       <description></description>
     </item>
     

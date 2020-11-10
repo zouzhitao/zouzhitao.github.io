@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>IR on taotao 码字的地方</title>
@@ -6,11 +6,7 @@
     <description>Recent content in IR on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 03 Nov 2019 22:02:12 +0800</lastBuildDate>
-    
-	<atom:link href="https://zouzhitao.github.io/categories/ir/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sun, 03 Nov 2019 22:02:12 +0800</lastBuildDate><atom:link href="https://zouzhitao.github.io/categories/ir/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>PageRank 算法简介</title>
       <link>https://zouzhitao.github.io/posts/pagerank/</link>
@@ -25,14 +21,15 @@ intuition pagerank的直观非常简单:
 最终每个页面的极限概率 就是每个页面的pagerank。
 表达成数学模型就是一个markov chain模型。
 markov chain 转移矩阵为$M$,其中 $M_{ij}$ 表示页面$j\rightarrow i$ 的转移概率，$\mathbf{r}$ 表示rank向量长度为 $n$,表示每个页面的pagerank，也就是每个页面的极限概率,其和为1.则
-$$ \begin{aligned} \mathbf{r}&amp;amp;=M\mathbf{r}\\
+$$ \begin{aligned} \mathbf{r}&amp;amp;=M\mathbf{r}\\\
 \sum_{i=1}^n &amp;amp; r_i=1
 \end{aligned} $$
 即
 $$ r_i=\sum_j M_{ij}r_j\tag{1} $$
-求解 求解这个很简单，可以将上式看做固定点迭代，从任意一个随机的r(和为1)开始不停迭代，当 $||r&amp;rsquo;-r||\le \epsilon$,类似于power iteration。不过这种方法是非常naive的，在数据很大，首先matrix纯不下来，后面我们再讨论pagerank的高效计算。
+求解 求解这个很简单，可以将上式看做固定点迭代，从任意一个随机的r(和为1)开始不停迭代，当 $||r&#39;-r||\le \epsilon$,类似于power iteration。不过这种方法是非常naive的，在数据很大，首先matrix纯不下来，后面我们再讨论pagerank的高效计算。
 现在先来看这样一个问题。一个非常核心的问题，一定有解吗？解唯一吗？
-解的唯一性 基于markov chain的相关知识我们知道，markov chain要能够收敛必须要保证 &amp;lsquo;irreducible&amp;rsquo; 和 &amp;lsquo;recurrent&amp;rsquo; 也就是任意两点可达，且非周期。因此我们需要解决两个问题</description>
+解的唯一性 基于markov chain的相关知识我们知道，markov chain要能够收敛必须要保证 &amp;lsquo;irreducible&amp;rsquo; 和 &amp;lsquo;recurrent&amp;rsquo; 也就是任意两点可达，且非周期。因此我们需要解决两个问题
+ dead end spider trap  解决这两个问题 Google 设计pagerank的时候引入了一个策略</description>
     </item>
     
     <item>
@@ -49,9 +46,10 @@ $$ r_i=\sum_j M_{ij}r_j\tag{1} $$
  下面介绍两种概率模型，BIM，BM25，分别基于 二项分布和泊松分布
 BIM( binary independent model) 首先将document 向量化成 $x = (x_1,\dots ,x_i,\dots ,x_T ),T$ 表示 query 中 $term$ 的数量，$x_i =1 \iff term_i$ 在document $d$ 中
 那么 score
-$$ \begin{aligned} O(R|q,d) &amp;amp;= O(Q|q,x)\\
-&amp;amp;= \frac{\Pr(R=1|q,x)}{\Pr(R=0|q,x)}\\
-&amp;amp;= \frac{\frac{\Pr(R=1|q)\Pr(x|R=1,q)}{\Pr(x|q)}}{\frac{\Pr(R=0|q)\Pr(x|R=0,q)}{\Pr(x|q)}} (bayes\ rule)\\</description>
+$$ \begin{aligned} O(R|q,d) &amp;amp;= O(Q|q,x)\\\
+&amp;amp;= \frac{\Pr(R=1|q,x)}{\Pr(R=0|q,x)}\\\
+&amp;amp;= \frac{\frac{\Pr(R=1|q)\Pr(x|R=1,q)}{\Pr(x|q)}}{\frac{\Pr(R=0|q)\Pr(x|R=0,q)}{\Pr(x|q)}} (bayes\ rule)\\\
+&amp;amp;=O(R|q)\frac{\Pr(x|R=1,q)}{\Pr(x|R=0,q)} \end{aligned} $$</description>
     </item>
     
     <item>
@@ -62,7 +60,7 @@ $$ \begin{aligned} O(R|q,d) &amp;amp;= O(Q|q,x)\\
       <guid>https://zouzhitao.github.io/posts/inverted-index/</guid>
       <description>建立索引是 information retrieval 的一个核心问题，这一节简单记录关于index的相关笔记. 所有内容均来自 stanford cs276 information retrieval &amp;amp; web search
 text preprocessing 一些术语
- tokenization  将文本编程token流，通常处理 &amp;ldquo;I&amp;rsquo;m &amp;ldquo;..  normalization  text 和query term 映射统一(e.g. U.S.A USA)  stemming  形式(中文通常没这个问题,e.g. authorize, authorization)  Stop words  omit 掉一些无用的，e.g a,an &amp;hellip;    inverted index term -&amp;gt; (frq,posting_list(docId))
+ tokenization  将文本编程token流，通常处理 &amp;ldquo;I&amp;rsquo;m &amp;ldquo;..   normalization  text 和query term 映射统一(e.g. U.S.A USA)   stemming  形式(中文通常没这个问题,e.g. authorize, authorization)   Stop words  omit 掉一些无用的，e.g a,an &amp;hellip;    inverted index term -&amp;gt; (frq,posting_list(docId))
 frq = len(posting_list)
 simple construction text -&amp;gt; tokenstream -&amp;gt; list ( term, docId) -&amp;gt; sort-&amp;gt;unique -&amp;gt; merge</description>
     </item>

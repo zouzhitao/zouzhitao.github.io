@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>cpp11 on taotao 码字的地方</title>
@@ -6,11 +6,7 @@
     <description>Recent content in cpp11 on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 23 Aug 2019 14:42:36 +0800</lastBuildDate>
-    
-	<atom:link href="https://zouzhitao.github.io/tags/cpp11/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Fri, 23 Aug 2019 14:42:36 +0800</lastBuildDate><atom:link href="https://zouzhitao.github.io/tags/cpp11/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>cpp 中Range Based for 的性能分析</title>
       <link>https://zouzhitao.github.io/posts/range-based-for-in-cpp11/</link>
@@ -19,8 +15,9 @@
       <guid>https://zouzhitao.github.io/posts/range-based-for-in-cpp11/</guid>
       <description>这要是对以下几种在c++里的 for-range-loop做一个总结
  for(auto e : container) for(auto &amp;amp;e : container) for(const auto &amp;amp;e : container) for(auto &amp;amp;&amp;amp; e : container)  这里主要是参考 ref [1] stackoverflow里的类容，他总结的很好，我这里做个备份
-核心思想是 &amp;gt; 和函数的参数一样，Same consideration applies as for function arguments
-简单解释  for(auto e : container) 这会使用一个 copy-constructor函数，构造一个副本，也就是说 e,仅仅是container中的一个copy test-code 见ref1 for(const auto &amp;amp; e:container),for(auto &amp;amp;e : container) 这两者的区别在于 const 不能在for-loop中更改 e,两者的开销(通常意义下，取决于copy-construct的开销)都会比 1低， for(auto &amp;amp;&amp;amp;e : container) 这个语法我也是第一次遇见，主要给一些proxy-iterator使用的， 例如 vector&amp;lt;bool&amp;gt; STL将其设计为一个bool一个bit 所以是没法refrence到它的地址的(cpu按byte寻址),如果用 for(auto &amp;amp; e: container)会出现编译错误 不过， 这种语法是兼容 for(auto &amp;amp; e:container),并且时间开销接近(见后文的时间测试)  使用总结  For observing mode，即仅仅是read-only的情况  通常使用 for(const auto &amp;amp;e:container) 例外，对于copy-cheap的类型(e.</description>
+核心思想是
+ 和函数的参数一样，Same consideration applies as for function arguments
+ 简单解释  for(auto e : container) 这会使用一个 copy-constructor函数，构造一个副本，也就是说 e,仅仅是container中的一个copy test-code 见ref1 for(const auto &amp;amp; e:container),for(auto &amp;amp;e : container) 这两者的区别在于 const 不能在for-loop中更改 e,两者的开销(通常意义下，取决于copy-construct的开销)都会比 1低， for(auto &amp;amp;&amp;amp;e : container) 这个语法我也是第一次遇见，主要给一些proxy-iterator使用的， 例如 vector&amp;lt;bool&amp;gt; STL将其设计为一个bool一个bit 所以是没法refrence到它的地址的(cpu按byte寻址),如果用 for(auto &amp;amp; e: container)会出现编译错误 不过， 这种语法是兼容 for(auto &amp;amp; e:container),并且时间开销接近(见后文的时间测试)  使用总结  For observing mode，即仅仅是read-only的情况  通常使用 for(const auto &amp;amp;e:container) 例外，对于copy-cheap的类型(e.</description>
     </item>
     
   </channel>

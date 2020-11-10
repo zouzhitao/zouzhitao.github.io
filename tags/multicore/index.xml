@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>multicore on taotao 码字的地方</title>
@@ -6,11 +6,7 @@
     <description>Recent content in multicore on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 10 Nov 2019 21:49:30 +0800</lastBuildDate>
-    
-	<atom:link href="https://zouzhitao.github.io/tags/multicore/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sun, 10 Nov 2019 21:49:30 +0800</lastBuildDate><atom:link href="https://zouzhitao.github.io/tags/multicore/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>现代多核计算机体系结构简介</title>
       <link>https://zouzhitao.github.io/posts/parrallel-computer-arch/</link>
@@ -19,20 +15,22 @@
       <guid>https://zouzhitao.github.io/posts/parrallel-computer-arch/</guid>
       <description>这篇博文简单介绍多核计算机体系结构的相关术语(e.g. SIMD,superscalar,hyper-thread&amp;hellip;)，现代计算机体系结构保罗万象，越来越复杂，这里仅仅是抽象层简介，不涉及具体实现。旨在简单介绍它的一些工作方式概念.(非专业人士，有错误欢迎指正)
  希望这篇文章能够帮助理解以下概念:
-单核 (**注** 未特别说明，图片均来自 cs149 slides @stanford)
-很简单，每个clock 执行一条指令.
+单核 很简单，每个clock 执行一条指令.
 并行优化技术 multi-core 一个处理器增加多个核
 这带来的是硬件对 multi-thread 的并行化支持.可以让两个线程同时跑.
 SIMD(Single Instruction Multi-Data) 这是典型的数据并行(Data parallel) 的模型
 典型的场景就是向量乘法
-for (int i=0 ; i&amp;lt;n ; ++i) z[i] = x[i] * y[i]  这里面每个data执行的指令都是一样的 mul
+for (int i=0 ; i&amp;lt;n ; ++i) z[i] = x[i] * y[i] 这里面每个data执行的指令都是一样的 mul
 有很多种方式都可以实现这种SIMD
  硬件,CPU运行时发现 compiler, 编译期发现 显示地用SIMD指令(程序员可见的)  前面两种都是programmer不可见的，因此写程序的时候尽量写data parallel 通常能够带来性能优化(PS:即使现在不能，随着这种技术的发展后面也一定能)
 超标量(superscalar) 和单核单指令流的唯一区别就是加了另外一套 fetch/decode 及ALU 逻辑，这意味着可以在一个clock跑2条并行 的指令(ILP,指令级并行) 需要执行的指令流中的指令是无关的，没有依赖的.
 这对programmer是完全透明的
 superscalar+SIMD 访存(access memory) 两个重要概念
 memory latency 处理器发出内存请求指令(store，load)，到获得内存，继续跑的时间
-memory bandwidth 内存系统可以提供数据给处理器的速度(e.g. 20G/s).</description>
+memory bandwidth 内存系统可以提供数据给处理器的速度(e.g. 20G/s).
+stalls 指令流中的指令由于前一条指令的依赖(e.g. 数据依赖,访存)而无法执行，称为被墙了(&amp;lsquo;stalls&amp;rsquo;，不知怎翻译)
+由于访存与cpu计算速度的巨大差异，改进前面的任意三者之一，都会提高计算的效果
+改进 access memory 的姿势  cache，有效减少 stalls的长度，从而 reduce latency(在cache命中了就不需要access memory 了) Prefech，减少stall，(如果预测正确，内存依赖会变少，从而减少stall，隐藏latency(整体性能上升))  硬件支持的multi-thread (单核multi-thread) interleave multi-thread 这种单核多线程称为 interleave 多线程，也叫伪多线程,顾名思义就是假的多线程，因为它其实只有一套 fetch/decode,ALU, 也就是一个clock只能执行一条指令，所以同时只能执行一条指令，所以线程是交错执行(interleave),的不过有多个执行上下文(excute context)</description>
     </item>
     
   </channel>

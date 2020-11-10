@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.51" />
+    <meta name="generator" content="Hugo 0.78.1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -93,147 +93,96 @@
                         
                         <aside id="toc" class="dismissed">
                             <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
-<ul>
-<li><a href="#引入">引入</a></li>
-<li><a href="#naive-bayes">naive bayes</a>
-<ul>
-<li><a href="#derivation">derivation</a></li>
-<li><a href="#naive-bayse-for-discrete-input">naive bayse for discrete input</a></li>
-<li><a href="#gaussian-naive-bayes-gnb">gaussian naive bayes (GNB)</a></li>
-</ul></li>
-<li><a href="#code">code</a></li>
-</ul>
+  <ul>
+    <li><a href="#derivation">derivation</a></li>
+    <li><a href="#naive-bayse-for-discrete-input">naive bayse for discrete input</a></li>
+    <li><a href="#gaussian-naive-bayes-gnb">gaussian naive bayes (GNB)</a></li>
+  </ul>
 </nav>
                         </aside><div class="post-content">
-                            
-
-<blockquote>
+                            <blockquote>
 <p><strong>写在前面:</strong>
 这是笔者学习<a href="http://www.cs.cmu.edu/~ninamf/courses/601sp15/lectures.shtml">CMU10601-ML</a>机器学习的笔记</p>
 </blockquote>
-
 <h1 id="引入">引入</h1>
-
 <p>首先我们考虑学习一个基于贝叶斯规则的分类器,即我们希望学到 $P(Y|X)$</p>
-
 <p>那么我们有</p>
-
 <p>$$
 P(Y|X)=\frac{P(Y)P(X|Y)}{P(X)}
 $$</p>
-
 <p>这里 $Y \in\{0,1\}$
 那么我们需要去估计的是这两个概率 $P(Y),P(X|Y)$</p>
-
 <p>假设 $X=&lt;X_1,X_2,\dots,X_n&gt;$, 即是一个 $n$ 维度的向量，其中$X_i \in \{0,1\}$</p>
-
 <p>我们需要估计的参数是 $P(X|Y)$ 有 $2(2^n-1)$种情况，$P(Y)$ 有 $1$ 个参数需要估计，因此总共需要估计的参数是 $2(2^n-1)+1$, 即是指数级的。</p>
-
 <p>这显然是不现实的，因此我们希望做出一些假设，以减少估计的参数，这是引入了 <strong>naive bayes</strong></p>
-
 <h1 id="naive-bayes">naive bayes</h1>
-
 <p>naive bayes <strong>假设</strong> given $Y$, 任意 $X_i,X_j$ 是条件独立(conditional independent)的，即</p>
-
 <p>$$
 P(X_i|X_j,Y)=P(X_i|Y)
 $$</p>
-
 <p>也就是说,</p>
-
 <p>$$
 \begin{align*}
-P(X_i,X_j|Y)&amp;=P(X_i|Y)P(X_j|Y)\\<br />
+P(X_i,X_j|Y)&amp;=P(X_i|Y)P(X_j|Y)\\\<br>
 P(X_1,X_2,\dots,X_n|Y)&amp;=\prod_i P(X_i|Y)
 \end{align*}
 $$</p>
-
 <p>因此现在我们需要估计的参数由原来的 $2(2^n-1)+1$ 变为了 $2n+1$ 个</p>
-
 <h2 id="derivation">derivation</h2>
-
 <p>简单搬运~</p>
-
-<p><img src="/img/ML-note-naive-bayes/naive-bayes.png" alt="naive bayes" /></p>
-
+<p><img src="/img/ML-note-naive-bayes/naive-bayes.png" alt="naive bayes"></p>
 <h2 id="naive-bayse-for-discrete-input">naive bayse for discrete input</h2>
-
 <p>假设 $X_i$ 有 $J$ 种离散值，而 $Y$ 有$K$ 种离散值，那么由上面的推导我们需要估计的是</p>
-
 <p>$$
 \begin{align*}
-\theta_{ijk}&amp;=P(X_i=x_{ij}|Y=y_k)\\<br />
+\theta_{ijk}&amp;=P(X_i=x_{ij}|Y=y_k)\\\<br>
 \pi_k&amp;=P(Y=y_k)
 \end{align*}
 $$</p>
-
 <p>基于 <strong>MLE</strong> 我们有,</p>
-
-<p><img src="/img/ML-note-naive-bayes/MEL.png" alt="MLE" /></p>
-
+<p><img src="/img/ML-note-naive-bayes/MEL.png" alt="MLE"></p>
 <p>注意两个小问题:</p>
-
 <ol>
 <li>如果不满足条件独立，极端的例子 $X_i=X_j$?</li>
-<li>极端情况出现 $\# D\{Y=y_k\}=0$?<br>
+<li>极端情况出现 $\# D\{Y=y_k\}=0$?<!-- raw HTML omitted -->
 这种情况可以用MAP解决
 $$
 \begin{align*}
-\theta_{ijk}&amp;=\frac{\# D\{X_i=x_{ij}\}+l}{\# D\{Y=y_k\}+lJ}\\<br />
+\theta_{ijk}&amp;=\frac{\# D\{X_i=x_{ij}\}+l}{\# D\{Y=y_k\}+lJ}\\\<br>
 \pi_k&amp;=\frac{\# D\{Y=y_k\}+l}{|D|+lK}
 \end{align*}
 $$
 这是基于 Dirichlet distribution 的先验。
 其中 $l$ 控制光滑的强度，$l=1$ 就是laplace smooth</li>
 </ol>
-
 <h2 id="gaussian-naive-bayes-gnb">gaussian naive bayes (GNB)</h2>
-
 <p>如果 $X_i$ 是连续值呢?</p>
-
 <p>我们需要引入另外的一个假设: $P(X_i =x|Y=y_k) \sim N(u_{ik},\sigma_{ik})$</p>
-
 <p>即:</p>
-
 <p>$$
 P(X_i=x|Y=y_k)=\frac{1}{\sqrt{2\pi}\sigma_{ik
 }} \exp\{\frac{-(x-u_{ik})^2}{2\sigma_{ik}^2}\}
 $$</p>
-
 <p>用 MLE 估计 $u_{ik},\sigma_{ik}$</p>
-
-<p><img src="/img/ML-note-naive-bayes/GNB.png" alt="GNB" /></p>
-
+<p><img src="/img/ML-note-naive-bayes/GNB.png" alt="GNB"></p>
 <p>(这很好计算，这里略去了&hellip;)</p>
-
 <p><strong>完整的算法总结</strong></p>
-
-<p><img src="/img/ML-note-naive-bayes/GNB-algo.png" alt="" /></p>
-
+<p><img src="/img/ML-note-naive-bayes/GNB-algo.png" alt=""></p>
 <p><strong>Question</strong></p>
-
 <ol>
 <li>What does the decision surface of a Naïve Bayes classifier look like?</li>
 <li>What error will the classifier achieve if Naïve Bayes assumption is satisfied and we have infinite training data?</li>
 </ol>
-
 <h1 id="code">code</h1>
-
 <p><a href="https://github.com/zouzhitao/CS_Learning/blob/master/10601ML-CMU/hw3/hw3-overview.md">naive bayes simple implementation</a></p>
-
 <p><strong>参考文献</strong></p>
-
 <ul>
 <li><a href="http://www.cs.cmu.edu/~tom/mlbook/NBayesLogReg.pdf">NBayesLogReg</a></li>
 </ul>
-
 <blockquote>
 <p><strong>版权声明</strong></p>
-
 <p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
-
 <p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
-
 <p><strong>转载请保留此版权声明，并注明出处</strong></p>
 </blockquote>
 
@@ -311,6 +260,10 @@ $$</p>
 <ul class="widget-list">
     
     <li>
+        <a href="https://zouzhitao.github.io/posts/finding-jobs/" title="告别学生生涯:秋招之路">告别学生生涯:秋招之路</a>
+    </li>
+    
+    <li>
         <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
     </li>
     
@@ -346,10 +299,6 @@ $$</p>
         <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
     </li>
     
-    <li>
-        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -360,15 +309,19 @@ $$</p>
 <ul class="widget-list">
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/ir/">IR(3)</a>
-    </li>
-    
-    <li>
         <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
     </li>
     
     <li>
         <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(1)</a>
     </li>
     
     <li>

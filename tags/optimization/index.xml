@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>optimization on taotao 码字的地方</title>
@@ -6,11 +6,7 @@
     <description>Recent content in optimization on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 15 Jul 2020 23:07:48 +0800</lastBuildDate>
-    
-	<atom:link href="https://zouzhitao.github.io/tags/optimization/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 15 Jul 2020 23:07:48 +0800</lastBuildDate><atom:link href="https://zouzhitao.github.io/tags/optimization/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>梯度下降优化算法简单总结</title>
       <link>https://zouzhitao.github.io/posts/grad-opt/</link>
@@ -18,12 +14,12 @@
       
       <guid>https://zouzhitao.github.io/posts/grad-opt/</guid>
       <description>本篇博客简要总结关于梯度的一些优化方法[1]
- 常见的三种基于梯度的优化框架 batch gradient for i in range(nb_epochs): params_grad = evaluate_gradient(loss_function, data, params) params = params - learning_rate * params_grad  一次迭代对所有的data进行更新
+ 常见的三种基于梯度的优化框架 batch gradient for i in range(nb_epochs): params_grad = evaluate_gradient(loss_function, data, params) params = params - learning_rate * params_grad 一次迭代对所有的data进行更新
 缺点
  数据量大，有时候根本无法将所有data丢进内存 会对重复的sample做冗余计算  好处:
 对于convex function 可以保证一定能到 global opt，non-convex 能到 local opt
 sgd 一次只2针对一个sample
-for i in range(nb_epochs): np.random.shuffle(data) for example in data: params_grad = evaluate_gradient(loss_function, example, params) params = params - learning_rate * params_grad  缺点
+for i in range(nb_epochs): np.random.shuffle(data) for example in data: params_grad = evaluate_gradient(loss_function, example, params) params = params - learning_rate * params_grad 缺点
  震荡(每个样本更新带来的方差大)  好处
  online learning faster  mini-batch gradient for i in range(nb_epochs): np.</description>
     </item>
@@ -38,12 +34,8 @@ for i in range(nb_epochs): np.random.shuffle(data) for example in data: params_g
  凸集合 定义就直接跳过了，这里简单写一些常见的凸集
  凸集的交, 设 $C_i,i = 1,2,3,&amp;hellip;,n$ 是凸集，那么我们有$\cap _{i=0}^n C_i$ 也是凸集 affine subspace 即 $Ax+b=0,x \in R^n$, 这既是 convex,也是concave 凸函数的sublevel 即 $if \ f(x)\ is\ convex\ function,then \{f(x) &amp;lt;=\alpha\} is\ convex\ set$  凸函数 Define
 性质，两条重点
- first-order-approximation
-$$ f(y)\ge f(x)+(\nabla f(x))^T(y-x) $$ 二阶导数大于0
-$$ \nabla_x^2 f(x) \ge 0 $$  一些简单的凸函数
- Affine funciton
-$f(x) =A^Tx+b,x\in R^n$ quadratic function
-$f:R^n-&amp;gt;R,f(x) = 2^{-1}x^TAx+b^Tx+c,A\in S^n,b\in R^n,c\in R$</description>
+ first-order-approximation$$ f(y)\ge f(x)+(\nabla f(x))^T(y-x) $$ 二阶导数大于0$$ \nabla_x^2 f(x) \ge 0 $$  一些简单的凸函数
+ Affine funciton$f(x) =A^Tx+b,x\in R^n$ quadratic function$f:R^n-&amp;gt;R,f(x) = 2^{-1}x^TAx+b^Tx+c,A\in S^n,b\in R^n,c\in R$这里简单说一下 $\nabla^2 f(x)=A$, 因此如果 $A$ 是半正定(positive-semidefinite)的,那么$f(x)$ is convex Norm,e.</description>
     </item>
     
     <item>
@@ -53,15 +45,15 @@ $f:R^n-&amp;gt;R,f(x) = 2^{-1}x^TAx+b^Tx+c,A\in S^n,b\in R^n,c\in R$</descriptio
       
       <guid>https://zouzhitao.github.io/posts/math-distence-to-hyperplane/</guid>
       <description> 发现自己从大二开始就没有好好的学习数学了，最近看 SVM，发现好多推导和证明自己都不会，或者就要想很久，实在是太废材了。 :(. 以后决定对一些数学知识(特别是高等数学，分析和代数领域的一些东西，学点记点)
- 这是正文
+  这是正文
 这是一个简单的问题，定义如下:
 设， $y(X) = W^TX +b, X \in R^n,b \in R$, 是一个 affine function(这个不重要，是个函数就行),超平面为 $h:W^TX +b=0$, 证明: $R^n$ 中任意一点 $X$ 到 $h$ 的距离为 $\frac{|y(X)|}{||W||}$
 证明：
 如图:
-在超平面上任意取一点 $X&amp;rsquo;,s.t. y(X&amp;rsquo;)=0$ 距离
-$$ \begin{align} d&amp;amp;= ||(X&amp;rsquo;-X)||\cos \alpha \\
-&amp;amp;=\frac{|W^T(X&amp;rsquo;-X)|}{||W||}\\
-&amp;amp;=\frac{|W^TX&amp;rsquo;+b - (W^TX+b)|}{||W||}\\
+在超平面上任意取一点 $X&#39;,s.t. y(X&#39;)=0$ 距离
+$$ \begin{align} d&amp;amp;= ||(X&#39;-X)||\cos \alpha \\\
+&amp;amp;=\frac{|W^T(X&#39;-X)|}{||W||}\\\
+&amp;amp;=\frac{|W^TX&#39;+b - (W^TX+b)|}{||W||}\\\
 &amp;amp;=\frac{|y(X)|}{||W||} \end{align} $$
  版权声明
 本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
@@ -76,11 +68,11 @@ $$ \begin{align} d&amp;amp;= ||(X&amp;rsquo;-X)||\cos \alpha \\
       <pubDate>Sun, 20 Jan 2019 22:34:21 +0800</pubDate>
       
       <guid>https://zouzhitao.github.io/posts/newton-method/</guid>
-      <description> 这里总结一个利用二价导数来求最优解的方法-牛顿法:
+      <description>这里总结一个利用二价导数来求最优解的方法-牛顿法:
 设: $f(X)$ 是一个多维函数,由taylor 二阶展开，我们有,
 $$ f(X) \approx f(X_0)+(X-X_0)\nabla f(X_0) + \frac{(X-X_0)\nabla^2 f(X_0)(X-X_0)}{2} $$
 对 $X$ 求导，并设置为0，我们有
-$$ \begin{align*} 0&amp;amp;=\nabla f(X_0) + (X-X_0) \nabla ^2 f(X_0) (X- X_0)\\
+$$ \begin{align*} 0&amp;amp;=\nabla f(X_0) + (X-X_0) \nabla ^2 f(X_0) (X- X_0)\\\
 X&amp;amp;=-\frac{\nabla f(X_0)}{\nabla^2 f(X_0)} X_0 \end{align*} $$
 相当于将梯度下降的learning rate设置为 $(\nabla^2 f(X_0))^{-1}$
 note  显然牛顿法计算量更大，因为他需要计算 hessian矩阵，相对于梯度下降来说这是$n^2$ 的 牛顿法收敛率更快 $O(t^{-2})$,梯度下降是 $O(t^{-1})$   版权声明

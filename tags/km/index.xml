@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>KM on taotao 码字的地方</title>
@@ -6,11 +6,7 @@
     <description>Recent content in KM on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 14 Aug 2019 20:34:05 +0800</lastBuildDate>
-    
-	<atom:link href="https://zouzhitao.github.io/tags/km/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 14 Aug 2019 20:34:05 +0800</lastBuildDate><atom:link href="https://zouzhitao.github.io/tags/km/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>KM Algorithm--二分图最大权匹配</title>
       <link>https://zouzhitao.github.io/posts/km-algorithm/</link>

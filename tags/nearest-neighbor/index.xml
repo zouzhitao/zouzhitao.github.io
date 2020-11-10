@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>nearest-neighbor on taotao 码字的地方</title>
@@ -6,11 +6,7 @@
     <description>Recent content in nearest-neighbor on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 13 Oct 2019 18:25:18 +0800</lastBuildDate>
-    
-	<atom:link href="https://zouzhitao.github.io/tags/nearest-neighbor/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sun, 13 Oct 2019 18:25:18 +0800</lastBuildDate><atom:link href="https://zouzhitao.github.io/tags/nearest-neighbor/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Dimension Reduction 降维: 随机投影与JL 变换</title>
       <link>https://zouzhitao.github.io/posts/dimension-reduction/</link>

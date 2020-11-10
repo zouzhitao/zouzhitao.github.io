@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.51" />
+    <meta name="generator" content="Hugo 0.78.1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -93,76 +93,45 @@
                         
                         <aside id="toc" class="dismissed">
                             <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
-<ul>
-<li><a href="#a-book-reading">A. Book Reading</a>
-<ul>
-<li><a href="#题解">题解</a></li>
-<li><a href="#code">code</a></li>
-</ul></li>
-<li><a href="#b-the-equation">B.The Equation</a>
-<ul>
-<li><a href="#分析">分析</a></li>
-<li><a href="#code-1">code</a></li>
-</ul></li>
-<li><a href="#c-shifts">C.Shifts</a></li>
-</ul>
+  <ul>
+    <li><a href="#题解">题解</a></li>
+    <li><a href="#code">code</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#分析">分析</a></li>
+    <li><a href="#code-1">code</a></li>
+  </ul>
 </nav>
                         </aside><div class="post-content">
-                            
-
-<blockquote>
+                            <blockquote>
 <p>人生第一次 AK!</p>
 </blockquote>
-
-<p><img src="/img/2019RoundG.PNG" width="60%" /></p>
-
+<!-- raw HTML omitted -->
 <p>这次的题目似乎比以前要简单一些</p>
-
 <h1 id="a-book-reading">A. Book Reading</h1>
-
 <p>这题是说，有 $N\le 1e5$ 页书，有 $M$ 页是坏的，有 $Q$ 个人分别从 $q_i\le N$ 开始读，只读 $q_i$ 的倍数，坏的不读， 求共读了多少页</p>
-
 <h2 id="题解">题解</h2>
-
 <p>直接暴力就行了，类似埃筛(complexity  $O(n\log n)$))注意将相同 $q_i$ 存一下</p>
-
 <h2 id="code">code</h2>
-
 <p><strong><a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-G-A.cpp">code</a></strong></p>
-
-<h1 id="b-the-equation">B.The Equation</h1>
-
+<h1 id="bthe-equation">B.The Equation</h1>
 <p>这题的意思是，找一个最大的 $k\ge0\ s.t.\ \sum k\land A_i \le M, M\le 10^{15},A_i\le 10^{15}$</p>
-
 <h2 id="分析">分析</h2>
-
 <p>从最高位开始，如果那一位能够置为 $1$， 那就置为 $1$, 否则放 $0$</p>
-
 <p>最高位能置为 $1$ 的条件是，后续和的最小值 $\le M-val(highest\ bit =1)$</p>
-
 <p>complexity $O(\log M)$</p>
-
 <h2 id="code-1">code</h2>
-
 <p><strong><a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-G-B.cpp">code</a></strong></p>
-
-<h1 id="c-shifts">C.Shifts</h1>
-
+<h1 id="cshifts">C.Shifts</h1>
 <p>这题就更简单了，直接暴力枚举 $3^{20}$ 种状态就行了</p>
-
 <p><strong><a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-G-C.cpp">code</a></strong></p>
-
 <p>更新了一个 $O(3^{N/2})$ 的做法</p>
-
 <p>见:<a href="https://zouzhitao.github.io/posts/pbds/#%E9%9D%99%E6%80%81%E8%8C%83%E5%9B%B4%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90">pbds</a></p>
-
 <blockquote>
 <p><strong>版权声明</strong></p>
-
 <p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
-
 <p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
-
 <p><strong>仅允许非商业转载，转载请保留此版权声明，并注明出处</strong></p>
 </blockquote>
 
@@ -240,6 +209,10 @@
 <ul class="widget-list">
     
     <li>
+        <a href="https://zouzhitao.github.io/posts/finding-jobs/" title="告别学生生涯:秋招之路">告别学生生涯:秋招之路</a>
+    </li>
+    
+    <li>
         <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
     </li>
     
@@ -275,10 +248,6 @@
         <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
     </li>
     
-    <li>
-        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -289,15 +258,19 @@
 <ul class="widget-list">
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/ir/">IR(3)</a>
-    </li>
-    
-    <li>
         <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
     </li>
     
     <li>
         <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(1)</a>
     </li>
     
     <li>

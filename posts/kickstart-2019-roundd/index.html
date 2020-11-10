@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.51" />
+    <meta name="generator" content="Hugo 0.78.1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -92,35 +92,19 @@
                         
                         
                         <aside id="toc" class="dismissed">
-                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
-<ul>
-<li><a href="#a-x-or-what">A.X or What?</a></li>
-<li><a href="#b-latest-guests">B.Latest Guests</a></li>
-<li><a href="#c-food-stalls">C.Food Stalls</a></li>
-</ul>
-</nav>
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents"></nav>
                         </aside><div class="post-content">
-                            
-
-<p>整体来说这次的题不是很难，我都能自己想出来，并写完，但是这次马力有点大，C题写了2hrs&hellip;</p>
-
-<h1 id="a-x-or-what">A.X or What?</h1>
-
+                            <p>整体来说这次的题不是很难，我都能自己想出来，并写完，但是这次马力有点大，C题写了2hrs&hellip;</p>
+<h1 id="ax-or-what">A.X or What?</h1>
 <p>这题比较简单，重点在一个 xor的性质，与位的异或次序无关即两数$A,B$ 共 $K$ 位</p>
-
 <p>$$
 \bigwedge_i A_i \wedge B_i = (\bigwedge_i A_i)\wedge (\bigwedge_i B_i)
 $$</p>
-
 <p><strong>code:</strong> <a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-D-A.cpp">github</a></p>
-
-<h1 id="b-latest-guests">B.Latest Guests</h1>
-
+<h1 id="blatest-guests">B.Latest Guests</h1>
 <p>tips 1: $M&gt;N$ 是无效的，因为仅有最后被访问的才会被记录，所以如果对于 领地 $k$ 它访问了两次，那仅仅需要知道最后一次访问的时间就行了
 tips 2: 因为仅有最后一次被访问才会被记录，即时间戳越后的优先于时间戳越早的，因此我们可以倒过来模拟整个过程，即从 $G_i$ 项最后一次待的地方开始往前模拟。</p>
-
 <p>即有如下伪代码：</p>
-
 <pre><code>vis[] // 第 i 个东西最后被访问的时间戳
 
 g[i] // cur,当前位置，dir行动方向，ans,访问次数，
@@ -131,148 +115,125 @@ for time = M to 0:
         g[i].ans ++
     update g[i].cur
 
-</code></pre>
-
-<p>接下来就是优化模拟的过程了，</p>
-
+</code></pre><p>接下来就是优化模拟的过程了，</p>
 <p>tips 3: 任意的项 $G_i$ 仅由当前位置 $cur$ ,和行进方向 $dir$ 决定它的ans，因此可以合并所有 $cur$ 和 $dir$ 相同的项到一组。</p>
-
 <p>tips 4: 可以用一个 访问的位置数目$no_vis$ 来记录还有多少位置未访问，到了 0就退出.</p>
-
 <p>前4项技巧已经能够通过test 1和test 2 了，
 这是我原始的代码</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;bits/stdc++.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
 
-<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+<span style="color:#75715e">#define ms(x,v) memset(x,(v), sizeof(x))
+</span><span style="color:#75715e">#define msn(x,v,n) memset(x,(v),sizeof(x[0]) * n)
+</span><span style="color:#75715e">#define INF 0x3f3f3f3f
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">long</span> <span style="color:#66d9ef">long</span> LL;
+<span style="color:#66d9ef">typedef</span> pair<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>,<span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> PII;
 
-using namespace std;
+<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> MAXN <span style="color:#f92672">=</span> <span style="color:#ae81ff">2e5</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">10</span>;
 
-#define ms(x,v) memset(x,(v), sizeof(x))
-#define msn(x,v,n) memset(x,(v),sizeof(x[0]) * n)
-#define INF 0x3f3f3f3f
-
-typedef long long LL;
-typedef pair&lt;int,int&gt; PII;
-
-const int MAXN = 2e5 +10;
-
-struct Node{
-    int cur,dir,ans;
-    vector&lt;int&gt; ids;
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Node</span>{
+    <span style="color:#66d9ef">int</span> cur,dir,ans;
+    vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> ids;
 };
 
 
-void solve(){
-    int N,G,M;
-    cin &gt;&gt; N &gt;&gt; G&gt;&gt;M;
-    vector&lt;vector&lt;int&gt; &gt; guests(2*N);
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">solve</span>(){
+    <span style="color:#66d9ef">int</span> N,G,M;
+    cin <span style="color:#f92672">&gt;&gt;</span> N <span style="color:#f92672">&gt;&gt;</span> G<span style="color:#f92672">&gt;&gt;</span>M;
+    vector<span style="color:#f92672">&lt;</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">&gt;</span> guests(<span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>N);
 
-    for(int i=0 ; i&lt; G; ++i){
-        int s;
-        char x;
-        cin &gt;&gt; s&gt;&gt;x;
-        s--;// map to [0,N)
-        int dir = x == 'C' ? 1 : -1;
-        s = (s + dir * (M%N) +N) % N;
-        int idx = (s&lt;&lt;1) + (dir==1);
+    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> ; i<span style="color:#f92672">&lt;</span> G; <span style="color:#f92672">++</span>i){
+        <span style="color:#66d9ef">int</span> s;
+        <span style="color:#66d9ef">char</span> x;
+        cin <span style="color:#f92672">&gt;&gt;</span> s<span style="color:#f92672">&gt;&gt;</span>x;
+        s<span style="color:#f92672">--</span>;<span style="color:#75715e">// map to [0,N)
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">int</span> dir <span style="color:#f92672">=</span> x <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;C&#39;</span> <span style="color:#f92672">?</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">:</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+        s <span style="color:#f92672">=</span> (s <span style="color:#f92672">+</span> dir <span style="color:#f92672">*</span> (M<span style="color:#f92672">%</span>N) <span style="color:#f92672">+</span>N) <span style="color:#f92672">%</span> N;
+        <span style="color:#66d9ef">int</span> idx <span style="color:#f92672">=</span> (s<span style="color:#f92672">&lt;&lt;</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">+</span> (dir<span style="color:#f92672">==</span><span style="color:#ae81ff">1</span>);
         guests[idx].push_back(i);
     }
 
-    vector&lt;Node&gt; gg;
-    for(int i=0 ; i&lt;guests.size() ; ++i){
-        if(guests[i].empty())continue;
-        Node tmp = {
-            i&gt;&gt;1,
-            i&amp;1 ? -1 : 1, // anti-dir
-            0,
+    vector<span style="color:#f92672">&lt;</span>Node<span style="color:#f92672">&gt;</span> gg;
+    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> ; i<span style="color:#f92672">&lt;</span>guests.size() ; <span style="color:#f92672">++</span>i){
+        <span style="color:#66d9ef">if</span>(guests[i].empty())<span style="color:#66d9ef">continue</span>;
+        Node tmp <span style="color:#f92672">=</span> {
+            i<span style="color:#f92672">&gt;&gt;</span><span style="color:#ae81ff">1</span>,
+            i<span style="color:#f92672">&amp;</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">?</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>, <span style="color:#75715e">// anti-dir
+</span><span style="color:#75715e"></span>            <span style="color:#ae81ff">0</span>,
             guests[i],
         };
         gg.push_back(tmp);
     }
-    vector&lt;int&gt; timep(N,-1);
-    int not_vis = N;
-    if(M &gt; N) M = N;
-    for(int time = M ; time &gt;= 0 &amp;&amp; not_vis&gt;0 ; --time)
+    vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> timep(N,<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
+    <span style="color:#66d9ef">int</span> not_vis <span style="color:#f92672">=</span> N;
+    <span style="color:#66d9ef">if</span>(M <span style="color:#f92672">&gt;</span> N) M <span style="color:#f92672">=</span> N;
+    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> time <span style="color:#f92672">=</span> M ; time <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&amp;&amp;</span> not_vis<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">0</span> ; <span style="color:#f92672">--</span>time)
     {
-        for(int i=0 ; i&lt; gg.size() ; ++i){
-            int &amp; cur = gg[i].cur;
-            if(timep[cur]&lt;time){
-                not_vis--;
-                timep[cur] = time;
-            }//first access
-            if(timep[cur] &lt;=time){
-                gg[i].ans ++;
+        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> ; i<span style="color:#f92672">&lt;</span> gg.size() ; <span style="color:#f92672">++</span>i){
+            <span style="color:#66d9ef">int</span> <span style="color:#f92672">&amp;</span> cur <span style="color:#f92672">=</span> gg[i].cur;
+            <span style="color:#66d9ef">if</span>(timep[cur]<span style="color:#f92672">&lt;</span>time){
+                not_vis<span style="color:#f92672">--</span>;
+                timep[cur] <span style="color:#f92672">=</span> time;
+            }<span style="color:#75715e">//first access
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span>(timep[cur] <span style="color:#f92672">&lt;=</span>time){
+                gg[i].ans <span style="color:#f92672">++</span>;
             }
-            gg[i].cur= (cur + gg[i].dir + N) % N;
+            gg[i].cur<span style="color:#f92672">=</span> (cur <span style="color:#f92672">+</span> gg[i].dir <span style="color:#f92672">+</span> N) <span style="color:#f92672">%</span> N;
         }
     }
-    vector&lt;int&gt; ans(G);
-    for(auto e: gg){
-        for(auto id : e.ids)
-            ans[id] = e.ans;
+    vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> ans(G);
+    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">auto</span> e: gg){
+        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">auto</span> id : e.ids)
+            ans[id] <span style="color:#f92672">=</span> e.ans;
     }
-    for(int i=0 ; i &lt; ans.size(); ++i)
-            cout &lt;&lt; &quot; &quot; &lt;&lt; ans[i];
+    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> ; i <span style="color:#f92672">&lt;</span> ans.size(); <span style="color:#f92672">++</span>i)
+            cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; &#34;</span> <span style="color:#f92672">&lt;&lt;</span> ans[i];
     
 }
 
-int main(int argc, char const *argv[])
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">*</span>argv[])
 {   
     
-    ios :: sync_with_stdio(0);
-    cin.tie(0);
-    // cout.tie(0);
-    std::cout.precision(8);
-    std::cout.setf( std::ios::fixed, std:: ios::floatfield );
-    int T;
-    cin &gt;&gt; T;
+    ios <span style="color:#f92672">::</span> sync_with_stdio(<span style="color:#ae81ff">0</span>);
+    cin.tie(<span style="color:#ae81ff">0</span>);
+    <span style="color:#75715e">// cout.tie(0);
+</span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>cout.precision(<span style="color:#ae81ff">8</span>);
+    std<span style="color:#f92672">::</span>cout.setf( std<span style="color:#f92672">::</span>ios<span style="color:#f92672">::</span>fixed, std<span style="color:#f92672">::</span> ios<span style="color:#f92672">::</span>floatfield );
+    <span style="color:#66d9ef">int</span> T;
+    cin <span style="color:#f92672">&gt;&gt;</span> T;
     
-    for(int kase =1;  kase &lt;= T ; ++kase)
+    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> kase <span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;  kase <span style="color:#f92672">&lt;=</span> T ; <span style="color:#f92672">++</span>kase)
     {   
-        cout &lt;&lt; &quot;Case #&quot;&lt;&lt;kase &lt;&lt; &quot;:&quot;;
+        cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Case #&#34;</span><span style="color:#f92672">&lt;&lt;</span>kase <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;:&#34;</span>;
 
         solve();
-        cout &lt;&lt; '\n';
+        cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>;
     }
 
-    return 0;
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 }
-</code></pre>
-
-<p>(其实是可以被hack的&hellip;,最坏情况下仍旧需要 $O(M G)$) 不过估计这个比较随机</p>
-
+</code></pre></div><p>(其实是可以被hack的&hellip;,最坏情况下仍旧需要 $O(M G)$) 不过估计这个比较随机</p>
 <p>tips 5: 延续tips 3的想法，任意一项它的访问路径仅仅由 $cur,dir$ 决定，因此如果某个状态 $cur,dir$ 已经出现过了，那么这一项就不会被记录了。用个array记录一个这个值，由于$dir$ 仅仅有 $2$
 因此,状态最多$2N$
 所以复杂度 $O(2N log(N))$ (实际中我用了set来记录还能更新的集合)</p>
-
 <p><strong>code</strong>: <a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-D-B.cpp">github</a></p>
-
-<h1 id="c-food-stalls">C.Food Stalls</h1>
-
+<h1 id="cfood-stalls">C.Food Stalls</h1>
 <p>这题也比较简单，只是编码有点复杂</p>
-
 <p>tips 1: 按 $X_i$ 的大小给这 $n$ 个点排序，如果固定warehouse 的位置 $i$， 那么选取 $X_j &gt; X_i$ 的点的花费是 $X_j - X_i + C_j$,选取 $X_j &lt; X_i$ 的花费是 $X_i - X_j + C_j$, 因此对于这 $n$ 个点，任意固定 warehouse 的位置后，计算上面的值，选前 $k$ 个求和就是答案。</p>
-
 <p>伪代码:</p>
-
 <pre><code>for warehouse = 0 to N:
     for j = 0 to N:
         计算每个点的花费
     选取前 $k$ 个求和
-</code></pre>
-
-<p>这是 ok的只是复杂度太大了，$O(N^2)$,我们可以优化一下</p>
-
+</code></pre><p>这是 ok的只是复杂度太大了，$O(N^2)$,我们可以优化一下</p>
 <p>如果我们维护两个集合对于 $X_j &gt; X_i$ 计算 upper_set(X_j+C_j), 对于 $X_i &gt; X_j$ 的 计算 lower_set(-X_j+C_j) , 有了这两个集合后我们也能计算出答案。同时想象一下 warehouse 从i -&gt; i+1 的过程，显然，第 $i$ 项会从 upper_set 移到 lower,同时还需要维护一个第 $k$ 项的分界点(这个贡献意义上) 的位置，简单想一下，维护这个不可能每次都经过 $O(N)$ 次，虽然我不会算它的复杂度，但在平均意义上我觉得仅仅会移动 O(1) 次，因此复杂度是 $O(N logN)$ 左右一定能通过</p>
-
 <p><strong>code</strong> : <a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-D-C.cpp">github</a></p>
-
 <blockquote>
 <p><strong>版权声明</strong></p>
-
 <p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
-
 <p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
-
 <p><strong>转载请保留此版权声明，并注明出处</strong></p>
 </blockquote>
 
@@ -350,6 +311,10 @@ int main(int argc, char const *argv[])
 <ul class="widget-list">
     
     <li>
+        <a href="https://zouzhitao.github.io/posts/finding-jobs/" title="告别学生生涯:秋招之路">告别学生生涯:秋招之路</a>
+    </li>
+    
+    <li>
         <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
     </li>
     
@@ -385,10 +350,6 @@ int main(int argc, char const *argv[])
         <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
     </li>
     
-    <li>
-        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -399,15 +360,19 @@ int main(int argc, char const *argv[])
 <ul class="widget-list">
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/ir/">IR(3)</a>
-    </li>
-    
-    <li>
         <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
     </li>
     
     <li>
         <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(1)</a>
     </li>
     
     <li>

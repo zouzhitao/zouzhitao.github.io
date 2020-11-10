@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>gridient descent on taotao 码字的地方</title>
@@ -6,11 +6,7 @@
     <description>Recent content in gridient descent on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 15 Jul 2020 23:07:48 +0800</lastBuildDate>
-    
-	<atom:link href="https://zouzhitao.github.io/tags/gridient-descent/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 15 Jul 2020 23:07:48 +0800</lastBuildDate><atom:link href="https://zouzhitao.github.io/tags/gridient-descent/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>梯度下降优化算法简单总结</title>
       <link>https://zouzhitao.github.io/posts/grad-opt/</link>
@@ -18,12 +14,12 @@
       
       <guid>https://zouzhitao.github.io/posts/grad-opt/</guid>
       <description>本篇博客简要总结关于梯度的一些优化方法[1]
- 常见的三种基于梯度的优化框架 batch gradient for i in range(nb_epochs): params_grad = evaluate_gradient(loss_function, data, params) params = params - learning_rate * params_grad  一次迭代对所有的data进行更新
+ 常见的三种基于梯度的优化框架 batch gradient for i in range(nb_epochs): params_grad = evaluate_gradient(loss_function, data, params) params = params - learning_rate * params_grad 一次迭代对所有的data进行更新
 缺点
  数据量大，有时候根本无法将所有data丢进内存 会对重复的sample做冗余计算  好处:
 对于convex function 可以保证一定能到 global opt，non-convex 能到 local opt
 sgd 一次只2针对一个sample
-for i in range(nb_epochs): np.random.shuffle(data) for example in data: params_grad = evaluate_gradient(loss_function, example, params) params = params - learning_rate * params_grad  缺点
+for i in range(nb_epochs): np.random.shuffle(data) for example in data: params_grad = evaluate_gradient(loss_function, example, params) params = params - learning_rate * params_grad 缺点
  震荡(每个样本更新带来的方差大)  好处
  online learning faster  mini-batch gradient for i in range(nb_epochs): np.</description>
     </item>

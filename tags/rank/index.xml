@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>rank on taotao 码字的地方</title>
@@ -6,11 +6,7 @@
     <description>Recent content in rank on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 06 Oct 2019 22:32:32 +0800</lastBuildDate>
-    
-	<atom:link href="https://zouzhitao.github.io/tags/rank/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sun, 06 Oct 2019 22:32:32 +0800</lastBuildDate><atom:link href="https://zouzhitao.github.io/tags/rank/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>信息检索(IR)笔记2: Rank: 基于概率的rank model</title>
       <link>https://zouzhitao.github.io/posts/rank-model-based-prob/</link>
@@ -25,9 +21,10 @@
  下面介绍两种概率模型，BIM，BM25，分别基于 二项分布和泊松分布
 BIM( binary independent model) 首先将document 向量化成 $x = (x_1,\dots ,x_i,\dots ,x_T ),T$ 表示 query 中 $term$ 的数量，$x_i =1 \iff term_i$ 在document $d$ 中
 那么 score
-$$ \begin{aligned} O(R|q,d) &amp;amp;= O(Q|q,x)\\
-&amp;amp;= \frac{\Pr(R=1|q,x)}{\Pr(R=0|q,x)}\\
-&amp;amp;= \frac{\frac{\Pr(R=1|q)\Pr(x|R=1,q)}{\Pr(x|q)}}{\frac{\Pr(R=0|q)\Pr(x|R=0,q)}{\Pr(x|q)}} (bayes\ rule)\\</description>
+$$ \begin{aligned} O(R|q,d) &amp;amp;= O(Q|q,x)\\\
+&amp;amp;= \frac{\Pr(R=1|q,x)}{\Pr(R=0|q,x)}\\\
+&amp;amp;= \frac{\frac{\Pr(R=1|q)\Pr(x|R=1,q)}{\Pr(x|q)}}{\frac{\Pr(R=0|q)\Pr(x|R=0,q)}{\Pr(x|q)}} (bayes\ rule)\\\
+&amp;amp;=O(R|q)\frac{\Pr(x|R=1,q)}{\Pr(x|R=0,q)} \end{aligned} $$</description>
     </item>
     
   </channel>

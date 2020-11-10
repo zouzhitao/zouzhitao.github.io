@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.51" />
+    <meta name="generator" content="Hugo 0.78.1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -93,109 +93,72 @@
                         
                         <aside id="toc" class="dismissed">
                             <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
-<ul>
-<li><a href="#adaboost">Adaboost</a>
-<ul>
-<li><a href="#algorithm">algorithm</a></li>
-<li><a href="#training-error">training error</a></li>
-<li><a href="#generalize-error">generalize error</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#algorithm">algorithm</a></li>
+    <li><a href="#training-error">training error</a></li>
+    <li><a href="#generalize-error">generalize error</a></li>
+  </ul>
 </nav>
                         </aside><div class="post-content">
-                            
-
-<blockquote>
+                            <blockquote>
 <p>纸上得来终觉浅，觉知此事要躬行。综上，我什莫都不懂.这仅仅是个人的学习<strong>防忘笔记</strong></p>
 </blockquote>
-
 <h1 id="adaboost">Adaboost</h1>
-
 <p>关于 Adaboost 的算法描述其实很简单，有趣的是的它的误差分析:</p>
-
 <h2 id="algorithm">algorithm</h2>
-
-<p><img src="/img/boosting/adaboost.png" alt="adaboost" /></p>
-
+<p><img src="/img/boosting/adaboost.png" alt="adaboost"></p>
 <p>其中</p>
-
 <p>$$
 \begin{align}
-\epsilon_t &amp;= Pr_{i\sim D_t}[h_t(x_i)\ne y_i]\\<br />
-&amp;=\sum D_t(i)I(h_t(x_i)\ne y_i)\\<br />
+\epsilon_t &amp;= Pr_{i\sim D_t}[h_t(x_i)\ne y_i]\\\<br>
+&amp;=\sum D_t(i)I(h_t(x_i)\ne y_i)\\\<br>
 \alpha_t &amp;= 2^{-1}\log (\frac{1-\epsilon_t}{\epsilon_t})
 \end{align}
 $$</p>
-
 <p>PS : 稍后会证明，为什么， $\alpha_t$ 取这个值</p>
-
 <h2 id="training-error">training error</h2>
-
-<p><img src="/img/boosting/trainingError.png" alt="" /></p>
-
+<p><img src="/img/boosting/trainingError.png" alt=""></p>
 <p>第一个不等式就不说了，分析，equal 和not equal 两种情况就好，我们来看第二个等式。</p>
-
 <p>其实第二个等式非常简单，我们只需要将 $D_t$ 的递推式展开就好了:</p>
-
 <p>$$
 \begin{align}
-D_2(i)&amp;=\frac{m^{-1}\exp (-\alpha_1y_ih_1(x_i))}{Z_1},Z_t\ is\ normlize\ term,a \ const,for\ i \in {1,&hellip;,T}\\<br />
-D_3(i)&amp;=\frac{D_2(i)\exp(-\alpha_2y_ih_2(x_i))}{Z_2}\\<br />
-&amp;=\frac{m^{-1}\exp(-y_i(\alpha_1h_1(x_i)+\alpha_2h_2(x_i)))}{Z_1Z_2}\\\<br />
-D_{T+1}&amp;=\frac{m^{-1}\exp(-y_i(\sum \alpha_th_t(x_i)))}{\prod_t Z_t}\\<br />
-becouse \sum_i D_t(i)=1,&amp; sum\ at\ left\ term\ and\ right\ term\\<br />
+D_2(i)&amp;=\frac{m^{-1}\exp (-\alpha_1y_ih_1(x_i))}{Z_1},Z_t\ is\ normlize\ term,a \ const,for\ i \in {1,&hellip;,T}\\\<br>
+D_3(i)&amp;=\frac{D_2(i)\exp(-\alpha_2y_ih_2(x_i))}{Z_2}\\\<br>
+&amp;=\frac{m^{-1}\exp(-y_i(\alpha_1h_1(x_i)+\alpha_2h_2(x_i)))}{Z_1Z_2}\\\<br>
+D_{T+1}&amp;=\frac{m^{-1}\exp(-y_i(\sum \alpha_th_t(x_i)))}{\prod_t Z_t}\\\<br>
+becouse \sum_i D_t(i)=1,&amp; sum\ at\ left\ term\ and\ right\ term\\\<br>
 \prod_t Z_t&amp;=\sum_i m^{-1}\exp(-y_i(\sum \alpha_th_t(x_i)))
 \end{align}
 $$</p>
-
 <p>好这里表明这个 training 的error 的上界仅仅与 $Z_t$ 相关，而</p>
-
 <p>$Z_t=\sum D_t(i)\exp(-y_i\alpha_th_t(x_i))$</p>
-
 <p>因此我们相当于需要优化 $\alpha_t$,</p>
-
 <p>其实， $y_ih_t(x_i)={-1,1}$,因此我们可以对这个式子求个期望，由于$\epsilon_t = Pr_{i\sim D_t}[h_t(x_i)\ne y_i]$,所以</p>
-
 <p>$$
 \begin{align}
-Z_t&amp;=\sum D_t(i)(\epsilon_t\exp(\alpha_t)+(1-\epsilon_t)(\exp(-\alpha_t)))\\<br />
+Z_t&amp;=\sum D_t(i)(\epsilon_t\exp(\alpha_t)+(1-\epsilon_t)(\exp(-\alpha_t)))\\\<br>
 &amp;=\epsilon_t\exp(\alpha_t)+(1-\epsilon_t)(\exp(-\alpha_t))
 \end{align}
 $$</p>
-
 <p>将 $Z_t$ 对 $\alpha_t$ 求导，并设为0，可得，$\alpha_t=2^{-1}\log(\frac{1-\epsilon_t}{\epsilon_t})$</p>
-
 <p>因此我们可以得到一个更有趣的bound</p>
-
-<p><img src="/img/boosting/zt.png" alt="" /></p>
-
+<p><img src="/img/boosting/zt.png" alt=""></p>
 <p>其中 $\gamma_t=\frac{1}{2}-\epsilon_t$ , 假设这个base learner，比random 要好一些，那么 $\gamma_t \in[0,.5]$,也就是说 $\exists \gamma&gt;0,\gamma_t&gt;\gamma\ for\ t \in{1,&hellip;,T}$</p>
-
 <p>所以说 $\prod Z_t\le \exp(-2T\gamma^2)$</p>
-
 <p>也就是说，adaboost 的过程其实是在找一个 $f=\sum \alpha_t h_t$ 即若学习器的线性组合，其中找 $\alpha_t$ 的过程其实是 <strong>coordinate-descent</strong>，并且training error 一定会收敛</p>
-
 <h2 id="generalize-error">generalize error</h2>
-
 <p>接下来谈论over-fitting 的问题，这问题有趣的地方是作者证明了一个届，表明 adaboost 不会出现over fitting，至于怎么证明的我就没管了</p>
-
-<p><img src="/img/boosting/generalizedError.png" alt="" /></p>
-
+<p><img src="/img/boosting/generalizedError.png" alt=""></p>
 <p><strong>reference</strong></p>
-
 <ol>
 <li><a href="https://github.com/zouzhitao/CS_Learning/blob/master/CMU-ML/paper/schapire02boosting_schapire.pdf">The Boosting Approach to Machine Learning:An Overview</a></li>
 <li><a href="https://github.com/zouzhitao/CS_Learning/blob/master/CMU-ML/paper/trebst.pdf">Greedy Function Aprroximation: A Gradient Boosting Machine</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/25096501">从 AdaBoost 到 Gradient Boosting</a></li>
 </ol>
-
 <blockquote>
 <p><strong>版权声明</strong></p>
-
 <p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
-
 <p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
-
 <p><strong>转载请保留此版权声明，并注明出处</strong></p>
 </blockquote>
 
@@ -279,6 +242,10 @@ $$</p>
 <ul class="widget-list">
     
     <li>
+        <a href="https://zouzhitao.github.io/posts/finding-jobs/" title="告别学生生涯:秋招之路">告别学生生涯:秋招之路</a>
+    </li>
+    
+    <li>
         <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
     </li>
     
@@ -314,10 +281,6 @@ $$</p>
         <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
     </li>
     
-    <li>
-        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -328,15 +291,19 @@ $$</p>
 <ul class="widget-list">
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/ir/">IR(3)</a>
-    </li>
-    
-    <li>
         <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
     </li>
     
     <li>
         <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(1)</a>
     </li>
     
     <li>

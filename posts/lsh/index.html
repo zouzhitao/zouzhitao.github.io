@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.51" />
+    <meta name="generator" content="Hugo 0.78.1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -93,108 +93,67 @@
                         
                         <aside id="toc" class="dismissed">
                             <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
-<ul>
-<li><a href="#case-study">case study</a>
-<ul>
-<li><a href="#lsh">LSH</a></li>
-</ul></li>
-<li><a href="#lsh-theroy">LSH Theroy</a>
-<ul>
-<li><a href="#and-扩展">AND 扩展</a></li>
-<li><a href="#or-扩展">OR 扩展</a></li>
-</ul></li>
-<li><a href="#其他距离函数">其他距离函数</a>
-<ul>
-<li><a href="#cosine-similarity">cosine similarity</a></li>
-<li><a href="#l2-norm">L2 norm</a></li>
-</ul></li>
-<li><a href="#ref">ref</a></li>
-</ul>
+  <ul>
+    <li><a href="#lsh">LSH</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#and-扩展">AND 扩展</a></li>
+    <li><a href="#or-扩展">OR 扩展</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#cosine-similarity">cosine similarity</a></li>
+    <li><a href="#l2-norm">L2 norm</a></li>
+  </ul>
 </nav>
                         </aside><div class="post-content">
-                            
-
-<blockquote>
+                            <blockquote>
 <p>这篇博文简单总结一下局部敏感性hash(locality-sensetive-hash,LSH) 在找相似元素中的应用，这也是最近邻的另外一种解决方案</p>
 </blockquote>
-
 <p>LSH 的直觉非常简单，设想一下我们判断一个集合 $set$ 中是否存在一个元素 $e$ 的方法，通常是将集合中的所有元素hash到一个一个的桶中，同时将 $e$ hash到桶中，如果存在，那么一定能在 $hash(e)$ 的桶中找到 $e$ ，这样的均摊代价只有 $O(1)$</p>
-
 <p>不过如果我们要找在某种距离下，与元素 $e$ 仅有些许差别(i.e. $distance(e,x) \le \theta$),而不是完全相同时，上面这种通常的hash方案是一定不行的。如果，我们能够找到一个hash 函数 $s.t. \Pr[hash(x)= hash(y)] = sim(x,y),x\ne y$ 即，两个不同元素hash到一个桶的概率和衡量他们之间距离的函数有某种数学关系，那么在加上一些独立实验的trick就能够保证，hash到一个桶中的元素都是距离相近的元素了</p>
-
 <h1 id="case-study">case study</h1>
-
 <p>假设有 $n$ 个集合 $set_1,\dots,set_n$, 每个集合是一些数字(或者可以将每个集合看做bit vector)表示是否存在某个元素 $e$. 我们要寻找每个集合的相识集合。</p>
-
 <p><strong>Jaccard similarity</strong> $sim(A,B)=\frac{|A\cap B|}{|A\cup B|}$.</p>
-
 <p>定义hash 函数 $min-hash(A) =\arg \min_{x \in A} hash(x), \forall x \ne y, hash(x)\ne hash(y) $,(一般来说会选择排列 $\pi$ 作为这样的hash 函数，然而其实通常意义上任意的hash函数都是ok的)。我们会发现 $min-hash$ 的一个好处</p>
-
 <p>$$
 \Pr[min-hash(x)=min-hash(y)]= \frac{|A\cap B|}{|A\cup B|}
 $$</p>
-
 <p>那么这里我们也采用独立实验的思想，选择 $r$ 个这样的hash函数，计算min-hash。两个集合的相似度就可以简单的计算为 $\frac{\#min-hash(A)=min-hash(B)}{r}$.</p>
-
 <h2 id="lsh">LSH</h2>
-
 <p>将上述计算的 $r$ 个hash函数的值记作 $M_{A,i}$ : 集合 $A$ 在$min-hash_i$ 下的计算值，如果将每个集合的所有 $r$ 个hash值，在用一个 hash映射出去，假设 $A,B$ 两个集合的相似度为 $p$,我们来算算，他们最终进入一个桶的概率.</p>
-
 <p>第 $i$ 个min-hash值相同的概率为 $p$,</p>
-
 <p>最终hash到一个桶的概率为 $p^r$,</p>
-
 <p>没被hash到一个桶的概率为 $1-p^r$,</p>
-
 <p>同理采用独立实验的思想，扩展上面的操作 $b$ 次， 即设置 $b*r$ 个min-hash，分为 $b$ 个band，每个band $r$ 个min-hash，如上。如果有一个band是相同的，即认为他们相同(OR 系统)。</p>
-
 <p>这样他们最终hash到一个桶的概率为 $1 - (1-p^r)^b$,这是一条 $s$ 曲线，需要注意的是，这样做会产生 false positive，与false negtive，分别是曲线与 x轴和 $y=1$ 围成的面积</p>
-
-<p><img src="/img/s-curve.png" width="40%" /></p>
-
+<!-- raw HTML omitted -->
 <h1 id="lsh-theroy">LSH Theroy</h1>
-
-<p><img src="/img/lsh.PNG" width="40%" /></p>
-
+<!-- raw HTML omitted -->
 <h2 id="and-扩展">AND 扩展</h2>
-
 <p>也就是采用上面的 r 个函数扩展，可以证明， $r$ 个AND 扩展可以变为</p>
-
 <p>$$
 (d_1,d_2,p_1^r,p_2^r)-sensitive
 $$</p>
-
 <h2 id="or-扩展">OR 扩展</h2>
-
 <p>$$
 (d_1,d_2,1 - (1 - p_1)^b,1-(1-p_2)^b)-sensitive
 $$</p>
-
 <h1 id="其他距离函数">其他距离函数</h1>
-
 <h2 id="cosine-similarity">cosine similarity</h2>
-
 <p>random-hyperplane,: $sgn(f_v(x))$</p>
-
 <h2 id="l2-norm">L2 norm</h2>
-
 <p>random line projection ：$f_\mathbf{v}(\mathbf{x}) = \mathbf{x}\mathbf{v}=\sum x_iv_i$,等距离分桶</p>
-
 <p><strong><a href="https://github.com/zouzhitao/cs168-19-stanford/blob/master/min-project2/LSH.py">code</a></strong></p>
-
 <h1 id="ref">ref</h1>
-
 <ol>
 <li>Anand Rajaraman, Jure Leskovec, and Jeffrey D. Ullman. <a href="http://infolab.stanford.edu/~ullman/mmds/ch3.pdf">Mining of Massive Datasets</a>. ch3</li>
 </ol>
-
 <blockquote>
 <p><strong>版权声明</strong></p>
-
 <p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
-
 <p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
-
 <p><strong>仅允许非商业转载，转载请保留此版权声明，并注明出处</strong></p>
 </blockquote>
 
@@ -274,6 +233,10 @@ $$</p>
 <ul class="widget-list">
     
     <li>
+        <a href="https://zouzhitao.github.io/posts/finding-jobs/" title="告别学生生涯:秋招之路">告别学生生涯:秋招之路</a>
+    </li>
+    
+    <li>
         <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
     </li>
     
@@ -309,10 +272,6 @@ $$</p>
         <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
     </li>
     
-    <li>
-        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -323,15 +282,19 @@ $$</p>
 <ul class="widget-list">
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/ir/">IR(3)</a>
-    </li>
-    
-    <li>
         <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
     </li>
     
     <li>
         <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(1)</a>
     </li>
     
     <li>

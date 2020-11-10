@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.51" />
+    <meta name="generator" content="Hugo 0.78.1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -93,45 +93,26 @@
                         
                         <aside id="toc" class="dismissed">
                             <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
-<ul>
-<li><a href="#ex6">ex6</a></li>
-<li><a href="#ex8">ex8</a>
-<ul>
-<li><a href="#3">3.</a></li>
-<li><a href="#4">4</a></li>
-</ul></li>
-<li><a href="#ex9">ex9</a></li>
-<li><a href="#ex10">ex10</a></li>
-<li><a href="#ex11">ex11</a></li>
-<li><a href="#ex12">ex12</a></li>
-<li><a href="#完整代码">完整代码</a>
-<ul>
-<li><a href="#debuginfo-eip">debuginfo_eip</a></li>
-<li><a href="#mon-bactrace">mon_bactrace</a></li>
-</ul></li>
-<li><a href="#最终成果">最终成果:</a></li>
-<li><a href="#总结">总结</a></li>
-<li><a href="#ref">ref</a></li>
-</ul>
+  <ul>
+    <li><a href="#3">3.</a></li>
+    <li><a href="#4">4</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#debuginfo_eip">debuginfo_eip</a></li>
+    <li><a href="#mon_bactrace">mon_bactrace</a></li>
+  </ul>
 </nav>
                         </aside><div class="post-content">
-                            
-
-<p>这里是 MIT 6.828 OS lab1 笔记.</p>
-
+                            <p>这里是 MIT 6.828 OS lab1 笔记.</p>
 <p><a href="https://pdos.csail.mit.edu/6.828/2018/">课程链接</a></p>
-
 <p>简单记录一些有趣，和有意思的东西</p>
-
 <h1 id="ex6">ex6</h1>
-
 <blockquote>
 <p>Exercise 6. We can examine memory using GDB&rsquo;s x command. The GDB manual has full details, but for now, it is enough to know that the command x/Nx ADDR prints N words of memory at ADDR. (Note that both &lsquo;x&rsquo;s in the command are lowercase.) Warning: The size of a word is not a universal standard. In GNU assembly, a word is two bytes (the &lsquo;w&rsquo; in xorw, which stands for word, means 2 bytes).
 Reset the machine (exit QEMU/GDB and start them again). Examine the 8 words of memory at 0x00100000 at the point the BIOS enters the boot loader, and then again at the point the boot loader enters the kernel. Why are they different? What is there at the second breakpoint? (You do not really need to use QEMU to answer this question. Just think.)</p>
 </blockquote>
-
 <p>首先我们看看 <code>objdump -h obj/kern/kernel</code> 将 kernel 的elf 二进制文件给输出出来看看</p>
-
 <pre><code>obj/kern/kernel：     文件格式 elf32-i386
 
 节：
@@ -159,219 +140,148 @@ Idx Name          Size      VMA       LMA       File off  Algn
  10 .comment      0000002a  00000000  00000000  000146a8  2**0
                   CONTENTS, READONLY
 
-</code></pre>
+</code></pre><p>VMA 是(link addr),LMA 是 (load addr), 也就是说 kernel 的 .text 也就是代码段全都被加载到 LMA, 而对应的虚拟地址是 VMA, 即后面需将虚地址转化为实地址</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm">entry:
+	<span style="color:#a6e22e">movw</span>	<span style="color:#66d9ef">$0x1234</span>,<span style="color:#ae81ff">0x472</span>			<span style="color:#75715e"># warm boot
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">f0100000</span>:	<span style="color:#ae81ff">02</span> <span style="color:#66d9ef">b0</span> <span style="color:#66d9ef">ad</span> <span style="color:#ae81ff">1</span><span style="color:#66d9ef">b</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span>    	<span style="color:#66d9ef">add</span>    <span style="color:#ae81ff">0x1bad</span>(%eax),%dh
+f0100006:	<span style="color:#960050;background-color:#1e0010">00</span> <span style="color:#960050;background-color:#1e0010">00</span>                	<span style="color:#a6e22e">add</span>    %al,(%eax)
+f0100008:	<span style="color:#a6e22e">fe</span> <span style="color:#ae81ff">4</span><span style="color:#66d9ef">f</span> <span style="color:#ae81ff">52</span>             	<span style="color:#66d9ef">decb</span>   <span style="color:#ae81ff">0x52</span>(%edi)
+f010000b:	<span style="color:#a6e22e">e4</span>                   	<span style="color:#66d9ef">.byte</span> <span style="color:#ae81ff">0xe4</span>
 
-<p>VMA 是(link addr),LMA 是 (load addr), 也就是说 kernel 的 .text 也就是代码段全都被加载到 LMA, 而对应的虚拟地址是 VMA, 即后面需将虚地址转化为实地址</p>
-
-<pre><code class="language-asm">entry:
-    movw    $0x1234,0x472           # warm boot
-f0100000:   02 b0 ad 1b 00 00       add    0x1bad(%eax),%dh
-f0100006:   00 00                   add    %al,(%eax)
-f0100008:   fe 4f 52                decb   0x52(%edi)
-f010000b:   e4                      .byte 0xe4
-
-</code></pre>
-
-<p><img src="/img/ex6.png" alt="ex6" /></p>
-
+</code></pre></div><p><img src="/img/ex6.png" alt="ex6"></p>
 <p>boot 之后会被 内核就被加载了，即: 在跳转到 内核之前，那一段read代码其实试讲kernel的各个段加载到 0x100000,处，至于为什么要加载在这里呢？lab中说了 <strong>为了保证其内存有&gt; 1M</strong></p>
-
 <h1 id="ex8">ex8</h1>
-
 <h2 id="3">3.</h2>
-
 <p>跟踪这段代码，技巧：　将这段代码放在　kernel/monitor.c 中　即可运行</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">int</span> x <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, y <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>, z <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>;
+cprintf(<span style="color:#e6db74">&#34;x %d, y %x, z %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, x, y, z);
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm">	<span style="color:#a6e22e">int</span> <span style="color:#66d9ef">x</span> <span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#ae81ff">1</span>, <span style="color:#66d9ef">y</span> <span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#ae81ff">3</span>, <span style="color:#66d9ef">z</span> <span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#ae81ff">4</span><span style="color:#75715e">;
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">cprintf</span>(<span style="color:#960050;background-color:#1e0010">&#34;</span><span style="color:#66d9ef">x</span> %d, <span style="color:#66d9ef">y</span> %x, <span style="color:#66d9ef">z</span> %d<span style="color:#960050;background-color:#1e0010">\</span><span style="color:#66d9ef">n</span><span style="color:#960050;background-color:#1e0010">&#34;</span>, <span style="color:#66d9ef">x</span>, <span style="color:#66d9ef">y</span>, <span style="color:#66d9ef">z</span>)<span style="color:#75715e">;
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">f010089f</span>:	<span style="color:#ae81ff">6</span><span style="color:#66d9ef">a</span> <span style="color:#ae81ff">04</span>                	<span style="color:#66d9ef">push</span>   <span style="color:#66d9ef">$0x4</span> <span style="color:#75715e">#z,y,x push in stack 
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">f01008a1</span>:	<span style="color:#ae81ff">6</span><span style="color:#66d9ef">a</span> <span style="color:#ae81ff">03</span>                	<span style="color:#66d9ef">push</span>   <span style="color:#66d9ef">$0x3</span>
+f01008a3:	<span style="color:#960050;background-color:#1e0010">6</span><span style="color:#a6e22e">a</span> <span style="color:#ae81ff">01</span>                	<span style="color:#66d9ef">push</span>   <span style="color:#66d9ef">$0x1</span>
+f01008a5:	<span style="color:#960050;background-color:#1e0010">8</span><span style="color:#a6e22e">d</span> <span style="color:#ae81ff">83</span> <span style="color:#ae81ff">66</span> <span style="color:#ae81ff">0</span><span style="color:#66d9ef">a</span> <span style="color:#66d9ef">ff</span> <span style="color:#66d9ef">ff</span>    	<span style="color:#66d9ef">lea</span>    -<span style="color:#ae81ff">0xf59a</span>(%ebx),%eax <span style="color:#75715e"># fmt pointer
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">f01008ab</span>:	<span style="color:#ae81ff">50</span>                   	<span style="color:#66d9ef">push</span>   %eax <span style="color:#75715e">#fmt addr
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">f01008ac</span>:	<span style="color:#66d9ef">e8</span> <span style="color:#66d9ef">c9</span> <span style="color:#ae81ff">01</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span>       	<span style="color:#66d9ef">call</span>   <span style="color:#ae81ff">f0100a7a</span> &lt;<span style="color:#66d9ef">cprintf</span>&gt;
 
-<pre><code class="language-cpp">int x = 1, y = 3, z = 4;
-cprintf(&quot;x %d, y %x, z %d\n&quot;, x, y, z);
-</code></pre>
-
-<pre><code class="language-asm">    int x = 1, y = 3, z = 4;
-    cprintf(&quot;x %d, y %x, z %d\n&quot;, x, y, z);
-f010089f:   6a 04                   push   $0x4 #z,y,x push in stack 
-f01008a1:   6a 03                   push   $0x3
-f01008a3:   6a 01                   push   $0x1
-f01008a5:   8d 83 66 0a ff ff       lea    -0xf59a(%ebx),%eax # fmt pointer
-f01008ab:   50                      push   %eax #fmt addr
-f01008ac:   e8 c9 01 00 00          call   f0100a7a &lt;cprintf&gt;
-
-</code></pre>
-
-<p><img src="/img/fmt.png" alt="ap&amp;fmt" /></p>
-
-<p>可以看到　：　fmt－＞&rdquo;x %d, y %x, z %d\n&rdquo;ap 指向的是栈中构造的参数１方的地方，而且如果你实实在在的跟踪并且打印栈中的数据，你会发现参数是倒着来的也就是说先压: z,y,x,fmt,这个可见 asm代码</p>
-
+</code></pre></div><p><img src="/img/fmt.png" alt="ap&fmt"></p>
+<p>可以看到　：　fmt－＞&quot;x %d, y %x, z %d\n&quot;ap 指向的是栈中构造的参数１方的地方，而且如果你实实在在的跟踪并且打印栈中的数据，你会发现参数是倒着来的也就是说先压: z,y,x,fmt,这个可见 asm代码</p>
 <p><strong>ap到底是什么</strong></p>
-
 <p>看下面两张图，你就会发现 ap 的地址正好等于 <code>x</code>在栈中的地址</p>
-
-<p><img src="/img/x_addr.png" alt="x_addr" /></p>
-
+<p><img src="/img/x_addr.png" alt="x_addr"></p>
 <p>(<strong>remark</strong>)
 ap_addr = <code>x</code> 放在栈中的地址</p>
-
-<p><img src="/img/ap_addr.png" alt="ap_addr" /></p>
-
+<p><img src="/img/ap_addr.png" alt="ap_addr"></p>
 <h2 id="4">4</h2>
-
-<pre><code class="language-cpp">unsigned int i = 0x00646c72;
-cprintf(&quot;H%x Wo%s&quot;, 57616, &amp;i);
-</code></pre>
-
-<p>57616 = 0xe110</p>
-
-<p><img src="/img/hello.png" alt="hello wolrd!" /></p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x00646c72</span>;
+cprintf(<span style="color:#e6db74">&#34;H%x Wo%s&#34;</span>, <span style="color:#ae81ff">57616</span>, <span style="color:#f92672">&amp;</span>i);
+</code></pre></div><p>57616 = 0xe110</p>
+<p><img src="/img/hello.png" alt="hello wolrd!"></p>
 <p><strong>解释</strong> : 将　57616 转化为16base,-&gt;e110,(<strong>这个转化与端系统没有关系，因为代码中是将整数 -&gt; base16，即这个整数是已经被读取出来的结果了</strong>)</p>
-
 <p>后面的 <code>&quot;rld\0&quot;</code> 是小端机器解释的结果，即解释的是这段ASCII code : 726c6400</p>
-
 <h1 id="ex9">ex9</h1>
-
 <p>kernel stack init</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm">
+<span style="color:#75715e"># kernel asm 54 ~ 58 line 
+</span><span style="color:#75715e"></span>f010002f:	<span style="color:#a6e22e">bd</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span>       	<span style="color:#66d9ef">mov</span>    <span style="color:#66d9ef">$0x0</span>,%ebp
 
-<pre><code class="language-asm">
-# kernel asm 54 ~ 58 line 
-f010002f:   bd 00 00 00 00          mov    $0x0,%ebp
-
-    # Set the stack pointer
-    movl    $(bootstacktop),%esp
-f0100034:   bc 00 00 11 f0          mov    $0xf0110000,%esp
-</code></pre>
-
-<p>栈的最顶部是 放置的数是0(<strong>value</strong>),因此后面打印栈帧的时候只需要判断 ebp =0 结束就好， 接着栈顶是 <code>f0110000</code></p>
-
+	<span style="color:#75715e"># Set the stack pointer
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">movl</span>	<span style="color:#66d9ef">$</span>(<span style="color:#66d9ef">bootstacktop</span>),%esp
+f0100034:	<span style="color:#a6e22e">bc</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">11</span> <span style="color:#66d9ef">f0</span>       	<span style="color:#66d9ef">mov</span>    <span style="color:#66d9ef">$0xf0110000</span>,%esp
+</code></pre></div><p>栈的最顶部是 放置的数是0(<strong>value</strong>),因此后面打印栈帧的时候只需要判断 ebp =0 结束就好， 接着栈顶是 <code>f0110000</code></p>
 <h1 id="ex10">ex10</h1>
-
-<p><img src="/img/ex10.png" alt="ex10" /></p>
-
+<p><img src="/img/ex10.png" alt="ex10"></p>
 <h1 id="ex11">ex11</h1>
-
 <p><strong>!!!!lec2-note</strong></p>
-
 <p>这个实验没啥难的，只需要看看 lec2-note 就行了，</p>
-
 <p>x86 dictates that stack grows down:</p>
-
-<p>Example instruction What it does</p>
-
-<p><strong>pushl</strong>
-&gt;%eax   subl $4, %esp
-&gt;
-&gt;movl %eax, (%esp)</p>
-
-<p>popl %eax<br />
-&gt;movl (%esp), %eax
-&gt;
-&gt;addl $4, %esp</p>
-
+<p>Example instruction	What it does</p>
+<p><strong>pushl</strong></p>
+<blockquote>
+<p>%eax	subl $4, %esp</p>
+<p>movl %eax, (%esp)</p>
+</blockquote>
+<p>popl %eax</p>
+<blockquote>
+<p>movl (%esp), %eax</p>
+<p>addl $4, %esp</p>
+</blockquote>
 <p>call 0x12345</p>
-
 <blockquote>
 <p>pushl %eip (*)</p>
-
 <p>movl $0x12345, %eip (*)</p>
 </blockquote>
-
-<p><strong>ret</strong> popl %eip (*)</p>
-
+<p><strong>ret</strong>	popl %eip (*)</p>
 <p>注意栈帧 <code>esp,ebp</code> 表示的栈的范围是 闭区间所以</p>
-
 <p>然后仔细看看 栈帧的图:</p>
-
-<pre><code class="language-text">+------------+   |
-               | arg 2      |   \
-               +------------+    &gt;- previous function's stack frame
-               | arg 1      |   /
-               +------------+   |
-               | ret %eip   |   /
-               +============+   
-               | saved %ebp |   \
-        %ebp-&gt; +------------+   |
-               |            |   |
-               |   local    |   \
-               | variables, |    &gt;- current function's stack frame
-               |    etc.    |   /
-               |            |   |
-               |            |   |
-        %esp-&gt; +------------+   /
-</code></pre>
-
-<h1 id="ex12">ex12</h1>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">+------------+   |
+		       | arg 2      |   \
+		       +------------+    &gt;- previous function&#39;s stack frame
+		       | arg 1      |   /
+		       +------------+   |
+		       | ret %eip   |   /
+		       +============+   
+		       | saved %ebp |   \
+		%ebp-&gt; +------------+   |
+		       |            |   |
+		       |   local    |   \
+		       | variables, |    &gt;- current function&#39;s stack frame
+		       |    etc.    |   /
+		       |            |   |
+		       |            |   |
+		%esp-&gt; +------------+   /
+</code></pre></div><h1 id="ex12">ex12</h1>
 <p>wa !!!</p>
-
-<pre><code class="language-cpp">**
-    // Search within [lline, rline] for the line number stab.
-    // If found, set info-&gt;eip_line to the right line number.
-    // If not found, return -1.
-**
-</code></pre>
-
-<p><strong>注意</strong>这里的right 不是 右的意思，:(,误导我半年&hellip;</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#f92672">**</span>
+	<span style="color:#75715e">// Search within [lline, rline] for the line number stab.
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// If found, set info-&gt;eip_line to the right line number.
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// If not found, return -1.
+</span><span style="color:#75715e"></span><span style="color:#f92672">**</span>
+</code></pre></div><p><strong>注意</strong>这里的right 不是 右的意思，:(,误导我半年&hellip;</p>
 <h1 id="完整代码">完整代码</h1>
-
-<h2 id="debuginfo-eip">debuginfo_eip</h2>
-
-<pre><code class="language-cpp">stab_binsearch(stabs,&amp;lline, &amp;rline, N_SLINE, addr);
-if(lline &gt; rline)return -1;
-info-&gt;eip_line = stabs[lline].n_desc; //这个可见上面stabs_binsearch 的样例解释
-    
-</code></pre>
-
-<h2 id="mon-bactrace">mon_bactrace</h2>
-
-<pre><code class="language-c++">int
-mon_backtrace(int argc, char **argv, struct Trapframe *tf)
+<h2 id="debuginfo_eip">debuginfo_eip</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">stab_binsearch(stabs,<span style="color:#f92672">&amp;</span>lline, <span style="color:#f92672">&amp;</span>rline, N_SLINE, addr);
+<span style="color:#66d9ef">if</span>(lline <span style="color:#f92672">&gt;</span> rline)<span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+info<span style="color:#f92672">-&gt;</span>eip_line <span style="color:#f92672">=</span> stabs[lline].n_desc; <span style="color:#75715e">//这个可见上面stabs_binsearch 的样例解释
+</span><span style="color:#75715e"></span>	
+</code></pre></div><h2 id="mon_bactrace">mon_bactrace</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">int</span>
+<span style="color:#a6e22e">mon_backtrace</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>argv, <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Trapframe</span> <span style="color:#f92672">*</span>tf)
 {
-    // Your code here.ex11
-    uint32_t * ebp = (uint32_t *)read_ebp();
-    while(ebp !=0){
-        cprintf(&quot;ebp %08x&quot;,ebp);
-        uint32_t eip = ebp[1];
-        cprintf(&quot;  eip %08x  args&quot;,eip);
-        uint32_t *args = ebp+2;
-        for(int i = 0 ; i&lt;5 ; ++i)
-            cprintf(&quot;  %08x&quot;,args[i]);
-        cputchar('\n');
-        struct Eipdebuginfo info;
-        debuginfo_eip(eip,&amp;info);
-        cprintf(&quot;%s:%d: %.*s+%d\n&quot;,info.eip_file,info.eip_line,info.eip_fn_namelen,info.eip_fn_name,eip - info.eip_fn_addr);
-        ebp = (uint32_t *) ebp[0];
-    }
-    return 0;
+	<span style="color:#75715e">// Your code here.ex11
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">uint32_t</span> <span style="color:#f92672">*</span> ebp <span style="color:#f92672">=</span> (<span style="color:#66d9ef">uint32_t</span> <span style="color:#f92672">*</span>)read_ebp();
+	<span style="color:#66d9ef">while</span>(ebp <span style="color:#f92672">!=</span><span style="color:#ae81ff">0</span>){
+		cprintf(<span style="color:#e6db74">&#34;ebp %08x&#34;</span>,ebp);
+		<span style="color:#66d9ef">uint32_t</span> eip <span style="color:#f92672">=</span> ebp[<span style="color:#ae81ff">1</span>];
+		cprintf(<span style="color:#e6db74">&#34;  eip %08x  args&#34;</span>,eip);
+		<span style="color:#66d9ef">uint32_t</span> <span style="color:#f92672">*</span>args <span style="color:#f92672">=</span> ebp<span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>;
+		<span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> ; i<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">5</span> ; <span style="color:#f92672">++</span>i)
+			cprintf(<span style="color:#e6db74">&#34;  %08x&#34;</span>,args[i]);
+		cputchar(<span style="color:#e6db74">&#39;\n&#39;</span>);
+		<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Eipdebuginfo</span> info;
+		debuginfo_eip(eip,<span style="color:#f92672">&amp;</span>info);
+		cprintf(<span style="color:#e6db74">&#34;%s:%d: %.*s+%d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,info.eip_file,info.eip_line,info.eip_fn_namelen,info.eip_fn_name,eip <span style="color:#f92672">-</span> info.eip_fn_addr);
+		ebp <span style="color:#f92672">=</span> (<span style="color:#66d9ef">uint32_t</span> <span style="color:#f92672">*</span>) ebp[<span style="color:#ae81ff">0</span>];
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 }
-</code></pre>
-
-<h1 id="最终成果">最终成果:</h1>
-
-<p><img src="/img/win.png" alt="win" /></p>
-
+</code></pre></div><h1 id="最终成果">最终成果:</h1>
+<p><img src="/img/win.png" alt="win"></p>
 <p><strong>我没有做 challenge</strong></p>
-
 <h1 id="总结">总结</h1>
-
 <p>我做过 清华的ucore,也做过JOS 所以想在这里如实对比一下:</p>
-
 <ul>
 <li>JOS 更难,但探索的更仔细</li>
 <li>ucore 稍微简单一些，只包含7个ex左右</li>
 <li>但是我想说的是 ucore我没做出来，这个JOS我做出来了，我觉得主要原因是 JOS lab提示更直接，整个lab一气呵成，照着做一定能做出来，资源也是就附着在链接里，比 Ucore 更容易获取，而且概念解释更详细，没有涉及 GDT ldt 之类的一来就把人下跑了</li>
 </ul>
-
 <h1 id="ref">ref</h1>
-
 <p><a href="https://pdos.csail.mit.edu/6.828/2018/labs/lab1/">2018/lab1</a>
-[Xin Qiu - MIT 6.828 Lab1)(<a href="https://xinqiu.me/2016/10/15/MIT-6.828-1/">https://xinqiu.me/2016/10/15/MIT-6.828-1/</a>)</p>
-
+[Xin Qiu - MIT 6.828 Lab1)(https://xinqiu.me/2016/10/15/MIT-6.828-1/)</p>
 <blockquote>
 <p><strong>版权声明</strong></p>
-
 <p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
-
 <p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
-
 <p><strong>转载请保留此版权声明，并注明出处</strong></p>
 </blockquote>
 
@@ -451,6 +361,10 @@ mon_backtrace(int argc, char **argv, struct Trapframe *tf)
 <ul class="widget-list">
     
     <li>
+        <a href="https://zouzhitao.github.io/posts/finding-jobs/" title="告别学生生涯:秋招之路">告别学生生涯:秋招之路</a>
+    </li>
+    
+    <li>
         <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
     </li>
     
@@ -486,10 +400,6 @@ mon_backtrace(int argc, char **argv, struct Trapframe *tf)
         <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
     </li>
     
-    <li>
-        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -500,15 +410,19 @@ mon_backtrace(int argc, char **argv, struct Trapframe *tf)
 <ul class="widget-list">
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/ir/">IR(3)</a>
-    </li>
-    
-    <li>
         <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
     </li>
     
     <li>
         <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(1)</a>
     </li>
     
     <li>

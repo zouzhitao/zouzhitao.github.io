@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.51" />
+    <meta name="generator" content="Hugo 0.78.1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -93,242 +93,173 @@
                         
                         <aside id="toc" class="dismissed">
                             <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
-<ul>
-<li><a href="#凸集合">凸集合</a></li>
-<li><a href="#凸函数">凸函数</a></li>
-<li><a href="#凸优化问题">凸优化问题</a>
-<ul>
-<li><a href="#凸优化问题的局部最优解一定是全局最优解">凸优化问题的局部最优解一定是全局最优解</a></li>
-<li><a href="#一些机器学习的example">一些机器学习的example</a></li>
-</ul></li>
-<li><a href="#lagrange-kkt">lagrange &amp; KKT</a>
-<ul>
-<li><a href="#lagrange-mutiplier">lagrange mutiplier</a></li>
-<li><a href="#primal-dual-原问题与对偶问题">primal &amp; dual 原问题与对偶问题</a></li>
-<li><a href="#原问题的解释">原问题的解释</a></li>
-<li><a href="#弱对偶性-weak-duality">弱对偶性(weak duality)</a></li>
-<li><a href="#互补松弛-complementary-slackness">互补松弛(complementary slackness)</a></li>
-</ul></li>
-<li><a href="#kkt">KKT</a></li>
-<li><a href="#参考">参考</a></li>
-</ul>
+  <ul>
+    <li><a href="#凸优化问题的局部最优解一定是全局最优解">凸优化问题的局部最优解一定是全局最优解</a></li>
+    <li><a href="#一些机器学习的example">一些机器学习的example</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#lagrange-mutiplier">lagrange mutiplier</a></li>
+    <li><a href="#primal--dual-原问题与对偶问题">primal &amp; dual 原问题与对偶问题</a></li>
+    <li><a href="#原问题的解释">原问题的解释</a></li>
+    <li><a href="#弱对偶性weak-duality">弱对偶性(weak duality)</a></li>
+    <li><a href="#互补松弛complementary-slackness">互补松弛(complementary slackness)</a></li>
+  </ul>
 </nav>
                         </aside><div class="post-content">
-                            
-
-<blockquote>
+                            <blockquote>
 <p>本文来源于个人的凸优化学习笔记参考cs229 cvxoptnote,写成笔记的原因仅仅是想通过个人的笔记自己讲述与推导一下这些数学公式，内容可能会很简单，强力建议想得到一手资料的人好好学习文末参考资料</p>
 </blockquote>
-
 <h1 id="凸集合">凸集合</h1>
-
 <p>定义就直接跳过了，这里简单写一些常见的凸集</p>
-
 <ul>
 <li><strong>凸集的交</strong>, 设 $C_i,i = 1,2,3,&hellip;,n$ 是凸集，那么我们有$\cap _{i=0}^n C_i$ 也是凸集</li>
 <li><strong>affine subspace</strong> 即 $Ax+b=0,x \in R^n$, 这既是 convex,也是concave</li>
 <li><strong>凸函数的sublevel</strong> 即 $if \ f(x)\  is\  convex\ function,then \{f(x) &lt;=\alpha\} is\ convex\ set$</li>
 </ul>
-
 <h1 id="凸函数">凸函数</h1>
-
 <p><strong>Define</strong></p>
-
-<p><img src="/img/math/convex.png" alt="convex" /></p>
-
+<p><img src="/img/math/convex.png" alt="convex"></p>
 <p><strong>性质</strong>，两条重点</p>
-
 <ol>
-<li><strong>first-order-approximation</strong><br>
+<li><strong>first-order-approximation</strong><!-- raw HTML omitted -->
 $$
 f(y)\ge f(x)+(\nabla f(x))^T(y-x)
 $$</li>
-<li><strong>二阶导数大于0</strong><br>
+<li><strong>二阶导数大于0</strong><!-- raw HTML omitted -->
 $$
 \nabla_x^2 f(x) \ge 0
 $$</li>
 </ol>
-
 <p><strong>一些简单的凸函数</strong></p>
-
 <ol>
-<li><strong>Affine funciton</strong><br>
+<li><strong>Affine funciton</strong><!-- raw HTML omitted -->
 $f(x) =A^Tx+b,x\in R^n$</li>
-<li><strong>quadratic function</strong><br>
-$f:R^n-&gt;R,f(x) = 2^{-1}x^TAx+b^Tx+c,A\in S^n,b\in R^n,c\in R$<br>
+<li><strong>quadratic function</strong><!-- raw HTML omitted -->
+$f:R^n-&gt;R,f(x) = 2^{-1}x^TAx+b^Tx+c,A\in S^n,b\in R^n,c\in R$<!-- raw HTML omitted -->
 这里简单说一下 $\nabla^2 f(x)=A$, 因此如果 $A$ 是半正定(positive-semidefinite)的,那么$f(x)$ is <strong>convex</strong></li>
 <li><strong>Norm</strong>,e.g $f(x) = ||x||_2^2$</li>
-<li><strong>凸函数的非负权重和</strong><br>
+<li><strong>凸函数的非负权重和</strong><!-- raw HTML omitted -->
 $f(x)=\sum_{i=0}^nc_if_i(x),f_i(x)\in convex\ function\ class$</li>
-<li><strong>凸函数集合的最大值函数</strong><br>
-$f(x) = \max f_i(x),f_i(x)\in convex\ function\ class$<br>
+<li><strong>凸函数集合的最大值函数</strong><!-- raw HTML omitted -->
+$f(x) = \max f_i(x),f_i(x)\in convex\ function\ class$<!-- raw HTML omitted -->
 证明:
 $$
 \begin{aligned}
-   f(\theta x + (1-\theta)y)&amp;= \max f_i(\theta x + (1-\theta)y)\\<br />
-   &amp;\le \max \theta f_i(x) +(1-\theta)f_i(y)\\<br />
-   &amp;\le \theta f(x) + (1-\theta)f(y)
+f(\theta x + (1-\theta)y)&amp;= \max f_i(\theta x + (1-\theta)y)\\\<br>
+&amp;\le \max \theta f_i(x) +(1-\theta)f_i(y)\\\<br>
+&amp;\le \theta f(x) + (1-\theta)f(y)
 \end{aligned}
 $$</li>
 </ol>
-
 <h1 id="凸优化问题">凸优化问题</h1>
-
 <p><strong>define</strong></p>
-
-<p><img src="/img/math/convex-opt.png" alt="" /></p>
-
+<p><img src="/img/math/convex-opt.png" alt=""></p>
 <h2 id="凸优化问题的局部最优解一定是全局最优解">凸优化问题的局部最优解一定是全局最优解</h2>
-
 <p>接下来是凸优化问题最重要，也是最有趣的一个性质</p>
-
 <p><strong>证明</strong></p>
-
 <p>我们用反证法，
 设 $x\in R^n,f(x) \in convex\ function\ class$,且， $x$ 是 凸优化问题 $f(x)$ 的一个局部最优解，那么我们有，<strong>在$x$ 的邻域中,i.e.$||x-z||_2 &lt;R$ ,不存在一个点 $z$,使得$f(z)&lt;f(x)$</strong>, 同时，假设 $x$ 不是全局最优解，那么我们有,在定义域中，存在一点 $y,s.t.\ f(y)&lt;f(x)$</p>
-
 <p>设 $z=\theta y + (1-\theta)x,\theta=\frac{R}{2||x-y||_2}$,可以证明$||x-z||_2=2^{-1}R&lt;R$</p>
-
 <p>同时,</p>
-
 <p>$$
 \begin{aligned}
-f(z)&amp;=f(\theta y + (1-\theta)x)\\<br />
-&amp;\le \theta f(y)+(1-\theta)f(x)\\<br />
+f(z)&amp;=f(\theta y + (1-\theta)x)\\\<br>
+&amp;\le \theta f(y)+(1-\theta)f(x)\\\<br>
 &amp;\le f(x)
 \end{aligned}
 $$</p>
-
 <p>矛盾</p>
-
 <h2 id="一些机器学习的example">一些机器学习的example</h2>
-
 <ol>
-<li><strong>线性回归</strong><br>
+<li><strong>线性回归</strong><!-- raw HTML omitted -->
 $J(\theta) = ||W^T\Phi (X)-Y||_2^2=\sum (w^t\phi(x_i)-y_i)^2$
 因为 $f_i(w)=(w^t\phi(x_i)-y_i)^2$ 是一个复合affine 凸函数(i.e. x^2 是凸函数，而 $w^t\phi(x_i)-y_i$ 是对 $w$ 的affine function)</li>
-<li><strong>logistic reg</strong><br>
+<li><strong>logistic reg</strong><!-- raw HTML omitted -->
 $J(\theta)=-\sum y_i\log g(\theta x_i) + (1-y_i)\log 1- g(\theta x_i)$</li>
-<li><strong>SVM</strong><br>
+<li><strong>SVM</strong><!-- raw HTML omitted -->
 SVM 的目标函数是一个 QP(quadratic opt) 问题，$O(n^3)$
 这个问题还引出一些凸问题有趣的性质，比如lagrange duality 和 KKT,我们后面分析</li>
 </ol>
-
-<h1 id="lagrange-kkt">lagrange &amp; KKT</h1>
-
+<h1 id="lagrange--kkt">lagrange &amp; KKT</h1>
 <h2 id="lagrange-mutiplier">lagrange mutiplier</h2>
-
 <p>对于上面的凸优化问题来说，我们有它的lagrange function</p>
-
 <p>$$
 \begin{aligned}
-\mathcal{L}(x,\alpha,\beta)&amp;=f(x)+\sum \alpha_i g_i(x) + \sum \beta_i h_i(x)\\<br />
+\mathcal{L}(x,\alpha,\beta)&amp;=f(x)+\sum \alpha_i g_i(x) + \sum \beta_i h_i(x)\\\<br>
 &amp;s.t. \alpha_i &gt;=0
 \end{aligned}
 $$</p>
-
 <p>其中 $x$ 称为 primal variable, $\alpha,\beta$ 是dual variable</p>
-
 <p><strong>NOTE</strong> 其实可以将 $\alpha,\beta$ 理解成打破原来约束的代价</p>
-
-<h2 id="primal-dual-原问题与对偶问题">primal &amp; dual 原问题与对偶问题</h2>
-
-<p><img src="/img/math/primal-dual.png" alt="" /></p>
-
+<h2 id="primal--dual-原问题与对偶问题">primal &amp; dual 原问题与对偶问题</h2>
+<p><img src="/img/math/primal-dual.png" alt=""></p>
 <p>中间那段 english 不用看，直接看形式就行了</p>
-
 <p>我们下面试图证明这样一个弱对偶性(weak duality)</p>
-
 <p>即 $d^*=\theta_D(\alpha^*,\beta^*)\le p^*=\theta_P(x^*)$,反之(<strong>strong duality</strong>) 是说$d^*=p^*$</p>
-
 <h2 id="原问题的解释">原问题的解释</h2>
-
 <p>首先我们化简一下$\theta_P(x)$
-<img src="/img/math/thetap.png" alt="" /></p>
-
+<img src="/img/math/thetap.png" alt=""></p>
 <p>可以证明如下两个性质</p>
-
 <ol>
-<li>$\theta_P(x)$ 是一个凸函数<br>
+<li>$\theta_P(x)$ 是一个凸函数<!-- raw HTML omitted -->
 $f(x)$ 是凸函数，$g(x)$ 是凸函数， $h(x)$ 是affine function $\alpha_i\ge 0$, 所以， $\sum \alpha_i g(x) + \beta_i h(x)$ 也是凸函数,凸函数集合的最大值是凸函数，所以$\theta_P(x)$ 是一个凸函数</li>
-<li>$\theta_P(x)$ 的简化<br>
-<img src="/img/math/thetap-sample.png" alt="" />
+<li>$\theta_P(x)$ 的简化<!-- raw HTML omitted -->
+<img src="/img/math/thetap-sample.png" alt="">
 关于这一点，我们可以从上面化简后的例子得到</li>
 </ol>
-
-<h2 id="弱对偶性-weak-duality">弱对偶性(weak duality)</h2>
-
+<h2 id="弱对偶性weak-duality">弱对偶性(weak duality)</h2>
 <p>$$
 \begin{aligned}
-\theta_D(\alpha,\beta)&amp;=\min \mathcal{L}(x,\alpha,\beta)\\<br />
-&amp;\le \mathcal{L}(x^*,\alpha,\beta)\\<br />
-&amp;\le f(x^*) + \max \{\sum \alpha_ig(x^*) + \beta_i h(x^*)\}\\<br />
-&amp;=\theta_P (x^*)\\<br />
-&amp;\le p^*
+\theta_D(\alpha,\beta)&amp;=\min \mathcal{L}(x,\alpha,\beta)\\\<br>
+&amp;\le \mathcal{L}(x^*,\alpha,\beta)\\\<br>
+&amp;\le f(x^*) + \max \{\sum \alpha_ig(x^*) + \beta_i h(x^*)\}\\\<br>
+&amp;=\theta_P (x^*)\\\<br>
+&amp;\le p^* 
 \end{aligned}
 $$</p>
-
 <p>即 对偶问题的最优解总是小于等于原问题的最优解</p>
-
 <p>当然<strong>强对偶性</strong>(strong duality) 指的就是 $d^*=p^*$ 了</p>
-
 <p>不过这要满足一些条件，参考文献中指出 一个 <strong>Slater&rsquo;s Condition</strong> ，指出如果存在一些可行解，严格满足所有的限制条件，即 $g_i(x)&lt;0$, 不过没有证明，同时指出几乎所有的图问题都满足 strong duility,这其实解释了为什么我们往往可以套用lagrange 乘数法求导解决这种限制性优化问题</p>
-
 <p>接下来还有一个重要的结论，互补松弛(complementary slackness)</p>
-
-<h2 id="互补松弛-complementary-slackness">互补松弛(complementary slackness)</h2>
-
+<h2 id="互补松弛complementary-slackness">互补松弛(complementary slackness)</h2>
 <p>这个定理是说，如果强对偶性满足，那么我们有 $a_i^*g_i(x^*)=0,i =1,2,\dots,m$</p>
-
 <p>简单证明一下</p>
-
 <p>$$
 \begin{aligned}
-p^*=d^*=\theta_D(\alpha^*,\beta^*)&amp;=\min \mathcal{L}(x,\alpha^*,\beta^*)\\<br />
-&amp;\le \mathcal{L}(x^*,\alpha^*,\beta^*)\\<br />
-&amp;=f(x^*) + \sum \alpha_i^*g(x^*) + \beta_i^* h(x^*)\\<br />
-&amp;\le f(x^*)\\<br />
-&amp;= p^* \\<br />
+p^*=d^*=\theta_D(\alpha^*,\beta^*)&amp;=\min \mathcal{L}(x,\alpha^*,\beta^*)\\\<br>
+&amp;\le \mathcal{L}(x^*,\alpha^*,\beta^*)\\\<br>
+&amp;=f(x^*) + \sum \alpha_i^*g(x^*) + \beta_i^* h(x^*)\\\<br>
+&amp;\le f(x^*)\\\<br>
+&amp;= p^* \\\<br>
 \end{aligned}
 $$</p>
-
-<p>着意味着
+<p>着意味着 
 $$
 \begin{aligned}
-&amp;\sum \alpha_i^*g_i(x^*) + \beta_i^* h(x^*)\\<br />
-&amp;=\sum \alpha_i^*g_i(x^*)\\<br />
+&amp;\sum \alpha_i^*g_i(x^*) + \beta_i^* h(x^*)\\\<br>
+&amp;=\sum \alpha_i^*g_i(x^*)\\\<br>
 &amp;=0
 \end{aligned}
 $$</p>
-
 <p>而我们有 $\alpha_i\ge 0, g_i(x)\le 0,\alpha_i^* g_i(x^*)\le 0$, 最终，他们的和等于0，因此 $\alpha_i^* g_i(x^*)=0$, 这意味着，</p>
-
 <p>$$
-if\ \alpha_i^* &gt;0,then,g_i(x^*)=0\\<br />
-or \\<br />
-if\ g_i(x^*)&gt;0,then,\alpha_i^* =0
+if\ \alpha_i^* &gt;0,then,g_i(x^*)=0\\\<br>
+or \\\<br>
+if\ g_i(x^*)&gt;0,then,\alpha_i^* =0 
 $$</p>
-
 <p>好，最后是 KKT条件，其实就是前几个性质的总结</p>
-
 <h1 id="kkt">KKT</h1>
-
-<p><img src="/img/math/KKT.png" alt="" /></p>
-
+<p><img src="/img/math/KKT.png" alt=""></p>
 <h1 id="参考">参考</h1>
-
 <ol>
 <li><a href="http://cs229.stanford.edu/section/cs229-cvxopt.pdf">cvxopt-note1</a></li>
 <li><a href="http://cs229.stanford.edu/section/cs229-cvxopt2.pdf">cvxopt-note2</a></li>
 </ol>
-
 <blockquote>
 <p><strong>版权声明</strong></p>
-
 <p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
-
 <p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
-
 <p><strong>转载请保留此版权声明，并注明出处</strong></p>
 </blockquote>
 
@@ -408,6 +339,10 @@ $$</p>
 <ul class="widget-list">
     
     <li>
+        <a href="https://zouzhitao.github.io/posts/finding-jobs/" title="告别学生生涯:秋招之路">告别学生生涯:秋招之路</a>
+    </li>
+    
+    <li>
         <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
     </li>
     
@@ -443,10 +378,6 @@ $$</p>
         <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
     </li>
     
-    <li>
-        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -457,15 +388,19 @@ $$</p>
 <ul class="widget-list">
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/ir/">IR(3)</a>
-    </li>
-    
-    <li>
         <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
     </li>
     
     <li>
         <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(1)</a>
     </li>
     
     <li>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on taotao 码字的地方</title>
@@ -6,9 +6,42 @@
     <description>Recent content in Categories on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
+    <lastBuildDate>Tue, 10 Nov 2020 00:32:29 +0800</lastBuildDate><atom:link href="https://zouzhitao.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>life</title>
+      <link>https://zouzhitao.github.io/categories/life/</link>
+      <pubDate>Tue, 10 Nov 2020 00:32:29 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/categories/life/</guid>
+      <description></description>
+    </item>
     
-	<atom:link href="https://zouzhitao.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>system</title>
+      <link>https://zouzhitao.github.io/categories/system/</link>
+      <pubDate>Sun, 16 Aug 2020 20:46:35 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/categories/system/</guid>
+      <description></description>
+    </item>
     
+    <item>
+      <title>math</title>
+      <link>https://zouzhitao.github.io/categories/math/</link>
+      <pubDate>Wed, 15 Jul 2020 23:07:48 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/categories/math/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>competitive-programing</title>
+      <link>https://zouzhitao.github.io/categories/competitive-programing/</link>
+      <pubDate>Mon, 23 Mar 2020 17:19:35 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/categories/competitive-programing/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>IR</title>
@@ -29,33 +62,6 @@
     </item>
     
     <item>
-      <title>competitive-programing</title>
-      <link>https://zouzhitao.github.io/categories/competitive-programing/</link>
-      <pubDate>Mon, 23 Mar 2020 17:19:35 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/categories/competitive-programing/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>machine-learning</title>
-      <link>https://zouzhitao.github.io/categories/machine-learning/</link>
-      <pubDate>Fri, 27 Sep 2019 20:45:14 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/categories/machine-learning/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>math</title>
-      <link>https://zouzhitao.github.io/categories/math/</link>
-      <pubDate>Wed, 15 Jul 2020 23:07:48 +0800</pubDate>
-      
-      <guid>https://zouzhitao.github.io/categories/math/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>programing-language</title>
       <link>https://zouzhitao.github.io/categories/programing-language/</link>
       <pubDate>Tue, 22 Oct 2019 22:58:55 +0800</pubDate>
@@ -65,11 +71,11 @@
     </item>
     
     <item>
-      <title>system</title>
-      <link>https://zouzhitao.github.io/categories/system/</link>
-      <pubDate>Sun, 16 Aug 2020 20:46:35 +0800</pubDate>
+      <title>machine-learning</title>
+      <link>https://zouzhitao.github.io/categories/machine-learning/</link>
+      <pubDate>Fri, 27 Sep 2019 20:45:14 +0800</pubDate>
       
-      <guid>https://zouzhitao.github.io/categories/system/</guid>
+      <guid>https://zouzhitao.github.io/categories/machine-learning/</guid>
       <description></description>
     </item>
     

@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.51" />
+    <meta name="generator" content="Hugo 0.78.1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -93,167 +93,116 @@
                         
                         <aside id="toc" class="dismissed">
                             <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
-<ul>
-<li><a href="#常见的三种基于梯度的优化框架">常见的三种基于梯度的优化框架</a>
-<ul>
-<li><a href="#batch-gradient">batch gradient</a></li>
-<li><a href="#sgd">sgd</a></li>
-<li><a href="#mini-batch-gradient">mini-batch gradient</a></li>
-</ul></li>
-<li><a href="#梯度迭代策略">梯度迭代策略</a>
-<ul>
-<li><a href="#momentum">momentum</a></li>
-<li><a href="#nesterov-accelerate-gradient">nesterov accelerate gradient</a></li>
-<li><a href="#adagrad">adagrad</a></li>
-<li><a href="#adam">adam</a></li>
-</ul></li>
-<li><a href="#参考文献">参考文献</a></li>
-</ul>
+  <ul>
+    <li><a href="#batch-gradient">batch gradient</a></li>
+    <li><a href="#sgd">sgd</a></li>
+    <li><a href="#mini-batch-gradient">mini-batch gradient</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#momentum">momentum</a></li>
+    <li><a href="#nesterov-accelerate-gradient">nesterov accelerate gradient</a></li>
+    <li><a href="#adagrad">adagrad</a></li>
+    <li><a href="#adam">adam</a></li>
+  </ul>
 </nav>
                         </aside><div class="post-content">
-                            
-
-<blockquote>
+                            <blockquote>
 <p>本篇博客简要总结关于梯度的一些优化方法[1]</p>
 </blockquote>
-
 <h1 id="常见的三种基于梯度的优化框架">常见的三种基于梯度的优化框架</h1>
-
 <h2 id="batch-gradient">batch gradient</h2>
-
-<pre><code class="language-python">for i in range(nb_epochs):
-  params_grad = evaluate_gradient(loss_function, data, params)
-  params = params - learning_rate * params_grad
-</code></pre>
-
-<p>一次迭代对所有的data进行更新</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(nb_epochs):
+  params_grad <span style="color:#f92672">=</span> evaluate_gradient(loss_function, data, params)
+  params <span style="color:#f92672">=</span> params <span style="color:#f92672">-</span> learning_rate <span style="color:#f92672">*</span> params_grad
+</code></pre></div><p>一次迭代对所有的data进行更新</p>
 <p><strong>缺点</strong></p>
-
 <ol>
 <li>数据量大，有时候根本无法将所有data丢进内存</li>
 <li>会对重复的sample做冗余计算</li>
 </ol>
-
 <p>好处:</p>
-
 <p>对于convex function 可以保证一定能到 global opt，non-convex 能到 local opt</p>
-
 <h2 id="sgd">sgd</h2>
-
 <p>一次只2针对一个sample</p>
-
-<pre><code class="language-python">for i in range(nb_epochs):
-  np.random.shuffle(data)
-  for example in data:
-    params_grad = evaluate_gradient(loss_function, example, params)
-    params = params - learning_rate * params_grad
-</code></pre>
-
-<p><strong>缺点</strong></p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(nb_epochs):
+  np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>shuffle(data)
+  <span style="color:#66d9ef">for</span> example <span style="color:#f92672">in</span> data:
+    params_grad <span style="color:#f92672">=</span> evaluate_gradient(loss_function, example, params)
+    params <span style="color:#f92672">=</span> params <span style="color:#f92672">-</span> learning_rate <span style="color:#f92672">*</span> params_grad
+</code></pre></div><p><strong>缺点</strong></p>
 <ol>
 <li>震荡(每个样本更新带来的方差大)</li>
 </ol>
-
 <p><strong>好处</strong></p>
-
 <ol>
 <li>online learning</li>
 <li>faster</li>
 </ol>
-
 <h2 id="mini-batch-gradient">mini-batch gradient</h2>
-
-<pre><code class="language-python">for i in range(nb_epochs):
-  np.random.shuffle(data)
-  for batch in get_batches(data, batch_size=50):
-    params_grad = evaluate_gradient(loss_function, batch, params)
-    params = params - learning_rate * params_grad
-</code></pre>
-
-<ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(nb_epochs):
+  np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>shuffle(data)
+  <span style="color:#66d9ef">for</span> batch <span style="color:#f92672">in</span> get_batches(data, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">50</span>):
+    params_grad <span style="color:#f92672">=</span> evaluate_gradient(loss_function, batch, params)
+    params <span style="color:#f92672">=</span> params <span style="color:#f92672">-</span> learning_rate <span style="color:#f92672">*</span> params_grad
+</code></pre></div><ol>
 <li>可以减小sgd带来的震荡问题(batch 会使样本方差变小，观察了多个样本)</li>
 <li>高效计算，更容易并行，会让硬件的吞吐量变大</li>
 </ol>
-
 <p>一些问题：</p>
-
 <ol>
 <li>如何选择合适的learning rate</li>
 <li>learning rate调度？优化过程中希望动态的调整learning rate</li>
 <li>每个参数都用同样的learning rate？-&gt; 稀疏数据</li>
 <li>local opt or saddle point</li>
 </ol>
-
 <h1 id="梯度迭代策略">梯度迭代策略</h1>
-
 <h2 id="momentum">momentum</h2>
-
 <p>对过往的速度做一个移动平均，减少震荡</p>
-
 <p>$$
 \begin{align}
-v_t &amp;= \gamma v_{t-1} + \eta \nabla_\theta J(\theta)\\<br />
+v_t &amp;= \gamma v_{t-1} + \eta \nabla_\theta J(\theta)\\\<br>
 \theta &amp;= \theta - v_t
 \end{align}
 $$</p>
-
 <h2 id="nesterov-accelerate-gradient">nesterov accelerate gradient</h2>
-
 <p>在 momentum 的基础上，更新梯度并非相对于 $\theta$, 而是 $\theta - \gamma v_{t-1}$ 因为根据之前的信息，你已经知道了 $\theta$ 要往前走了，那我们可以先往前走一步在算法梯度</p>
-
 <p>$$
 v_t = \gamma v_{t-1} + \eta \nabla_\theta J(\theta - \gamma v_{t-1})
 $$</p>
-
 <h2 id="adagrad">adagrad</h2>
-
 <p>前面两种迭代策略都是在调整步幅，后面的方法在解决参数学习率同质化的问题</p>
-
 <p>这个方法希望对那些很少被更新的参数走一个大的步幅，而对于经常更新的走一个小的步幅</p>
-
 <p>$$
 \begin{align}
-\theta_{t+1,i} &amp;= \theta_{t,i} - \frac{\eta}{\sqrt{G_{t,ii} + \epsilon}} g_{t,i}\\<br />
-i, &amp; is\ the\ ith\ param\ of\ \theta \\<br />
+\theta_{t+1,i} &amp;= \theta_{t,i} - \frac{\eta}{\sqrt{G_{t,ii} + \epsilon}} g_{t,i}\\\<br>
+i, &amp; is\ the\ ith\ param\ of\ \theta \\\<br>
 G_{t,ii}&amp;=\sum_k^t g_{k,i}^2
 \end{align}
 $$</p>
-
 <p><strong>缺点</strong>
 一个致命的问题是，$G_t$ 每次加的都是一个正数，因此随着迭代的进行，很容易变得非常大，导致learning rate 很小，以至于梯度不会被更新</p>
-
 <h2 id="adam">adam</h2>
-
 <p>也是一种自适应的learning raate的方式</p>
-
 <p>它估计了迭代过程中的梯度的均值和方差</p>
-
 <p>$$
 \begin{align}
-m_t&amp;=\beta_1 m_{t-1} + (1-\beta_1) g_t\\<br />
-v_t&amp;=\beta_2 v_{t-1} + (1 - \beta_2) g_t^2\\<br />
-\hat{m_t}&amp;=\frac{m_t}{1 - \beta_1^t} \\<br />
-\hat{v_t}&amp;=\frac{v_t}{1- \beta_2^t} \\<br />
+m_t&amp;=\beta_1 m_{t-1} + (1-\beta_1) g_t\\<br>
+v_t&amp;=\beta_2 v_{t-1} + (1 - \beta_2) g_t^2\\\<br>
+\hat{m_t}&amp;=\frac{m_t}{1 - \beta_1^t} \\<br>
+\hat{v_t}&amp;=\frac{v_t}{1- \beta_2^t} \\\<br>
 \theta_t&amp;= \theta_{t-1} - \frac{\eta}{\sqrt{\hat{v_t}} + \epsilon} \hat{m_t}
-\end{align}</p>
-
+\end{align}
+$$</p>
 <p>其中作者发现又有的估计会有bias 所以除以了一个修正项</p>
-
 <h1 id="参考文献">参考文献</h1>
-
 <ol>
 <li><a href="https://arxiv.org/abs/1609.04747">An overview of gradient descent optimization algorithms</a></li>
 </ol>
-
 <blockquote>
 <p><strong>版权声明</strong></p>
-
 <p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
-
 <p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
-
 <p><strong>仅允许非商业转载，转载请保留此版权声明，并注明出处</strong></p>
 </blockquote>
 
@@ -333,6 +282,10 @@ v_t&amp;=\beta_2 v_{t-1} + (1 - \beta_2) g_t^2\\<br />
 <ul class="widget-list">
     
     <li>
+        <a href="https://zouzhitao.github.io/posts/finding-jobs/" title="告别学生生涯:秋招之路">告别学生生涯:秋招之路</a>
+    </li>
+    
+    <li>
         <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
     </li>
     
@@ -368,10 +321,6 @@ v_t&amp;=\beta_2 v_{t-1} + (1 - \beta_2) g_t^2\\<br />
         <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
     </li>
     
-    <li>
-        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -382,15 +331,19 @@ v_t&amp;=\beta_2 v_{t-1} + (1 - \beta_2) g_t^2\\<br />
 <ul class="widget-list">
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/ir/">IR(3)</a>
-    </li>
-    
-    <li>
         <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
     </li>
     
     <li>
         <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(1)</a>
     </li>
     
     <li>

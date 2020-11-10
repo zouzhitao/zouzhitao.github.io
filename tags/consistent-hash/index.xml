@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>consistent-hash on taotao 码字的地方</title>
@@ -6,11 +6,7 @@
     <description>Recent content in consistent-hash on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 04 May 2019 00:56:55 +0800</lastBuildDate>
-    
-	<atom:link href="https://zouzhitao.github.io/tags/consistent-hash/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sat, 04 May 2019 00:56:55 +0800</lastBuildDate><atom:link href="https://zouzhitao.github.io/tags/consistent-hash/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Consistent Hash</title>
       <link>https://zouzhitao.github.io/posts/consistent-hash/</link>

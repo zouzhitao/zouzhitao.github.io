@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.51" />
+    <meta name="generator" content="Hugo 0.78.1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -92,89 +92,54 @@
                         
                         
                         <aside id="toc" class="dismissed">
-                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
-<ul>
-<li><a href="#a-wiggle-walk">A. Wiggle Walk</a></li>
-<li><a href="#b-circuit-board">B. Circuit Board</a></li>
-<li><a href="#c-catch-some">C. Catch Some</a></li>
-</ul>
-</nav>
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents"></nav>
                         </aside><div class="post-content">
-                            
-
-<h1 id="a-wiggle-walk">A. Wiggle Walk</h1>
-
+                            <h1 id="a-wiggle-walk">A. Wiggle Walk</h1>
 <p><strong>难度</strong> 模拟，编码，hashtable</p>
-
 <p>这个题比较简单，可以直接模拟，用一个 <code>hashtable</code> 维护 dp[x][y][dir]  [注意这里不是开数组]， 因为只有 $N \le 5e4$ 个点所以用hashtable维护就好，复杂度 $O(n)$</p>
-
 <p><strong>code</strong> : <a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-C-A.cpp">github</a></p>
-
 <h1 id="b-circuit-board">B. Circuit Board</h1>
-
 <p><strong>难度</strong> RMQ</p>
-
 <p>每一行都是独立的，因此可以枚举列</p>
-
-<pre><code class="language-c++">    for(int l = 0 ; l&lt; c ; ++l)
-        for(int r=l ; r &lt; c ; ++r)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> l <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> ; l<span style="color:#f92672">&lt;</span> c ; <span style="color:#f92672">++</span>l)
+        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> r<span style="color:#f92672">=</span>l ; r <span style="color:#f92672">&lt;</span> c ; <span style="color:#f92672">++</span>r)
             compute best ans
-</code></pre>
-
-<p>这里需要判断每一行是否满足 $\max a_i[l,\dots,r] - \min a_i[l,\dots,r] &gt;k$ 因此需要快速求 [l,r] 的最大最小值，这个不就是经典的 RMQ 吗？</p>
-
+</code></pre></div><p>这里需要判断每一行是否满足 $\max a_i[l,\dots,r] - \min a_i[l,\dots,r] &gt;k$ 因此需要快速求 [l,r] 的最大最小值，这个不就是经典的 RMQ 吗？</p>
 <p><strong>code</strong> : <a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-C-B.cpp">github</a></p>
-
 <h1 id="c-catch-some">C. Catch Some</h1>
-
 <p><strong>难度</strong> dp,0/1 knapstack</p>
-
 <p>这题是一个类似 0/1 背包的dp</p>
-
 <p>一点变化是最后不需要回到原点，因此最后观察的dog是一个关键，也就是对每个type来说最后一种type是有差别的，其他没差别。</p>
-
 <p>这里我借鉴了 No.1 大哥的是做法，</p>
-
 <p>对于 $M$ 种type $A_1,\dots,A_M$, 计算两个方向的dp</p>
-
 <blockquote>
 <p>$ldp[i][k]$ 仅仅考虑前 $i$ 种类型，并且都是要回到原点，取 $k$ 个dog的最优解。$O(n^2)$ (注意这里复杂度计算还是有一些trick的，因为对于每一个dog仅仅会考虑一次，而总共有 $k$ 种观测，所以复杂度为 $O(n^2)$)</p>
-
 <p>$rdp[i][k]$ 仅仅考虑后 $i$ 种类型，并且都回到原点，取 $k$ 个dog 的最优解</p>
 </blockquote>
-
 <p>最后考虑每一个dog作为终点的情款的最优解就好了</p>
-
 <p>这里总结一个 离散化的模板</p>
-
-<pre><code class="language-c++">// discretize a vector
-// 
-// example:
-// 1,10,3,5 -&gt; 0,3,1,2
-// NOTE: re-write parameter, not functional
-// return : number of non-duplicated elements
-int discretization(vector&lt;int&gt; &amp; raw){
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">// discretize a vector
+</span><span style="color:#75715e">// 
+</span><span style="color:#75715e">// example:
+</span><span style="color:#75715e">// 1,10,3,5 -&gt; 0,3,1,2
+</span><span style="color:#75715e">// NOTE: re-write parameter, not functional
+</span><span style="color:#75715e">// return : number of non-duplicated elements
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">discretization</span>(vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> raw){
   
-    // discretization
-    vector&lt;int&gt; id = raw;
+    <span style="color:#75715e">// discretization
+</span><span style="color:#75715e"></span>    vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> id <span style="color:#f92672">=</span> raw;
     sort(id.begin(),id.end());
-    auto it_end = unique(id.begin() , id.end());
-    for(int i=0 ; i&lt;raw.size() ; ++i)
-        raw[i] = lower_bound(id.begin(),it_end,raw[i]) - id.begin();
+    <span style="color:#66d9ef">auto</span> it_end <span style="color:#f92672">=</span> unique(id.begin() , id.end());
+    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> ; i<span style="color:#f92672">&lt;</span>raw.size() ; <span style="color:#f92672">++</span>i)
+        raw[i] <span style="color:#f92672">=</span> lower_bound(id.begin(),it_end,raw[i]) <span style="color:#f92672">-</span> id.begin();
     
-    return it_end - id.begin();
+    <span style="color:#66d9ef">return</span> it_end <span style="color:#f92672">-</span> id.begin();
 }
-</code></pre>
-
-<p><strong>code</strong> <a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-C-C.cpp">github</a></p>
-
+</code></pre></div><p><strong>code</strong> <a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-C-C.cpp">github</a></p>
 <blockquote>
 <p><strong>版权声明</strong></p>
-
 <p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
-
 <p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
-
 <p><strong>转载请保留此版权声明，并注明出处</strong></p>
 </blockquote>
 
@@ -252,6 +217,10 @@ int discretization(vector&lt;int&gt; &amp; raw){
 <ul class="widget-list">
     
     <li>
+        <a href="https://zouzhitao.github.io/posts/finding-jobs/" title="告别学生生涯:秋招之路">告别学生生涯:秋招之路</a>
+    </li>
+    
+    <li>
         <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
     </li>
     
@@ -287,10 +256,6 @@ int discretization(vector&lt;int&gt; &amp; raw){
         <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
     </li>
     
-    <li>
-        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -301,15 +266,19 @@ int discretization(vector&lt;int&gt; &amp; raw){
 <ul class="widget-list">
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/ir/">IR(3)</a>
-    </li>
-    
-    <li>
         <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
     </li>
     
     <li>
         <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(1)</a>
     </li>
     
     <li>

@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.51" />
+    <meta name="generator" content="Hugo 0.78.1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -92,60 +92,36 @@
                         
                         
                         <aside id="toc" class="dismissed">
-                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
-<ul>
-<li><a href="#hw2-code">hw2 code</a></li>
-</ul>
-</nav>
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents"></nav>
                         </aside><div class="post-content">
-                            
-
-<blockquote>
+                            <blockquote>
 <p><strong>写在前面:</strong>
 这是笔者学习<a href="http://www.cs.cmu.edu/~ninamf/courses/601sp15/lectures.shtml">CMU10601-ML</a>机器学习的笔记</p>
 </blockquote>
-
 <p>MLE 和 MAP ,是两种不同的估计概率的准则，可是他们的数学公式却是如此相似</p>
-
-<p><img src="/img/ML-note-MLE-MAP/MLE&amp;MAP.png" alt="MLE and MAP" /></p>
-
+<p><img src="/img/ML-note-MLE-MAP/MLE&amp;MAP.png" alt="MLE and MAP"></p>
 <p><strong>remark</strong></p>
-
 <p><strong>MLE</strong> 实际使用的过程中，通常会用<strong>LOG</strong> likelihood function,</p>
-
 <p><strong>MAP</strong> 这里 $P(D)$ 是没用的，即</p>
-
 <p>$$
 \hat{\theta}=\arg \max_{\theta} P(\theta)P(D|\theta)
 $$</p>
-
 <p>即比 MLE多了一个 $P(\theta)$ 的先验信息</p>
-
 <p>这里通常，来说 $P(\theta)$ 取与 $P(D|\theta)$ 相同的分布，称为<strong>共轭先验</strong>，个人以为这其实是为了好计算!</p>
-
 <p>参考文献给了一个总结,很有意思，我这里简单的总结两点东西</p>
-
 <ol>
 <li>如果知道联合概率分布，那么什么都能求，了，但是通常情况下，需要非常大的数据，这在实际情况下是不可能的，所以需要一些概率估计方法，MLE和MAP是其中一种</li>
 </ol>
-
 <h1 id="hw2-code">hw2 code</h1>
-
 <p><a href="https://github.com/zouzhitao/CS_Learning/blob/master/10601ML-CMU/lec3/hw2.py">code</a></p>
-
 <p><strong>参考文献</strong></p>
-
 <ol>
 <li>Machine Learning, Tom M.Mitchell, ch2, <a href="http://www.cs.cmu.edu/~tom/mlbook/Joint_MLE_MAP.pdf">estimating probabilities</a></li>
 </ol>
-
 <blockquote>
 <p><strong>版权声明</strong></p>
-
 <p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
-
 <p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
-
 <p><strong>转载请保留此版权声明，并注明出处</strong></p>
 </blockquote>
 
@@ -225,6 +201,10 @@ $$</p>
 <ul class="widget-list">
     
     <li>
+        <a href="https://zouzhitao.github.io/posts/finding-jobs/" title="告别学生生涯:秋招之路">告别学生生涯:秋招之路</a>
+    </li>
+    
+    <li>
         <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
     </li>
     
@@ -260,10 +240,6 @@ $$</p>
         <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
     </li>
     
-    <li>
-        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -274,15 +250,19 @@ $$</p>
 <ul class="widget-list">
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/ir/">IR(3)</a>
-    </li>
-    
-    <li>
         <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
     </li>
     
     <li>
         <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(1)</a>
     </li>
     
     <li>

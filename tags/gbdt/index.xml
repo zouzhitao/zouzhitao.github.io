@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>GBDT on taotao 码字的地方</title>
@@ -6,11 +6,7 @@
     <description>Recent content in GBDT on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Mon, 04 Mar 2019 23:23:53 +0800</lastBuildDate>
-    
-	<atom:link href="https://zouzhitao.github.io/tags/gbdt/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 04 Mar 2019 23:23:53 +0800</lastBuildDate><atom:link href="https://zouzhitao.github.io/tags/gbdt/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>boosting : adaboost &amp; gradient boost</title>
       <link>https://zouzhitao.github.io/posts/booosting/</link>
@@ -20,17 +16,17 @@
       <description>纸上得来终觉浅，觉知此事要躬行。综上，我什莫都不懂.这仅仅是个人的学习防忘笔记
  Adaboost 关于 Adaboost 的算法描述其实很简单，有趣的是的它的误差分析:
 algorithm 其中
-$$ \begin{align} \epsilon_t &amp;amp;= Pr_{i\sim D_t}[h_t(x_i)\ne y_i]\\
-&amp;amp;=\sum D_t(i)I(h_t(x_i)\ne y_i)\\
+$$ \begin{align} \epsilon_t &amp;amp;= Pr_{i\sim D_t}[h_t(x_i)\ne y_i]\\\
+&amp;amp;=\sum D_t(i)I(h_t(x_i)\ne y_i)\\\
 \alpha_t &amp;amp;= 2^{-1}\log (\frac{1-\epsilon_t}{\epsilon_t}) \end{align} $$
 PS : 稍后会证明，为什么， $\alpha_t$ 取这个值
 training error 第一个不等式就不说了，分析，equal 和not equal 两种情况就好，我们来看第二个等式。
 其实第二个等式非常简单，我们只需要将 $D_t$ 的递推式展开就好了:
-$$ \begin{align} D_2(i)&amp;amp;=\frac{m^{-1}\exp (-\alpha_1y_ih_1(x_i))}{Z_1},Z_t\ is\ normlize\ term,a \ const,for\ i \in {1,&amp;hellip;,T}\\
-D_3(i)&amp;amp;=\frac{D_2(i)\exp(-\alpha_2y_ih_2(x_i))}{Z_2}\\
+$$ \begin{align} D_2(i)&amp;amp;=\frac{m^{-1}\exp (-\alpha_1y_ih_1(x_i))}{Z_1},Z_t\ is\ normlize\ term,a \ const,for\ i \in {1,&amp;hellip;,T}\\\
+D_3(i)&amp;amp;=\frac{D_2(i)\exp(-\alpha_2y_ih_2(x_i))}{Z_2}\\\
 &amp;amp;=\frac{m^{-1}\exp(-y_i(\alpha_1h_1(x_i)+\alpha_2h_2(x_i)))}{Z_1Z_2}\\\
-D_{T+1}&amp;amp;=\frac{m^{-1}\exp(-y_i(\sum \alpha_th_t(x_i)))}{\prod_t Z_t}\\
-becouse \sum_i D_t(i)=1,&amp;amp; sum\ at\ left\ term\ and\ right\ term\\
+D_{T+1}&amp;amp;=\frac{m^{-1}\exp(-y_i(\sum \alpha_th_t(x_i)))}{\prod_t Z_t}\\\
+becouse \sum_i D_t(i)=1,&amp;amp; sum\ at\ left\ term\ and\ right\ term\\\
 \prod_t Z_t&amp;amp;=\sum_i m^{-1}\exp(-y_i(\sum \alpha_th_t(x_i))) \end{align} $$</description>
     </item>
     

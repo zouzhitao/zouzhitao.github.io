@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.51" />
+    <meta name="generator" content="Hugo 0.78.1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -92,47 +92,30 @@
                         
                         
                         <aside id="toc" class="dismissed">
-                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> 
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents"></nav>
                         </aside><div class="post-content">
                             <p>很久以前打ACM的时候学过这个算法，但到用的时候还是忘了，起因是来源于这样一个问题:</p>
-
 <blockquote>
 <p>给定任意一个矩阵 $nXn$, 选取其中 $n$ 个点，$s.t.$ 任意两个点 <strong>不在同一行，同一列</strong>，求这 $n$ 个点的和的最大值.</p>
 </blockquote>
-
 <p>这个问题可以很简单的转化为 最大流，或者最大权匹配问题来求解。</p>
-
 <p>可是难受的是这两个算法都忘了，不会敲，所以又重新拿起遗忘的知识，学了一波KM算法。</p>
-
 <p>我主要是参考这篇<a href="https://blog.sengxian.com/algorithms/km">sengxian&rsquo;s blog</a> 个人认为其讲解的非常棒。</p>
-
 <p>这里简要概述其原理:</p>
-
 <p>主要的想法仍然是增广路(augumentation path). 核心思想是维系一个最大的相等子图，类似二分图匹配一样，每次找增广路去扩充.</p>
-
 <p>算法如下:</p>
-
 <p>设左边 顶点初始权重为 $lx[i] = max_j  w[i][j]$ , 右边顶点初始权重为 $ry[i] =0$</p>
-
 <p>依次从左边顶点出发，寻找最大相等子图，即满足 $lx[i] + ry[j] == w[i][j]$ 的图，若遇到无法增广的点，一定存在链接当前最大子图的交错路，对于交错路上的顶点，设在左边X端的顶点集合为 $S$, 右端为 $T$, 则将$S$ 中的顶点权重全都加 $d$ ,右端加 $-d$. 此时原来的相等子图依旧保持不变同时，会产生增广路，从而使全图得到增广(前提是一定存在一个最大匹配)</p>
-
 <p>代码详见:</p>
-
 <p><a href="https://github.com/zouzhitao/competitive-programing/blob/master/template/KM.cpp">https://github.com/zouzhitao/competitive-programing/blob/master/template/KM.cpp</a></p>
-
 <p><strong>reference</strong></p>
-
 <ol>
 <li>sengxian&rsquo;s blog. <a href="https://blog.sengxian.com/algorithms/km">https://blog.sengxian.com/algorithms/km</a></li>
 </ol>
-
 <blockquote>
 <p><strong>版权声明</strong></p>
-
 <p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
-
 <p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
-
 <p><strong>转载请保留此版权声明，并注明出处</strong></p>
 </blockquote>
 
@@ -210,6 +193,10 @@
 <ul class="widget-list">
     
     <li>
+        <a href="https://zouzhitao.github.io/posts/finding-jobs/" title="告别学生生涯:秋招之路">告别学生生涯:秋招之路</a>
+    </li>
+    
+    <li>
         <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
     </li>
     
@@ -245,10 +232,6 @@
         <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
     </li>
     
-    <li>
-        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -259,15 +242,19 @@
 <ul class="widget-list">
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/ir/">IR(3)</a>
-    </li>
-    
-    <li>
         <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
     </li>
     
     <li>
         <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(1)</a>
     </li>
     
     <li>

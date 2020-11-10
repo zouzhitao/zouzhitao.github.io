@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.51" />
+    <meta name="generator" content="Hugo 0.78.1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -68,6 +68,31 @@
                         <article class="post">
                             <header>
                                 <h1 class="post-title">
+                                    <a href="https://zouzhitao.github.io/posts/unordered-map/" title="kickstart: Scrambled-Words(hash&#43;complexity)" >kickstart: Scrambled-Words(hash&#43;complexity)</a>
+                                </h1>
+                            </header>
+                            <date class="post-meta meta-date">
+                                2019年2月21日
+                            </date>
+                            
+                            <div class="post-meta meta-category">
+                                |
+                                
+                                    <a href="https://zouzhitao.github.io/categories/competitive-programing">competitive-programing</a>
+                                
+                                    <a href="https://zouzhitao.github.io/categories/programing-language">programing-language</a>
+                                
+                            </div>
+                            
+                            <div class="post-content">
+                                <!-- raw HTML omitted -->
+                            </div>
+                            <p class="readmore"><a href="https://zouzhitao.github.io/posts/unordered-map/">阅读全文</a></p>
+                        </article>
+                    
+                        <article class="post">
+                            <header>
+                                <h1 class="post-title">
                                     <a href="https://zouzhitao.github.io/posts/math-convex-opt/" title="个人凸优化简单学习笔记" >个人凸优化简单学习笔记</a>
                                 </h1>
                             </header>
@@ -83,16 +108,7 @@
                             </div>
                             
                             <div class="post-content">
-                                <blockquote>
-<p>本文来源于个人的凸优化学习笔记参考cs229 cvxoptnote,写成笔记的原因仅仅是想通过个人的笔记自己讲述与推导一下这些数学公式，内容可能会很简单，强力建议想得到一手资料的人好好学习文末参考资料</p>
-</blockquote>
-
-<h1 id="凸集合">凸集合</h1>
-
-<p>定义就直接跳过了，这里简单写一些常见的凸集</p>
-
-<ul>
-<li><strong>凸集的交</strong>, 设 $C_i,i = 1,2,3,&hellip;,n$ 是凸集，那么我们 …</li></ul>
+                                <!-- raw HTML omitted -->
                             </div>
                             <p class="readmore"><a href="https://zouzhitao.github.io/posts/math-convex-opt/">阅读全文</a></p>
                         </article>
@@ -115,17 +131,7 @@
                             </div>
                             
                             <div class="post-content">
-                                <blockquote>
-<p>发现自己从大二开始就没有好好的学习数学了，最近看 SVM，发现好多推导和证明自己都不会，或者就要想很久，实在是太废材了。 :(. 以后决定对一些数学知识(特别是高等数学，分析和代数领域的一些东西，学点记点)</p>
-</blockquote>
-
-<hr />
-
-<p><strong>这是正文</strong></p>
-
-<p>这是一个简单的问题，定义如下:</p>
-
-<p>设， $y(X) = W^TX +b, X \in R^n,b \in R$, …</p>
+                                <!-- raw HTML omitted -->
                             </div>
                             <p class="readmore"><a href="https://zouzhitao.github.io/posts/math-distence-to-hyperplane/">阅读全文</a></p>
                         </article>
@@ -148,17 +154,7 @@
                             </div>
                             
                             <div class="post-content">
-                                <p>这里总结一个利用二价导数来求最优解的方法-牛顿法:</p>
-
-<p>设: $f(X)$ 是一个多维函数,由taylor 二阶展开，我们有,</p>
-
-<p>$$
-f(X) \approx f(X_0)+(X-X_0)\nabla f(X_0) + \frac{(X-X_0)\nabla^2 f(X_0)(X-X_0)}{2}
-$$</p>
-
-<p>对 $X$ 求导，并设置为0，我们有</p>
-
-<p>$$ …</p>
+                                <!-- raw HTML omitted -->
                             </div>
                             <p class="readmore"><a href="https://zouzhitao.github.io/posts/newton-method/">阅读全文</a></p>
                         </article>
@@ -181,10 +177,7 @@ $$</p>
                             </div>
                             
                             <div class="post-content">
-                                <p>logistic regression (Log.Reg)是一种简单的 Discriminative(后面会简单的比较discriminative 与generative) 分类方法，和naive bayes不同的是，他假设了概率:</p>
-
-<p>$$
-P(y=1|X) = \frac{1}{1+\exp(w_0+\sum w_i^TX_i)} …</p>
+                                <!-- raw HTML omitted -->
                             </div>
                             <p class="readmore"><a href="https://zouzhitao.github.io/posts/ml-note-lr/">阅读全文</a></p>
                         </article>
@@ -207,23 +200,7 @@ P(y=1|X) = \frac{1}{1+\exp(w_0+\sum w_i^TX_i)} …</p>
                             </div>
                             
                             <div class="post-content">
-                                <blockquote>
-<p><strong>写在前面:</strong>
-这是笔者学习<a href="http://www.cs.cmu.edu/~ninamf/courses/601sp15/lectures.shtml">CMU10601-ML</a>机器学习的笔记</p>
-</blockquote>
-
-<h1 id="引入">引入</h1>
-
-<p>首先我们考虑学习一个基于贝叶斯规则的分类器,即我们希望学到 $P(Y|X)$</p>
-
-<p>那么我们有</p>
-
-<p>$$
-P(Y|X)=\frac{P(Y)P(X|Y)}{P(X)}
-$$</p>
-
-<p>这里 $Y \in\{0,1\}$
-那么我们需要去估计的是这两个概率 $P(Y),P(X|Y)$ …</p>
+                                <!-- raw HTML omitted -->
                             </div>
                             <p class="readmore"><a href="https://zouzhitao.github.io/posts/ml-note-naive-bayes/">阅读全文</a></p>
                         </article>
@@ -246,22 +223,7 @@ $$</p>
                             </div>
                             
                             <div class="post-content">
-                                <p>这是一个简单的概率论公式总结</p>
-
-<ul>
-<li><strong>bayes rule:</strong> $P(A|B) = \frac{P(A)P(B|A)}{P(B)}$</li>
-</ul>
-
-<blockquote>
-<p><strong>版权声明</strong></p>
-
-<p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
-
-<p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
-
-<p><strong>转载请保留此版权声明，并注明出处</strong></p>
-</blockquote>
-
+                                <!-- raw HTML omitted -->
                             </div>
                             <p class="readmore"><a href="https://zouzhitao.github.io/posts/ml-note-probility/">阅读全文</a></p>
                         </article>
@@ -284,23 +246,7 @@ $$</p>
                             </div>
                             
                             <div class="post-content">
-                                <blockquote>
-<p><strong>写在前面:</strong>
-这是笔者学习<a href="http://www.cs.cmu.edu/~ninamf/courses/601sp15/lectures.shtml">CMU10601-ML</a>机器学习的笔记</p>
-</blockquote>
-
-<p>MLE 和 MAP ,是两种不同的估计概率的准则，可是他们的数学公式却是如此相似</p>
-
-<p><img src="/img/ML-note-MLE-MAP/MLE&amp;MAP.png" alt="MLE and MAP" /></p>
-
-<p><strong>remark</strong></p>
-
-<p><strong>MLE</strong> 实际使用的过程中，通常会用<strong>LOG</strong> likelihood function,</p>
-
-<p><strong>MAP</strong> 这里 $P(D)$ 是没用的，即</p>
-
-<p>$$
-\hat{\theta}=\arg …</p>
+                                <!-- raw HTML omitted -->
                             </div>
                             <p class="readmore"><a href="https://zouzhitao.github.io/posts/ml-note-mle-and-map/">阅读全文</a></p>
                         </article>
@@ -323,23 +269,7 @@ $$</p>
                             </div>
                             
                             <div class="post-content">
-                                <blockquote>
-<p><strong>写在前面:</strong>
-这是笔者学习<a href="http://www.cs.cmu.edu/~ninamf/courses/601sp15/lectures.shtml">CMU10601-ML</a>机器学习的笔记</p>
-</blockquote>
-
-<h1 id="决策树算法框架">决策树算法框架</h1>
-
-<p><img src="/img/ML-decision-tree-note/algorithm.png" alt="决策树算法" /></p>
-
-<p><strong>适合问题的特点</strong></p>
-
-<ol>
-<li>实例是由 $(attr,value)$, 表示的，并且 $value$ 是离散的 (<strong>remark:</strong> 能使用连续值，不过连续值其实也是在先将连续值转化为离散值，再使用的决策树)</li>
-<li>目标函数具有离散的输出值，或者说是一个分类问题</li>
-</ol>
-
-<p>整个算法就是一个分治， …</p>
+                                <!-- raw HTML omitted -->
                             </div>
                             <p class="readmore"><a href="https://zouzhitao.github.io/posts/ml-decision-tree-note/">阅读全文</a></p>
                         </article>
@@ -362,59 +292,9 @@ $$</p>
                             </div>
                             
                             <div class="post-content">
-                                <h1 id="官方链接">官方链接</h1>
-
-<ul>
-<li><a href="https://code.google.com/codejam/contest/9234486/dashboard#s=p1&amp;a=1">题目描述</a></li>
-<li><a href="https://code.google.com/codejam/contest/9234486/dashboard#s=a&amp;a=1">官方题解</a></li>
-</ul>
-
-<h1 id="我的心路历程">我的心路历程</h1>
-
-<p>首先不难想到，肯定要将 $v_i$ 排序，然后如果取到的是小的那部分值，那么我们肯定要将其放回，然后再取，不妨设 $i&lt;j$, 均要放回。因此所有的 $n$ 个item 就被分为了两个部分，一部分是要放回的，另外一部分是不放回的。</p>
-
-<p>最开始的时候，看样例的解释我以为是这样的,直接分别求两者的概率，则 …</p>
+                                <!-- raw HTML omitted -->
                             </div>
                             <p class="readmore"><a href="https://zouzhitao.github.io/posts/18-kickstart-rounda-pb-lucky-dip/">阅读全文</a></p>
-                        </article>
-                    
-                        <article class="post">
-                            <header>
-                                <h1 class="post-title">
-                                    <a href="https://zouzhitao.github.io/posts/mit6.828-os-hw1-boot-xv6/" title="MIT6.828 OS hw1 boot xv6" >MIT6.828 OS hw1 boot xv6</a>
-                                </h1>
-                            </header>
-                            <date class="post-meta meta-date">
-                                2018年12月6日
-                            </date>
-                            
-                            <div class="post-meta meta-category">
-                                |
-                                
-                                    <a href="https://zouzhitao.github.io/categories/system">system</a>
-                                
-                            </div>
-                            
-                            <div class="post-content">
-                                <p><strong>完整内容可见</strong></p>
-
-<p><a href="https://github.com/zouzhitao/CS_Learning/blob/master/MIT6.828-fa18/README.md">MIT 6.828 note</a></p>
-
-<p>这个任务就是检查 _start 开始的时候栈顶的所有值，</p>
-
-<blockquote>
-<p>进入 xv6, gdb 调试</p>
-
-<p>b *0x10000c (_start kernel start point)</p>
-
-<p>x /24x $esp</p>
-</blockquote>
-
-<p><img src="/img/hw2-esp.png" alt="hw1-esp.png" /></p>
-
-<p>解释栈中的各个值，首先看 <code>0x7d8d,0x7c4d</code>, 这显然是某个地址， …</p>
-                            </div>
-                            <p class="readmore"><a href="https://zouzhitao.github.io/posts/mit6.828-os-hw1-boot-xv6/">阅读全文</a></p>
                         </article>
                     
 
@@ -477,6 +357,10 @@ $$</p>
 <ul class="widget-list">
     
     <li>
+        <a href="https://zouzhitao.github.io/posts/finding-jobs/" title="告别学生生涯:秋招之路">告别学生生涯:秋招之路</a>
+    </li>
+    
+    <li>
         <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
     </li>
     
@@ -512,10 +396,6 @@ $$</p>
         <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
     </li>
     
-    <li>
-        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -526,15 +406,19 @@ $$</p>
 <ul class="widget-list">
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/ir/">IR(3)</a>
-    </li>
-    
-    <li>
         <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
     </li>
     
     <li>
         <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(1)</a>
     </li>
     
     <li>

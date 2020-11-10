@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>pbds on taotao 码字的地方</title>
@@ -6,11 +6,7 @@
     <description>Recent content in pbds on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Tue, 22 Oct 2019 22:58:55 +0800</lastBuildDate>
-    
-	<atom:link href="https://zouzhitao.github.io/tags/pbds/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Tue, 22 Oct 2019 22:58:55 +0800</lastBuildDate><atom:link href="https://zouzhitao.github.io/tags/pbds/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>pbds: STL 的扩展数据结构</title>
       <link>https://zouzhitao.github.io/posts/pbds/</link>
@@ -21,7 +17,8 @@
  introduction pbds 是GNU对STL的一个扩展，封装了很多常见的数据结构，并且提供了操作数据结构内部metadata的策略，也就是说user(我们)可以直接对内部节点更新了，这称之为 policy。这里并不打算详细介绍 pbds的使用和设计，instead，这里仅仅提供一些案例，它的使用可见官方手册
 pbds 封装这样一些数据结构:
  tree hash_table priority_queue trie  并且提供比STL更加通用的操作方式
-tree template&amp;lt; typename Key,// key 类型 typename Mapped,// value 类型，可为null_type, 表示set typename Cmp_Fn = std::less&amp;lt;Key&amp;gt;, typename Tag = rb_tree_tag,// other rb_tree_tag, splay_tree_tag, or ov_tree_tag template&amp;lt; typename Const_Node_Iterator, typename Node_Iterator, typename Cmp_Fn_, typename Allocator_&amp;gt; class Node_Update = null_node_update,// update policy，大部分情况下不用自己写 typename Allocator = std::allocator&amp;lt;char&amp;gt; &amp;gt; class tree;  tree 与STL中的map和set非常类似，不过由于提供了对node的metadata的操作使得我们能够解决一些set和map无法解决的东西。</description>
+tree template&amp;lt; typename Key,// key 类型 typename Mapped,// value 类型，可为null_type, 表示set typename Cmp_Fn = std::less&amp;lt;Key&amp;gt;, typename Tag = rb_tree_tag,// other rb_tree_tag, splay_tree_tag, or ov_tree_tag template&amp;lt; typename Const_Node_Iterator, typename Node_Iterator, typename Cmp_Fn_, typename Allocator_&amp;gt; class Node_Update = null_node_update,// update policy，大部分情况下不用自己写 typename Allocator = std::allocator&amp;lt;char&amp;gt; &amp;gt; class tree; tree 与STL中的map和set非常类似，不过由于提供了对node的metadata的操作使得我们能够解决一些set和map无法解决的东西。
+order 查询 最典型的一种情形就是 set 无法告诉你 某个 key的前面有多少元素，然而我们知道通过维护一些节点上的metadata(算法导论)，可以实现这个操作，斌且不需要任何额外的时间开销</description>
     </item>
     
   </channel>

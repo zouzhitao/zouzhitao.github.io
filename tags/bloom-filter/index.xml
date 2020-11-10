@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>bloom-filter on taotao 码字的地方</title>
@@ -6,11 +6,7 @@
     <description>Recent content in bloom-filter on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 08 May 2019 00:35:33 +0800</lastBuildDate>
-    
-	<atom:link href="https://zouzhitao.github.io/tags/bloom-filter/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 08 May 2019 00:35:33 +0800</lastBuildDate><atom:link href="https://zouzhitao.github.io/tags/bloom-filter/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Count Min Sketch:找最频繁元素</title>
       <link>https://zouzhitao.github.io/posts/count-min-sketch/</link>
@@ -21,7 +17,7 @@
  heavy hitter problem Find majority element 先来看一个简单的在面试中经常会遇到的问题，找主要元素
  问题如下: 一组数据流: $a_1,\dots,a_n$, 存在一个元素 $a_i$ 保证出现次数大于 $n/2$。 能否设计一个算法在 仅仅扫描一遍的情况下找到它。
  这里有一个很 cute 的算法
-current = -1 counter = 0 for e in stream: if counter == 0: current = e counter += 1 elif e == current: counter += 1 else counter -= 1 return current  可以证明这个算法一定是正确的。</description>
+current = -1 counter = 0 for e in stream: if counter == 0: current = e counter += 1 elif e == current: counter += 1 else counter -= 1 return current 可以证明这个算法一定是正确的。</description>
     </item>
     
   </channel>

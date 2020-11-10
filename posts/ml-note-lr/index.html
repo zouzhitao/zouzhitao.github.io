@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.51" />
+    <meta name="generator" content="Hugo 0.78.1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -92,57 +92,37 @@
                         
                         
                         <aside id="toc" class="dismissed">
-                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
-<ul>
-<li><a href="#loss">loss</a></li>
-</ul>
-</nav>
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents"></nav>
                         </aside><div class="post-content">
-                            
-
-<p>logistic regression (Log.Reg)是一种简单的 Discriminative(后面会简单的比较discriminative 与generative) 分类方法，和naive bayes不同的是，他假设了概率:</p>
-
+                            <p>logistic regression (Log.Reg)是一种简单的 Discriminative(后面会简单的比较discriminative 与generative) 分类方法，和naive bayes不同的是，他假设了概率:</p>
 <p>$$
-P(y=1|X) = \frac{1}{1+\exp(w_0+\sum w_i^TX_i)} =Sigmoid(x)\\<br />
+P(y=1|X) = \frac{1}{1+\exp(w_0+\sum w_i^TX_i)} =Sigmoid(x)\\\<br>
 P(y=0|X) = 1-P(y=1|X)
 $$</p>
-
 <p>那 $P_0 = 1-P$,所以最终得到 $w$ 以后，我们可以用</p>
-
 <p>$$
 \frac{P(y=0|x)}{P(y=1|x)} &gt;0 \rightarrow w_0+\sum w_i^TX_i &lt;0
 $$</p>
-
 <p>来进行分类。</p>
-
 <p>也就是说这是一个 parametric model, 引入了参数向量 $\theta$</p>
-
 <p>所以需要来解这个向量:</p>
-
 <h1 id="loss">loss</h1>
-
 <p>接下来我们来看看loss的求解</p>
-
 <p>$$
 \begin{aligned}
-w &amp;=\arg \max_{w}\prod P(Y_i|X_i,w)[max\ likelyhood]\\<br />
-&amp;=\arg \max \sum \ln P(Y_i|X_i,w)\\<br />
+w &amp;=\arg \max_{w}\prod P(Y_i|X_i,w)[max\ likelyhood]\\\<br>
+&amp;=\arg \max \sum \ln P(Y_i|X_i,w)\\\<br>
 &amp;=\arg \max \sum (Y_i\ln P(Y_i=1|X_i,w)+(1-Y_i)\ln P(Y_i=0|X_i,w))
 \end{aligned}
 $$
 后面就是用一些优化方法进行求解</p>
-
 <p>$$
 loss(w) = \sum (Y_i\ln P(Y_i=1|X_i,w)+(1-Y_i)\ln P(Y_i=0|X_i,w))
 $$</p>
-
 <blockquote>
 <p><strong>版权声明</strong></p>
-
 <p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
-
 <p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
-
 <p><strong>转载请保留此版权声明，并注明出处</strong></p>
 </blockquote>
 
@@ -224,6 +204,10 @@ $$</p>
 <ul class="widget-list">
     
     <li>
+        <a href="https://zouzhitao.github.io/posts/finding-jobs/" title="告别学生生涯:秋招之路">告别学生生涯:秋招之路</a>
+    </li>
+    
+    <li>
         <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
     </li>
     
@@ -259,10 +243,6 @@ $$</p>
         <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
     </li>
     
-    <li>
-        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -273,15 +253,19 @@ $$</p>
 <ul class="widget-list">
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/ir/">IR(3)</a>
-    </li>
-    
-    <li>
         <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
     </li>
     
     <li>
         <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(1)</a>
     </li>
     
     <li>

@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.51" />
+    <meta name="generator" content="Hugo 0.78.1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -92,49 +92,26 @@
                         
                         
                         <aside id="toc" class="dismissed">
-                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
-<ul>
-<li><a href="#a-cherries-mesh">A. Cherries Mesh</a></li>
-<li><a href="#b-code-eat-switcher">B. Code-Eat Switcher</a></li>
-<li><a href="#c-street-checkers">C. Street Checkers</a></li>
-</ul>
-</nav>
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents"></nav>
                         </aside><div class="post-content">
-                            
-
-<h1 id="a-cherries-mesh">A. Cherries Mesh</h1>
-
+                            <h1 id="a-cherries-mesh">A. Cherries Mesh</h1>
 <p>easy</p>
-
 <p><strong>code</strong> : <a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-E-A.cpp">github</a></p>
-
 <h1 id="b-code-eat-switcher">B. Code-Eat Switcher</h1>
-
 <p>这题结束后想通了，可以贪心，将 $(c_i,e_i)$ 按照 $c_i / e_i$ 排序，然后贪心.</p>
-
 <p><strong>code</strong><a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-E-B.cpp">github</a></p>
-
 <h1 id="c-street-checkers">C. Street Checkers</h1>
-
 <p>这题还是很容易的，</p>
-
 <p>首先翻译一下题意，对于一个数 $X$, 如果它的奇数因子和偶数因子之差不超过 2，这个数就ok，判断 [L,R] 中有多少个这样的数， $R-L \le 10^5,L,R \le 10^9$,</p>
-
 <p>首先，观察规律，
-假设 $X=2*X&rsquo;$(其中 $X&rsquo;$ 是奇数) 的奇数因子为 $p_i$， 那么所有$2p_i$ 都是它的偶数因子
-同理，如果 $X=2^2X&rsquo;$, 那么所有的 $2p_i,4p_i$ 都为它的因子，此时，如果$X$ ok，那么 $4p_i$ 的个数要小于2，即 $X&rsquo;$ 为素数或者$1$,其他情况也可推知，</p>
-
+假设 $X=2*X'$(其中 $X'$ 是奇数) 的奇数因子为 $p_i$， 那么所有$2p_i$ 都是它的偶数因子
+同理，如果 $X=2^2X'$, 那么所有的 $2p_i,4p_i$ 都为它的因子，此时，如果$X$ ok，那么 $4p_i$ 的个数要小于2，即 $X'$ 为素数或者$1$,其他情况也可推知，</p>
 <p>最后就变成判断质数的题目了，用miller-robin就ok了</p>
-
 <p><strong>code</strong> <a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-E-C.cpp">github</a></p>
-
 <blockquote>
 <p><strong>版权声明</strong></p>
-
 <p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
-
 <p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
-
 <p><strong>转载请保留此版权声明，并注明出处</strong></p>
 </blockquote>
 
@@ -212,6 +189,10 @@
 <ul class="widget-list">
     
     <li>
+        <a href="https://zouzhitao.github.io/posts/finding-jobs/" title="告别学生生涯:秋招之路">告别学生生涯:秋招之路</a>
+    </li>
+    
+    <li>
         <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
     </li>
     
@@ -247,10 +228,6 @@
         <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
     </li>
     
-    <li>
-        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -261,15 +238,19 @@
 <ul class="widget-list">
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/ir/">IR(3)</a>
-    </li>
-    
-    <li>
         <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
     </li>
     
     <li>
         <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(1)</a>
     </li>
     
     <li>

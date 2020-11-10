@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.51" />
+    <meta name="generator" content="Hugo 0.78.1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -92,47 +92,30 @@
                         
                         
                         <aside id="toc" class="dismissed">
-                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
-<ul>
-<li><a href="#note">note</a></li>
-</ul>
-</nav>
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents"></nav>
                         </aside><div class="post-content">
-                            
-
-<p>这里总结一个利用二价导数来求最优解的方法-牛顿法:</p>
-
+                            <p>这里总结一个利用二价导数来求最优解的方法-牛顿法:</p>
 <p>设: $f(X)$ 是一个多维函数,由taylor 二阶展开，我们有,</p>
-
 <p>$$
 f(X) \approx f(X_0)+(X-X_0)\nabla f(X_0) + \frac{(X-X_0)\nabla^2 f(X_0)(X-X_0)}{2}
 $$</p>
-
 <p>对 $X$ 求导，并设置为0，我们有</p>
-
 <p>$$
 \begin{align*}
-0&amp;=\nabla f(X_0) + (X-X_0) \nabla ^2 f(X_0) (X- X_0)\\<br />
+0&amp;=\nabla f(X_0) + (X-X_0) \nabla ^2 f(X_0) (X- X_0)\\\<br>
 X&amp;=-\frac{\nabla f(X_0)}{\nabla^2 f(X_0)} X_0
 \end{align*}
 $$</p>
-
 <p>相当于将梯度下降的learning rate设置为 $(\nabla^2 f(X_0))^{-1}$</p>
-
 <h1 id="note">note</h1>
-
 <ol>
 <li>显然牛顿法计算量更大，因为他需要计算 hessian矩阵，相对于梯度下降来说这是$n^2$ 的</li>
 <li>牛顿法收敛率更快 $O(t^{-2})$,梯度下降是 $O(t^{-1})$</li>
 </ol>
-
 <blockquote>
 <p><strong>版权声明</strong></p>
-
 <p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
-
 <p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
-
 <p><strong>转载请保留此版权声明，并注明出处</strong></p>
 </blockquote>
 
@@ -210,6 +193,10 @@ $$</p>
 <ul class="widget-list">
     
     <li>
+        <a href="https://zouzhitao.github.io/posts/finding-jobs/" title="告别学生生涯:秋招之路">告别学生生涯:秋招之路</a>
+    </li>
+    
+    <li>
         <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
     </li>
     
@@ -245,10 +232,6 @@ $$</p>
         <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
     </li>
     
-    <li>
-        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -259,15 +242,19 @@ $$</p>
 <ul class="widget-list">
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/ir/">IR(3)</a>
-    </li>
-    
-    <li>
         <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
     </li>
     
     <li>
         <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(1)</a>
     </li>
     
     <li>

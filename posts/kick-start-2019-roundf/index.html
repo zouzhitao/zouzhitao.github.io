@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.51" />
+    <meta name="generator" content="Hugo 0.78.1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -93,79 +93,50 @@
                         
                         <aside id="toc" class="dismissed">
                             <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
-<ul>
-<li><a href="#a-flattening">A.Flattening</a>
-<ul>
-<li><a href="#o-n-3-版本">$O(N^3)$ 版本</a></li>
-<li><a href="#一些小bug">一些小bug</a></li>
-<li><a href="#o-n-2logn-版本">O(N^2logN) 版本</a></li>
-</ul></li>
-<li><a href="#b-teach-me">B.Teach Me</a></li>
-<li><a href="#c-spectating-villages">C.Spectating Villages</a>
-<ul>
-<li><a href="#细节">细节</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#on3-版本">$O(N^3)$ 版本</a></li>
+    <li><a href="#一些小bug">一些小bug</a></li>
+    <li><a href="#on2logn-版本">O(N^2logN) 版本</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#细节">细节</a></li>
+  </ul>
 </nav>
                         </aside><div class="post-content">
-                            
-
-<blockquote>
+                            <blockquote>
 <p>F round 题解</p>
 </blockquote>
-
-<h1 id="a-flattening">A.Flattening</h1>
-
+<h1 id="aflattening">A.Flattening</h1>
 <p>这轮，这个A还是有点难，好多选手都挂了&hellip;</p>
-
-<h2 id="o-n-3-版本">$O(N^3)$ 版本</h2>
-
+<h2 id="on3-版本">$O(N^3)$ 版本</h2>
 <ol>
 <li>计算 $num[i][j], interval[i,&hellip;,j]$ 仅存在一块时需要改变的元素数目</li>
 <li>$dp[i][k]$ 使得前 $i$ 块的石头中，$\# A_x \ne A_{x+1}\le k$  需要改变的元素数目
 易知，$dp[i][k] = \min_j dp[j][k-1]+num[j+1][i]$</li>
 </ol>
-
 <p><strong><a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-F-A.cpp">github code</a></strong></p>
-
 <h2 id="一些小bug">一些小bug</h2>
-
 <p>vector [] 操作， uncheck index out of size &hellip;也就是说 out of size 返回的值是 <strong>未定义的</strong>(i.e. 可能是 segment fault，也有可能是很奇怪的值，可见源码)</p>
-
-<h2 id="o-n-2logn-版本">O(N^2logN) 版本</h2>
-
+<h2 id="on2logn-版本">O(N^2logN) 版本</h2>
 <p>还没想通。。。</p>
-
-<h1 id="b-teach-me">B.Teach Me</h1>
-
+<h1 id="bteach-me">B.Teach Me</h1>
 <ul>
 <li>skill[i] 表示拥有第 $i$ 项技能的人的集合(vector，递增顺序存储就好)</li>
 <li>ee[i], 第 $i$ 个人所具有的技能集合</li>
 </ul>
-
 <p>那么对于每个人 $ee[i]$ 来说，它所不能交的人就是 $\bigcap_{s \in ee[i]} skill[s]$,注意由于 $|ee[i]|\le 5$, 上面的求解过程最坏是 $O(N)$,将ee去一下重，然后在暴力算就行了</p>
-
 <p><strong><a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-F-B.cpp">github code</a></strong></p>
-
-<h1 id="c-spectating-villages">C.Spectating Villages</h1>
-
+<h1 id="cspectating-villages">C.Spectating Villages</h1>
 <p>这波似乎全是dp..</p>
-
 <p>树形dp，挺简单的..不说了</p>
-
 <p><strong><a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-F-C.cpp">github code</a></strong></p>
-
 <h2 id="细节">细节</h2>
-
 <p>这题有个挺坑的地方，map,比 unordered_map 慢太多了，所以大数据就挂了，有时候能用unordered_map的还是就用unordered_map,比较好</p>
-
 <blockquote>
 <p><strong>版权声明</strong></p>
-
 <p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
-
 <p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
-
 <p><strong>仅允许非商业转载，转载请保留此版权声明，并注明出处</strong></p>
 </blockquote>
 
@@ -243,6 +214,10 @@
 <ul class="widget-list">
     
     <li>
+        <a href="https://zouzhitao.github.io/posts/finding-jobs/" title="告别学生生涯:秋招之路">告别学生生涯:秋招之路</a>
+    </li>
+    
+    <li>
         <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
     </li>
     
@@ -278,10 +253,6 @@
         <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
     </li>
     
-    <li>
-        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -292,15 +263,19 @@
 <ul class="widget-list">
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/ir/">IR(3)</a>
-    </li>
-    
-    <li>
         <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
     </li>
     
     <li>
         <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(1)</a>
     </li>
     
     <li>

@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.51" />
+    <meta name="generator" content="Hugo 0.78.1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -93,152 +93,108 @@
                         
                         <aside id="toc" class="dismissed">
                             <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
-<ul>
-<li><a href="#a-building-palindromes">A. Building Palindromes</a></li>
-<li><a href="#b-energy-stones">B. Energy Stones</a>
-<ul>
-<li><a href="#个人小插曲">个人小插曲</a></li>
-</ul></li>
-<li><a href="#c-diverse-subarray">C. Diverse Subarray</a></li>
-</ul>
+  <ul>
+    <li><a href="#个人小插曲">个人小插曲</a></li>
+  </ul>
 </nav>
                         </aside><div class="post-content">
-                            
-
-<h1 id="a-building-palindromes">A. Building Palindromes</h1>
-
+                            <h1 id="a-building-palindromes">A. Building Palindromes</h1>
 <p>easy</p>
-
 <p><strong>code</strong> : <a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-B-A.cpp">https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-B-A.cpp</a></p>
-
 <h1 id="b-energy-stones">B. Energy Stones</h1>
-
 <p>knapstack 变种.</p>
-
 <p><strong>题意</strong></p>
-
 <blockquote>
 <p>$n$ 块石头，每块石头有 3 个参数， 初始能量 $e$, 每秒能量损失 $l$, 吃完所需要的时间 $s$, 若石头能量损失到0，或者负数，该石头能量为0. 求吃完说有石头所能够得到的最大能量值
-link ：<a href="https://codingcompetitions.withgoogle.com/kickstart/round/0000000000050eda/00000000001198c3">https://codingcompetitions.withgoogle.com/kickstart/round/0000000000050eda/00000000001198c3</a></p>
+link ：https://codingcompetitions.withgoogle.com/kickstart/round/0000000000050eda/00000000001198c3</p>
 </blockquote>
-
 <p>这其实是一个背包问题，但是要推出是背包还是需要一些功夫的。</p>
-
 <p>首先，能量值为0 的石头一定不会吃它，那我们考虑要吃的石头集合的次序，如果两块石头紧邻，那我们一定会先吃能量损失的少的石头。因此可以以这个顺序将所有石头拍个序，然后问题就变成了一个背包问题了。</p>
-
 <p><strong>以上是官方题解</strong></p>
-
 <h2 id="个人小插曲">个人小插曲</h2>
-
 <p>在解决这个问题的时候，对于test set 1，我首先想到的是可以对每一个石头求解出次序为 $i$ 的时候它的能量值，然后在求解一个最优次序，这个问题等价与在一张 $nXn$ 的矩阵中，找不再同一列同一行的权值和最大的 $n$ 个数。这个问题等价与二分图的最大权值匹配，复杂度 $O(n^3)$</p>
-
 <p>对于 Test set 2,个人并没能够想出。</p>
-
 <p>看了题解之后用了 dp的方法，这种dp还是很经典的。</p>
-
 <p>其中有一个小bug 让我调试了很久， <code>#define MAXN 100+3</code>(果然是很久没敲代码了)</p>
-
 <p>code : <a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-B-B.cpp">https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-B-B.cpp</a></p>
-
 <h1 id="c-diverse-subarray">C. Diverse Subarray</h1>
-
 <p>对于小数据我们可以用暴力做，对每个 $l$ , 计算以$l$ 为左端点的最优的 $r$ 这个可以暴力统计每个 <code>type</code> 的frequency</p>
-
 <p><strong>code</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;bits/stdc++.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
 
-<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
-
-using namespace std;
-
-#define ms(x,v) memset(x,(v), sizeof(x))
-#define msn(x,v,n) memset(x,(v),sizeof(x[0]) * n)
-#define INF 0x3f3f3f3f
-
-typedef long long LL;
+<span style="color:#75715e">#define ms(x,v) memset(x,(v), sizeof(x))
+</span><span style="color:#75715e">#define msn(x,v,n) memset(x,(v),sizeof(x[0]) * n)
+</span><span style="color:#75715e">#define INF 0x3f3f3f3f
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">long</span> <span style="color:#66d9ef">long</span> LL;
 
 
-const int MAXN = 100 + 3;
+<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> MAXN <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">3</span>;
 
-int a[MAXN];
-int S,n;
+<span style="color:#66d9ef">int</span> a[MAXN];
+<span style="color:#66d9ef">int</span> S,n;
 
-int main(int argc, char const *argv[])
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">*</span>argv[])
 {   
-    ios :: sync_with_stdio(0);
-    cin.tie(0);
-    std::cout.precision(8);
-    std::cout.setf( std::ios::fixed, std:: ios::floatfield );
-    int T;
-    cin &gt;&gt; T;
+    ios <span style="color:#f92672">::</span> sync_with_stdio(<span style="color:#ae81ff">0</span>);
+    cin.tie(<span style="color:#ae81ff">0</span>);
+    std<span style="color:#f92672">::</span>cout.precision(<span style="color:#ae81ff">8</span>);
+    std<span style="color:#f92672">::</span>cout.setf( std<span style="color:#f92672">::</span>ios<span style="color:#f92672">::</span>fixed, std<span style="color:#f92672">::</span> ios<span style="color:#f92672">::</span>floatfield );
+    <span style="color:#66d9ef">int</span> T;
+    cin <span style="color:#f92672">&gt;&gt;</span> T;
 
-    for(int t =1;  t &lt;= T ; ++t)
+    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> t <span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;  t <span style="color:#f92672">&lt;=</span> T ; <span style="color:#f92672">++</span>t)
     {
         
-        cin &gt;&gt;n &gt;&gt; S;
-        for(int i=0 ; i&lt;n ; ++i)
-            cin &gt;&gt; a[i];
+        cin <span style="color:#f92672">&gt;&gt;</span>n <span style="color:#f92672">&gt;&gt;</span> S;
+        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> ; i<span style="color:#f92672">&lt;</span>n ; <span style="color:#f92672">++</span>i)
+            cin <span style="color:#f92672">&gt;&gt;</span> a[i];
         
-        int ans = 0;
-        for(int l=0 ; l &lt; n; ++l){
+        <span style="color:#66d9ef">int</span> ans <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> l<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> ; l <span style="color:#f92672">&lt;</span> n; <span style="color:#f92672">++</span>l){
 
-            unordered_map&lt;int,int&gt; frq;
-            int cur_ans = 0;
-            for(int r = l; r &lt;n ; ++r){
-                auto f = frq[a[r]];
-                if(frq[a[r]]&lt;S){
-                    cur_ans++;
-                    ++frq[a[r]];
-                }else if(f==S)
+            unordered_map<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>,<span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> frq;
+            <span style="color:#66d9ef">int</span> cur_ans <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+            <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> r <span style="color:#f92672">=</span> l; r <span style="color:#f92672">&lt;</span>n ; <span style="color:#f92672">++</span>r){
+                <span style="color:#66d9ef">auto</span> f <span style="color:#f92672">=</span> frq[a[r]];
+                <span style="color:#66d9ef">if</span>(frq[a[r]]<span style="color:#f92672">&lt;</span>S){
+                    cur_ans<span style="color:#f92672">++</span>;
+                    <span style="color:#f92672">++</span>frq[a[r]];
+                }<span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(f<span style="color:#f92672">==</span>S)
                 {
-                    cur_ans -=S;
-                    ++frq[a[r]];
+                    cur_ans <span style="color:#f92672">-=</span>S;
+                    <span style="color:#f92672">++</span>frq[a[r]];
                 }
-                if(ans &lt; cur_ans)ans = cur_ans;
+                <span style="color:#66d9ef">if</span>(ans <span style="color:#f92672">&lt;</span> cur_ans)ans <span style="color:#f92672">=</span> cur_ans;
             }
         }
 
-        cout &lt;&lt; &quot;Case #&quot;&lt;&lt;t &lt;&lt; &quot;: &quot; &lt;&lt; ans &lt;&lt; &quot;\n&quot;;
+        cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Case #&#34;</span><span style="color:#f92672">&lt;&lt;</span>t <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> ans <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
     }
 
-    return 0;
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 }
-</code></pre>
-
-<p>对于大数据就不太行了，这里看了题解后明白了</p>
-
+</code></pre></div><p>对于大数据就不太行了，这里看了题解后明白了</p>
 <p>首先，从右统计每个type的频率，那么频率数组是可以继承的.</p>
-
 <p><strong>example</strong></p>
-
 <p>1,1,2,1,3,2,3,2,</p>
-
 <p>设 $S=2$</p>
-
 <p>则仿照官方题解的做法，贡献如下:</p>
-
 <p>+1,+1,+1,-2,+1,+1+1,-2</p>
-
 <p>若此时左端又来了一个 1, 那么将变为</p>
-
 <p>+1,+1,-2,+1,0,+1,+1+1,-2</p>
-
 <p>若我们维护从 $l$ 到 $i$ 的浅醉和，我们会发现，此时[l,n] 全都+1,然后，[ptr[a[l]]+s,n] -(s+1),[ptr[a[l]+s+1,n]+s</p>
-
 <blockquote>
 <p>ptr 表示当前访问元素的下标。</p>
 </blockquote>
-
 <p>以上操作可以用线段树处理</p>
-
 <p><strong>code</strong> <a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-B-C.cpp">C</a></p>
-
 <blockquote>
 <p><strong>版权声明</strong></p>
-
 <p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
-
 <p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
-
 <p><strong>转载请保留此版权声明，并注明出处</strong></p>
 </blockquote>
 
@@ -316,6 +272,10 @@ int main(int argc, char const *argv[])
 <ul class="widget-list">
     
     <li>
+        <a href="https://zouzhitao.github.io/posts/finding-jobs/" title="告别学生生涯:秋招之路">告别学生生涯:秋招之路</a>
+    </li>
+    
+    <li>
         <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
     </li>
     
@@ -351,10 +311,6 @@ int main(int argc, char const *argv[])
         <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
     </li>
     
-    <li>
-        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -365,15 +321,19 @@ int main(int argc, char const *argv[])
 <ul class="widget-list">
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/ir/">IR(3)</a>
-    </li>
-    
-    <li>
         <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
     </li>
     
     <li>
         <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(1)</a>
     </li>
     
     <li>

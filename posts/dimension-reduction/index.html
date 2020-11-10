@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.51" />
+    <meta name="generator" content="Hugo 0.78.1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -93,118 +93,73 @@
                         
                         <aside id="toc" class="dismissed">
                             <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
-<ul>
-<li><a href="#随机投影">随机投影</a>
-<ul>
-<li><a href="#mathcal-l-2-距离的无偏估计">$\mathcal{L_2} 距离的无偏估计$</a></li>
-</ul></li>
-<li><a href="#jl-transform">JL Transform</a>
-<ul>
-<li><a href="#jl-变换的加速工作">JL 变换的加速工作</a>
-<ul>
-<li><a href="#改变变量分布">改变变量分布</a></li>
-<li><a href="#fast-jl-transform">Fast JL Transform</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#总结-beyond-jl">总结: beyond JL</a></li>
-<li><a href="#一些代码和实验">一些代码和实验</a></li>
-<li><a href="#ref">ref</a></li>
-</ul>
+  <ul>
+    <li><a href="#mathcall_2-距离的无偏估计">$\mathcal{L_2} 距离的无偏估计$</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#jl-变换的加速工作">JL 变换的加速工作</a>
+      <ul>
+        <li><a href="#改变变量分布">改变变量分布</a></li>
+        <li><a href="#fast-jl-transform">Fast JL Transform</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
                         </aside><div class="post-content">
-                            
-
-<blockquote>
+                            <blockquote>
 <p>关于维度爆炸的问题，历来探讨的都很广泛。存在于很多真实的问题中，比如 nearest neighbor，最近邻问题，这里总结一种简单的技术，叫做随机投影(random projection)</p>
 </blockquote>
-
 <p>最近邻问题的简单描述如下:</p>
-
 <p>给定 $k$ 维空间 $R^k$ 中的 $n$ 个点 $x_1,x_2,\dots ,x_n$,找到每个点的最近邻居 $NN_i = \arg \min_j \mathcal{L_2}(x_i,x_j) = \arg \min_j ||x_i-x_j||_2^2$,</p>
-
 <p>朴素的<strong>算法复杂度</strong>为 $O(n^2 k)$, $k$ 为计算 $\mathcal{L_2}$ 的时间复杂度。通常 $k \le 20$ 非常小的情况下可以用 <strong>kd-tree</strong> (<strong>注</strong> 这里kd-tree 查询最近邻的复杂度问题，我看很多资料都写着会和dim成指数增长，然而原始论文写的是 $O(\log n)$ ,这里个人暂时并没有一个严格证明. 此处留待验证，和这个主题暂时无关).</p>
-
 <h1 id="随机投影">随机投影</h1>
-
 <p>随机投影的想法很简单，它的直观就是 ，想象我们在二维平面上找一个点 $p$ 的最近邻，如果在 $x$ 坐标上距离 $p$ 比较远的点，通常很难成为最终解。</p>
-
 <p>接下来我们用严格的数学语言表述一下:</p>
-
 <p><strong>define</strong> $f_\mathbf{v}(\mathbf{x}) = \mathbf{x} \mathbf{v} = \sum x_i v_i, \mathbf{v} \in \mathcal{N(0,1)}$ 即将向量 $\mathbf{x}$ 在 $\mathbf{v}$ 上做一个投影</p>
-
 <p>接下来我们证明对于任意两个向量 $\mathbf{x},\mathbf{y} \in \mathcal{R}^k,\mathbf{v} \sim \mathcal{N}(0,1),(f_\mathbf{v}(\mathbf{x}) -f_\mathbf{v}(\mathbf{y}))^2$
 是 $|\mathbf{x}-\mathbf{y}|_2^2$ 的无偏估计</p>
-
-<h2 id="mathcal-l-2-距离的无偏估计">$\mathcal{L_2} 距离的无偏估计$</h2>
-
+<h2 id="mathcall_2-距离的无偏估计">$\mathcal{L_2} 距离的无偏估计$</h2>
 <p>$f_\mathbf{v}(\mathbf{x}) - f_\mathbf{v}(\mathbf{x}) = \sum (x_i-y_i) v_i$</p>
-
 <p>其中 $v_i \sim \mathcal{N}(0,1)$,因此 $D = f_\mathbf{v}(\mathbf{x}) - f_\mathbf{v}(\mathbf{x}) \sim \mathcal{N}(0,\sum (x_i-y_i)^2)$</p>
-
 <p>由统计中的经典公式 $E[X^2] = E^2[X] + Var(X)$ 可知</p>
-
 <p>$$
 E[(f_\mathbf{v}(\mathbf{x}) - f_\mathbf{v}(\mathbf{x}))^2]=Var(f_\mathbf{v}(\mathbf{x}) - f_\mathbf{v}(\mathbf{x}))=|\mathbf{x}-\mathbf{y}|_2^2
 $$</p>
-
 <p>实际上采用独立实验的思想，也就是说，多选取几个随机向量 $\mathbf{v}$ 我们能够得到得到更加的结果，具体的，如果采用 $d$ 个随机向量，当$d$ 足够大的时候，我们能够得到任意估计的任意两个向量的距离不超过原有距离的 $\epsilon$</p>
-
 <h1 id="jl-transform">JL Transform</h1>
-
 <p>JL 变换就是应用随机独立实验的思想将随机投影从往一个线投变为往一个空间投</p>
-
 <p><strong>JL 变换</strong></p>
-
 <p>$$
 f(X) = \frac{1}{\sqrt{d}} X_{n\mathbb{x}k} A_{k\mathbb{x}d},f : \mathcal{R}^k \rightarrow \mathcal{R}^d
 $$</p>
-
 <p>然而这是有定理证明保证的</p>
-
 <p>(JL 定理[1]) 给定 $\epsilon &gt;0$,令 $d\ge d_0=\theta(\epsilon^{-2}\log n)$, 存在一个映射 $f: \mathcal{R}^k\rightarrowtail \mathcal{R}^d$ ,使得 $\forall \mathbf{x},\mathbf{y} \in P$, $P$ 是任意给定的 $n$ 个点的点集，满足</p>
-
 <p>$$
 (1-\epsilon)||\mathbf{x}-\mathbf{y}||_2^2\le ||f(\mathbf{x}) - \mathbf{y}||_2^2\le (1+\epsilon)||\mathbf{x}-\mathbf{y}||
 $$</p>
-
 <h2 id="jl-变换的加速工作">JL 变换的加速工作</h2>
-
 <p>JL 变化的加速工作有两个方式，一种是改变投影向量的分布[2],一种是引入类似 $\mathcal{FFT}$ 的思想构造一个特俗矩阵，加快JL变换的计算[3]</p>
-
 <h3 id="改变变量分布">改变变量分布</h3>
-
-<p><img src="/img/JL/JL.PNG" width="80%" /></p>
-
+<!-- raw HTML omitted -->
 <h3 id="fast-jl-transform">Fast JL Transform</h3>
-
 <p>这个方法是构造几个特俗矩阵 $\Phi = P H D$, 其中 $H$ 是 W-H 矩阵，D 是对角矩阵， $H$ 是一个sparse JL 矩阵，证明太过复杂带填坑。。。详见ref</p>
-
 <h1 id="总结-beyond-jl">总结: beyond JL</h1>
-
 <p>JL 变换本质上还是在降维，并没有改变 NN 问题复杂度的本质 $O(n^2 O(distance-metric))$,如果要解决 $n^2$ 的问题还是要从LSH(locality-sensitive-hash) 着手，详见后文</p>
-
 <p>不过<strong>独立实验</strong> 的思想，确实是一个非常简单美妙的思想</p>
-
 <h1 id="一些代码和实验">一些代码和实验</h1>
-
 <p><a href="https://github.com/zouzhitao/cs168-19-stanford/blob/master/min-project2/part2.ipynb">code</a></p>
-
 <h1 id="ref">ref</h1>
-
 <ol>
 <li>W.B. Johnson, J. Lindenstrauss, Extensions of Lipschitz mappings into a Hilbert space, Conference in modern analysis and probability, New Haven, CI, 1982, Amer. Math. Soc., Providence, RI, 1984, pp. 189–206</li>
 <li>D. Achlioptas. <a href="https://users.soe.ucsc.edu/~optas/papers/jl.pdf">Database-friendly random projections: Johnson-Lindenstrauss with binary coins</a>. Journal of Computer and System Sciences, 66(4):671–687, 2003</li>
 <li>N. Ailon and B. Chazelle. <a href="https://www.cs.princeton.edu/~chazelle/pubs/fasterdim-ac10.pdf">Faster dimension reduction</a>. Communications of the ACM,
 53(2):97–104, 2010</li>
 </ol>
-
 <blockquote>
 <p><strong>版权声明</strong></p>
-
 <p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
-
 <p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
-
 <p><strong>仅允许非商业转载，转载请保留此版权声明，并注明出处</strong></p>
 </blockquote>
 
@@ -286,6 +241,10 @@ $$</p>
 <ul class="widget-list">
     
     <li>
+        <a href="https://zouzhitao.github.io/posts/finding-jobs/" title="告别学生生涯:秋招之路">告别学生生涯:秋招之路</a>
+    </li>
+    
+    <li>
         <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
     </li>
     
@@ -321,10 +280,6 @@ $$</p>
         <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
     </li>
     
-    <li>
-        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -335,15 +290,19 @@ $$</p>
 <ul class="widget-list">
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/ir/">IR(3)</a>
-    </li>
-    
-    <li>
         <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
     </li>
     
     <li>
         <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(1)</a>
     </li>
     
     <li>

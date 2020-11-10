@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.51" />
+    <meta name="generator" content="Hugo 0.78.1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -93,49 +93,30 @@
                         
                         <aside id="toc" class="dismissed">
                             <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
-<ul>
-<li><a href="#思考">思考</a></li>
-<li><a href="#知识回顾">知识回顾</a>
-<ul>
-<li><a href="#wk1">wk1</a></li>
-<li><a href="#wk2">wk2</a></li>
-<li><a href="#wk3">wk3</a></li>
-<li><a href="#wk4">wk4</a></li>
-</ul></li>
-<li><a href="#以后的路">以后的路</a></li>
-</ul>
+  <ul>
+    <li><a href="#wk1">wk1</a></li>
+    <li><a href="#wk2">wk2</a></li>
+    <li><a href="#wk3">wk3</a></li>
+    <li><a href="#wk4">wk4</a></li>
+  </ul>
 </nav>
                         </aside><div class="post-content">
-                            
-
-<p><strong><a href="https://github.com/zouzhitao/CS_Learning/tree/master/PL%40Grossman">作业仓库</a></strong></p>
-
+                            <p><strong><a href="https://github.com/zouzhitao/CS_Learning/tree/master/PL%40Grossman">作业仓库</a></strong></p>
 <p><strong>url</strong>: <a href="https://github.com/zouzhitao/CS_Learning/tree/master/PL%40Grossman">https://github.com/zouzhitao/CS_Learning/tree/master/PL%40Grossman</a></p>
-
 <p>这是 UW programing language part A 的一个简单回顾.</p>
-
 <p><a href="https://www.coursera.org/learn/programming-languages">coursera 课程地址</a>: <a href="https://www.coursera.org/learn/programming-languages">https://www.coursera.org/learn/programming-languages</a></p>
-
 <h1 id="思考">思考</h1>
-
 <p>这门课程可以说非常棒，给了我很多在程序语言上的洞见，可以说是让我重新理解了编程，重新理解了程序语言，不过可能关于整个 程序语言(programing language,PL)的研究, 在工业界真正的用武之地是很少的，或者说不如真正的应用计算机科学(系统,机器学习,etc)来的那么直接。不过我却认为里面有很多迷人的哲学式的美感。这是我第一次用函数式语言，我被他的间接，以及逻辑上的清晰感给折服了。所有计算都是用函数解决的，可以说是非常接近于数学逻辑了。不过真要入这个程序语言的坑，可能还得稍后一些，彼时的我需要的更多的还是一些工业界的东西。(:( ,不然就要饿肚子了)。扯了这么多，感觉是在为不继续学习 Part B，找借口&hellip;</p>
-
 <h1 id="知识回顾">知识回顾</h1>
-
 <h2 id="wk1">wk1</h2>
-
 <p>wk1 主要是讲一些 ML的基本用法和概念:</p>
-
 <ul>
 <li>variable binding</li>
 <li>function binding</li>
 <li>List</li>
-<li>immutable
-<br /></li>
+<li>immutable</li>
 </ul>
-
 <p>但是最为主要的还是在最后的一节:,作者点出了程序语言的几个重要特征(不要忘了，这门课程的目的是叫我们如何学习所有程序语言)</p>
-
 <ul>
 <li><strong>Syntax</strong>: How do you write the various parts of the language?</li>
 <li><strong>Semantics</strong>: What do the various language features mean? For example, how are expressions evaluated?</li>
@@ -145,37 +126,23 @@ library support (like access les)?</li>
 <li><strong>Tools</strong>: What is available for manipulating programs in the language (compilers, read-eval-print loops,
 debuggers, &hellip;)</li>
 </ul>
-
 <p>其实学习语言最主要的是掌握语言的 特性，也就是第三点 (<strong>idoms</strong>),这很切合我的想法，所以我上了第一周后就信心满满的继续学了起来</p>
-
 <p>然后后面就是围绕ML的语言特性展开了，重点在于<strong>函数式编程</strong></p>
-
 <p>wk1 编程作业没什么好说的</p>
-
 <h2 id="wk2">wk2</h2>
-
 <p>wk2 的核心在于: <strong>datatype</strong>.</p>
-
 <p>围绕这个展开了如下几个点:</p>
-
 <ul>
 <li>pattern match</li>
 <li>polymorphic datatype</li>
 <li>tail recursion</li>
 </ul>
-
 <p>作业就是让你全部用pattern match 而不是用 <code>hd,tail,#</code>之类的内置函数</p>
-
 <p>作业编程作业就会发现<strong>pattern match</strong> 和tail recursion 实在是太好用了</p>
-
 <p><strong>tail recursion</strong> 应该是一个比较通用的概念，不仅仅是函数式里面才有的。因为从他的设计来说，非函数式也可以设计成这样。至于 <strong>pattern match</strong> 我确实在其他语言里没有使用过</p>
-
 <p><strong>remark:</strong> 我对这些东西仅在理解是什么，怎么用的阶段，以及有什么好处的阶段，至于更深的地方，他的设计哲学在哪里，我变不清楚了。</p>
-
 <h2 id="wk3">wk3</h2>
-
 <p>wk3 可以说是整个函数式语言的核心了。</p>
-
 <ul>
 <li>fun as arguments and returned value</li>
 <li>lexical scope</li>
@@ -184,34 +151,20 @@ debuggers, &hellip;)</li>
 <li>map,filter,fold</li>
 <li>Combining function</li>
 </ul>
-
 <p>总之有了这些的 idiom 之后的特性是 : 代码更短，逻辑更强，语法糖更多</p>
-
 <p>当然我从不认为语言糖是语言的核心，<strong>其实个人认为语法糖在语言设计中最无足轻重</strong> 但是上面的那些特性，都是语言基于数学逻辑的自然表达，就算没有诱人的语法糖,那些特性也是必须有的。</p>
-
 <p>这周的作业难度要大一些，同时也更简洁一些，用了函数式语法后会发现作业表述起来非常简单。</p>
-
 <p>这周作业剩下最后一个 challenge 没有做，这个challenge是叫你去实现一个type-checker 系统.其他均为满分</p>
-
 <h2 id="wk4">wk4</h2>
-
 <p>感觉我wk4 挺boring 的，就是将信息隐藏和表示不变性，这个其实我在 <a href="http://mit.edu/6.031">MIT 6.031 software construction</a> 中看过，所以了解的比较清楚，就没认真学这章了，</p>
-
 <p>最后还好通过了 :)</p>
-
 <h1 id="以后的路">以后的路</h1>
-
 <p>学了这个以后准备把: Part B,Part C 学了，然后以后可能要深入了解一下程序语言，</p>
-
 <p><strong>programing language 还是很有意思的</strong></p>
-
 <blockquote>
 <p><strong>版权声明</strong></p>
-
 <p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
-
 <p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
-
 <p><strong>转载请保留此版权声明，并注明出处</strong></p>
 </blockquote>
 
@@ -293,6 +246,10 @@ debuggers, &hellip;)</li>
 <ul class="widget-list">
     
     <li>
+        <a href="https://zouzhitao.github.io/posts/finding-jobs/" title="告别学生生涯:秋招之路">告别学生生涯:秋招之路</a>
+    </li>
+    
+    <li>
         <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
     </li>
     
@@ -328,10 +285,6 @@ debuggers, &hellip;)</li>
         <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
     </li>
     
-    <li>
-        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -342,15 +295,19 @@ debuggers, &hellip;)</li>
 <ul class="widget-list">
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/ir/">IR(3)</a>
-    </li>
-    
-    <li>
         <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
     </li>
     
     <li>
         <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(1)</a>
     </li>
     
     <li>

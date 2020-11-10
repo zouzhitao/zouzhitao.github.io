@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>bayes on taotao 码字的地方</title>
@@ -6,11 +6,7 @@
     <description>Recent content in bayes on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 05 Jan 2019 19:58:38 +0800</lastBuildDate>
-    
-	<atom:link href="https://zouzhitao.github.io/tags/bayes/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sat, 05 Jan 2019 19:58:38 +0800</lastBuildDate><atom:link href="https://zouzhitao.github.io/tags/bayes/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>机器学习笔记:朴素贝叶斯</title>
       <link>https://zouzhitao.github.io/posts/ml-note-naive-bayes/</link>
@@ -28,7 +24,7 @@ $$ P(Y|X)=\frac{P(Y)P(X|Y)}{P(X)} $$
 naive bayes naive bayes 假设 given $Y$, 任意 $X_i,X_j$ 是条件独立(conditional independent)的，即
 $$ P(X_i|X_j,Y)=P(X_i|Y) $$
 也就是说,
-$$ \begin{align*} P(X_i,X_j|Y)&amp;amp;=P(X_i|Y)P(X_j|Y)\\
+$$ \begin{align*} P(X_i,X_j|Y)&amp;amp;=P(X_i|Y)P(X_j|Y)\\\
 P(X_1,X_2,\dots,X_n|Y)&amp;amp;=\prod_i P(X_i|Y) \end{align*} $$
 因此现在我们需要估计的参数由原来的 $2(2^n-1)+1$ 变为了 $2n+1$ 个
 derivation 简单搬运~

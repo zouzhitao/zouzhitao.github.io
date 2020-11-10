@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.51" />
+    <meta name="generator" content="Hugo 0.78.1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -93,227 +93,157 @@
                         
                         <aside id="toc" class="dismissed">
                             <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
-<ul>
-<li><a href="#text-preprocessing">text preprocessing</a></li>
-<li><a href="#inverted-index">inverted index</a>
-<ul>
-<li><a href="#simple-construction">simple construction</a></li>
-<li><a href="#posional-index">posional index</a></li>
-</ul></li>
-<li><a href="#index-construction">index construction</a>
-<ul>
-<li><a href="#block-sort-based-index-bsbi">Block sort-based index(BSBI)</a>
-<ul>
-<li><a href="#complexity">complexity</a></li>
-</ul></li>
-<li><a href="#single-pass-in-memory-indexing">single pass in memory indexing</a></li>
-</ul></li>
-<li><a href="#index-compression">index compression</a></li>
-<li><a href="#code-简单实现">code 简单实现</a></li>
-<li><a href="#ref">ref</a></li>
-</ul>
+  <ul>
+    <li><a href="#simple-construction">simple construction</a></li>
+    <li><a href="#posional-index">posional index</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#block-sort-based-indexbsbi">Block sort-based index(BSBI)</a>
+      <ul>
+        <li><a href="#complexity">complexity</a></li>
+      </ul>
+    </li>
+    <li><a href="#single-pass-in-memory-indexing">single pass in memory indexing</a></li>
+  </ul>
 </nav>
                         </aside><div class="post-content">
-                            
-
-<p>建立索引是 information retrieval 的一个核心问题，这一节简单记录关于index的相关笔记.
+                            <p>建立索引是 information retrieval 的一个核心问题，这一节简单记录关于index的相关笔记.
 所有内容均来自 <a href="https://web.stanford.edu/class/cs276/">stanford cs276 information retrieval &amp; web search</a></p>
-
 <h1 id="text-preprocessing">text preprocessing</h1>
-
 <p>一些术语</p>
-
 <ol>
 <li>tokenization
-
 <ol>
 <li>将文本编程token流，通常处理 &ldquo;I&rsquo;m &ldquo;..</li>
-</ol></li>
+</ol>
+</li>
 <li>normalization
-
 <ol>
 <li>text 和query term 映射统一(e.g. U.S.A USA)</li>
-</ol></li>
+</ol>
+</li>
 <li>stemming
-
 <ol>
 <li>形式(中文通常没这个问题,e.g. authorize, authorization)</li>
-</ol></li>
-<li>Stop words
-
-<ol>
-<li>omit 掉一些无用的，e.g a,an &hellip;
-<br />
-<br /></li>
-</ol></li>
 </ol>
-
+</li>
+<li>Stop words
+<ol>
+<li>omit 掉一些无用的，e.g a,an &hellip;</li>
+</ol>
+</li>
+</ol>
 <h1 id="inverted-index">inverted index</h1>
-
-<p><img src="/img/IIdx.PNG" alt="ii" /></p>
-
+<p><img src="/img/IIdx.PNG" alt="ii"></p>
 <p>term -&gt; (frq,posting_list(docId))</p>
-
 <p>frq = len(posting_list)</p>
-
 <h2 id="simple-construction">simple construction</h2>
-
 <p>text -&gt; tokenstream -&gt; list ( term, docId) -&gt; sort-&gt;<strong>unique</strong> -&gt; merge</p>
-
 <p>IR 系统两个核心的问题是 index高效和storage 高效，</p>
-
 <p>比如这种索引可以应对简单 boolean query,</p>
-
 <p>也就是说 term1 &amp; term2 的问题，仅需对两个term的posting list merge就行了，并且效率在 $O(frq_1+frq_2)$</p>
-
 <p><strong>注意</strong>可以证明 任意的boolean 查询都能保证在 $O(\sum frq_i)$ 也就是说linear on sum of size of posting_list</p>
-
 <p>但是这种索引如果用来处理 短语查询(phase query) 是有问题的</p>
-
 <p>一种简单的解决方案是建立positional index，着种索引类似 inverted index，不过还存储了位置信息，因此storage用的会更多</p>
-
 <h2 id="posional-index">posional index</h2>
-
 <p>(term , frq[Int], List[(docId, List[post[Int]]])</p>
-
 <p>trem : frq
-    - docId1 : list(pos in docId2)
-    - docId2 : list(pos in docId2)</p>
-
+- docId1 : list(pos in docId2)
+- docId2 : list(pos in docId2)</p>
 <p>查询也是高效的(POSITIONALINTERSECT(p1, p2, k), ref1 P42, 本质上还是基于有序list的merge)</p>
-
 <h1 id="index-construction">index construction</h1>
-
 <p>由于index 通常非常大，不可能简单地把它全部存在memory中，肯定是要存到disk上的，(这里的计算机模型还是简单的PC机，没考虑集群)，因此除了简单考虑memory中的算法效率外，还得尽量让算法具备disk-友好性(<strong>note</strong> 就是能够利用disk访问的时候询盘耗时的特点，多访问block少访问多的小数据)</p>
-
 <p>简单总结几种index</p>
-
-<h2 id="block-sort-based-index-bsbi">Block sort-based index(BSBI)</h2>
-
+<h2 id="block-sort-based-indexbsbi">Block sort-based index(BSBI)</h2>
 <p>回忆前面提到的 simple construction 方法，会存在一个问题，要将所有的文本集合产生的 term dict 放在memory中，当集合很大的时候就会导致memory不够用，因此必须要用second storage(简单起见，后面就称为disk)</p>
-
 <p>BSBI 构造非常简单</p>
-
 <blockquote>
 <p><strong>algo</strong></p>
-
 <ol>
-<li><p>将text集合分成 $n$ 个块(block), 每个块在memory中构造好inverted-index，然后写到disk</p></li>
-
-<li><p>对每个block中的inverted-index做multi-way merge</p></li>
+<li>
+<p>将text集合分成 $n$ 个块(block), 每个块在memory中构造好inverted-index，然后写到disk</p>
+</li>
+<li>
+<p>对每个block中的inverted-index做multi-way merge</p>
+</li>
 </ol>
 </blockquote>
-
 <p><strong>block process</strong></p>
-
 <blockquote>
 <p>这个算法比较蠢的地方就在于每个block的处理，它采用的是上面提到的(simple construction 的做法) 先简单的 生成 List[(termID,docId)] 然后再排序，注意这是很慢的，有一个sort的过程,后面的SPIMI就是在这个上做了一些改进</p>
 </blockquote>
-
 <p><strong>multi-way merge</strong></p>
-
 <blockquote>
 <p>multi-way merge 的过程很简单，就是在memory中维护一个 <strong>buffer</strong>，存贮当前的term的posting_list，同时用一个priority-queue维护每个block的最小的 termId，每次却出queue中最小的termId，从磁盘中读取posting_list,合并到buffer中，当当前的term的posting_list处理完毕，或者，buffur到达给定的size，写到disk中
 (<strong>note</strong> 注意这是一个非常典型的有限缓冲区读写问题)</p>
 </blockquote>
-
 <p>简单实现</p>
-
-<pre><code class="language-python">import heapq
-class BSBIIndex(BSBIIndex):
-    def merge(self, indices, merged_index,buffur_size=1024*1024):
-        &quot;&quot;&quot;Merges multiple inverted indices into a single index
-        
-        Parameters
-        ----------
-        indices: List[InvertedIndexIterator]
-            A list of InvertedIndexIterator objects, each representing an
-            iterable inverted index for a block
-        merged_index: InvertedIndexWriter
-            An instance of InvertedIndexWriter object into which each merged 
-            postings list is written out one at a time
-        &quot;&quot;&quot;
-        ### Begin your code
-        cur_term=None
-        buffer= []
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> heapq
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BSBIIndex</span>(BSBIIndex):
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">merge</span>(self, indices, merged_index,buffur_size<span style="color:#f92672">=</span><span style="color:#ae81ff">1024</span><span style="color:#f92672">*</span><span style="color:#ae81ff">1024</span>):
+        <span style="color:#e6db74">&#34;&#34;&#34;Merges multiple inverted indices into a single index
+</span><span style="color:#e6db74">        
+</span><span style="color:#e6db74">        Parameters
+</span><span style="color:#e6db74">        ----------
+</span><span style="color:#e6db74">        indices: List[InvertedIndexIterator]
+</span><span style="color:#e6db74">            A list of InvertedIndexIterator objects, each representing an
+</span><span style="color:#e6db74">            iterable inverted index for a block
+</span><span style="color:#e6db74">        merged_index: InvertedIndexWriter
+</span><span style="color:#e6db74">            An instance of InvertedIndexWriter object into which each merged 
+</span><span style="color:#e6db74">            postings list is written out one at a time
+</span><span style="color:#e6db74">        &#34;&#34;&#34;</span>
+        <span style="color:#75715e">### Begin your code</span>
+        cur_term<span style="color:#f92672">=</span>None
+        buffer<span style="color:#f92672">=</span> []
     
-        for merged_item in heapq.merge(*indices,key=lambda x : x[0]):
-            if cur_term is None or cur_term == merged_item[0]:
-                cur_term = merged_item[0]
-                buffer.extend(merged_item[1])
-            else :
-                merged_index.append(cur_term,buffer)
-                cur_term = merged_item[0]
-                buffer=[]
-                buffer.extend(merged_item[1])
+        <span style="color:#66d9ef">for</span> merged_item <span style="color:#f92672">in</span> heapq<span style="color:#f92672">.</span>merge(<span style="color:#f92672">*</span>indices,key<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> x : x[<span style="color:#ae81ff">0</span>]):
+            <span style="color:#66d9ef">if</span> cur_term <span style="color:#f92672">is</span> None <span style="color:#f92672">or</span> cur_term <span style="color:#f92672">==</span> merged_item[<span style="color:#ae81ff">0</span>]:
+                cur_term <span style="color:#f92672">=</span> merged_item[<span style="color:#ae81ff">0</span>]
+                buffer<span style="color:#f92672">.</span>extend(merged_item[<span style="color:#ae81ff">1</span>])
+            <span style="color:#66d9ef">else</span> :
+                merged_index<span style="color:#f92672">.</span>append(cur_term,buffer)
+                cur_term <span style="color:#f92672">=</span> merged_item[<span style="color:#ae81ff">0</span>]
+                buffer<span style="color:#f92672">=</span>[]
+                buffer<span style="color:#f92672">.</span>extend(merged_item[<span style="color:#ae81ff">1</span>])
             
-            if len(buffer) &gt; buffur_size:
-                merged_index.append(cur_term,buffer)
-                buffer = []
+            <span style="color:#66d9ef">if</span> len(buffer) <span style="color:#f92672">&gt;</span> buffur_size:
+                merged_index<span style="color:#f92672">.</span>append(cur_term,buffer)
+                buffer <span style="color:#f92672">=</span> []
                 
-</code></pre>
-
-<h3 id="complexity">complexity</h3>
-
+</code></pre></div><h3 id="complexity">complexity</h3>
 <p>假设总的term 为 $T$, 分为 $n$ 块</p>
-
 <p>$O(n*T/nlog(T/n) + log(n)T)$</p>
-
 <p>同时 BSBI还用了一个map term-&gt; termID,这个也是耗费存储的</p>
-
 <h2 id="single-pass-in-memory-indexing">single pass in memory indexing</h2>
-
-<p><img src="/img/SPIMI.PNG" alt="spimi" /></p>
-
+<p><img src="/img/SPIMI.PNG" alt="spimi"></p>
 <blockquote>
 <p>其实我感觉这算法就是正常人的写法, :(</p>
 </blockquote>
-
 <p>因为这个posting_list本来就是递增的所以在处理每个block的时候仅仅需要维护一个dict然后每次append到posting_list的末尾就行了，满了之后放到磁盘中</p>
-
 <p>不太清楚 single-pass的意义，因为每个block仍旧需要merge的过程</p>
-
 <p>可以加色blockmerge的过程近似线性，block很少啊
 complexity $\Theta(T)$</p>
-
 <h1 id="index-compression">index compression</h1>
-
 <p>这东西大概是研究index的编解码，不太感兴趣&hellip;</p>
-
 <p>补充一个作业中用到的吧</p>
-
 <p><a href="https://nlp.stanford.edu/IR-book/html/htmledition/variable-byte-codes-1.html">variable-byte-code</a></p>
-
 <p>很简单就是将一个数字按照7bit一个byte表示, 仅仅表示有效的byte(全0的byte就不要了)，最后一个byte(最高位)做高bit为1，其他byte最高bit为0，这样就能分辨一个数字结尾了</p>
-
 <p>e.g</p>
-
 <pre><code>11111000011111 -&gt; 1111100 0011111 -&gt; 00011111 11111100 
-</code></pre>
-
-<p><a href="../pa1/pa1-skeleton/submission/compressed_postings.py">code</a></p>
-
+</code></pre><p><a href="../pa1/pa1-skeleton/submission/compressed_postings.py">code</a></p>
 <p><strong>补充</strong></p>
-
 <p>这个算法对于assigment中的例子来说 57M-&gt; 31M</p>
-
 <h1 id="code-简单实现">code 简单实现</h1>
-
 <p><a href="https://github.com/zouzhitao/cs276-Information-Retrieval-and-Web-Search/tree/master/pa1/pa1-skeleton">code</a></p>
-
 <h1 id="ref">ref</h1>
-
 <ol>
 <li><a href="https://nlp.stanford.edu/IR-book/">Introduction to Information Retrieval, by C. Manning, P. Raghavan, and H. Schütze (Cambridge University Press, 2008).</a></li>
 </ol>
-
 <blockquote>
 <p><strong>版权声明</strong></p>
-
 <p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
-
 <p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
-
 <p><strong>转载请保留此版权声明，并注明出处</strong></p>
 </blockquote>
 
@@ -393,6 +323,10 @@ complexity $\Theta(T)$</p>
 <ul class="widget-list">
     
     <li>
+        <a href="https://zouzhitao.github.io/posts/finding-jobs/" title="告别学生生涯:秋招之路">告别学生生涯:秋招之路</a>
+    </li>
+    
+    <li>
         <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
     </li>
     
@@ -428,10 +362,6 @@ complexity $\Theta(T)$</p>
         <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
     </li>
     
-    <li>
-        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -442,15 +372,19 @@ complexity $\Theta(T)$</p>
 <ul class="widget-list">
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/ir/">IR(3)</a>
-    </li>
-    
-    <li>
         <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
     </li>
     
     <li>
         <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(1)</a>
     </li>
     
     <li>

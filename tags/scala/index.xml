@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>scala on taotao 码字的地方</title>
@@ -6,11 +6,7 @@
     <description>Recent content in scala on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Tue, 26 Mar 2019 23:38:34 +0800</lastBuildDate>
-    
-	<atom:link href="https://zouzhitao.github.io/tags/scala/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Tue, 26 Mar 2019 23:38:34 +0800</lastBuildDate><atom:link href="https://zouzhitao.github.io/tags/scala/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Generic Variance in Scala: 泛型变化 in scala</title>
       <link>https://zouzhitao.github.io/posts/generic-variance-in-scala/</link>
@@ -19,10 +15,11 @@
       <guid>https://zouzhitao.github.io/posts/generic-variance-in-scala/</guid>
       <description>本文主要总结Scala中关于generic variance(泛型变化， 我也不知道该怎么翻译，以下称 GV),(co-,contra-,in)variance in Scala 的相关知识，什么是 generic variance 呢？我的感觉是一种泛型类型的类型系统，应该和 type system 比较相关，(PL专家就不要嘲笑我了)。比如: List&amp;lt;Integer&amp;gt;是 List&amp;lt;Object&amp;gt; 的子类，合理吗？cast 行吗？为什么不行？什么样的 Function 是另外一个 function 的subclass？
  引入 我们先来看一段简单的代码
-Object [] x = new Integer[1]; x[0] = &amp;quot;crash&amp;quot;;  这样是能够编译通过的，但是我们知道其实这是错误的，而这种错误最好是在编译期就能即时发现，而不是运行时。
+Object [] x = new Integer[1]; x[0] = &amp;#34;crash&amp;#34;; 这样是能够编译通过的，但是我们知道其实这是错误的，而这种错误最好是在编译期就能即时发现，而不是运行时。
 我们来简单分析一下，这段代码出现错误的原因, 其实最大的问题就是在于 第二行 的赋值，x 是一个 mutable 的object array，所以天然就是允许这样做的，如果 x 是一个 immutable 的对象，那 第一行的 操作完全不会在 runtime 出问题
 再来一段代码
-List&amp;lt;String&amp;gt; yList = new ArrayList&amp;lt;&amp;gt;(); List&amp;lt;Object&amp;gt; xList = yList;  这段代码是会报错的，然而在某些情况下，我们就是需要一个list 既能够装 string， 又能够装 Integer 。所以，我们接下来探讨什么样的操作能够让我们随心所欲的cast，同时不会出现各种各样的 编译期或运行时的问题。</description>
+List&amp;lt;String&amp;gt; yList = new ArrayList&amp;lt;&amp;gt;(); List&amp;lt;Object&amp;gt; xList = yList; 这段代码是会报错的，然而在某些情况下，我们就是需要一个list 既能够装 string， 又能够装 Integer 。所以，我们接下来探讨什么样的操作能够让我们随心所欲的cast，同时不会出现各种各样的 编译期或运行时的问题。
+LSP (Liskov substitution principle)  in a computer program, if S is a subtype of T, then objects of type T may be replaced with objects of type S (i.</description>
     </item>
     
   </channel>

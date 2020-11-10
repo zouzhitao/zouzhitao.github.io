@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.51" />
+    <meta name="generator" content="Hugo 0.78.1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -92,69 +92,41 @@
                         
                         
                         <aside id="toc" class="dismissed">
-                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
-<ul>
-<li><a href="#官方链接">官方链接</a></li>
-<li><a href="#我的心路历程">我的心路历程</a></li>
-<li><a href="#官方题解详解">官方题解详解</a></li>
-<li><a href="#ac-code">AC code</a></li>
-</ul>
-</nav>
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents"></nav>
                         </aside><div class="post-content">
-                            
-
-<h1 id="官方链接">官方链接</h1>
-
+                            <h1 id="官方链接">官方链接</h1>
 <ul>
 <li><a href="https://code.google.com/codejam/contest/9234486/dashboard#s=p1&amp;a=1">题目描述</a></li>
 <li><a href="https://code.google.com/codejam/contest/9234486/dashboard#s=a&amp;a=1">官方题解</a></li>
 </ul>
-
 <h1 id="我的心路历程">我的心路历程</h1>
-
 <p>首先不难想到，肯定要将 $v_i$ 排序，然后如果取到的是小的那部分值，那么我们肯定要将其放回，然后再取，不妨设 $i&lt;j$, 均要放回。因此所有的 $n$ 个item 就被分为了两个部分，一部分是要放回的，另外一部分是不放回的。</p>
-
 <p>最开始的时候，看样例的解释我以为是这样的,直接分别求两者的概率，则有</p>
-
 <p>放回的那部分 $p_1 = (\frac{j}{n})^{k+1}$不放回的那部分为 $1-p_1 = 1-(\frac{j}{n})^{k+1}$</p>
-
 <p>因此只要枚举 $j$ 就行了，然而样例通不过，果然在case 5 就错了。后来就看了官方题解，还是一脸懵逼，虽然感觉这样是对的然而并不清楚为什么这样是对的。因此我就重新推了一遍公式</p>
-
 <h1 id="官方题解详解">官方题解详解</h1>
-
 <p>首先 $k = 1$ 时， $p1$ 肯定是对的,因此我们有</p>
-
 <p>$$
 \begin{align*}
-E[0] &amp;=\frac{\sum_{i=1}^nv_i}{n}\\<br />
-E[1] &amp;= \frac{j^2}{n^2}\frac{\sum_{k&lt;=j}v_i}{j} + \frac{(n-j)(n+j)}{n^2}\frac{\sum_{i&gt;j}v_i}{n-j}\\<br />
-&amp;= \frac{j\sum_{k&lt;=j}v_i}{n^2}+\frac{(n+j)\sum_{i&gt;j}v_i}{n^2}\\<br />
-&amp;= \frac{\sum_{i&gt;j}v_i}{n} + \frac{j\sum_iv_i}{n^2}\\<br />
-&amp;=\frac{\sum_{i&gt;j}v_i+jE[0]}{n}\\<br />
+E[0] &amp;=\frac{\sum_{i=1}^nv_i}{n}\\\<br>
+E[1] &amp;= \frac{j^2}{n^2}\frac{\sum_{k&lt;=j}v_i}{j} + \frac{(n-j)(n+j)}{n^2}\frac{\sum_{i&gt;j}v_i}{n-j}\\\<br>
+&amp;= \frac{j\sum_{k&lt;=j}v_i}{n^2}+\frac{(n+j)\sum_{i&gt;j}v_i}{n^2}\\\<br>
+&amp;= \frac{\sum_{i&gt;j}v_i}{n} + \frac{j\sum_iv_i}{n^2}\\\<br>
+&amp;=\frac{\sum_{i&gt;j}v_i+jE[0]}{n}\\\<br>
 \end{align*}
 $$</p>
-
-<p><img src="/img/18-12-25-1.png" alt="公式" /></p>
-
+<p><img src="/img/18-12-25-1.png" alt="公式"></p>
 <p>很显然 $j = \arg \max_{i} v_i&lt;=E[0]$, 即</p>
-
 <p>$$
 E[1] = \frac{\sum_{i=1}^n \max\{v_i,E[0]\}}{n}
 $$</p>
-
 <p>得出了官方题解中的第一个公式，对于 $k=2$ 其实相当于将 所有 $v_i&lt;E[0]$ 的item 换成 $E[0]$ 之后，$k=1$ 的期望，这就回到了第一种情况</p>
-
 <h1 id="ac-code">AC code</h1>
-
 <p><a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/18-roundA-PB-Lucky%20Dip.cpp">github.com/zouzhitao/competitive-programing</a></p>
-
 <blockquote>
 <p><strong>版权声明</strong></p>
-
 <p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
-
 <p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
-
 <p><strong>转载请保留此版权声明，并注明出处</strong></p>
 </blockquote>
 
@@ -234,6 +206,10 @@ $$</p>
 <ul class="widget-list">
     
     <li>
+        <a href="https://zouzhitao.github.io/posts/finding-jobs/" title="告别学生生涯:秋招之路">告别学生生涯:秋招之路</a>
+    </li>
+    
+    <li>
         <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
     </li>
     
@@ -269,10 +245,6 @@ $$</p>
         <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
     </li>
     
-    <li>
-        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -283,15 +255,19 @@ $$</p>
 <ul class="widget-list">
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/ir/">IR(3)</a>
-    </li>
-    
-    <li>
         <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
     </li>
     
     <li>
         <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(1)</a>
     </li>
     
     <li>

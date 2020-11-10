@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.51" />
+    <meta name="generator" content="Hugo 0.78.1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -92,33 +92,21 @@
                         
                         
                         <aside id="toc" class="dismissed">
-                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
-<ul>
-<li><a href="#简单解释">简单解释</a></li>
-<li><a href="#使用总结">使用总结</a></li>
-<li><a href="#时间测试">时间测试</a></li>
-<li><a href="#refrence">refrence</a></li>
-</ul>
-</nav>
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents"></nav>
                         </aside><div class="post-content">
-                            
-
-<p>这要是对以下几种在c++里的 for-range-loop做一个总结</p>
-
+                            <p>这要是对以下几种在c++里的 for-range-loop做一个总结</p>
 <ol>
 <li><code>for(auto e : container)</code></li>
 <li><code>for(auto &amp;e : container)</code></li>
 <li><code>for(const auto &amp;e : container)</code></li>
 <li><code>for(auto &amp;&amp; e : container)</code></li>
 </ol>
-
 <p>这里主要是参考 ref [1] stackoverflow里的类容，他总结的很好，我这里做个备份</p>
-
-<p>核心思想是
-&gt; 和函数的参数一样，Same consideration applies as for function arguments</p>
-
+<p>核心思想是</p>
+<blockquote>
+<p>和函数的参数一样，Same consideration applies as for function arguments</p>
+</blockquote>
 <h1 id="简单解释">简单解释</h1>
-
 <ol>
 <li>for(auto e : container)
 这会使用一个 copy-constructor函数，构造一个副本，也就是说 e,仅仅是container中的一个copy
@@ -130,111 +118,93 @@ test-code 见ref1</li>
 例如 <code>vector&lt;bool&gt;</code> STL将其设计为一个bool一个bit 所以是没法refrence到它的地址的(cpu按byte寻址),如果用 <code>for(auto &amp; e: container)</code>会出现<strong>编译错误</strong>
 <strong>不过</strong>， 这种语法是兼容 <code>for(auto &amp; e:container)</code>,并且时间开销接近(见后文的时间测试)</li>
 </ol>
-
 <h1 id="使用总结">使用总结</h1>
-
 <ol>
 <li>For <strong>observing</strong> mode，即仅仅是read-only的情况
-
 <ol>
 <li>通常使用 <code>for(const auto &amp;e:container)</code></li>
 <li>例外，对于copy-cheap的类型(e.g. int,double,&hellip;,value type),<code>for(auto e:container)</code></li>
-</ol></li>
+</ol>
+</li>
 <li>For <strong>modifying</strong> mode,需要再遍历过程中modify 数据的情况
-
 <ol>
 <li>通常使用 <code>for(auto &amp; e :container)</code></li>
 <li>对于 <strong>proxy-iterator</strong> 采用<code>for(auto &amp;&amp; e: container)</code></li>
-</ol></li>
 </ol>
-
+</li>
+</ol>
 <p>这里不得不感慨 <code>cpp</code> 这是最难的语言，例外如此多，一点也不general，一点也不generic&hellip;.</p>
-
 <p>有没有更简单一些的规则呢？ 更general一些的，有的</p>
-
 <ol>
 <li>For <strong>observing</strong>
 <code>for(const auto &amp;e : container)</code> 不管它是不是copy-cheap，也不管它是不是value-type,（实际测试中(int,long long,double) 使用auto e仍旧会比const auto &amp;e 慢一些，测试见后文）</li>
 <li>For <strong>modifying</strong>
 <code>for(auto &amp;&amp; e: container)</code> 就ok 了，因为这两者 <strong>行为</strong> (并未看过底层是否等价)等价，并且时间也接近</li>
 </ol>
-
 <h1 id="时间测试">时间测试</h1>
-
 <ol>
-<li><p>copy-construct 在 <code>vector&lt;string&gt;,every string'length is equal to 100</code></p>
-
+<li>copy-construct 在 <code>vector&lt;string&gt;,every string'length is equal to 100</code>
 <ol>
-<li>测试代码 <a href="https://gist.github.com/zouzhitao/aef28279e19611a0b463398676799a56">github</a></li>
-<li>测试结果
-<br /></li>
-</ol>
+<li>
+<p>测试代码 <a href="https://gist.github.com/zouzhitao/aef28279e19611a0b463398676799a56">github</a></p>
+</li>
+<li>
+<p>测试结果</p>
+<pre><code>auto e : 0.132257s
 
-<pre><code>  auto e : 0.132257s
+const auto &amp; e: 0.0180348s
 
-  const auto &amp; e: 0.0180348s
-
-  auto &amp;&amp; e : 0.0188524s
+auto &amp;&amp; e : 0.0188524s
 </code></pre></li>
-
-<li><p>值类型(int,long long,double) 测试</p>
-
+</ol>
+</li>
+<li>值类型(int,long long,double) 测试
 <ol>
 <li>测试代码 <a href="https://gist.github.com/zouzhitao/64e66da40ec18db0972c8a37db774ec5">github</a></li>
 <li>测试结果</li>
-</ol></li>
 </ol>
-
+</li>
+</ol>
 <table>
 <thead>
 <tr>
-<th align="center">for-type</th>
-<th align="center">int(s)</th>
-<th align="center">long long(s)</th>
-<th align="center">double(s)</th>
+<th style="text-align:center">for-type</th>
+<th style="text-align:center">int(s)</th>
+<th style="text-align:center">long long(s)</th>
+<th style="text-align:center">double(s)</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
-<td align="center">auto e</td>
-<td align="center">0.0932</td>
-<td align="center">0.0924</td>
-<td align="center">0.0933</td>
+<td style="text-align:center">auto e</td>
+<td style="text-align:center">0.0932</td>
+<td style="text-align:center">0.0924</td>
+<td style="text-align:center">0.0933</td>
 </tr>
-
 <tr>
-<td align="center">const auto&amp; e</td>
-<td align="center">0.0884</td>
-<td align="center">0.0861</td>
-<td align="center">0.0875</td>
+<td style="text-align:center">const auto&amp; e</td>
+<td style="text-align:center">0.0884</td>
+<td style="text-align:center">0.0861</td>
+<td style="text-align:center">0.0875</td>
 </tr>
-
 <tr>
-<td align="center">auto &amp;&amp; e</td>
-<td align="center">0.0903</td>
-<td align="center">0.0872</td>
-<td align="center">0.0864</td>
+<td style="text-align:center">auto &amp;&amp; e</td>
+<td style="text-align:center">0.0903</td>
+<td style="text-align:center">0.0872</td>
+<td style="text-align:center">0.0864</td>
 </tr>
 </tbody>
 </table>
-
 <p>需要注意的是测试代码仅仅是测试的遍历，没有访问过程，如果考虑访问寻址的开销，那么对于value type based on refrence 可能会开销更多的时间.</p>
-
 <h1 id="refrence">refrence</h1>
-
 <ol>
 <li><a href="https://stackoverflow.com/questions/15927033/what-is-the-correct-way-of-using-c11s-range-based-for">stackoverflow.What is the correct way of using C++11&rsquo;s range-based for?</a></li>
 <li><a href="https://en.cppreference.com/w/cpp/language/range-for">cpprefrence</a></li>
 </ol>
-
 <blockquote>
 <p><strong>版权声明</strong></p>
-
 <p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
-
 <p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
-
 <p><strong>转载请保留此版权声明，并注明出处</strong></p>
 </blockquote>
 
@@ -314,6 +284,10 @@ test-code 见ref1</li>
 <ul class="widget-list">
     
     <li>
+        <a href="https://zouzhitao.github.io/posts/finding-jobs/" title="告别学生生涯:秋招之路">告别学生生涯:秋招之路</a>
+    </li>
+    
+    <li>
         <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
     </li>
     
@@ -349,10 +323,6 @@ test-code 见ref1</li>
         <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
     </li>
     
-    <li>
-        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -363,15 +333,19 @@ test-code 见ref1</li>
 <ul class="widget-list">
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/ir/">IR(3)</a>
-    </li>
-    
-    <li>
         <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
     </li>
     
     <li>
         <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(1)</a>
     </li>
     
     <li>

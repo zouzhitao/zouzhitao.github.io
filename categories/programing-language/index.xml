@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>programing-language on taotao 码字的地方</title>
@@ -6,11 +6,7 @@
     <description>Recent content in programing-language on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Tue, 22 Oct 2019 22:58:55 +0800</lastBuildDate>
-    
-	<atom:link href="https://zouzhitao.github.io/categories/programing-language/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Tue, 22 Oct 2019 22:58:55 +0800</lastBuildDate><atom:link href="https://zouzhitao.github.io/categories/programing-language/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>pbds: STL 的扩展数据结构</title>
       <link>https://zouzhitao.github.io/posts/pbds/</link>
@@ -21,7 +17,8 @@
  introduction pbds 是GNU对STL的一个扩展，封装了很多常见的数据结构，并且提供了操作数据结构内部metadata的策略，也就是说user(我们)可以直接对内部节点更新了，这称之为 policy。这里并不打算详细介绍 pbds的使用和设计，instead，这里仅仅提供一些案例，它的使用可见官方手册
 pbds 封装这样一些数据结构:
  tree hash_table priority_queue trie  并且提供比STL更加通用的操作方式
-tree template&amp;lt; typename Key,// key 类型 typename Mapped,// value 类型，可为null_type, 表示set typename Cmp_Fn = std::less&amp;lt;Key&amp;gt;, typename Tag = rb_tree_tag,// other rb_tree_tag, splay_tree_tag, or ov_tree_tag template&amp;lt; typename Const_Node_Iterator, typename Node_Iterator, typename Cmp_Fn_, typename Allocator_&amp;gt; class Node_Update = null_node_update,// update policy，大部分情况下不用自己写 typename Allocator = std::allocator&amp;lt;char&amp;gt; &amp;gt; class tree;  tree 与STL中的map和set非常类似，不过由于提供了对node的metadata的操作使得我们能够解决一些set和map无法解决的东西。</description>
+tree template&amp;lt; typename Key,// key 类型 typename Mapped,// value 类型，可为null_type, 表示set typename Cmp_Fn = std::less&amp;lt;Key&amp;gt;, typename Tag = rb_tree_tag,// other rb_tree_tag, splay_tree_tag, or ov_tree_tag template&amp;lt; typename Const_Node_Iterator, typename Node_Iterator, typename Cmp_Fn_, typename Allocator_&amp;gt; class Node_Update = null_node_update,// update policy，大部分情况下不用自己写 typename Allocator = std::allocator&amp;lt;char&amp;gt; &amp;gt; class tree; tree 与STL中的map和set非常类似，不过由于提供了对node的metadata的操作使得我们能够解决一些set和map无法解决的东西。
+order 查询 最典型的一种情形就是 set 无法告诉你 某个 key的前面有多少元素，然而我们知道通过维护一些节点上的metadata(算法导论)，可以实现这个操作，斌且不需要任何额外的时间开销</description>
     </item>
     
     <item>
@@ -32,8 +29,9 @@ tree template&amp;lt; typename Key,// key 类型 typename Mapped,// value 类型
       <guid>https://zouzhitao.github.io/posts/range-based-for-in-cpp11/</guid>
       <description>这要是对以下几种在c++里的 for-range-loop做一个总结
  for(auto e : container) for(auto &amp;amp;e : container) for(const auto &amp;amp;e : container) for(auto &amp;amp;&amp;amp; e : container)  这里主要是参考 ref [1] stackoverflow里的类容，他总结的很好，我这里做个备份
-核心思想是 &amp;gt; 和函数的参数一样，Same consideration applies as for function arguments
-简单解释  for(auto e : container) 这会使用一个 copy-constructor函数，构造一个副本，也就是说 e,仅仅是container中的一个copy test-code 见ref1 for(const auto &amp;amp; e:container),for(auto &amp;amp;e : container) 这两者的区别在于 const 不能在for-loop中更改 e,两者的开销(通常意义下，取决于copy-construct的开销)都会比 1低， for(auto &amp;amp;&amp;amp;e : container) 这个语法我也是第一次遇见，主要给一些proxy-iterator使用的， 例如 vector&amp;lt;bool&amp;gt; STL将其设计为一个bool一个bit 所以是没法refrence到它的地址的(cpu按byte寻址),如果用 for(auto &amp;amp; e: container)会出现编译错误 不过， 这种语法是兼容 for(auto &amp;amp; e:container),并且时间开销接近(见后文的时间测试)  使用总结  For observing mode，即仅仅是read-only的情况  通常使用 for(const auto &amp;amp;e:container) 例外，对于copy-cheap的类型(e.</description>
+核心思想是
+ 和函数的参数一样，Same consideration applies as for function arguments
+ 简单解释  for(auto e : container) 这会使用一个 copy-constructor函数，构造一个副本，也就是说 e,仅仅是container中的一个copy test-code 见ref1 for(const auto &amp;amp; e:container),for(auto &amp;amp;e : container) 这两者的区别在于 const 不能在for-loop中更改 e,两者的开销(通常意义下，取决于copy-construct的开销)都会比 1低， for(auto &amp;amp;&amp;amp;e : container) 这个语法我也是第一次遇见，主要给一些proxy-iterator使用的， 例如 vector&amp;lt;bool&amp;gt; STL将其设计为一个bool一个bit 所以是没法refrence到它的地址的(cpu按byte寻址),如果用 for(auto &amp;amp; e: container)会出现编译错误 不过， 这种语法是兼容 for(auto &amp;amp; e:container),并且时间开销接近(见后文的时间测试)  使用总结  For observing mode，即仅仅是read-only的情况  通常使用 for(const auto &amp;amp;e:container) 例外，对于copy-cheap的类型(e.</description>
     </item>
     
     <item>
@@ -44,10 +42,11 @@ tree template&amp;lt; typename Key,// key 类型 typename Mapped,// value 类型
       <guid>https://zouzhitao.github.io/posts/generic-variance-in-scala/</guid>
       <description>本文主要总结Scala中关于generic variance(泛型变化， 我也不知道该怎么翻译，以下称 GV),(co-,contra-,in)variance in Scala 的相关知识，什么是 generic variance 呢？我的感觉是一种泛型类型的类型系统，应该和 type system 比较相关，(PL专家就不要嘲笑我了)。比如: List&amp;lt;Integer&amp;gt;是 List&amp;lt;Object&amp;gt; 的子类，合理吗？cast 行吗？为什么不行？什么样的 Function 是另外一个 function 的subclass？
  引入 我们先来看一段简单的代码
-Object [] x = new Integer[1]; x[0] = &amp;quot;crash&amp;quot;;  这样是能够编译通过的，但是我们知道其实这是错误的，而这种错误最好是在编译期就能即时发现，而不是运行时。
+Object [] x = new Integer[1]; x[0] = &amp;#34;crash&amp;#34;; 这样是能够编译通过的，但是我们知道其实这是错误的，而这种错误最好是在编译期就能即时发现，而不是运行时。
 我们来简单分析一下，这段代码出现错误的原因, 其实最大的问题就是在于 第二行 的赋值，x 是一个 mutable 的object array，所以天然就是允许这样做的，如果 x 是一个 immutable 的对象，那 第一行的 操作完全不会在 runtime 出问题
 再来一段代码
-List&amp;lt;String&amp;gt; yList = new ArrayList&amp;lt;&amp;gt;(); List&amp;lt;Object&amp;gt; xList = yList;  这段代码是会报错的，然而在某些情况下，我们就是需要一个list 既能够装 string， 又能够装 Integer 。所以，我们接下来探讨什么样的操作能够让我们随心所欲的cast，同时不会出现各种各样的 编译期或运行时的问题。</description>
+List&amp;lt;String&amp;gt; yList = new ArrayList&amp;lt;&amp;gt;(); List&amp;lt;Object&amp;gt; xList = yList; 这段代码是会报错的，然而在某些情况下，我们就是需要一个list 既能够装 string， 又能够装 Integer 。所以，我们接下来探讨什么样的操作能够让我们随心所欲的cast，同时不会出现各种各样的 编译期或运行时的问题。
+LSP (Liskov substitution principle)  in a computer program, if S is a subtype of T, then objects of type T may be replaced with objects of type S (i.</description>
     </item>
     
     <item>
@@ -56,7 +55,7 @@ List&amp;lt;String&amp;gt; yList = new ArrayList&amp;lt;&amp;gt;(); List&amp;lt;
       <pubDate>Thu, 21 Feb 2019 22:33:57 +0800</pubDate>
       
       <guid>https://zouzhitao.github.io/posts/unordered-map/</guid>
-      <description> 题目链接 google kickstart 2018 Scrambled Words
+      <description>题目链接 google kickstart 2018 Scrambled Words
 分析 分析在题目网站有，首先需要想到的就是不同串的长度只有 $O(\sqrt{\sum words_i})$ 种，那么枚举所有长度肯定是一种可行的方法，不过呢，即使枚举长度，对于每个枚举到的字串，我们仍然需要将他和所有具有此长度的串比较，太过浪费时间了，怎么做才能加速呢？ 对 hash, 将dict中的串 hash 一下，那么查找时间就变成了$O(1)$, 所以最终的时间复杂度就变成了 $O(1)$
 这里补充一些 hash 知识，其实这个在工业界用的非常多，所以基本上的程序语言都提供了丰富的类库，我用的是c++ 的unordered_map&amp;lt;&amp;gt;,当然，对于 个性化 的类还是需要自己写hash 函数以及 ==的，详见参考文献
 code github
@@ -79,7 +78,7 @@ url: https://github.com/zouzhitao/CS_Learning/tree/master/PL%40Grossman
 coursera 课程地址: https://www.coursera.org/learn/programming-languages
 思考 这门课程可以说非常棒，给了我很多在程序语言上的洞见，可以说是让我重新理解了编程，重新理解了程序语言，不过可能关于整个 程序语言(programing language,PL)的研究, 在工业界真正的用武之地是很少的，或者说不如真正的应用计算机科学(系统,机器学习,etc)来的那么直接。不过我却认为里面有很多迷人的哲学式的美感。这是我第一次用函数式语言，我被他的间接，以及逻辑上的清晰感给折服了。所有计算都是用函数解决的，可以说是非常接近于数学逻辑了。不过真要入这个程序语言的坑，可能还得稍后一些，彼时的我需要的更多的还是一些工业界的东西。(:( ,不然就要饿肚子了)。扯了这么多，感觉是在为不继续学习 Part B，找借口&amp;hellip;
 知识回顾 wk1 wk1 主要是讲一些 ML的基本用法和概念:
- variable binding function binding List immutable   但是最为主要的还是在最后的一节:,作者点出了程序语言的几个重要特征(不要忘了，这门课程的目的是叫我们如何学习所有程序语言)
+ variable binding function binding List immutable  但是最为主要的还是在最后的一节:,作者点出了程序语言的几个重要特征(不要忘了，这门课程的目的是叫我们如何学习所有程序语言)
  Syntax: How do you write the various parts of the language? Semantics: What do the various language features mean? For example, how are expressions evaluated? Idioms: What are the common approaches to using the language features to express computations?</description>
     </item>
     

@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.51" />
+    <meta name="generator" content="Hugo 0.78.1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -93,87 +93,51 @@
                         
                         <aside id="toc" class="dismissed">
                             <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
-<ul>
-<li><a href="#a-allocation">A.Allocation</a>
-<ul>
-<li><a href="#分析">分析</a></li>
-</ul></li>
-<li><a href="#b-plates">B.Plates</a>
-<ul>
-<li><a href="#分析-1">分析</a></li>
-</ul></li>
-<li><a href="#c-workout">C.Workout</a>
-<ul>
-<li><a href="#分析-2">分析</a></li>
-</ul></li>
-<li><a href="#d-bundling">D.Bundling</a></li>
-<li><a href="#分析-3">分析</a></li>
-</ul>
+  <ul>
+    <li><a href="#分析">分析</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#分析-1">分析</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#分析-2">分析</a></li>
+  </ul>
 </nav>
                         </aside><div class="post-content">
-                            
-
-<blockquote>
+                            <blockquote>
 <p>这次的题挺简单的,可惜了当时没做，错过一次好机会</p>
 </blockquote>
-
-<h1 id="a-allocation">A.Allocation</h1>
-
+<h1 id="aallocation">A.Allocation</h1>
 <p>有 $N$ 个房子，每个房子单价为 $a_i$ 你共有 $B$ 块钱，求最多可以买多少个房子</p>
-
 <h2 id="分析">分析</h2>
-
 <p><strong>贪心</strong></p>
-
 <p>每个房子的收益都是 1，因此如果有两个房子 $A,B$, 一定是买价格低的最好</p>
-
 <p><a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2020-A-A.cpp"><strong>code</strong></a></p>
-
-<h1 id="b-plates">B.Plates</h1>
-
+<h1 id="bplates">B.Plates</h1>
 <p>$N$ 堆盘子，每堆有 $K$ 个, 每个盘子的收益是 $a_{ij}$, 你可以取 $P$ 个盘子，不过限制是，如果你取了盘子 $A$, 必须要取走它上面的所有盘子，问最大收益，</p>
-
 <h2 id="分析-1">分析</h2>
-
 <p>01背包的变种，相当于每堆盘子仅取一次，只需确定每堆盘子取的最大位置就好，</p>
-
 <p><a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2020-A-B.cpp"><strong>code</strong></a></p>
-
-<h1 id="c-workout">C.Workout</h1>
-
-<p>$N$ 个连续的数字，$a_{i+1}&gt;a<em>i$, 这个序列的收益是 $\max {a</em>{i+1}-a_i}$, 你可以至多添加 $K$ 个新的数字，使得最小化这个序列的收益，问最小值</p>
-
+<h1 id="cworkout">C.Workout</h1>
+<p>$N$ 个连续的数字，$a_{i+1}&gt;a_i$, 这个序列的收益是 $\max {a_{i+1}-a_i}$, 你可以至多添加 $K$ 个新的数字，使得最小化这个序列的收益，问最小值</p>
 <h2 id="分析-2">分析</h2>
-
 <p>二分</p>
-
 <p><a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2020-A-C.cpp"><strong>code</strong></a></p>
-
-<h1 id="d-bundling">D.Bundling</h1>
-
+<h1 id="dbundling">D.Bundling</h1>
 <p>$N$ 个字符串(仅包含大写),将他们分成 $N/K$ 个组，每个组 $K$ 个字符串，每个组的score是该组字符串的最长公共前缀</p>
-
 <p>求最大化每个组的score的和</p>
-
 <h1 id="分析-3">分析</h1>
-
 <p>这题很简单，建一棵trie 树 (前缀树), 每一个节点 记录这个节点的包含此节点的前缀个数(记为 $cnt$).</p>
-
 <p>遍历这颗trie树，对每个节点($u-&gt;v$) 统计它的子树收益($ans$)以及需要使用的字符串个数($used$)</p>
-
 <p>因此节点 $u$ 个收益为 $\sum v.ans +(u.cnt - v.used)/K*dep$. (dep 表示树的深度)</p>
-
 <p>详细的计算公式可见代码(trie写的不好， :(, )</p>
-
 <p><a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2020-A-D.cpp"><strong>code</strong></a></p>
-
 <blockquote>
 <p><strong>版权声明</strong></p>
-
 <p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
-
 <p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
-
 <p><strong>仅允许非商业转载，转载请保留此版权声明，并注明出处</strong></p>
 </blockquote>
 
@@ -251,6 +215,10 @@
 <ul class="widget-list">
     
     <li>
+        <a href="https://zouzhitao.github.io/posts/finding-jobs/" title="告别学生生涯:秋招之路">告别学生生涯:秋招之路</a>
+    </li>
+    
+    <li>
         <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
     </li>
     
@@ -286,10 +254,6 @@
         <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
     </li>
     
-    <li>
-        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -300,15 +264,19 @@
 <ul class="widget-list">
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/ir/">IR(3)</a>
-    </li>
-    
-    <li>
         <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
     </li>
     
     <li>
         <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(1)</a>
     </li>
     
     <li>

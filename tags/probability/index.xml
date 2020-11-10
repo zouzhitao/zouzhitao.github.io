@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>probability on taotao 码字的地方</title>
@@ -6,11 +6,7 @@
     <description>Recent content in probability on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 05 Jan 2019 19:24:41 +0800</lastBuildDate>
-    
-	<atom:link href="https://zouzhitao.github.io/tags/probability/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sat, 05 Jan 2019 19:24:41 +0800</lastBuildDate><atom:link href="https://zouzhitao.github.io/tags/probability/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>机器学习笔记: 概率论基础</title>
       <link>https://zouzhitao.github.io/posts/ml-note-probility/</link>
@@ -31,7 +27,7 @@
       <pubDate>Sat, 05 Jan 2019 19:20:46 +0800</pubDate>
       
       <guid>https://zouzhitao.github.io/posts/ml-note-mle-and-map/</guid>
-      <description>  写在前面: 这是笔者学习CMU10601-ML机器学习的笔记
+      <description> 写在前面: 这是笔者学习CMU10601-ML机器学习的笔记
  MLE 和 MAP ,是两种不同的估计概率的准则，可是他们的数学公式却是如此相似
 remark
 MLE 实际使用的过程中，通常会用LOG likelihood function,

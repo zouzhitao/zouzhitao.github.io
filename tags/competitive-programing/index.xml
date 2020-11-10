@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>competitive-programing on taotao 码字的地方</title>
@@ -6,11 +6,7 @@
     <description>Recent content in competitive-programing on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Tue, 25 Dec 2018 15:21:27 +0800</lastBuildDate>
-    
-	<atom:link href="https://zouzhitao.github.io/tags/competitive-programing/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Tue, 25 Dec 2018 15:21:27 +0800</lastBuildDate><atom:link href="https://zouzhitao.github.io/tags/competitive-programing/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>2018 google Kickstart RoundA PB Lucky Dip 详细题解</title>
       <link>https://zouzhitao.github.io/posts/18-kickstart-rounda-pb-lucky-dip/</link>
@@ -22,11 +18,11 @@
 放回的那部分 $p_1 = (\frac{j}{n})^{k+1}$不放回的那部分为 $1-p_1 = 1-(\frac{j}{n})^{k+1}$
 因此只要枚举 $j$ 就行了，然而样例通不过，果然在case 5 就错了。后来就看了官方题解，还是一脸懵逼，虽然感觉这样是对的然而并不清楚为什么这样是对的。因此我就重新推了一遍公式
 官方题解详解 首先 $k = 1$ 时， $p1$ 肯定是对的,因此我们有
-$$ \begin{align*} E[0] &amp;amp;=\frac{\sum_{i=1}^nv_i}{n}\\
-E[1] &amp;amp;= \frac{j^2}{n^2}\frac{\sum_{k&amp;lt;=j}v_i}{j} + \frac{(n-j)(n+j)}{n^2}\frac{\sum_{i&amp;gt;j}v_i}{n-j}\\
-&amp;amp;= \frac{j\sum_{k&amp;lt;=j}v_i}{n^2}+\frac{(n+j)\sum_{i&amp;gt;j}v_i}{n^2}\\
-&amp;amp;= \frac{\sum_{i&amp;gt;j}v_i}{n} + \frac{j\sum_iv_i}{n^2}\\
-&amp;amp;=\frac{\sum_{i&amp;gt;j}v_i+jE[0]}{n}\\
+$$ \begin{align*} E[0] &amp;amp;=\frac{\sum_{i=1}^nv_i}{n}\\\
+E[1] &amp;amp;= \frac{j^2}{n^2}\frac{\sum_{k&amp;lt;=j}v_i}{j} + \frac{(n-j)(n+j)}{n^2}\frac{\sum_{i&amp;gt;j}v_i}{n-j}\\\
+&amp;amp;= \frac{j\sum_{k&amp;lt;=j}v_i}{n^2}+\frac{(n+j)\sum_{i&amp;gt;j}v_i}{n^2}\\\
+&amp;amp;= \frac{\sum_{i&amp;gt;j}v_i}{n} + \frac{j\sum_iv_i}{n^2}\\\
+&amp;amp;=\frac{\sum_{i&amp;gt;j}v_i+jE[0]}{n}\\\
 \end{align*} $$
 很显然 $j = \arg \max_{i} v_i&amp;lt;=E[0]$, 即
 $$ E[1] = \frac{\sum_{i=1}^n \max\{v_i,E[0]\}}{n} $$

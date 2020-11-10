@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.51" />
+    <meta name="generator" content="Hugo 0.78.1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -92,71 +92,52 @@
                         
                         
                         <aside id="toc" class="dismissed">
-                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> 
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents"></nav>
                         </aside><div class="post-content">
                             <p><strong>完整内容可见</strong></p>
-
 <p><a href="https://github.com/zouzhitao/CS_Learning/blob/master/MIT6.828-fa18/README.md">MIT 6.828 note</a></p>
-
 <p>这个任务就是检查 _start 开始的时候栈顶的所有值，</p>
-
 <blockquote>
 <p>进入 xv6, gdb 调试</p>
-
 <p>b *0x10000c (_start kernel start point)</p>
-
 <p>x /24x $esp</p>
 </blockquote>
-
-<p><img src="/img/hw2-esp.png" alt="hw1-esp.png" /></p>
-
+<p><img src="/img/hw2-esp.png" alt="hw1-esp.png"></p>
 <p>解释栈中的各个值，首先看 <code>0x7d8d,0x7c4d</code>, 这显然是某个地址，先去 <code>bootblock.asm</code> 中找到这两个地址</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"> <span style="color:#75715e"># Set up the stack pointer and call into C.
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">movl</span>    <span style="color:#66d9ef">$start</span>, %esp
+    <span style="color:#960050;background-color:#1e0010">7</span>c43:	<span style="color:#a6e22e">bc</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">7</span><span style="color:#66d9ef">c</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span>       	<span style="color:#66d9ef">mov</span>    <span style="color:#66d9ef">$0x7c00</span>,%esp
+  <span style="color:#a6e22e">call</span>    <span style="color:#66d9ef">bootmain</span>
+    <span style="color:#960050;background-color:#1e0010">7</span>c48:	<span style="color:#a6e22e">e8</span> <span style="color:#66d9ef">ee</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span>       	<span style="color:#66d9ef">call</span>   <span style="color:#ae81ff">7d3b</span> &lt;<span style="color:#66d9ef">bootmain</span>&gt;
 
-<pre><code class="language-asm"> # Set up the stack pointer and call into C.
-  movl    $start, %esp
-    7c43:	bc 00 7c 00 00       	mov    $0x7c00,%esp
-  call    bootmain
-    7c48:	e8 ee 00 00 00       	call   7d3b &lt;bootmain&gt;
-
-  # If bootmain returns (it shouldn't), trigger a Bochs
-  # breakpoint if running under Bochs, then loop.
-  movw    $0x8a00, %ax            # 0x8a00 -&gt; port 0x8a00
-    7c4d:	66 b8 00 8a          	mov    $0x8a00,%ax
+  <span style="color:#75715e"># If bootmain returns (it shouldn&#39;t), trigger a Bochs
+</span><span style="color:#75715e"></span>  <span style="color:#75715e"># breakpoint if running under Bochs, then loop.
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">movw</span>    <span style="color:#66d9ef">$0x8a00</span>, %ax            <span style="color:#75715e"># 0x8a00 -&gt; port 0x8a00
+</span><span style="color:#75715e"></span>    <span style="color:#ae81ff">7</span><span style="color:#66d9ef">c4d</span>:	<span style="color:#ae81ff">66</span> <span style="color:#66d9ef">b8</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">8</span><span style="color:#66d9ef">a</span>          	<span style="color:#66d9ef">mov</span>    <span style="color:#66d9ef">$0x8a00</span>,%ax
  
-</code></pre>
-
-<p>这是栈建立的地方，也就是说栈顶在 <strong>0x7c00</strong>, <strong>0x7c4d</strong> 就是栈调用 bootmain 后的下面一条指令</p>
-
+</code></pre></div><p>这是栈建立的地方，也就是说栈顶在 <strong>0x7c00</strong>, <strong>0x7c4d</strong> 就是栈调用 bootmain 后的下面一条指令</p>
 <p>继续看 bootmain</p>
-
-<pre><code class="language-asm">
-00007d3b &lt;bootmain&gt;:
-{
-    7d3b:	55                   	push   %ebp
-    7d3c:	89 e5                	mov    %esp,%ebp
-    7d3e:	57                   	push   %edi
-    7d3f:	56                   	push   %esi
-    7d40:	53                   	push   %ebx
-    7d41:	83 ec 0c             	sub    $0xc,%esp
-  readseg((uchar*)elf, 4096, 0);
-    7d44:	6a 00                	push   $0x0
-    7d46:	68 00 10 00 00       	push   $0x1000
-    7d4b:	68 00 00 01 00       	push   $0x10000
-</code></pre>
-
-<p>栈建立好后压了很多 reg 值进去，就是那些 0</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm">
+<span style="color:#960050;background-color:#1e0010">00007</span><span style="color:#a6e22e">d3b</span> <span style="color:#960050;background-color:#1e0010">&lt;</span><span style="color:#66d9ef">bootmain</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:
+<span style="color:#960050;background-color:#1e0010">{</span>
+    <span style="color:#960050;background-color:#1e0010">7</span>d3b:	<span style="color:#960050;background-color:#1e0010">55</span>                   	<span style="color:#a6e22e">push</span>   %ebp
+    <span style="color:#960050;background-color:#1e0010">7</span>d3c:	<span style="color:#960050;background-color:#1e0010">89</span> <span style="color:#a6e22e">e5</span>                	<span style="color:#66d9ef">mov</span>    %esp,%ebp
+    <span style="color:#960050;background-color:#1e0010">7</span>d3e:	<span style="color:#960050;background-color:#1e0010">57</span>                   	<span style="color:#a6e22e">push</span>   %edi
+    <span style="color:#960050;background-color:#1e0010">7</span>d3f:	<span style="color:#960050;background-color:#1e0010">56</span>                   	<span style="color:#a6e22e">push</span>   %esi
+    <span style="color:#960050;background-color:#1e0010">7</span>d40:	<span style="color:#960050;background-color:#1e0010">53</span>                   	<span style="color:#a6e22e">push</span>   %ebx
+    <span style="color:#960050;background-color:#1e0010">7</span>d41:	<span style="color:#960050;background-color:#1e0010">83</span> <span style="color:#a6e22e">ec</span> <span style="color:#ae81ff">0</span><span style="color:#66d9ef">c</span>             	<span style="color:#66d9ef">sub</span>    <span style="color:#66d9ef">$0xc</span>,%esp
+  <span style="color:#a6e22e">readseg</span>((<span style="color:#66d9ef">uchar</span>*)<span style="color:#66d9ef">elf</span>, <span style="color:#ae81ff">4096</span>, <span style="color:#ae81ff">0</span>)<span style="color:#75715e">;
+</span><span style="color:#75715e"></span>    <span style="color:#ae81ff">7</span><span style="color:#66d9ef">d44</span>:	<span style="color:#ae81ff">6</span><span style="color:#66d9ef">a</span> <span style="color:#ae81ff">00</span>                	<span style="color:#66d9ef">push</span>   <span style="color:#66d9ef">$0x0</span>
+    <span style="color:#960050;background-color:#1e0010">7</span>d46:	<span style="color:#960050;background-color:#1e0010">68</span> <span style="color:#960050;background-color:#1e0010">00</span> <span style="color:#960050;background-color:#1e0010">10</span> <span style="color:#960050;background-color:#1e0010">00</span> <span style="color:#960050;background-color:#1e0010">00</span>       	<span style="color:#a6e22e">push</span>   <span style="color:#66d9ef">$0x1000</span>
+    <span style="color:#960050;background-color:#1e0010">7</span>d4b:	<span style="color:#960050;background-color:#1e0010">68</span> <span style="color:#960050;background-color:#1e0010">00</span> <span style="color:#960050;background-color:#1e0010">00</span> <span style="color:#960050;background-color:#1e0010">01</span> <span style="color:#960050;background-color:#1e0010">00</span>       	<span style="color:#a6e22e">push</span>   <span style="color:#66d9ef">$0x10000</span>
+</code></pre></div><p>栈建立好后压了很多 reg 值进去，就是那些 0</p>
 <p>然后
 我们在文件中搜索 7d8d,会发现是 <code>entry</code> 下面一条指令</p>
-
-<pre><code class="language-asm">//.bootblock.asm : line 322
-entry();
-    7d87:	ff 15 18 00 01 00    	call   *0x10018
-    7d8d:	eb d5                	jmp    7d64 &lt;bootmain+0x29&gt;
-</code></pre>
-
-<p>所以整个栈的值解释如下</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#960050;background-color:#1e0010">//</span><span style="color:#a6e22e">.bootblock.asm</span> : <span style="color:#66d9ef">line</span> <span style="color:#ae81ff">322</span>
+<span style="color:#a6e22e">entry</span>()<span style="color:#75715e">;
+</span><span style="color:#75715e"></span>    <span style="color:#ae81ff">7</span><span style="color:#66d9ef">d87</span>:	<span style="color:#66d9ef">ff</span> <span style="color:#ae81ff">15</span> <span style="color:#ae81ff">18</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">01</span> <span style="color:#ae81ff">00</span>    	<span style="color:#66d9ef">call</span>   *<span style="color:#ae81ff">0x10018</span>
+    <span style="color:#960050;background-color:#1e0010">7</span>d8d:	<span style="color:#a6e22e">eb</span> <span style="color:#66d9ef">d5</span>                	<span style="color:#66d9ef">jmp</span>    <span style="color:#ae81ff">7d64</span> &lt;<span style="color:#66d9ef">bootmain</span>+<span style="color:#ae81ff">0x29</span>&gt;
+</code></pre></div><p>所以整个栈的值解释如下</p>
 <pre><code>ox7c00 : 0x00007c4d # bootmain hou mian yitiao dizhi
        : 0x00000000 #
        :
@@ -166,15 +147,10 @@ entry();
        :
        :
 0x7bdc : 0x00007d8d # kernel hou de dizhi
-</code></pre>
-
-<blockquote>
+</code></pre><blockquote>
 <p><strong>版权声明</strong></p>
-
 <p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
-
 <p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
-
 <p><strong>转载请保留此版权声明，并注明出处</strong></p>
 </blockquote>
 
@@ -254,6 +230,10 @@ entry();
 <ul class="widget-list">
     
     <li>
+        <a href="https://zouzhitao.github.io/posts/finding-jobs/" title="告别学生生涯:秋招之路">告别学生生涯:秋招之路</a>
+    </li>
+    
+    <li>
         <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
     </li>
     
@@ -289,10 +269,6 @@ entry();
         <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
     </li>
     
-    <li>
-        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -303,15 +279,19 @@ entry();
 <ul class="widget-list">
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/ir/">IR(3)</a>
-    </li>
-    
-    <li>
         <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
     </li>
     
     <li>
         <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(1)</a>
     </li>
     
     <li>

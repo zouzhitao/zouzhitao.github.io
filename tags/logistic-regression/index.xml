@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>logistic-regression on taotao 码字的地方</title>
@@ -6,11 +6,7 @@
     <description>Recent content in logistic-regression on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 06 Jan 2019 14:38:13 +0800</lastBuildDate>
-    
-	<atom:link href="https://zouzhitao.github.io/tags/logistic-regression/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sun, 06 Jan 2019 14:38:13 +0800</lastBuildDate><atom:link href="https://zouzhitao.github.io/tags/logistic-regression/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>机器学习笔记:logistic regression</title>
       <link>https://zouzhitao.github.io/posts/ml-note-lr/</link>
@@ -18,7 +14,7 @@
       
       <guid>https://zouzhitao.github.io/posts/ml-note-lr/</guid>
       <description>logistic regression (Log.Reg)是一种简单的 Discriminative(后面会简单的比较discriminative 与generative) 分类方法，和naive bayes不同的是，他假设了概率:
-$$ P(y=1|X) = \frac{1}{1+\exp(w_0+\sum w_i^TX_i)} =Sigmoid(x)\\
+$$ P(y=1|X) = \frac{1}{1+\exp(w_0+\sum w_i^TX_i)} =Sigmoid(x)\\\
 P(y=0|X) = 1-P(y=1|X) $$
 那 $P_0 = 1-P$,所以最终得到 $w$ 以后，我们可以用
 $$ \frac{P(y=0|x)}{P(y=1|x)} &amp;gt;0 \rightarrow w_0+\sum w_i^TX_i &amp;lt;0 $$
@@ -26,10 +22,11 @@ $$ \frac{P(y=0|x)}{P(y=1|x)} &amp;gt;0 \rightarrow w_0+\sum w_i^TX_i &amp;lt;0 $
 也就是说这是一个 parametric model, 引入了参数向量 $\theta$
 所以需要来解这个向量:
 loss 接下来我们来看看loss的求解
-$$ \begin{aligned} w &amp;amp;=\arg \max_{w}\prod P(Y_i|X_i,w)[max\ likelyhood]\\
-&amp;amp;=\arg \max \sum \ln P(Y_i|X_i,w)\\
+$$ \begin{aligned} w &amp;amp;=\arg \max_{w}\prod P(Y_i|X_i,w)[max\ likelyhood]\\\
+&amp;amp;=\arg \max \sum \ln P(Y_i|X_i,w)\\\
 &amp;amp;=\arg \max \sum (Y_i\ln P(Y_i=1|X_i,w)+(1-Y_i)\ln P(Y_i=0|X_i,w)) \end{aligned} $$ 后面就是用一些优化方法进行求解
-$$ loss(w) = \sum (Y_i\ln P(Y_i=1|X_i,w)+(1-Y_i)\ln P(Y_i=0|X_i,w)) $$</description>
+$$ loss(w) = \sum (Y_i\ln P(Y_i=1|X_i,w)+(1-Y_i)\ln P(Y_i=0|X_i,w)) $$
+ 版权声明</description>
     </item>
     
   </channel>

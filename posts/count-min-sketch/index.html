@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.51" />
+    <meta name="generator" content="Hugo 0.78.1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -93,132 +93,96 @@
                         
                         <aside id="toc" class="dismissed">
                             <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
-<ul>
-<li><a href="#heavy-hitter-problem">heavy hitter problem</a>
-<ul>
-<li><a href="#find-majority-element">Find majority element</a></li>
-<li><a href="#heavy-hitter-problem-1">heavy hitter problem</a>
-<ul>
-<li><a href="#impossible-result">impossible result</a></li>
-</ul></li>
-<li><a href="#epsilon-heavy-hitters-problem">$\epsilon$ - heavy hitters problem</a></li>
-</ul></li>
-<li><a href="#count-min-sketch">count min sketch</a>
-<ul>
-<li><a href="#rigorous-error-analysis">rigorous error analysis</a>
-<ul>
-<li><a href="#参数-trick">参数 trick</a></li>
-</ul></li>
-<li><a href="#conservative-update">conservative update</a></li>
-<li><a href="#扩展">扩展</a></li>
-<li><a href="#code">code</a></li>
-</ul></li>
-<li><a href="#reference">reference</a></li>
-</ul>
+  <ul>
+    <li><a href="#find-majority-element">Find majority element</a></li>
+    <li><a href="#heavy-hitter-problem-1">heavy hitter problem</a>
+      <ul>
+        <li><a href="#impossible-result">impossible result</a></li>
+      </ul>
+    </li>
+    <li><a href="#epsilon---heavy-hitters-problem">$\epsilon$ - heavy hitters problem</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#rigorous-error-analysis">rigorous error analysis</a>
+      <ul>
+        <li><a href="#参数-trick">参数 trick</a></li>
+      </ul>
+    </li>
+    <li><a href="#conservative-update">conservative update</a></li>
+    <li><a href="#扩展">扩展</a></li>
+    <li><a href="#code">code</a></li>
+  </ul>
 </nav>
                         </aside><div class="post-content">
-                            
-
-<blockquote>
+                            <blockquote>
 <p>这是笔者学习 Stanford cs 168 课程的一些学习笔记
 lecture 2, 主要讲一个基于 hash 和独立试验思想，设计的一种数据结构 count min sketch，想法非常类似于 bloom filter，都是以牺牲准确率换空间和时间。</p>
 </blockquote>
-
 <h1 id="heavy-hitter-problem">heavy hitter problem</h1>
-
 <h2 id="find-majority-element">Find majority element</h2>
-
 <p>先来看一个简单的在面试中经常会遇到的问题，<strong>找主要元素</strong></p>
-
 <blockquote>
 <p><strong>问题如下</strong>: 一组数据流: $a_1,\dots,a_n$, 存在一个元素 $a_i$ 保证出现次数大于
 $n/2$。 能否设计一个算法在 仅仅扫描一遍的情况下找到它。</p>
 </blockquote>
-
 <p>这里有一个很 cute 的算法</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">
+current <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+counter <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
 
-<pre><code class="language-py">
-current = -1
-counter = 0
+<span style="color:#66d9ef">for</span> e <span style="color:#f92672">in</span> stream:
+    <span style="color:#66d9ef">if</span> counter <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+        current <span style="color:#f92672">=</span> e
+        counter <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">elif</span> e <span style="color:#f92672">==</span> current:
+        counter <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">else</span> counter <span style="color:#f92672">-=</span> <span style="color:#ae81ff">1</span>
 
-for e in stream:
-    if counter == 0:
-        current = e
-        counter += 1
-    elif e == current:
-        counter += 1
-    else counter -= 1
-
-return current
-</code></pre>
-
-<p>可以证明这个算法一定是正确的。</p>
-
+<span style="color:#66d9ef">return</span> current
+</code></pre></div><p>可以证明这个算法一定是正确的。</p>
 <p><strong>证明</strong></p>
-
 <p>数学归纳法</p>
-
 <ol>
 <li>当 len(stream) = 1 的时候，一定是正确的</li>
 <li>假设当 len(stream)&lt;=n 的时候是正确的</li>
 <li>当 len(stream) = n+1 的时候
-
 <ol>
 <li>如果 $a_1$ 是ans，当 counter 第一次减少为0 的时候，流被分为两段,一段是走过的，另外一段是没有遍历过的，[s_1|counter=0|,s_2],设 $l_1,l_2$ 分别是两段的长度，显然，第一段中 $cnt(a_1)=s_1 / 2$ , 由于 $a_1$ 是答案，它在整个序列中出现的次数大于 $(n+1)/2$ 因此在 $s_2$ 中，我们有 $cnt(a_1) &gt; \frac{n+1}{2}-\frac{s_1}{2}=\frac{s_2}{2}$ ,同时 $len(s_2) &lt;=n$ 因此，由数学归纳法，再第二段中能正确找到答案。</li>
 <li>如果 $a_2$ 不是 ans，遍历第一段的时候，$cnt(ans) &lt; \frac{s_1}{2}$, 因此在第二段中 $cnt(ans)&gt;\frac{s_2}{2}$, 同理，根据数学归纳法，一定能找到答案</li>
-</ol></li>
 </ol>
-
+</li>
+</ol>
 <p>证毕</p>
-
 <h2 id="heavy-hitter-problem-1">heavy hitter problem</h2>
-
 <p>这个问题是这样的，</p>
-
 <blockquote>
 <p>给一个数据流 $a_1,\dots,a_n$, 以及一个整数 $k$ , 找出其中所有 出现次数(记作 frequency) 大于等于 $\frac{n}{k}$ 的元素</p>
 </blockquote>
-
 <p>朴素的做法是用一个 hash 表统计一下 每个元素出现的次数，然后再输出次数 $\ge \frac{n}{k}$ 的元素，这个算法能够解决这个问题，但是最大的问题是它需要的空间依赖于不同元素的个数，因此我们希望能找一个空间 <strong>亚线性</strong>(sublinear) 的算法，同时只需要遍历一次整个流，换句话说，希望如下代码能够解决这个问题</p>
-
 <pre><code>for e in stream:
     # code
-</code></pre>
-
-<p>对每个元素只看一次，同时保证空间需求 $O(sizeOfAns)$</p>
-
+</code></pre><p>对每个元素只看一次，同时保证空间需求 $O(sizeOfAns)$</p>
 <h3 id="impossible-result">impossible result</h3>
-
 <p>可以证明精确求解算法的亚线性辅助空间算法是不可能的。见 [1] 1.3, 因此我们希望找到一个近似做法</p>
-
-<h2 id="epsilon-heavy-hitters-problem">$\epsilon$ - heavy hitters problem</h2>
-
+<h2 id="epsilon---heavy-hitters-problem">$\epsilon$ - heavy hitters problem</h2>
 <p>问题同上，不过我们仅仅希望最终找到的答案，满足如下需求:</p>
-
 <blockquote>
 <ol>
 <li>每一个出现次数 $\ge \frac{n}{k}$ 的元素都在里面</li>
 <li>每一个出现次数 $\ge \frac{n}{k} - \epsilon n$ 的元素也可以在里面</li>
 </ol>
 </blockquote>
-
 <p>我们允许使用的空间随着 $O(\frac{1}{\epsilon})$ 当 $\epsilon = 0$ 就和原来的问题一样了。算法的空间使用情况为 $O(\frac{1}{\epsilon})=O(k)$</p>
-
 <p>下面就来介绍这篇博客的主角 <strong>count-min-sketch</strong> 频率统计利器</p>
-
 <h1 id="count-min-sketch">count min sketch</h1>
-
 <p>和 bloom filter 类似的hash 做法，结构如下:</p>
-
-<p><img src="/img/cms1.png" alt="count min sketch" /></p>
-
-<p>其中 $b &lt;&lt; n$,支持两个操作:</p>
-
+<p><img src="/img/cms1.png" alt="count min sketch"></p>
+<p>其中 $b &laquo; n$,支持两个操作:</p>
 <blockquote>
 <p>add(x),将 x 的频率 +1
 frq(x),统计 x 的频率</p>
 </blockquote>
-
 <pre><code>add(x):
 
 for i in range(l):
@@ -228,98 +192,64 @@ for i in range(l):
 frq(x):
     return min(cms[i][hash(x)]) for i in range(l)
 
-</code></pre>
-
-<p>很显然 $frq(x)$ 一定会高估 $cnt(x)$(元素 $x$ 的真实频率), 下面我们来分析一下会高估的概率是多少，同时我们希望 $\Pr[min(cms[i][hash_i(x)]) \ge cnt(x)]$ 的概率足够小，</p>
-
+</code></pre><p>很显然 $frq(x)$ 一定会高估 $cnt(x)$(元素 $x$ 的真实频率), 下面我们来分析一下会高估的概率是多少，同时我们希望 $\Pr[min(cms[i][hash_i(x)]) \ge cnt(x)]$ 的概率足够小，</p>
 <h2 id="rigorous-error-analysis">rigorous error analysis</h2>
-
 <p>先给出如下结论:</p>
-
 <blockquote>
 <p>$\Pr[min(cms[i][hash_i(x)]) \ge cnt(x)] \le e^{-l}$</p>
 </blockquote>
-
 <p><strong>证明</strong></p>
-
 <p>定义:</p>
-
 <blockquote>
 <p>$f_x$ 元素 $x$ 在stream 中的真实频率，这是一个常数
 $Z_i=cms[i][hash_i(x)]$</p>
 </blockquote>
-
 <p>假设</p>
-
 <blockquote>
 <p>hash 函数是独立的，同时 $\Pr[hash(x)=hash(y)|y\ne x]\le \frac{1}{b}$</p>
 </blockquote>
-
 <p>$$
 \begin{aligned}
-Z_i&amp;=f_x+\sum_{hash(y)==hash(x),x\ne y} f_y\\<br />
-E[Z_i]&amp;=f_x + E[\sum_{hash(y)==hash(x),x\ne y} f_y]\\<br />
-&amp;= f_x+\sum_{x\ne y}f_yE[I(hash(y)=hash(x))]\\<br />
-&amp;= f_x+\sum_{y\ne x}f_y\Pr[hash(y)=hash(x)]\\<br />
+Z_i&amp;=f_x+\sum_{hash(y)==hash(x),x\ne y} f_y\\\<br>
+E[Z_i]&amp;=f_x + E[\sum_{hash(y)==hash(x),x\ne y} f_y]\\\<br>
+&amp;= f_x+\sum_{x\ne y}f_yE[I(hash(y)=hash(x))]\\\<br>
+&amp;= f_x+\sum_{y\ne x}f_y\Pr[hash(y)=hash(x)]\\\<br>
 &amp;\le f_x + \frac{n}{b}
 \end{aligned}
 $$</p>
-
 <p>fix x 以及 row i令 $b=\frac{e}{\epsilon}, X = Z_i- f_x$  由于 $E[X] \le \frac{n\epsilon}{e}$</p>
-
 <p>由 markov&rsquo;s inequality</p>
-
 <blockquote>
 <p>$\Pr[X &gt; cE[X]] \le \frac{1}{c}$</p>
 </blockquote>
-
 <p>$$
 \begin{aligned}
-\Pr[Z_i-f_x\ge \frac{n\epsilon}{e}*e]&amp;=\Pr[Z_i\ge \epsilon n + f_x]\\<br />
- &amp;\le \frac{1}{e}\\<br />
+\Pr[Z_i-f_x\ge \frac{n\epsilon}{e}*e]&amp;=\Pr[Z_i\ge \epsilon n + f_x]\\\<br>
+&amp;\le \frac{1}{e}\\\<br>
 \Pr[min(Z_i)\ge \epsilon n + f_x] &amp;\le  \frac{1}{e^l}
 \end{aligned}
 $$</p>
-
 <p>完</p>
-
 <h3 id="参数-trick">参数 trick</h3>
-
 <p>设错误概率为 $\sigma$, 要达到这个概率，大概需要 $l = \ln \sigma^{-1}$</p>
-
 <p>同时，通常，$b=\frac{e}{\epsilon} =&gt;^{O(\epsilon^{-1})=O(k)}=e k$</p>
-
 <p>作业中探讨了一种 Conservative Update 的 简单优化方式</p>
-
 <h2 id="conservative-update">conservative update</h2>
-
 <p>这是说，对于操作 add(x)</p>
-
 <p>仅仅将 $cms[i][hash_i(x)] = min(cms[i][hash_i(x)])$ 的那些“格子” 更新，可以很容易的证明这不会低估 $f_x$</p>
-
 <h2 id="扩展">扩展</h2>
-
 <p>很容易将操作扩展到 add(x,cnt) 上</p>
-
 <h2 id="code">code</h2>
-
 <p><a href="https://github.com/zouzhitao/cs168-19-stanford/blob/master/min-project1/cms.py">这是一份我的作业中的代码</a> python 实现</p>
-
 <p><a href="https://github.com/addthis/stream-lib">这是一份开源代码</a> java 实现</p>
-
 <h1 id="reference">reference</h1>
-
 <ol>
 <li><a href="http://web.stanford.edu/class/cs168/l/l2.pdf">CS168: The Modern Algorithmic Toolbox Lecture #2: Approximate Heavy Hitters and the Count-Min Sketch</a></li>
 </ol>
-
 <blockquote>
 <p><strong>版权声明</strong></p>
-
 <p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
-
 <p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
-
 <p><strong>转载请保留此版权声明，并注明出处</strong></p>
 </blockquote>
 
@@ -403,6 +333,10 @@ $$</p>
 <ul class="widget-list">
     
     <li>
+        <a href="https://zouzhitao.github.io/posts/finding-jobs/" title="告别学生生涯:秋招之路">告别学生生涯:秋招之路</a>
+    </li>
+    
+    <li>
         <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
     </li>
     
@@ -438,10 +372,6 @@ $$</p>
         <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
     </li>
     
-    <li>
-        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -452,15 +382,19 @@ $$</p>
 <ul class="widget-list">
     
     <li>
-        <a href="https://zouzhitao.github.io/categories/ir/">IR(3)</a>
-    </li>
-    
-    <li>
         <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
     </li>
     
     <li>
         <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/life/">life(1)</a>
     </li>
     
     <li>

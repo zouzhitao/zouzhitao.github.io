@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Inverted Index on taotao 码字的地方</title>
@@ -6,11 +6,7 @@
     <description>Recent content in Inverted Index on taotao 码字的地方</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 06 Oct 2019 22:04:00 +0800</lastBuildDate>
-    
-	<atom:link href="https://zouzhitao.github.io/tags/inverted-index/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sun, 06 Oct 2019 22:04:00 +0800</lastBuildDate><atom:link href="https://zouzhitao.github.io/tags/inverted-index/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>信息检索(IR)笔记1: 倒排索引(Inverted Index)</title>
       <link>https://zouzhitao.github.io/posts/inverted-index/</link>
@@ -19,7 +15,7 @@
       <guid>https://zouzhitao.github.io/posts/inverted-index/</guid>
       <description>建立索引是 information retrieval 的一个核心问题，这一节简单记录关于index的相关笔记. 所有内容均来自 stanford cs276 information retrieval &amp;amp; web search
 text preprocessing 一些术语
- tokenization  将文本编程token流，通常处理 &amp;ldquo;I&amp;rsquo;m &amp;ldquo;..  normalization  text 和query term 映射统一(e.g. U.S.A USA)  stemming  形式(中文通常没这个问题,e.g. authorize, authorization)  Stop words  omit 掉一些无用的，e.g a,an &amp;hellip;    inverted index term -&amp;gt; (frq,posting_list(docId))
+ tokenization  将文本编程token流，通常处理 &amp;ldquo;I&amp;rsquo;m &amp;ldquo;..   normalization  text 和query term 映射统一(e.g. U.S.A USA)   stemming  形式(中文通常没这个问题,e.g. authorize, authorization)   Stop words  omit 掉一些无用的，e.g a,an &amp;hellip;    inverted index term -&amp;gt; (frq,posting_list(docId))
 frq = len(posting_list)
 simple construction text -&amp;gt; tokenstream -&amp;gt; list ( term, docId) -&amp;gt; sort-&amp;gt;unique -&amp;gt; merge</description>
     </item>
