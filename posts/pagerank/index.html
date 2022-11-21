@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="generator" content="Hugo 0.78.1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>PageRank 算法简介 | taotao的杂货铺</title>
+    <meta property="og:title" content="PageRank 算法简介 - taotao的杂货铺">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content="2019-11-03T22:02:12&#43;08:00">
+        
+        
+    <meta property="article:modified_time" content="2019-11-03T22:02:12&#43;08:00">
+        
+    <meta name="Keywords" content="computer system,algorithm,OS,distribute system,big data,ML,算法，系统，分布式，大数据，推荐系统">
+    <meta name="description" content="PageRank 算法简介">
+        
+    <meta name="author" content="taotao">
+    <meta property="og:url" content="https://zouzhitao.github.io/posts/pagerank/">
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="/css/normalize.css">
+    
+        <link rel="stylesheet" href="/css/prism.css">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+    
+
+
+    
+    
+</head>
+
+<body>
+<header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://zouzhitao.github.io/">
+                        taotao的杂货铺
+                    </a>
+                
+                <p class="description">人生杂谈，随笔，技术笔记</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://zouzhitao.github.io/">首页</a>
+                    
+                    <a  href="https://zouzhitao.github.io/archives/" title="archives">archives</a>
+                    
+                    <a  href="https://zouzhitao.github.io/about/" title="about">about</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div id="body">
+    <div class="container">
+        <div class="col-group">
+
+            <div class="col-8" id="main">
+                <div class="res-cons">
+                    <article class="post">
+                        <header>
+                            <h1 class="post-title">PageRank 算法简介</h1>
+                        </header>
+                        <date class="post-meta meta-date">
+                            2019年11月3日
+                        </date>
+                        
+                        <div class="post-meta meta-category">
+                            |
+                            
+                                <a href="https://zouzhitao.github.io/categories/ir">IR</a>
+                            
+                        </div>
+                        
+                        
+                        <div class="post-meta">
+                            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span> 阅读</span></span>
+                        </div>
+                        
+                        
+                        <aside id="toc" class="dismissed">
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
+  <ul>
+    <li><a href="#求解">求解</a></li>
+    <li><a href="#解的唯一性">解的唯一性</a>
+      <ul>
+        <li><a href="#trick">trick</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#spark简单实现">spark简单实现</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#固定teleport-集合">固定teleport 集合</a></li>
+  </ul>
+</nav>
+                        </aside><div class="post-content">
+                            <blockquote>
+<p>这篇文章总结 PageRank 相关内容</p>
+</blockquote>
+<p>PageRank 在搜索引擎中用来对网页做特征评估(为网页重要性打分)，Google当年就是靠它，拿到互联网时代的门票，进而成就今天的霸主地位。同时，这也是 <code>技术+商业</code> 变现的例子。这边博文就在这里简要总结PageRank算法，揭开它的神秘面纱。</p>
+<h1 id="intuition">intuition</h1>
+<p>pagerank的直观非常简单:</p>
+<ol>
+<li>整个 web 是一个是一个有向图，一个页面包含的链接，表示这个页面指向另外一个页面</li>
+<li>重要的页面被访问的频率越高</li>
+<li>被访问的频率(次数) 代表page的重要性</li>
+</ol>
+<!-- raw HTML omitted -->
+<p>那么剩下的就是一个问题，如何评估页面被访问的次数？当然，直接统计是一种方式，不过这种方式有一个问题，最开始的时候(无人访问的时候)怎么评估？因此我们要想出一个替代的办法</p>
+<p>这里采用的模型就是<strong>随机游走(random walk)</strong>。假设一个人在这个web上随机游走，每个链接指向的边($A\rightarrow B$) 表示从页面 $A$ 到达 $B$ 的权重，其权重为 $\frac{1}{deg-out_{A}}$。即将它自己的pagerank等概率的分给所有出边指向的链接.</p>
+<p>最终每个页面的极限<strong>概率</strong> 就是每个页面的pagerank。</p>
+<p>表达成数学模型就是一个markov chain模型。</p>
+<h1 id="markov-chain">markov chain</h1>
+<p>转移矩阵为$M$,其中 $M_{ij}$ 表示页面$j\rightarrow i$ 的转移概率，$\mathbf{r}$ 表示rank向量长度为 $n$,表示每个页面的pagerank，也就是每个页面的极限概率,其和为1.则</p>
+<p>$$
+\begin{aligned}
+\mathbf{r}&amp;=M\mathbf{r}\\\<br>
+\sum_{i=1}^n &amp; r_i=1<br>
+\end{aligned}
+$$</p>
+<p>即</p>
+<p>$$
+r_i=\sum_j M_{ij}r_j\tag{1}
+$$</p>
+<h2 id="求解">求解</h2>
+<p>求解这个很简单，可以将上式看做固定点迭代，从任意一个随机的r(和为1)开始不停迭代，当 $||r'-r||\le \epsilon$,类似于power iteration。不过这种方法是非常naive的，在数据很大，首先matrix纯不下来，后面我们再讨论pagerank的高效计算。</p>
+<p>现在先来看这样一个问题。一个非常核心的问题，一定有解吗？解唯一吗？</p>
+<h2 id="解的唯一性">解的唯一性</h2>
+<p>基于markov chain的相关知识我们知道，markov chain要能够收敛必须要保证 &lsquo;irreducible&rsquo; 和 &lsquo;recurrent&rsquo; 也就是任意两点可达，且非周期。因此我们需要解决两个问题</p>
+<ol>
+<li>dead end</li>
+<li>spider trap</li>
+</ol>
+<!-- raw HTML omitted -->
+<p>解决这两个问题 Google 设计pagerank的时候引入了一个策略</p>
+<blockquote>
+<ol>
+<li>每个节点以 $\beta \le 1$ 的概率分配转移链接到的节点集合，</li>
+<li>每个节点以 $1 - \beta$ 的概率转移到任意一个节点</li>
+</ol>
+</blockquote>
+<p>即</p>
+<p>$$
+r_i =\beta \sum_j M_{ij}r_j + \sum \frac{(1-\beta)r_j}{N}\tag{2}
+$$</p>
+<h3 id="trick">trick</h3>
+<p>(2) 式有一个小缺陷，即对于dead end，也就是没有出边的节点，它的出边概率之和为 $1 - \beta$,不满足出边概率和为1，也就是会造成 <strong>rank 泄露</strong>。为解决这个问题，我们可以加入下面一个trick</p>
+<ol>
+<li>$r'_i = \beta \sum_j M_{ij}r_j$</li>
+<li>$r'_i += (1-S)/N,S=\sum r'_i$</li>
+</ol>
+<h1 id="高效计算">高效计算</h1>
+<p>最朴素的算法就是直接按照上面的trick进行计算，但是，这通常会有两个问题:</p>
+<ol>
+<li>矩阵太大$O(N^2)$，内存不够</li>
+<li>矩阵乘法 $O(N^2)$运行时间也不够</li>
+</ol>
+<p>解决这两个问题，有两个手段</p>
+<ol>
+<li>矩阵是稀疏的，所以仅仅存下这个稀疏矩阵就行了，这样内存仅有 $O(|E|)$, $E$ 为网络的边的集合</li>
+<li>分布式，mapreduce</li>
+</ol>
+<p>将矩阵存为，如</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">顶点</th>
+<th style="text-align:center">IN边集合</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">3，5</td>
+</tr>
+</tbody>
+</table>
+<p>再存下每个节点的出度 $deg_i$</p>
+<p><strong>注意</strong> 存取入边集合，有一个好处，这使得每次乘法行与行独立，可以做<strong>并行加速</strong></p>
+<p>这样每次迭代需要扫描内存为 $O(|M|)$,每次计算时间为 $O(|E|)$</p>
+<h2 id="spark简单实现">spark简单实现</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">cur <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+r_dict<span style="color:#f92672">=</span> [dict([(i,<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>N_NODES) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(N_NODES)]),dict()]
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(MAX_ITERS):
+    r_dict[cur]<span style="color:#f92672">=</span>sc<span style="color:#f92672">.</span>pickleFile(DEG_IN)<span style="color:#f92672">.</span>mapValues(
+        <span style="color:#66d9ef">lambda</span> in_nodes: sum(list(map(<span style="color:#66d9ef">lambda</span> e : r_dict[cur<span style="color:#f92672">^</span><span style="color:#ae81ff">1</span>][e]<span style="color:#f92672">/</span>no_degs[e],in_nodes)))
+    )<span style="color:#f92672">.</span>collectAsMap()
+    cur <span style="color:#f92672">^=</span><span style="color:#ae81ff">1</span>
+</code></pre></div><p><a href="https://github.com/zouzhitao/cs246-Mining-Massive-Data-Sets/tree/master/hw3">完整代码 github</a></p>
+<p>以上代码没有考虑 <strong>dead end</strong></p>
+<h1 id="扩展">扩展</h1>
+<h2 id="固定teleport-集合">固定teleport 集合</h2>
+<p>teleport 是说，每次$1-\beta$ 的概率不等概率转移到所有节点，而是等概率转移到一个固定节点集合 $S$。这样有一个好处，与 $S$ 连接的点的pagerank会得到提升</p>
+<p>例如，如果 $S$ 所包含的是一个固定的topic集合，那么整个就是 topic specific PageRank</p>
+<p>这种方法还能拿来做推荐，pinterest就是用了这种方法，将 $S$ 固定为一个 user，那与他silimar的节点会得到更大的pagerank，也就会更容易被推荐</p>
+<h1 id="beyond-link-analysis">beyond Link Analysis</h1>
+<p>PageRank 已经有了许多不同的改进，被用在许多地方，比如图中的社群检测，这个我们后面再讲</p>
+<h1 id="reference">reference</h1>
+<ol>
+<li>Jure Leskovec,Anand Rajaraman,Jeffrey D. Ullman. Mining massive data set. ch5. link analysis.P175-212.</li>
+<li><a href="http://web.stanford.edu/class/cs246/">http://web.stanford.edu/class/cs246/</a> . lec 9.pagerank</li>
+</ol>
+<blockquote>
+<p><strong>版权声明</strong></p>
+<p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
+<p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
+<p><strong>仅允许非商业转载，转载请保留此版权声明，并注明出处</strong></p>
+</blockquote>
+
+                        </div>
+                        
+
+                        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/posts/rank-model-based-prob/">信息检索(IR)笔记2: Rank: 基于概率的rank model</a></li>
+        
+        <li><a href="/posts/inverted-index/">信息检索(IR)笔记1: 倒排索引(Inverted Index)</a></li>
+        
+        <li><a href="/posts/dm-reduction-pca-svd/">Dimension Reduction: PCA and SVD</a></li>
+        
+        <li><a href="/posts/pbds/">pbds: STL 的扩展数据结构</a></li>
+        
+        <li><a href="/posts/dm-association-rule/">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a></li>
+        
+    </ul>
+</div>
+
+
+                        <div class="post-meta meta-tags">
+                            
+                            <ul class="clearfix">
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/ir">IR</a></li>
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/pagerank">PageRank</a></li>
+                                
+                            </ul>
+                            
+                        </div>
+                    </article>
+                    
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "zouzhitao-github-io" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+    
+                </div>
+            </div>
+            <div id="secondary">
+    <section class="widget">
+        <form id="search" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://zouzhitao.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/grad-opt/" title="梯度下降优化算法简单总结">梯度下降优化算法简单总结</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kick-start-2020-round-a/" title="Kick Start 2020 Round A 题解">Kick Start 2020 Round A 题解</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kickstart-2019-round-h/" title="Kickstart 2019 Round H">Kickstart 2019 Round H</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/parrallel-computer-arch/" title="现代多核计算机体系结构简介">现代多核计算机体系结构简介</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/pagerank/" title="PageRank 算法简介">PageRank 算法简介</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/dm-reduction-pca-svd/" title="Dimension Reduction: PCA and SVD">Dimension Reduction: PCA and SVD</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/pbds/" title="pbds: STL 的扩展数据结构">pbds: STL 的扩展数据结构</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/machine-learning/">machine-learning(8)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/math/">math(4)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/programing-language/">programing-language(5)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/system/">system(6)</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="https://blog.csdn.net/Dylan_Frank" title="以前的个人博客">dylanfrank@csdn</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://traderforce.github.io/" title="银牌大佬交易者">trader</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://bbkgl.github.io/" title="c&#43;&#43;技术大牛">坤坤</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://tawn0000.github.io" title="JNU ACMer,银牌大佬">tawn</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://akeeper.space/" title="彼得·攀的小站">null</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://godweiyang.com" title="ECNU NLPer">godweiyang</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://blog.csdn.net/Krone_" title="望着楼上大佬">Krone_@csdn</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://zc-apiao.space/" title="过客别墅">Apiao</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://zouzhitao.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+        </div>
+    </div>
+</div>
+<footer id="footer">
+    <div class="container">
+        &copy; 2018 <a href="https://zouzhitao.github.io/">taotao的杂货铺 By taotao</a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="http://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/rujews/maupassant-hugo" target="_blank">maupassant</a>.
+        
+    </div>
+</footer>
+
+
+    <script type="text/javascript" src="/js/prism.js" async="true"></script>
+    <script type="text/javascript">
+    window.MathJax = {
+        tex2jax: {
+            inlineMath: [ ['$','$'] ],
+            processEscapes: true
+        }
+    };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src="/js/totop.js?v=0.0.0" async=""></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-100944759-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+<script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+</body>
+</html>

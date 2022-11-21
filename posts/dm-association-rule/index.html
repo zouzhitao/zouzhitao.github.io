@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="generator" content="Hugo 0.78.1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set) | taotao的杂货铺</title>
+    <meta property="og:title" content="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set) - taotao的杂货铺">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content="2019-10-21T21:58:26&#43;08:00">
+        
+        
+    <meta property="article:modified_time" content="2019-10-21T21:58:26&#43;08:00">
+        
+    <meta name="Keywords" content="computer system,algorithm,OS,distribute system,big data,ML,算法，系统，分布式，大数据，推荐系统">
+    <meta name="description" content="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">
+        
+    <meta name="author" content="taotao">
+    <meta property="og:url" content="https://zouzhitao.github.io/posts/dm-association-rule/">
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="/css/normalize.css">
+    
+        <link rel="stylesheet" href="/css/prism.css">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+    
+
+
+    
+    
+</head>
+
+<body>
+<header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://zouzhitao.github.io/">
+                        taotao的杂货铺
+                    </a>
+                
+                <p class="description">人生杂谈，随笔，技术笔记</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://zouzhitao.github.io/">首页</a>
+                    
+                    <a  href="https://zouzhitao.github.io/archives/" title="archives">archives</a>
+                    
+                    <a  href="https://zouzhitao.github.io/about/" title="about">about</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div id="body">
+    <div class="container">
+        <div class="col-group">
+
+            <div class="col-8" id="main">
+                <div class="res-cons">
+                    <article class="post">
+                        <header>
+                            <h1 class="post-title">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</h1>
+                        </header>
+                        <date class="post-meta meta-date">
+                            2019年10月21日
+                        </date>
+                        
+                        <div class="post-meta meta-category">
+                            |
+                            
+                                <a href="https://zouzhitao.github.io/categories/algorithm">algorithm</a>
+                            
+                        </div>
+                        
+                        
+                        <div class="post-meta">
+                            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span> 阅读</span></span>
+                        </div>
+                        
+                        
+                        <aside id="toc" class="dismissed">
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
+  <ul>
+    <li><a href="#apriori-算法描述">Apriori 算法描述</a></li>
+    <li><a href="#improve">improve</a></li>
+  </ul>
+</nav>
+                        </aside><div class="post-content">
+                            <blockquote>
+<p>这篇博文主要总结数据挖掘 find frequent item set 的 两个个有趣的算法: Apriori,FP-Growth Tree</p>
+</blockquote>
+<h1 id="introduction">introduction</h1>
+<p>关联规则，简单的说就是在一个数据集中，通常我们如果看见 A，同时也会看见 B。就称他们是关联的，用一个经典例子解释就是:</p>
+<blockquote>
+<p>market-basket,你在超市买东西，通常买面包，同时也会买牛奶。关联规则就是要在一堆数据中找&rsquo;这种&rsquo;东西</p>
+</blockquote>
+<p>当然一切问题只有当他有数学描述的时候才好定量衡量，下面就是几个关于关联规则的衡量方法</p>
+<p>假设数据是 horizontal 的。</p>
+<p>即</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">TID</th>
+<th style="text-align:center">Items</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">id1</td>
+<td style="text-align:center">i1,i2</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Support</strong> : 集合 $A$ 的支撑，$sp(A):= \# A$</p>
+<p><strong>Confidence</strong>: $conf(A\rightarrow B) = \Pr(B|A)=\frac{sp(A\cup B)}{sp(A)}$，注意 conf 衡量并<strong>不对称</strong></p>
+<p><strong>lift</strong>: $lift(A\rightarrow B)=\frac{\Pr(A\cup B)}{\Pr(A)\Pr(B)}$</p>
+<p><strong>interest:</strong> $intere(A\rightarrow B) = |conf(A\rightarrow B) - \Pr(B)|$</p>
+<p>可以看到要计算这些东西最核心的问题就是就算suport，也就是考虑集合的计数问题</p>
+<p>通常我们需要挖掘的是那些 $sp(S) \ge TH$ 其中 $TH$ 是个常数最小支撑界限</p>
+<p>接下来总结两个算法 <strong>Apriori</strong> 和 FP-Growth</p>
+<h1 id="apriori">Apriori</h1>
+<p>这个算法挺简单的，就一个核心思想:</p>
+<p><strong>集合偏序的单调性</strong></p>
+<p>即如果 $A\subseteq B$, 则 $sp(A)\ge sp(B)$, 换句话说，如果 $A$ 不满足支撑条件，那么 $B$ 也不可能满足从而筛选掉一部分</p>
+<h2 id="apriori-算法描述">Apriori 算法描述</h2>
+<ol>
+<li>生成 1-frequent item set $L_1={S|sp(S)\ge TH \And |S|=1}$,(需要扫描数据一遍)</li>
+<li>生成候选集合 $C_k={S|S\in L_{k-1}\Join L_{k-1}, |S|=k,\forall s \subseteq S,|s|=k-1,s\in L_{k-1}}$ (这一项用到了单调性的先验知识)</li>
+<li>扫描数据，通过 $C_k$筛选 $L_k$,这里有两种方法，都非常暴力
+<ol>
+<li>对数据集合中的每一项 $t$ ，生成 $k$ 子集，检测是否在 $C_k$ 中 $O(n^k),n=|t|$</li>
+<li>对$C_k$ 中的每一项,检测是否在 $t$ 中(membership test) $O(|C_k|k)$</li>
+</ol>
+</li>
+</ol>
+<p>详细算法描述，可见[2]</p>
+<!-- raw HTML omitted -->
+<p>同时这里有我的一个简单实现 <strong><a href="https://github.com/zouzhitao/cs246-Mining-Massive-Data-Sets/tree/master/hw1">code</a></strong></p>
+<p>可以看见这个算法非常暴力，通常从 1-&gt; 2 会生成非常多的无用集合,因此相应的优化策略也被提出来了</p>
+<h2 id="improve">improve</h2>
+<ol>
+<li>对与 3.1 先对$C_k$ 中的每个元素 hash，维护一个hash表，然后仅对每条记录$t$ 在$C_k$ 中的元素生成子集，(我自己的代码中测试的时候这个方法很管用)</li>
+<li>hash，每次生成 $L_k$ 的时候，每条记录同时生成 $k+1$ 的子集，hash记录 hash(s) : 的个数，生成 $k+1$ 候选集的时候，去掉 $hash(C_{k+1})\le TH$ 的候选集，这个方法在 1-&gt;2 的时候挺管用，不过也挺麻烦(对于spark操作来说)</li>
+<li>transaction 减少，如果一条记录在 $k$ 时不没有生成候选集，那么他在k+1时也不可能生成</li>
+<li>partition， 就是将数据划分成几个小块，对每一块求frequent itemset($TH'=TH*\frac{N_i}{N}$)这个方法能降低读取数据的次数，在大数据的时候主要开销在 $IO$ 因此这个方法可行</li>
+</ol>
+<h1 id="fp-growth">FP-Growth</h1>
+<p>这个方法挺占用内存的。它的思想挺高明，建造一颗前缀树(trie)</p>
+<!-- raw HTML omitted -->
+<ol>
+<li>先找到 $L_1$, 按照 Support 排序</li>
+<li>对于每条记录按照筛选出在 $L_1$ 中的节点，然后在按照suport 排序，够着如图所示的前缀树</li>
+<li>从 $L_1$ 中support 最小的节点开始，找到包含它的合法的子集，具体来说
+<ol>
+<li>找到树根到 $i$ 的所有路径，比如上图中的 I5, 我们能够知道，{I2,I1,I5:1},{I2,I1,I3,I5:1},就能够得到 {I2,I1,I5:2},{I2,I5:2},{I1,I5:2} 几个集合了</li>
+</ol>
+</li>
+</ol>
+<p>这个算法应该还有很多优化的空间，比如最近公共祖先优化。</p>
+<p><strong>[code]</strong> 待写</p>
+<h1 id="reference">reference</h1>
+<ol>
+<li>Anand Rajaraman, Jure Leskovec, and Jeffrey D. Ullman.<a href="http://www.mmds.org/">Mining of Massive Datasets</a>. ch6.</li>
+<li>Data mining : concepts and techniques. ch6. Jiawei Han, Micheline Kamber, Jian Pei.–3rd ed.</li>
+</ol>
+<blockquote>
+<p><strong>版权声明</strong></p>
+<p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
+<p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
+<p><strong>仅允许非商业转载，转载请保留此版权声明，并注明出处</strong></p>
+</blockquote>
+
+                        </div>
+                        
+
+                        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/posts/kickstart-2019-g/">Kick Start 2019 Round G</a></li>
+        
+        <li><a href="/posts/kick-start-2019-roundf/">Kick Start 2019 Round F</a></li>
+        
+        <li><a href="/posts/lsh/">找相似元素: LSH 局部敏感性hash</a></li>
+        
+        <li><a href="/posts/dimension-reduction/">Dimension Reduction 降维: 随机投影与JL 变换</a></li>
+        
+        <li><a href="/posts/rank-model-based-prob/">信息检索(IR)笔记2: Rank: 基于概率的rank model</a></li>
+        
+    </ul>
+</div>
+
+
+                        <div class="post-meta meta-tags">
+                            
+                            <ul class="clearfix">
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/apriori">Apriori</a></li>
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/fp-growth">FP-Growth</a></li>
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/data-mining">Data-Mining</a></li>
+                                
+                            </ul>
+                            
+                        </div>
+                    </article>
+                    
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "zouzhitao-github-io" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+    
+                </div>
+            </div>
+            <div id="secondary">
+    <section class="widget">
+        <form id="search" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://zouzhitao.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/grad-opt/" title="梯度下降优化算法简单总结">梯度下降优化算法简单总结</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kick-start-2020-round-a/" title="Kick Start 2020 Round A 题解">Kick Start 2020 Round A 题解</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kickstart-2019-round-h/" title="Kickstart 2019 Round H">Kickstart 2019 Round H</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/parrallel-computer-arch/" title="现代多核计算机体系结构简介">现代多核计算机体系结构简介</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/pagerank/" title="PageRank 算法简介">PageRank 算法简介</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/dm-reduction-pca-svd/" title="Dimension Reduction: PCA and SVD">Dimension Reduction: PCA and SVD</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/pbds/" title="pbds: STL 的扩展数据结构">pbds: STL 的扩展数据结构</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/machine-learning/">machine-learning(8)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/math/">math(4)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/programing-language/">programing-language(5)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/system/">system(6)</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="https://blog.csdn.net/Dylan_Frank" title="以前的个人博客">dylanfrank@csdn</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://traderforce.github.io/" title="银牌大佬交易者">trader</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://bbkgl.github.io/" title="c&#43;&#43;技术大牛">坤坤</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://tawn0000.github.io" title="JNU ACMer,银牌大佬">tawn</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://akeeper.space/" title="彼得·攀的小站">null</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://godweiyang.com" title="ECNU NLPer">godweiyang</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://blog.csdn.net/Krone_" title="望着楼上大佬">Krone_@csdn</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://zc-apiao.space/" title="过客别墅">Apiao</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://zouzhitao.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+        </div>
+    </div>
+</div>
+<footer id="footer">
+    <div class="container">
+        &copy; 2018 <a href="https://zouzhitao.github.io/">taotao的杂货铺 By taotao</a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="http://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/rujews/maupassant-hugo" target="_blank">maupassant</a>.
+        
+    </div>
+</footer>
+
+
+    <script type="text/javascript" src="/js/prism.js" async="true"></script>
+    <script type="text/javascript">
+    window.MathJax = {
+        tex2jax: {
+            inlineMath: [ ['$','$'] ],
+            processEscapes: true
+        }
+    };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src="/js/totop.js?v=0.0.0" async=""></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-100944759-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+<script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+</body>
+</html>

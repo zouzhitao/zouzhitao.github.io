@@ -1,0 +1,890 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>taotao的杂货铺</title>
+    <link>https://zouzhitao.github.io/</link>
+    <description>Recent content on taotao的杂货铺</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sun, 16 Aug 2020 20:46:35 +0800</lastBuildDate><atom:link href="https://zouzhitao.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cache Friendly Binary Search: cache 友好的二分搜索</title>
+      <link>https://zouzhitao.github.io/posts/cache-friendly-binary-search/</link>
+      <pubDate>Sun, 16 Aug 2020 20:46:35 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/cache-friendly-binary-search/</guid>
+      <description>前段时间面试，一面试官问我一个问题。写一个二分搜索。我一分钟以内就切完了，面试官让我在x86平台下将代码优化到极致. 我一下子就懵了。感觉多年的计算机白学了。
+ 众所周知二分查找的主要瓶颈在 cache miss. 因为查找过程中第一次可能在 数组的 $\frac{1}{2}$ 处，第二次可能就跑到了数组的 $\frac{3}{4}$ 或者 $\frac{1}{4}$ 处，如果数组够长，那前面的几次查找几乎都会miss。
+因此优化二分查找的效率，主要就在于优化 cache miss
+我上网找了两天资料，确实找到了一种方法可以优化二分查找eytzinger binary search，可是限制条件是十分昂贵的:
+ 需要对数组布局做一个重排(单次二分查找不会有任何优势) 只有在对数组做多次静态二分查找的情形下会带来cache优化。  我们先来详细看一下算法。再来仔细分析这个算法
+eytzinger binary search eytzinger memory layout 先来看一下eytzinger 内存布局。
+先举一个例子，一个有序数组的[1,&amp;hellip;,15] 所对应的完全二分查找树如下
+如果我们将这颗树保存为 pointer-free 的完全二叉树的形式，可以得到下面的数组形式 记为 $b$, base-1,也就是
+ $b[1]$ 为根节点 $b[2k]$ 为 $b[k]$ 的左孩子，且 $b[2k] &amp;lt;= b[k]$ $b[2k+1]$ 为 $b[k]$ 的右孩子，且 $b[2k +1] &amp;gt;=b[k]$  也就是说
+对于一个有序数组的eytzinger 内存布局定义为它的完全二分搜索树的数组形式，类似表示在计算机世界中并不少见，比如 binary-heap就是这样表示的。
+如何将有序数组改为eytzinger形式 其实不难发现 原数组是这颗完全二分搜索树的中序遍历，而eytzinger布局是这颗完全二分搜索树的层序遍历
+const int n = 1e5; int a[n], b[n+1]; int eytzinger(int i = 0, int k = 1) { if (k &amp;lt;= n) { i = eytzinger(i, 2 * k); b[k] = a[i++]; i = eytzinger(i, 2 * k + 1); } return i; } 在eytzinger 布局上的二分搜索实现 原理很简单了，</description>
+    </item>
+    
+    <item>
+      <title>梯度下降优化算法简单总结</title>
+      <link>https://zouzhitao.github.io/posts/grad-opt/</link>
+      <pubDate>Wed, 15 Jul 2020 23:07:48 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/grad-opt/</guid>
+      <description>本篇博客简要总结关于梯度的一些优化方法[1]
+ 常见的三种基于梯度的优化框架 batch gradient for i in range(nb_epochs): params_grad = evaluate_gradient(loss_function, data, params) params = params - learning_rate * params_grad 一次迭代对所有的data进行更新
+缺点
+ 数据量大，有时候根本无法将所有data丢进内存 会对重复的sample做冗余计算  好处:
+对于convex function 可以保证一定能到 global opt，non-convex 能到 local opt
+sgd 一次只2针对一个sample
+for i in range(nb_epochs): np.random.shuffle(data) for example in data: params_grad = evaluate_gradient(loss_function, example, params) params = params - learning_rate * params_grad 缺点
+ 震荡(每个样本更新带来的方差大)  好处
+ online learning faster  mini-batch gradient for i in range(nb_epochs): np.</description>
+    </item>
+    
+    <item>
+      <title>Kick Start 2020 Round A 题解</title>
+      <link>https://zouzhitao.github.io/posts/kick-start-2020-round-a/</link>
+      <pubDate>Mon, 23 Mar 2020 17:19:35 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/kick-start-2020-round-a/</guid>
+      <description>这次的题挺简单的,可惜了当时没做，错过一次好机会
+ A.Allocation 有 $N$ 个房子，每个房子单价为 $a_i$ 你共有 $B$ 块钱，求最多可以买多少个房子
+分析 贪心
+每个房子的收益都是 1，因此如果有两个房子 $A,B$, 一定是买价格低的最好
+code
+B.Plates $N$ 堆盘子，每堆有 $K$ 个, 每个盘子的收益是 $a_{ij}$, 你可以取 $P$ 个盘子，不过限制是，如果你取了盘子 $A$, 必须要取走它上面的所有盘子，问最大收益，
+分析 01背包的变种，相当于每堆盘子仅取一次，只需确定每堆盘子取的最大位置就好，
+code
+C.Workout $N$ 个连续的数字，$a_{i+1}&amp;gt;a_i$, 这个序列的收益是 $\max {a_{i+1}-a_i}$, 你可以至多添加 $K$ 个新的数字，使得最小化这个序列的收益，问最小值
+分析 二分
+code
+D.Bundling $N$ 个字符串(仅包含大写),将他们分成 $N/K$ 个组，每个组 $K$ 个字符串，每个组的score是该组字符串的最长公共前缀
+求最大化每个组的score的和
+分析 这题很简单，建一棵trie 树 (前缀树), 每一个节点 记录这个节点的包含此节点的前缀个数(记为 $cnt$).
+遍历这颗trie树，对每个节点($u-&amp;gt;v$) 统计它的子树收益($ans$)以及需要使用的字符串个数($used$)
+因此节点 $u$ 个收益为 $\sum v.ans +(u.cnt - v.used)/K*dep$. (dep 表示树的深度)</description>
+    </item>
+    
+    <item>
+      <title>Kickstart 2019 Round H</title>
+      <link>https://zouzhitao.github.io/posts/kickstart-2019-round-h/</link>
+      <pubDate>Thu, 21 Nov 2019 20:46:21 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/kickstart-2019-round-h/</guid>
+      <description>kickstart 2019 round H, 2019 年最后一场kickstart，被打回原型了
+ 感觉还是应该莽一发小数据的&amp;hellip; 前天已经接到了google的实习申请通知了，得抓紧时间刷题了，近期准备把 2018，2017都刷一遍
+A H-index easy， H，是递增的，因此有很多种解决方案
+ 维护一个 $citation \ge h$ 的优先队列，h变化过程中动态删减 (from lls) 维护从 [0,l]以来citation的顺序，移动过程中动态计算  code
+B. Diagonal Puzzle 题目链接 https://codingcompetitions.withgoogle.com/kickstart/round/0000000000050edd/00000000001a2835
+这题很像棋盘翻转，不过是在对角线上的版本，
+考虑一下，如果任意一跳对角线只有翻转与不反转两种情况，重复翻转无效，因此，对于两条大对角线，枚举两种情况，之后对于其上的点，如果为 &amp;lsquo;.&amp;rsquo; 则必翻转，由此求解
+不过写起来真麻烦，代码参考了 lls的解决方案
+将每条对角线想象成一个点，每个点想成边，则对于每个点 $C_{ij}$, 表示一条从 $(i+j) -&amp;gt; (i-j)$ 的边，(注意重编码)其颜色为 $C$, 对于任意一个连通分量，翻转一条对角线就能决定所有翻转，dfs就行了
+code
+C. Elevanagram 题目链接 https://codingcompetitions.withgoogle.com/kickstart/round/0000000000050edd/00000000001a286d
+题意 对于一个数字(很大，数字 $i,1\le i\le 9$, 有 $A[i]\le 10^9$ 个)，是否存在一种排列方式，s.t.它能够被 11 整除
+对于 test1其实很好解决，直接dp就行了，这里有很多种dp姿势，我写的有点搓
+我的方法如下:
+ 首先，设数字 $i$ 选择的正数为 $k_i$, 则他对答案的贡献为 $\sum (k_i - (A_i-k_i)) i % 11$ 因此设 $dp[i][j]$ 表示前 $i$ 个数中 最终 mod 11为 $j$ 的正数的个数情况</description>
+    </item>
+    
+    <item>
+      <title>现代多核计算机体系结构简介</title>
+      <link>https://zouzhitao.github.io/posts/parrallel-computer-arch/</link>
+      <pubDate>Sun, 10 Nov 2019 21:49:30 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/parrallel-computer-arch/</guid>
+      <description>这篇博文简单介绍多核计算机体系结构的相关术语(e.g. SIMD,superscalar,hyper-thread&amp;hellip;)，现代计算机体系结构保罗万象，越来越复杂，这里仅仅是抽象层简介，不涉及具体实现。旨在简单介绍它的一些工作方式概念.(非专业人士，有错误欢迎指正)
+ 希望这篇文章能够帮助理解以下概念:
+单核 很简单，每个clock 执行一条指令.
+并行优化技术 multi-core 一个处理器增加多个核
+这带来的是硬件对 multi-thread 的并行化支持.可以让两个线程同时跑.
+SIMD(Single Instruction Multi-Data) 这是典型的数据并行(Data parallel) 的模型
+典型的场景就是向量乘法
+for (int i=0 ; i&amp;lt;n ; ++i) z[i] = x[i] * y[i] 这里面每个data执行的指令都是一样的 mul
+有很多种方式都可以实现这种SIMD
+ 硬件,CPU运行时发现 compiler, 编译期发现 显示地用SIMD指令(程序员可见的)  前面两种都是programmer不可见的，因此写程序的时候尽量写data parallel 通常能够带来性能优化(PS:即使现在不能，随着这种技术的发展后面也一定能)
+超标量(superscalar) 和单核单指令流的唯一区别就是加了另外一套 fetch/decode 及ALU 逻辑，这意味着可以在一个clock跑2条并行 的指令(ILP,指令级并行) 需要执行的指令流中的指令是无关的，没有依赖的.
+这对programmer是完全透明的
+superscalar+SIMD 访存(access memory) 两个重要概念
+memory latency 处理器发出内存请求指令(store，load)，到获得内存，继续跑的时间
+memory bandwidth 内存系统可以提供数据给处理器的速度(e.g. 20G/s).
+stalls 指令流中的指令由于前一条指令的依赖(e.g. 数据依赖,访存)而无法执行，称为被墙了(&amp;lsquo;stalls&amp;rsquo;，不知怎翻译)
+由于访存与cpu计算速度的巨大差异，改进前面的任意三者之一，都会提高计算的效果
+改进 access memory 的姿势  cache，有效减少 stalls的长度，从而 reduce latency(在cache命中了就不需要access memory 了) Prefech，减少stall，(如果预测正确，内存依赖会变少，从而减少stall，隐藏latency(整体性能上升))  硬件支持的multi-thread (单核multi-thread) interleave multi-thread 这种单核多线程称为 interleave 多线程，也叫伪多线程,顾名思义就是假的多线程，因为它其实只有一套 fetch/decode,ALU, 也就是一个clock只能执行一条指令，所以同时只能执行一条指令，所以线程是交错执行(interleave),的不过有多个执行上下文(excute context)</description>
+    </item>
+    
+    <item>
+      <title>PageRank 算法简介</title>
+      <link>https://zouzhitao.github.io/posts/pagerank/</link>
+      <pubDate>Sun, 03 Nov 2019 22:02:12 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/pagerank/</guid>
+      <description>这篇文章总结 PageRank 相关内容
+ PageRank 在搜索引擎中用来对网页做特征评估(为网页重要性打分)，Google当年就是靠它，拿到互联网时代的门票，进而成就今天的霸主地位。同时，这也是 技术+商业 变现的例子。这边博文就在这里简要总结PageRank算法，揭开它的神秘面纱。
+intuition pagerank的直观非常简单:
+ 整个 web 是一个是一个有向图，一个页面包含的链接，表示这个页面指向另外一个页面 重要的页面被访问的频率越高 被访问的频率(次数) 代表page的重要性  那么剩下的就是一个问题，如何评估页面被访问的次数？当然，直接统计是一种方式，不过这种方式有一个问题，最开始的时候(无人访问的时候)怎么评估？因此我们要想出一个替代的办法
+这里采用的模型就是随机游走(random walk)。假设一个人在这个web上随机游走，每个链接指向的边($A\rightarrow B$) 表示从页面 $A$ 到达 $B$ 的权重，其权重为 $\frac{1}{deg-out_{A}}$。即将它自己的pagerank等概率的分给所有出边指向的链接.
+最终每个页面的极限概率 就是每个页面的pagerank。
+表达成数学模型就是一个markov chain模型。
+markov chain 转移矩阵为$M$,其中 $M_{ij}$ 表示页面$j\rightarrow i$ 的转移概率，$\mathbf{r}$ 表示rank向量长度为 $n$,表示每个页面的pagerank，也就是每个页面的极限概率,其和为1.则
+$$ \begin{aligned} \mathbf{r}&amp;amp;=M\mathbf{r}\\\
+\sum_{i=1}^n &amp;amp; r_i=1
+\end{aligned} $$
+即
+$$ r_i=\sum_j M_{ij}r_j\tag{1} $$
+求解 求解这个很简单，可以将上式看做固定点迭代，从任意一个随机的r(和为1)开始不停迭代，当 $||r&#39;-r||\le \epsilon$,类似于power iteration。不过这种方法是非常naive的，在数据很大，首先matrix纯不下来，后面我们再讨论pagerank的高效计算。
+现在先来看这样一个问题。一个非常核心的问题，一定有解吗？解唯一吗？
+解的唯一性 基于markov chain的相关知识我们知道，markov chain要能够收敛必须要保证 &amp;lsquo;irreducible&amp;rsquo; 和 &amp;lsquo;recurrent&amp;rsquo; 也就是任意两点可达，且非周期。因此我们需要解决两个问题
+ dead end spider trap  解决这两个问题 Google 设计pagerank的时候引入了一个策略</description>
+    </item>
+    
+    <item>
+      <title>Dimension Reduction: PCA and SVD</title>
+      <link>https://zouzhitao.github.io/posts/dm-reduction-pca-svd/</link>
+      <pubDate>Wed, 23 Oct 2019 14:20:43 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/dm-reduction-pca-svd/</guid>
+      <description>这篇博文简要总结关于数据降维的另外两种方法，PCA与SVD。之前讲过用JL变换和随机投影的方式做降维，那种方式的出发点是从计算效率出发的，所以计算方式会更快同时也是数据透明(data-oblivious)的,也就是不关心数据的特点，而今天要讲的两种方式都关心数据的特点。同时这里给出了一些PCA的相关直观性解释
+ PCA 首先我们说降维的目标始终都是用一个低维空间($\mathcal{R}^m$) 来近似的表示高维空间 $\mathcal{R}^n,m\ll n$ 中的向量。
+也就是说 PCA的目标就是
+ 将 $m$ 个 $n$ 维空间中的向量 $\mathbf{x}_1,\dots,\mathbf{x}_m$ 用 $k$ 个$n$ 维空间中的向量来近似表示：
+ $$ \mathbf{x}_i\approx \sum_{j=1}^k a_{ij}\mathbf{v}_j,\forall l,m\le k,l\neq m,\mathbf{v}_l^T\mathbf{v}_m=0,||\mathbf{v}_j||=1 $$ 也就是说将 每个n维向量往 $k$ 个正交向量张成的空间投影。
+因此PCA的目的就是找到这 $k$ 正交向量。怎么找我们留在后面(注意在随即投影中，这几个向量都是random选择的)
+与linear regression 的关系 也就是说最大的不同在于 线性回归找到的线是使得说有点到线的竖直距离最小，而pca是让找到线到说有点的垂直距离(perpendicular) 距离最小。
+问题的严格定义 1维情况 我们的目标就是要:
+$$ \mathbf{v} = \arg \min_{||v||=1} \sum_i dist(\mathbf{x}_i\leftrightarrow v)^2 $$
+很显然这个目标等价于
+$$ \mathbf{v} = \arg \max_{||v||=1} \sum_i &amp;lt;\mathbf{x}_i,v&amp;gt;^2\tag{1} $$
+detail
+ 很显然这个投影距离是shift，和scale敏感的，所以做pca前通常需要0均值化，以及去scale  多维 定义 $n$ 维空间中 $k$ 个正交向量，所张成的子空间 $S=span\{\mathbf{v}_1,\dots,\mathbf{v}_k\}$，很显然，多为情况就是</description>
+    </item>
+    
+    <item>
+      <title>pbds: STL 的扩展数据结构</title>
+      <link>https://zouzhitao.github.io/posts/pbds/</link>
+      <pubDate>Tue, 22 Oct 2019 22:58:55 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/pbds/</guid>
+      <description>这篇blog 介绍，GNU对STL的一个扩展库 Policy-Based Data Structures,PBDS，的一些应用，会持续更新
+ introduction pbds 是GNU对STL的一个扩展，封装了很多常见的数据结构，并且提供了操作数据结构内部metadata的策略，也就是说user(我们)可以直接对内部节点更新了，这称之为 policy。这里并不打算详细介绍 pbds的使用和设计，instead，这里仅仅提供一些案例，它的使用可见官方手册
+pbds 封装这样一些数据结构:
+ tree hash_table priority_queue trie  并且提供比STL更加通用的操作方式
+tree template&amp;lt; typename Key,// key 类型 typename Mapped,// value 类型，可为null_type, 表示set typename Cmp_Fn = std::less&amp;lt;Key&amp;gt;, typename Tag = rb_tree_tag,// other rb_tree_tag, splay_tree_tag, or ov_tree_tag template&amp;lt; typename Const_Node_Iterator, typename Node_Iterator, typename Cmp_Fn_, typename Allocator_&amp;gt; class Node_Update = null_node_update,// update policy，大部分情况下不用自己写 typename Allocator = std::allocator&amp;lt;char&amp;gt; &amp;gt; class tree; tree 与STL中的map和set非常类似，不过由于提供了对node的metadata的操作使得我们能够解决一些set和map无法解决的东西。
+order 查询 最典型的一种情形就是 set 无法告诉你 某个 key的前面有多少元素，然而我们知道通过维护一些节点上的metadata(算法导论)，可以实现这个操作，斌且不需要任何额外的时间开销</description>
+    </item>
+    
+    <item>
+      <title>Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</title>
+      <link>https://zouzhitao.github.io/posts/dm-association-rule/</link>
+      <pubDate>Mon, 21 Oct 2019 21:58:26 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/dm-association-rule/</guid>
+      <description>这篇博文主要总结数据挖掘 find frequent item set 的 两个个有趣的算法: Apriori,FP-Growth Tree
+ introduction 关联规则，简单的说就是在一个数据集中，通常我们如果看见 A，同时也会看见 B。就称他们是关联的，用一个经典例子解释就是:
+ market-basket,你在超市买东西，通常买面包，同时也会买牛奶。关联规则就是要在一堆数据中找&amp;rsquo;这种&amp;rsquo;东西
+ 当然一切问题只有当他有数学描述的时候才好定量衡量，下面就是几个关于关联规则的衡量方法
+假设数据是 horizontal 的。
+即
+   TID Items     id1 i1,i2    Support : 集合 $A$ 的支撑，$sp(A):= \# A$
+Confidence: $conf(A\rightarrow B) = \Pr(B|A)=\frac{sp(A\cup B)}{sp(A)}$，注意 conf 衡量并不对称
+lift: $lift(A\rightarrow B)=\frac{\Pr(A\cup B)}{\Pr(A)\Pr(B)}$
+interest: $intere(A\rightarrow B) = |conf(A\rightarrow B) - \Pr(B)|$
+可以看到要计算这些东西最核心的问题就是就算suport，也就是考虑集合的计数问题
+通常我们需要挖掘的是那些 $sp(S) \ge TH$ 其中 $TH$ 是个常数最小支撑界限</description>
+    </item>
+    
+    <item>
+      <title>Kick Start 2019 Round G</title>
+      <link>https://zouzhitao.github.io/posts/kickstart-2019-g/</link>
+      <pubDate>Sun, 20 Oct 2019 11:28:03 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/kickstart-2019-g/</guid>
+      <description>人生第一次 AK!
+ 这次的题目似乎比以前要简单一些
+A. Book Reading 这题是说，有 $N\le 1e5$ 页书，有 $M$ 页是坏的，有 $Q$ 个人分别从 $q_i\le N$ 开始读，只读 $q_i$ 的倍数，坏的不读， 求共读了多少页
+题解 直接暴力就行了，类似埃筛(complexity $O(n\log n)$))注意将相同 $q_i$ 存一下
+code code
+B.The Equation 这题的意思是，找一个最大的 $k\ge0\ s.t.\ \sum k\land A_i \le M, M\le 10^{15},A_i\le 10^{15}$
+分析 从最高位开始，如果那一位能够置为 $1$， 那就置为 $1$, 否则放 $0$
+最高位能置为 $1$ 的条件是，后续和的最小值 $\le M-val(highest\ bit =1)$
+complexity $O(\log M)$
+code code
+C.Shifts 这题就更简单了，直接暴力枚举 $3^{20}$ 种状态就行了
+code
+更新了一个 $O(3^{N/2})$ 的做法</description>
+    </item>
+    
+    <item>
+      <title>Kick Start 2019 Round F</title>
+      <link>https://zouzhitao.github.io/posts/kick-start-2019-roundf/</link>
+      <pubDate>Tue, 15 Oct 2019 21:00:42 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/kick-start-2019-roundf/</guid>
+      <description>F round 题解
+ A.Flattening 这轮，这个A还是有点难，好多选手都挂了&amp;hellip;
+$O(N^3)$ 版本  计算 $num[i][j], interval[i,&amp;hellip;,j]$ 仅存在一块时需要改变的元素数目 $dp[i][k]$ 使得前 $i$ 块的石头中，$\# A_x \ne A_{x+1}\le k$ 需要改变的元素数目 易知，$dp[i][k] = \min_j dp[j][k-1]+num[j+1][i]$  github code
+一些小bug vector [] 操作， uncheck index out of size &amp;hellip;也就是说 out of size 返回的值是 未定义的(i.e. 可能是 segment fault，也有可能是很奇怪的值，可见源码)
+O(N^2logN) 版本 还没想通。。。
+B.Teach Me  skill[i] 表示拥有第 $i$ 项技能的人的集合(vector，递增顺序存储就好) ee[i], 第 $i$ 个人所具有的技能集合  那么对于每个人 $ee[i]$ 来说，它所不能交的人就是 $\bigcap_{s \in ee[i]} skill[s]$,注意由于 $|ee[i]|\le 5$, 上面的求解过程最坏是 $O(N)$,将ee去一下重，然后在暴力算就行了</description>
+    </item>
+    
+    <item>
+      <title>找相似元素: LSH 局部敏感性hash</title>
+      <link>https://zouzhitao.github.io/posts/lsh/</link>
+      <pubDate>Mon, 14 Oct 2019 19:19:18 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/lsh/</guid>
+      <description>这篇博文简单总结一下局部敏感性hash(locality-sensetive-hash,LSH) 在找相似元素中的应用，这也是最近邻的另外一种解决方案
+ LSH 的直觉非常简单，设想一下我们判断一个集合 $set$ 中是否存在一个元素 $e$ 的方法，通常是将集合中的所有元素hash到一个一个的桶中，同时将 $e$ hash到桶中，如果存在，那么一定能在 $hash(e)$ 的桶中找到 $e$ ，这样的均摊代价只有 $O(1)$
+不过如果我们要找在某种距离下，与元素 $e$ 仅有些许差别(i.e. $distance(e,x) \le \theta$),而不是完全相同时，上面这种通常的hash方案是一定不行的。如果，我们能够找到一个hash 函数 $s.t. \Pr[hash(x)= hash(y)] = sim(x,y),x\ne y$ 即，两个不同元素hash到一个桶的概率和衡量他们之间距离的函数有某种数学关系，那么在加上一些独立实验的trick就能够保证，hash到一个桶中的元素都是距离相近的元素了
+case study 假设有 $n$ 个集合 $set_1,\dots,set_n$, 每个集合是一些数字(或者可以将每个集合看做bit vector)表示是否存在某个元素 $e$. 我们要寻找每个集合的相识集合。
+Jaccard similarity $sim(A,B)=\frac{|A\cap B|}{|A\cup B|}$.
+定义hash 函数 $min-hash(A) =\arg \min_{x \in A} hash(x), \forall x \ne y, hash(x)\ne hash(y) $,(一般来说会选择排列 $\pi$ 作为这样的hash 函数，然而其实通常意义上任意的hash函数都是ok的)。我们会发现 $min-hash$ 的一个好处
+$$ \Pr[min-hash(x)=min-hash(y)]= \frac{|A\cap B|}{|A\cup B|} $$</description>
+    </item>
+    
+    <item>
+      <title>Dimension Reduction 降维: 随机投影与JL 变换</title>
+      <link>https://zouzhitao.github.io/posts/dimension-reduction/</link>
+      <pubDate>Sun, 13 Oct 2019 18:25:18 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/dimension-reduction/</guid>
+      <description>关于维度爆炸的问题，历来探讨的都很广泛。存在于很多真实的问题中，比如 nearest neighbor，最近邻问题，这里总结一种简单的技术，叫做随机投影(random projection)
+ 最近邻问题的简单描述如下:
+给定 $k$ 维空间 $R^k$ 中的 $n$ 个点 $x_1,x_2,\dots ,x_n$,找到每个点的最近邻居 $NN_i = \arg \min_j \mathcal{L_2}(x_i,x_j) = \arg \min_j ||x_i-x_j||_2^2$,
+朴素的算法复杂度为 $O(n^2 k)$, $k$ 为计算 $\mathcal{L_2}$ 的时间复杂度。通常 $k \le 20$ 非常小的情况下可以用 kd-tree (注 这里kd-tree 查询最近邻的复杂度问题，我看很多资料都写着会和dim成指数增长，然而原始论文写的是 $O(\log n)$ ,这里个人暂时并没有一个严格证明. 此处留待验证，和这个主题暂时无关).
+随机投影 随机投影的想法很简单，它的直观就是 ，想象我们在二维平面上找一个点 $p$ 的最近邻，如果在 $x$ 坐标上距离 $p$ 比较远的点，通常很难成为最终解。
+接下来我们用严格的数学语言表述一下:
+define $f_\mathbf{v}(\mathbf{x}) = \mathbf{x} \mathbf{v} = \sum x_i v_i, \mathbf{v} \in \mathcal{N(0,1)}$ 即将向量 $\mathbf{x}$ 在 $\mathbf{v}$ 上做一个投影</description>
+    </item>
+    
+    <item>
+      <title>信息检索(IR)笔记2: Rank: 基于概率的rank model</title>
+      <link>https://zouzhitao.github.io/posts/rank-model-based-prob/</link>
+      <pubDate>Sun, 06 Oct 2019 22:32:32 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/rank-model-based-prob/</guid>
+      <description>这是cs276 information retrieval &amp;amp; web search的笔记2，这里总结关于IR 系统中，rank的一些概率模型，BIM，BM25
+ introduction IR系统的核心就是ranking，也就是非常直观的任务，对于user的一个query $q$, IR系统希望给每个检索出来的文档一个分数 score，按照score由高到低反馈给用户，而概率模型的核心就是对这个分数，用概率建模。
+ $P(R|q,d)$ 其中 $R$ 是一个binary事件变量，$R=1$ 表示相关，$R=0$ 表示不相关。$q$ 表示user的查询，而 $d$ 表示文档
+ 由于我们只care的是rank(相对大小)而不是 $Prob$ 绝对大小。因此在概率模型中我们使用的metric通常是
+ $Odd(R|q,d)=\frac{P(R=1|q,d)}{P(R=0|q,d)}$
+ 下面介绍两种概率模型，BIM，BM25，分别基于 二项分布和泊松分布
+BIM( binary independent model) 首先将document 向量化成 $x = (x_1,\dots ,x_i,\dots ,x_T ),T$ 表示 query 中 $term$ 的数量，$x_i =1 \iff term_i$ 在document $d$ 中
+那么 score
+$$ \begin{aligned} O(R|q,d) &amp;amp;= O(Q|q,x)\\\
+&amp;amp;= \frac{\Pr(R=1|q,x)}{\Pr(R=0|q,x)}\\\
+&amp;amp;= \frac{\frac{\Pr(R=1|q)\Pr(x|R=1,q)}{\Pr(x|q)}}{\frac{\Pr(R=0|q)\Pr(x|R=0,q)}{\Pr(x|q)}} (bayes\ rule)\\\
+&amp;amp;=O(R|q)\frac{\Pr(x|R=1,q)}{\Pr(x|R=0,q)} \end{aligned} $$</description>
+    </item>
+    
+    <item>
+      <title>信息检索(IR)笔记1: 倒排索引(Inverted Index)</title>
+      <link>https://zouzhitao.github.io/posts/inverted-index/</link>
+      <pubDate>Sun, 06 Oct 2019 22:04:00 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/inverted-index/</guid>
+      <description>建立索引是 information retrieval 的一个核心问题，这一节简单记录关于index的相关笔记. 所有内容均来自 stanford cs276 information retrieval &amp;amp; web search
+text preprocessing 一些术语
+ tokenization  将文本编程token流，通常处理 &amp;ldquo;I&amp;rsquo;m &amp;ldquo;..   normalization  text 和query term 映射统一(e.g. U.S.A USA)   stemming  形式(中文通常没这个问题,e.g. authorize, authorization)   Stop words  omit 掉一些无用的，e.g a,an &amp;hellip;    inverted index term -&amp;gt; (frq,posting_list(docId))
+frq = len(posting_list)
+simple construction text -&amp;gt; tokenstream -&amp;gt; list ( term, docId) -&amp;gt; sort-&amp;gt;unique -&amp;gt; merge</description>
+    </item>
+    
+    <item>
+      <title>Support Vector Machine</title>
+      <link>https://zouzhitao.github.io/posts/svm/</link>
+      <pubDate>Fri, 27 Sep 2019 20:45:14 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/svm/</guid>
+      <description>简单总结一下SVM，以帮助ML相关面试
+  SVM 是一种上古时代(90s) 的东西，其实我也不清楚他在工业界的用处到底几何。只是感觉算法特别慢，还意义不太大。
+ intuition 首先SVM的动机其实很简单。我们都知道对于分类问题(这里以二分类为例)，就是要找一个超平面将正例和负例分开，而SVM找的这个超平面相对比较特殊，他希望找到一个超平面，s.t最大化到两个类别的距离。
+如图，关于点到超平面的距离，可见我之前写的一篇文章点到超平面的距离计算
+设间距为 $c$ 于是，我们简化为以下数学形式，
+找到一个超平面(hyperplane)
+$w^Tx+b=0$
+s.t.
+$w^tx_i+b\geq c,\forall y_i=1$
+$w^tx_i+b\le -c, \forall y_i=-1$
+注意 这里的距离仅仅是一个单位，他到底是多少没有关系，仅仅关系到对超平面的缩放(scale)。
+可以得到如下的二阶规划的形式
+$$ \max \frac{C}{||w||}\\\
+s.t\\\
+y_i(w^tx_i+b) \ge c\\\
+$$
+即,
+$$ \min ||w|| \rightarrow \min \frac{1}{2} w^Tw\\\
+s.t\\\
+y_i(w^tx_i+b) \ge 1\\\
+$$
+到这里其实就完事儿了，用任意一个二阶规划求解器解一下就行了，然而为了说明 support vector 的由来，我们有必要继续探讨一下它的其他形式。
+Lagrangian 关于凸优化中的拉格朗日乘子与KKT条件详见，我的另外一篇文章 凸优化
+这里不见证明的直接用结论了。
+利用拉格朗日乘子，
+$\mathcal{L}(w,b,\alpha)=\frac{1}{2}w^Tw+\sum \alpha_i(1 - y_i(w^Tx_i +b)),\forall a_i\le 0$
+由拉格朗日对偶，
+原问题 : $\min_{w,b} \max_{\alpha} \mathcal{L}(w,b,\alpha)$</description>
+    </item>
+    
+    <item>
+      <title>Kickstart 2019 Round E</title>
+      <link>https://zouzhitao.github.io/posts/kickstart-2019-rounde/</link>
+      <pubDate>Sun, 25 Aug 2019 19:10:53 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/kickstart-2019-rounde/</guid>
+      <description>A. Cherries Mesh easy
+code : github
+B. Code-Eat Switcher 这题结束后想通了，可以贪心，将 $(c_i,e_i)$ 按照 $c_i / e_i$ 排序，然后贪心.
+codegithub
+C. Street Checkers 这题还是很容易的，
+首先翻译一下题意，对于一个数 $X$, 如果它的奇数因子和偶数因子之差不超过 2，这个数就ok，判断 [L,R] 中有多少个这样的数， $R-L \le 10^5,L,R \le 10^9$,
+首先，观察规律， 假设 $X=2*X&#39;$(其中 $X&#39;$ 是奇数) 的奇数因子为 $p_i$， 那么所有$2p_i$ 都是它的偶数因子 同理，如果 $X=2^2X&#39;$, 那么所有的 $2p_i,4p_i$ 都为它的因子，此时，如果$X$ ok，那么 $4p_i$ 的个数要小于2，即 $X&#39;$ 为素数或者$1$,其他情况也可推知，
+最后就变成判断质数的题目了，用miller-robin就ok了
+code github
+ 版权声明
+本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
+作者: taotao
+转载请保留此版权声明，并注明出处
+ </description>
+    </item>
+    
+    <item>
+      <title>cpp 中Range Based for 的性能分析</title>
+      <link>https://zouzhitao.github.io/posts/range-based-for-in-cpp11/</link>
+      <pubDate>Fri, 23 Aug 2019 14:42:36 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/range-based-for-in-cpp11/</guid>
+      <description>这要是对以下几种在c++里的 for-range-loop做一个总结
+ for(auto e : container) for(auto &amp;amp;e : container) for(const auto &amp;amp;e : container) for(auto &amp;amp;&amp;amp; e : container)  这里主要是参考 ref [1] stackoverflow里的类容，他总结的很好，我这里做个备份
+核心思想是
+ 和函数的参数一样，Same consideration applies as for function arguments
+ 简单解释  for(auto e : container) 这会使用一个 copy-constructor函数，构造一个副本，也就是说 e,仅仅是container中的一个copy test-code 见ref1 for(const auto &amp;amp; e:container),for(auto &amp;amp;e : container) 这两者的区别在于 const 不能在for-loop中更改 e,两者的开销(通常意义下，取决于copy-construct的开销)都会比 1低， for(auto &amp;amp;&amp;amp;e : container) 这个语法我也是第一次遇见，主要给一些proxy-iterator使用的， 例如 vector&amp;lt;bool&amp;gt; STL将其设计为一个bool一个bit 所以是没法refrence到它的地址的(cpu按byte寻址),如果用 for(auto &amp;amp; e: container)会出现编译错误 不过， 这种语法是兼容 for(auto &amp;amp; e:container),并且时间开销接近(见后文的时间测试)  使用总结  For observing mode，即仅仅是read-only的情况  通常使用 for(const auto &amp;amp;e:container) 例外，对于copy-cheap的类型(e.</description>
+    </item>
+    
+    <item>
+      <title>Kickstart 2019 RoundD</title>
+      <link>https://zouzhitao.github.io/posts/kickstart-2019-roundd/</link>
+      <pubDate>Thu, 22 Aug 2019 21:24:34 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/kickstart-2019-roundd/</guid>
+      <description>整体来说这次的题不是很难，我都能自己想出来，并写完，但是这次马力有点大，C题写了2hrs&amp;hellip;
+A.X or What? 这题比较简单，重点在一个 xor的性质，与位的异或次序无关即两数$A,B$ 共 $K$ 位
+$$ \bigwedge_i A_i \wedge B_i = (\bigwedge_i A_i)\wedge (\bigwedge_i B_i) $$
+code: github
+B.Latest Guests tips 1: $M&amp;gt;N$ 是无效的，因为仅有最后被访问的才会被记录，所以如果对于 领地 $k$ 它访问了两次，那仅仅需要知道最后一次访问的时间就行了 tips 2: 因为仅有最后一次被访问才会被记录，即时间戳越后的优先于时间戳越早的，因此我们可以倒过来模拟整个过程，即从 $G_i$ 项最后一次待的地方开始往前模拟。
+即有如下伪代码：
+vis[] // 第 i 个东西最后被访问的时间戳 g[i] // cur,当前位置，dir行动方向，ans,访问次数， for time = M to 0: if(vis[g[i].cur] &amp;lt;=time) // 还未被访问过 vis[g[i].cur] = time g[i].ans ++ update g[i].cur 接下来就是优化模拟的过程了，
+tips 3: 任意的项 $G_i$ 仅由当前位置 $cur$ ,和行进方向 $dir$ 决定它的ans，因此可以合并所有 $cur$ 和 $dir$ 相同的项到一组。</description>
+    </item>
+    
+    <item>
+      <title>Kickstart 2019 RoundC 题解</title>
+      <link>https://zouzhitao.github.io/posts/kickstart-2019-roundc/</link>
+      <pubDate>Sat, 17 Aug 2019 12:58:56 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/kickstart-2019-roundc/</guid>
+      <description>A. Wiggle Walk 难度 模拟，编码，hashtable
+这个题比较简单，可以直接模拟，用一个 hashtable 维护 dp[x][y][dir] [注意这里不是开数组]， 因为只有 $N \le 5e4$ 个点所以用hashtable维护就好，复杂度 $O(n)$
+code : github
+B. Circuit Board 难度 RMQ
+每一行都是独立的，因此可以枚举列
+for(int l = 0 ; l&amp;lt; c ; ++l) for(int r=l ; r &amp;lt; c ; ++r) compute best ans 这里需要判断每一行是否满足 $\max a_i[l,\dots,r] - \min a_i[l,\dots,r] &amp;gt;k$ 因此需要快速求 [l,r] 的最大最小值，这个不就是经典的 RMQ 吗？
+code : github
+C. Catch Some 难度 dp,0/1 knapstack
+这题是一个类似 0/1 背包的dp
+一点变化是最后不需要回到原点，因此最后观察的dog是一个关键，也就是对每个type来说最后一种type是有差别的，其他没差别。</description>
+    </item>
+    
+    <item>
+      <title>Kick Start 2019 RoundB</title>
+      <link>https://zouzhitao.github.io/posts/kick-start-2019-roundb/</link>
+      <pubDate>Wed, 14 Aug 2019 21:04:33 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/kick-start-2019-roundb/</guid>
+      <description>A. Building Palindromes easy
+code : https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-B-A.cpp
+B. Energy Stones knapstack 变种.
+题意
+ $n$ 块石头，每块石头有 3 个参数， 初始能量 $e$, 每秒能量损失 $l$, 吃完所需要的时间 $s$, 若石头能量损失到0，或者负数，该石头能量为0. 求吃完说有石头所能够得到的最大能量值 link ：https://codingcompetitions.withgoogle.com/kickstart/round/0000000000050eda/00000000001198c3
+ 这其实是一个背包问题，但是要推出是背包还是需要一些功夫的。
+首先，能量值为0 的石头一定不会吃它，那我们考虑要吃的石头集合的次序，如果两块石头紧邻，那我们一定会先吃能量损失的少的石头。因此可以以这个顺序将所有石头拍个序，然后问题就变成了一个背包问题了。
+以上是官方题解
+个人小插曲 在解决这个问题的时候，对于test set 1，我首先想到的是可以对每一个石头求解出次序为 $i$ 的时候它的能量值，然后在求解一个最优次序，这个问题等价与在一张 $nXn$ 的矩阵中，找不再同一列同一行的权值和最大的 $n$ 个数。这个问题等价与二分图的最大权值匹配，复杂度 $O(n^3)$
+对于 Test set 2,个人并没能够想出。
+看了题解之后用了 dp的方法，这种dp还是很经典的。
+其中有一个小bug 让我调试了很久， #define MAXN 100+3(果然是很久没敲代码了)
+code : https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-B-B.cpp
+C. Diverse Subarray 对于小数据我们可以用暴力做，对每个 $l$ , 计算以$l$ 为左端点的最优的 $r$ 这个可以暴力统计每个 type 的frequency</description>
+    </item>
+    
+    <item>
+      <title>KM Algorithm--二分图最大权匹配</title>
+      <link>https://zouzhitao.github.io/posts/km-algorithm/</link>
+      <pubDate>Wed, 14 Aug 2019 20:34:05 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/km-algorithm/</guid>
+      <description>很久以前打ACM的时候学过这个算法，但到用的时候还是忘了，起因是来源于这样一个问题:
+ 给定任意一个矩阵 $nXn$, 选取其中 $n$ 个点，$s.t.$ 任意两个点 不在同一行，同一列，求这 $n$ 个点的和的最大值.
+ 这个问题可以很简单的转化为 最大流，或者最大权匹配问题来求解。
+可是难受的是这两个算法都忘了，不会敲，所以又重新拿起遗忘的知识，学了一波KM算法。
+我主要是参考这篇sengxian&amp;rsquo;s blog 个人认为其讲解的非常棒。
+这里简要概述其原理:
+主要的想法仍然是增广路(augumentation path). 核心思想是维系一个最大的相等子图，类似二分图匹配一样，每次找增广路去扩充.
+算法如下:
+设左边 顶点初始权重为 $lx[i] = max_j w[i][j]$ , 右边顶点初始权重为 $ry[i] =0$
+依次从左边顶点出发，寻找最大相等子图，即满足 $lx[i] + ry[j] == w[i][j]$ 的图，若遇到无法增广的点，一定存在链接当前最大子图的交错路，对于交错路上的顶点，设在左边X端的顶点集合为 $S$, 右端为 $T$, 则将$S$ 中的顶点权重全都加 $d$ ,右端加 $-d$. 此时原来的相等子图依旧保持不变同时，会产生增广路，从而使全图得到增广(前提是一定存在一个最大匹配)
+代码详见:
+https://github.com/zouzhitao/competitive-programing/blob/master/template/KM.cpp
+reference
+ sengxian&amp;rsquo;s blog. https://blog.sengxian.com/algorithms/km   版权声明
+本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
+作者: taotao
+转载请保留此版权声明，并注明出处
+ </description>
+    </item>
+    
+    <item>
+      <title>Count Min Sketch:找最频繁元素</title>
+      <link>https://zouzhitao.github.io/posts/count-min-sketch/</link>
+      <pubDate>Wed, 08 May 2019 00:35:33 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/count-min-sketch/</guid>
+      <description>这是笔者学习 Stanford cs 168 课程的一些学习笔记 lecture 2, 主要讲一个基于 hash 和独立试验思想，设计的一种数据结构 count min sketch，想法非常类似于 bloom filter，都是以牺牲准确率换空间和时间。
+ heavy hitter problem Find majority element 先来看一个简单的在面试中经常会遇到的问题，找主要元素
+ 问题如下: 一组数据流: $a_1,\dots,a_n$, 存在一个元素 $a_i$ 保证出现次数大于 $n/2$。 能否设计一个算法在 仅仅扫描一遍的情况下找到它。
+ 这里有一个很 cute 的算法
+current = -1 counter = 0 for e in stream: if counter == 0: current = e counter += 1 elif e == current: counter += 1 else counter -= 1 return current 可以证明这个算法一定是正确的。</description>
+    </item>
+    
+    <item>
+      <title>Consistent Hash</title>
+      <link>https://zouzhitao.github.io/posts/consistent-hash/</link>
+      <pubDate>Sat, 04 May 2019 00:56:55 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/consistent-hash/</guid>
+      <description>记得我人生第一次参加bytedance 的面试的时候，面试官问我的就是这样一个问题: 你有很多台服务器，每台服务器上都存放着很多数据，现在要加一台服务器，如何才能让数据搬迁尽可能的少，同时能让每台服务器经可能的负载均衡。现在才发现，这就是可一致性hash 问题，当时我答了个hashMap中的rehash操作，给糊弄过去了&amp;hellip;.
+ 具体的内容可见 reference，这里大致记录一下
+问题定义 简化问题如下:
+ 有 $m$ 个item，有 $n$ 台机器，将 $m$ 个item 尽量均匀的hash到每一台服务器，同时，当机器出现删减的时候应该能够保证数据移动足够小。
+ 简单实现 用两个hash函数，
+$hash_i(x)$, 对 item 做hash
+$hash_m(x)$, 对 machine 做hash
+hash的范围是一个单位圆(e.g. [0,1] float /[0,2^32-1] int)
+每个 item 的hash值所对应的顺时针找到的第一个server，存储这个item 对象，这就是 karger 论文中的核心思想。
+假设机器将圆平均分成 $m$ 段 这样做很显然，每台机器的期望对象数目是 $O(\frac{n}{m})$ 同时，同时新加入一台机器的时候期望的移动数目是 $O(\frac{n}{m+1})$
+这样做已经是很好的解决我们的那个问题了。
+下面是用一个好的数据结构来维护查找一个item的时间，可以用一棵 BST 来维护这些机器 (e.g. rb-tree )&amp;lt;key: hash_m(server),value: (server)&amp;gt; 他们的key是 server 的hash 值，value 是每一个server对象。
+看一下如下几个操作:
+ 插入/delete item  这样插入一个 item 仅仅需要找到 hash(item) 在bst上的后继节点就好了。删除类似</description>
+    </item>
+    
+    <item>
+      <title>MIT6.824 lab1:mapreduce 总结</title>
+      <link>https://zouzhitao.github.io/posts/mit6.824-lab1/</link>
+      <pubDate>Sat, 06 Apr 2019 00:30:41 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/mit6.824-lab1/</guid>
+      <description>这是 MIT 6.824 课程 lab1 的学习总结，记录我在学习过程中的收获和踩的坑。
+我的实验环境是 windows 10，所以对lab的code 做了一些环境上的修改，如果你仅仅对code 感兴趣，请移步 : github/zouzhitao
+ mapreduce overview  先大致看一下 mapreduce 到底是什么
+ 我个人的简单理解是这样的: mapreduce 就是一种分布式处理用户特定任务的系统。它大概是这样处理的。
+用户提供两个函数
+mapFunc(k1,v1)-&amp;gt; list(k2,v2) reduceFunc(k2,list(v2)) -&amp;gt; ans of k2 这个 分布式系统 将用户的任务做分布式处理，最终为每一个 k2 生成答案。下面我们就来描述一下，这个分布式系统是如何处理的。
+首先，他有一个 master 来做任务调度。
+master
+ 先调度 worker 做 map 任务，设总的 map 任务的数目为 $M$ , 将result 存储在 中间文件 m-i-j 中, $i \in {0,\dots ,M-1}, j \in {0,\dots,R-1}$ 调度 worker 做 reduce 任务，设总的 reduce 任务数目为 $R$, 将答案储存在 $$ 然后将所有的renduce 任务的ans merge起来作为答案放在一个文件中交给用户。  detail 都在实验中</description>
+    </item>
+    
+    <item>
+      <title>Kick Start 2019 RoundA: 题解</title>
+      <link>https://zouzhitao.github.io/posts/kick-start-2019-rounda/</link>
+      <pubDate>Wed, 03 Apr 2019 00:09:24 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/kick-start-2019-rounda/</guid>
+      <description>题目链接
+A. Training 这题很简单，处理一下前缀和就完事儿，没什么好说的。当时就做出了这个题 :(
+code github
+B. parcel 这题还是很有意思的，正式赛没做出来，其实第一问暴力很容易求，不过 作为一名 ACMer，有一种惯性会忽略掉这种方式&amp;hellip;，下次一定要补上了。
+题解可以参考官方题解
+我这里就是将题解翻译一下，同时总结一下学到东西。
+分析 首先对于每一个没有 deliver 的位置，我们可以先求出它的最短距离。这个可以将整个地图看成一个 graph，然后，任意两个deliver之间的距离为 0，然后将 所有deliver 看做图上的一个节点，其他的点与点之间的距离为 曼哈顿距离，那么只需要对图做一个 bfs 就行了，这就是answer中说的 muti-source bfs，其实感觉与bfs 并没有什么区别。
+然后对于答案来说我们可以二分枚举，将优化问题转化为 满足性问题。
+也就是说 对于一个固定的 $K$, 我们判断，是否可以找到一个点使得，所有点到delivers的距离不会超过 $K$.
+判断这个是很容易的。
+这里涉及到一个 曼哈顿距离 到 切比雪夫距离 的转化
+关于曼哈顿距离与切比雪夫距离的转化，推荐参考 SGColin&amp;rsquo;s Space
+有了这个我们就可以得到，答案分析中的结果
+dist((x1, y1), (x2, y2)) = max(abs(x1 + y1 - (x2 + y2)), abs(x1 - y1 - (x2 - y2))) 那么固定一个点 ($x_2$,$y_2$) 我们只需要求出 $\min (x_i+y_i),\max (x_i+y_i),\min (x_i-y_i),\max (x_i - y_i), i \in dist(i)&amp;gt;K$</description>
+    </item>
+    
+    <item>
+      <title>Generic Variance in Scala: 泛型变化 in scala</title>
+      <link>https://zouzhitao.github.io/posts/generic-variance-in-scala/</link>
+      <pubDate>Tue, 26 Mar 2019 23:38:34 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/generic-variance-in-scala/</guid>
+      <description>本文主要总结Scala中关于generic variance(泛型变化， 我也不知道该怎么翻译，以下称 GV),(co-,contra-,in)variance in Scala 的相关知识，什么是 generic variance 呢？我的感觉是一种泛型类型的类型系统，应该和 type system 比较相关，(PL专家就不要嘲笑我了)。比如: List&amp;lt;Integer&amp;gt;是 List&amp;lt;Object&amp;gt; 的子类，合理吗？cast 行吗？为什么不行？什么样的 Function 是另外一个 function 的subclass？
+ 引入 我们先来看一段简单的代码
+Object [] x = new Integer[1]; x[0] = &amp;#34;crash&amp;#34;; 这样是能够编译通过的，但是我们知道其实这是错误的，而这种错误最好是在编译期就能即时发现，而不是运行时。
+我们来简单分析一下，这段代码出现错误的原因, 其实最大的问题就是在于 第二行 的赋值，x 是一个 mutable 的object array，所以天然就是允许这样做的，如果 x 是一个 immutable 的对象，那 第一行的 操作完全不会在 runtime 出问题
+再来一段代码
+List&amp;lt;String&amp;gt; yList = new ArrayList&amp;lt;&amp;gt;(); List&amp;lt;Object&amp;gt; xList = yList; 这段代码是会报错的，然而在某些情况下，我们就是需要一个list 既能够装 string， 又能够装 Integer 。所以，我们接下来探讨什么样的操作能够让我们随心所欲的cast，同时不会出现各种各样的 编译期或运行时的问题。
+LSP (Liskov substitution principle)  in a computer program, if S is a subtype of T, then objects of type T may be replaced with objects of type S (i.</description>
+    </item>
+    
+    <item>
+      <title>PAC learning 与样本复杂度</title>
+      <link>https://zouzhitao.github.io/posts/pac/</link>
+      <pubDate>Wed, 06 Mar 2019 22:05:16 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/pac/</guid>
+      <description>这篇文章主要总结 PAC 学习框架以及样本复杂度相关的东西，大致来说就是:要保证以概率 $1-\delta$ 使得 generalized error 小于 $\epsilon$ 需要多大的样本复杂度，以及时间复杂度才是好的。
+ 问题及约定 符号约定 两个 error 符号
+就是我们常说的 train error 与 true error
+接下来是定义我们要研究的问题
+简单的来说就是 依赖于 $m,H,\epsilon,\delta$ 这四个东西，我们找到一个 样本复杂度以及计算复杂度的界.或者说找到他们的一些关系
+定义 consistent hypothesis:
+$consistent(h,S) |= h(x)=c(x),\forall (x,c(x))\in S$
+一个 假设称为是 consistent 的，if and only if, $\forall (x,c(x))\in S$ 都有，$h(x)=c(x)$
+Version Space:
+$VS_{H,S}:\{h \in H|consistent(h,S)\}$
+$\epsilon-exhausted$
+$VS_{H,S}$ 称为 $\epsilon-exhausted$,当且仅当,
+$\forall h\in H,error_D(h)&amp;lt;\epsilon$
+throme 这个定理的证明会在文末给出，接下来的核心就在于理解这个定理
+理解 这个定理的前提:
+ $H finite$ $c\in H$  注意这个定理说的是 not，将这个定理翻译一下就是</description>
+    </item>
+    
+    <item>
+      <title>boosting : adaboost &amp; gradient boost</title>
+      <link>https://zouzhitao.github.io/posts/booosting/</link>
+      <pubDate>Mon, 04 Mar 2019 23:23:53 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/booosting/</guid>
+      <description>纸上得来终觉浅，觉知此事要躬行。综上，我什莫都不懂.这仅仅是个人的学习防忘笔记
+ Adaboost 关于 Adaboost 的算法描述其实很简单，有趣的是的它的误差分析:
+algorithm 其中
+$$ \begin{align} \epsilon_t &amp;amp;= Pr_{i\sim D_t}[h_t(x_i)\ne y_i]\\\
+&amp;amp;=\sum D_t(i)I(h_t(x_i)\ne y_i)\\\
+\alpha_t &amp;amp;= 2^{-1}\log (\frac{1-\epsilon_t}{\epsilon_t}) \end{align} $$
+PS : 稍后会证明，为什么， $\alpha_t$ 取这个值
+training error 第一个不等式就不说了，分析，equal 和not equal 两种情况就好，我们来看第二个等式。
+其实第二个等式非常简单，我们只需要将 $D_t$ 的递推式展开就好了:
+$$ \begin{align} D_2(i)&amp;amp;=\frac{m^{-1}\exp (-\alpha_1y_ih_1(x_i))}{Z_1},Z_t\ is\ normlize\ term,a \ const,for\ i \in {1,&amp;hellip;,T}\\\
+D_3(i)&amp;amp;=\frac{D_2(i)\exp(-\alpha_2y_ih_2(x_i))}{Z_2}\\\
+&amp;amp;=\frac{m^{-1}\exp(-y_i(\alpha_1h_1(x_i)+\alpha_2h_2(x_i)))}{Z_1Z_2}\\\
+D_{T+1}&amp;amp;=\frac{m^{-1}\exp(-y_i(\sum \alpha_th_t(x_i)))}{\prod_t Z_t}\\\
+becouse \sum_i D_t(i)=1,&amp;amp; sum\ at\ left\ term\ and\ right\ term\\\
+\prod_t Z_t&amp;amp;=\sum_i m^{-1}\exp(-y_i(\sum \alpha_th_t(x_i))) \end{align} $$</description>
+    </item>
+    
+    <item>
+      <title>kickstart: Scrambled-Words(hash&#43;complexity)</title>
+      <link>https://zouzhitao.github.io/posts/unordered-map/</link>
+      <pubDate>Thu, 21 Feb 2019 22:33:57 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/unordered-map/</guid>
+      <description>题目链接 google kickstart 2018 Scrambled Words
+分析 分析在题目网站有，首先需要想到的就是不同串的长度只有 $O(\sqrt{\sum words_i})$ 种，那么枚举所有长度肯定是一种可行的方法，不过呢，即使枚举长度，对于每个枚举到的字串，我们仍然需要将他和所有具有此长度的串比较，太过浪费时间了，怎么做才能加速呢？ 对 hash, 将dict中的串 hash 一下，那么查找时间就变成了$O(1)$, 所以最终的时间复杂度就变成了 $O(1)$
+这里补充一些 hash 知识，其实这个在工业界用的非常多，所以基本上的程序语言都提供了丰富的类库，我用的是c++ 的unordered_map&amp;lt;&amp;gt;,当然，对于 个性化 的类还是需要自己写hash 函数以及 ==的，详见参考文献
+code github
+参考文献  C++ unordered_map using a custom class type as the key hash - c++ reference unordered_map   版权声明
+本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
+作者: taotao
+转载请保留此版权声明，并注明出处
+ </description>
+    </item>
+    
+    <item>
+      <title>个人凸优化简单学习笔记</title>
+      <link>https://zouzhitao.github.io/posts/math-convex-opt/</link>
+      <pubDate>Wed, 23 Jan 2019 23:49:12 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/math-convex-opt/</guid>
+      <description>本文来源于个人的凸优化学习笔记参考cs229 cvxoptnote,写成笔记的原因仅仅是想通过个人的笔记自己讲述与推导一下这些数学公式，内容可能会很简单，强力建议想得到一手资料的人好好学习文末参考资料
+ 凸集合 定义就直接跳过了，这里简单写一些常见的凸集
+ 凸集的交, 设 $C_i,i = 1,2,3,&amp;hellip;,n$ 是凸集，那么我们有$\cap _{i=0}^n C_i$ 也是凸集 affine subspace 即 $Ax+b=0,x \in R^n$, 这既是 convex,也是concave 凸函数的sublevel 即 $if \ f(x)\ is\ convex\ function,then \{f(x) &amp;lt;=\alpha\} is\ convex\ set$  凸函数 Define
+性质，两条重点
+ first-order-approximation$$ f(y)\ge f(x)+(\nabla f(x))^T(y-x) $$ 二阶导数大于0$$ \nabla_x^2 f(x) \ge 0 $$  一些简单的凸函数
+ Affine funciton$f(x) =A^Tx+b,x\in R^n$ quadratic function$f:R^n-&amp;gt;R,f(x) = 2^{-1}x^TAx+b^Tx+c,A\in S^n,b\in R^n,c\in R$这里简单说一下 $\nabla^2 f(x)=A$, 因此如果 $A$ 是半正定(positive-semidefinite)的,那么$f(x)$ is convex Norm,e.</description>
+    </item>
+    
+    <item>
+      <title>点到超平面的距离计算简单笔记</title>
+      <link>https://zouzhitao.github.io/posts/math-distence-to-hyperplane/</link>
+      <pubDate>Wed, 23 Jan 2019 00:47:54 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/math-distence-to-hyperplane/</guid>
+      <description> 发现自己从大二开始就没有好好的学习数学了，最近看 SVM，发现好多推导和证明自己都不会，或者就要想很久，实在是太废材了。 :(. 以后决定对一些数学知识(特别是高等数学，分析和代数领域的一些东西，学点记点)
+  这是正文
+这是一个简单的问题，定义如下:
+设， $y(X) = W^TX +b, X \in R^n,b \in R$, 是一个 affine function(这个不重要，是个函数就行),超平面为 $h:W^TX +b=0$, 证明: $R^n$ 中任意一点 $X$ 到 $h$ 的距离为 $\frac{|y(X)|}{||W||}$
+证明：
+如图:
+在超平面上任意取一点 $X&#39;,s.t. y(X&#39;)=0$ 距离
+$$ \begin{align} d&amp;amp;= ||(X&#39;-X)||\cos \alpha \\\
+&amp;amp;=\frac{|W^T(X&#39;-X)|}{||W||}\\\
+&amp;amp;=\frac{|W^TX&#39;+b - (W^TX+b)|}{||W||}\\\
+&amp;amp;=\frac{|y(X)|}{||W||} \end{align} $$
+ 版权声明
+本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
+作者: taotao
+转载请保留此版权声明，并注明出处
+ </description>
+    </item>
+    
+    <item>
+      <title>Newton&#39;s Method</title>
+      <link>https://zouzhitao.github.io/posts/newton-method/</link>
+      <pubDate>Sun, 20 Jan 2019 22:34:21 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/newton-method/</guid>
+      <description>这里总结一个利用二价导数来求最优解的方法-牛顿法:
+设: $f(X)$ 是一个多维函数,由taylor 二阶展开，我们有,
+$$ f(X) \approx f(X_0)+(X-X_0)\nabla f(X_0) + \frac{(X-X_0)\nabla^2 f(X_0)(X-X_0)}{2} $$
+对 $X$ 求导，并设置为0，我们有
+$$ \begin{align*} 0&amp;amp;=\nabla f(X_0) + (X-X_0) \nabla ^2 f(X_0) (X- X_0)\\\
+X&amp;amp;=-\frac{\nabla f(X_0)}{\nabla^2 f(X_0)} X_0 \end{align*} $$
+相当于将梯度下降的learning rate设置为 $(\nabla^2 f(X_0))^{-1}$
+note  显然牛顿法计算量更大，因为他需要计算 hessian矩阵，相对于梯度下降来说这是$n^2$ 的 牛顿法收敛率更快 $O(t^{-2})$,梯度下降是 $O(t^{-1})$   版权声明
+本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
+作者: taotao
+转载请保留此版权声明，并注明出处
+ </description>
+    </item>
+    
+    <item>
+      <title>机器学习笔记:logistic regression</title>
+      <link>https://zouzhitao.github.io/posts/ml-note-lr/</link>
+      <pubDate>Sun, 06 Jan 2019 14:38:13 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/ml-note-lr/</guid>
+      <description>logistic regression (Log.Reg)是一种简单的 Discriminative(后面会简单的比较discriminative 与generative) 分类方法，和naive bayes不同的是，他假设了概率:
+$$ P(y=1|X) = \frac{1}{1+\exp(w_0+\sum w_i^TX_i)} =Sigmoid(x)\\\
+P(y=0|X) = 1-P(y=1|X) $$
+那 $P_0 = 1-P$,所以最终得到 $w$ 以后，我们可以用
+$$ \frac{P(y=0|x)}{P(y=1|x)} &amp;gt;0 \rightarrow w_0+\sum w_i^TX_i &amp;lt;0 $$
+来进行分类。
+也就是说这是一个 parametric model, 引入了参数向量 $\theta$
+所以需要来解这个向量:
+loss 接下来我们来看看loss的求解
+$$ \begin{aligned} w &amp;amp;=\arg \max_{w}\prod P(Y_i|X_i,w)[max\ likelyhood]\\\
+&amp;amp;=\arg \max \sum \ln P(Y_i|X_i,w)\\\
+&amp;amp;=\arg \max \sum (Y_i\ln P(Y_i=1|X_i,w)+(1-Y_i)\ln P(Y_i=0|X_i,w)) \end{aligned} $$ 后面就是用一些优化方法进行求解
+$$ loss(w) = \sum (Y_i\ln P(Y_i=1|X_i,w)+(1-Y_i)\ln P(Y_i=0|X_i,w)) $$
+ 版权声明</description>
+    </item>
+    
+    <item>
+      <title>机器学习笔记:朴素贝叶斯</title>
+      <link>https://zouzhitao.github.io/posts/ml-note-naive-bayes/</link>
+      <pubDate>Sat, 05 Jan 2019 19:58:38 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/ml-note-naive-bayes/</guid>
+      <description>写在前面: 这是笔者学习CMU10601-ML机器学习的笔记
+ 引入 首先我们考虑学习一个基于贝叶斯规则的分类器,即我们希望学到 $P(Y|X)$
+那么我们有
+$$ P(Y|X)=\frac{P(Y)P(X|Y)}{P(X)} $$
+这里 $Y \in\{0,1\}$ 那么我们需要去估计的是这两个概率 $P(Y),P(X|Y)$
+假设 $X=&amp;lt;X_1,X_2,\dots,X_n&amp;gt;$, 即是一个 $n$ 维度的向量，其中$X_i \in \{0,1\}$
+我们需要估计的参数是 $P(X|Y)$ 有 $2(2^n-1)$种情况，$P(Y)$ 有 $1$ 个参数需要估计，因此总共需要估计的参数是 $2(2^n-1)+1$, 即是指数级的。
+这显然是不现实的，因此我们希望做出一些假设，以减少估计的参数，这是引入了 naive bayes
+naive bayes naive bayes 假设 given $Y$, 任意 $X_i,X_j$ 是条件独立(conditional independent)的，即
+$$ P(X_i|X_j,Y)=P(X_i|Y) $$
+也就是说,
+$$ \begin{align*} P(X_i,X_j|Y)&amp;amp;=P(X_i|Y)P(X_j|Y)\\\
+P(X_1,X_2,\dots,X_n|Y)&amp;amp;=\prod_i P(X_i|Y) \end{align*} $$
+因此现在我们需要估计的参数由原来的 $2(2^n-1)+1$ 变为了 $2n+1$ 个
+derivation 简单搬运~
+naive bayse for discrete input 假设 $X_i$ 有 $J$ 种离散值，而 $Y$ 有$K$ 种离散值，那么由上面的推导我们需要估计的是</description>
+    </item>
+    
+    <item>
+      <title>机器学习笔记: 概率论基础</title>
+      <link>https://zouzhitao.github.io/posts/ml-note-probility/</link>
+      <pubDate>Sat, 05 Jan 2019 19:24:41 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/ml-note-probility/</guid>
+      <description>这是一个简单的概率论公式总结
+ bayes rule: $P(A|B) = \frac{P(A)P(B|A)}{P(B)}$   版权声明
+本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
+作者: taotao
+转载请保留此版权声明，并注明出处
+ </description>
+    </item>
+    
+    <item>
+      <title>机器学习笔记: MLE and MAP</title>
+      <link>https://zouzhitao.github.io/posts/ml-note-mle-and-map/</link>
+      <pubDate>Sat, 05 Jan 2019 19:20:46 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/ml-note-mle-and-map/</guid>
+      <description> 写在前面: 这是笔者学习CMU10601-ML机器学习的笔记
+ MLE 和 MAP ,是两种不同的估计概率的准则，可是他们的数学公式却是如此相似
+remark
+MLE 实际使用的过程中，通常会用LOG likelihood function,
+MAP 这里 $P(D)$ 是没用的，即
+$$ \hat{\theta}=\arg \max_{\theta} P(\theta)P(D|\theta) $$
+即比 MLE多了一个 $P(\theta)$ 的先验信息
+这里通常，来说 $P(\theta)$ 取与 $P(D|\theta)$ 相同的分布，称为共轭先验，个人以为这其实是为了好计算!
+参考文献给了一个总结,很有意思，我这里简单的总结两点东西
+ 如果知道联合概率分布，那么什么都能求，了，但是通常情况下，需要非常大的数据，这在实际情况下是不可能的，所以需要一些概率估计方法，MLE和MAP是其中一种  hw2 code code
+参考文献
+ Machine Learning, Tom M.Mitchell, ch2, estimating probabilities   版权声明
+本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
+作者: taotao
+转载请保留此版权声明，并注明出处
+ </description>
+    </item>
+    
+    <item>
+      <title>机器学习笔记: 决策树</title>
+      <link>https://zouzhitao.github.io/posts/ml-decision-tree-note/</link>
+      <pubDate>Mon, 31 Dec 2018 15:27:33 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/ml-decision-tree-note/</guid>
+      <description>写在前面: 这是笔者学习CMU10601-ML机器学习的笔记
+ 决策树算法框架 适合问题的特点
+ 实例是由 $(attr,value)$, 表示的，并且 $value$ 是离散的 (remark: 能使用连续值，不过连续值其实也是在先将连续值转化为离散值，再使用的决策树) 目标函数具有离散的输出值，或者说是一个分类问题  整个算法就是一个分治，核心的地方在于如何选择划分属性。后面的内容先简单总结几种属性划分准则，然后在讨论几种解决过拟合的方法，最后再给出我的简单的代码实现
+属性划分方法 ID3 这是一种基于 信息增益 的划分方法，首先，我们
+定义信息熵(entropy)
+$$ Entropy(\{p_1,p_2,\dots,p_n\}) = -\sum_i p_i\log p_i $$
+这里 $p_i$ 表示概率，并且 $\sum_i p_i =1$,同时我们定义数据集 $D$ 的信息商为
+$$ Entropy(D) = Entropy(\{\frac{|D_1|}{|D|},\dots,\frac{|D_n|}{|D|} \}) $$
+其中 $D_i$ 表示数据集 $D$ 中 $label=i$,的集合，即 $D_i = \{D|label=i\}$
+remark: 这里的 $\log$ 的底数是多少是无关紧要的，因为两个不同的底之间只相差一个常数倍数
+然后信息增益是怎么算的呢？
+看图
+假设对于某一个节点，处于这个节点的数据集合是 $D$,对于这个节点的属性 $attr_i$ 可以将数据集划分为 $D_v$, 每一个 $D_v$ 对应着 $attr_i$ 的一种取值，即 $D_v=\{D | attr_i = v\}$,我们定义信息增益为</description>
+    </item>
+    
+    <item>
+      <title>2018 google Kickstart RoundA PB Lucky Dip 详细题解</title>
+      <link>https://zouzhitao.github.io/posts/18-kickstart-rounda-pb-lucky-dip/</link>
+      <pubDate>Tue, 25 Dec 2018 15:21:27 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/18-kickstart-rounda-pb-lucky-dip/</guid>
+      <description>官方链接  题目描述 官方题解  我的心路历程 首先不难想到，肯定要将 $v_i$ 排序，然后如果取到的是小的那部分值，那么我们肯定要将其放回，然后再取，不妨设 $i&amp;lt;j$, 均要放回。因此所有的 $n$ 个item 就被分为了两个部分，一部分是要放回的，另外一部分是不放回的。
+最开始的时候，看样例的解释我以为是这样的,直接分别求两者的概率，则有
+放回的那部分 $p_1 = (\frac{j}{n})^{k+1}$不放回的那部分为 $1-p_1 = 1-(\frac{j}{n})^{k+1}$
+因此只要枚举 $j$ 就行了，然而样例通不过，果然在case 5 就错了。后来就看了官方题解，还是一脸懵逼，虽然感觉这样是对的然而并不清楚为什么这样是对的。因此我就重新推了一遍公式
+官方题解详解 首先 $k = 1$ 时， $p1$ 肯定是对的,因此我们有
+$$ \begin{align*} E[0] &amp;amp;=\frac{\sum_{i=1}^nv_i}{n}\\\
+E[1] &amp;amp;= \frac{j^2}{n^2}\frac{\sum_{k&amp;lt;=j}v_i}{j} + \frac{(n-j)(n+j)}{n^2}\frac{\sum_{i&amp;gt;j}v_i}{n-j}\\\
+&amp;amp;= \frac{j\sum_{k&amp;lt;=j}v_i}{n^2}+\frac{(n+j)\sum_{i&amp;gt;j}v_i}{n^2}\\\
+&amp;amp;= \frac{\sum_{i&amp;gt;j}v_i}{n} + \frac{j\sum_iv_i}{n^2}\\\
+&amp;amp;=\frac{\sum_{i&amp;gt;j}v_i+jE[0]}{n}\\\
+\end{align*} $$
+很显然 $j = \arg \max_{i} v_i&amp;lt;=E[0]$, 即
+$$ E[1] = \frac{\sum_{i=1}^n \max\{v_i,E[0]\}}{n} $$
+得出了官方题解中的第一个公式，对于 $k=2$ 其实相当于将 所有 $v_i&amp;lt;E[0]$ 的item 换成 $E[0]$ 之后，$k=1$ 的期望，这就回到了第一种情况</description>
+    </item>
+    
+    <item>
+      <title>MIT6.828 OS hw1 boot xv6</title>
+      <link>https://zouzhitao.github.io/posts/mit6.828-os-hw1-boot-xv6/</link>
+      <pubDate>Thu, 06 Dec 2018 18:49:44 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/mit6.828-os-hw1-boot-xv6/</guid>
+      <description>完整内容可见
+MIT 6.828 note
+这个任务就是检查 _start 开始的时候栈顶的所有值，
+ 进入 xv6, gdb 调试
+b *0x10000c (_start kernel start point)
+x /24x $esp
+ 解释栈中的各个值，首先看 0x7d8d,0x7c4d, 这显然是某个地址，先去 bootblock.asm 中找到这两个地址
+# Set up the stack pointer and call into C.  movl $start, %esp 7c43:	bc 00 7c 00 00 mov $0x7c00,%esp call bootmain 7c48:	e8 ee 00 00 00 call 7d3b &amp;lt;bootmain&amp;gt; # If bootmain returns (it shouldn&amp;#39;t), trigger a Bochs  # breakpoint if running under Bochs, then loop.</description>
+    </item>
+    
+    <item>
+      <title>MIT6.828 OS lab1 note</title>
+      <link>https://zouzhitao.github.io/posts/mit6.828os-lab1-note/</link>
+      <pubDate>Wed, 05 Dec 2018 23:41:09 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/mit6.828os-lab1-note/</guid>
+      <description>这里是 MIT 6.828 OS lab1 笔记.
+课程链接
+简单记录一些有趣，和有意思的东西
+ex6  Exercise 6. We can examine memory using GDB&amp;rsquo;s x command. The GDB manual has full details, but for now, it is enough to know that the command x/Nx ADDR prints N words of memory at ADDR. (Note that both &amp;lsquo;x&amp;rsquo;s in the command are lowercase.) Warning: The size of a word is not a universal standard. In GNU assembly, a word is two bytes (the &amp;lsquo;w&amp;rsquo; in xorw, which stands for word, means 2 bytes).</description>
+    </item>
+    
+    <item>
+      <title>UW Programing Language PartA Overview</title>
+      <link>https://zouzhitao.github.io/posts/uw-programing-language-parta-overview/</link>
+      <pubDate>Wed, 05 Dec 2018 14:02:01 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/uw-programing-language-parta-overview/</guid>
+      <description>作业仓库
+url: https://github.com/zouzhitao/CS_Learning/tree/master/PL%40Grossman
+这是 UW programing language part A 的一个简单回顾.
+coursera 课程地址: https://www.coursera.org/learn/programming-languages
+思考 这门课程可以说非常棒，给了我很多在程序语言上的洞见，可以说是让我重新理解了编程，重新理解了程序语言，不过可能关于整个 程序语言(programing language,PL)的研究, 在工业界真正的用武之地是很少的，或者说不如真正的应用计算机科学(系统,机器学习,etc)来的那么直接。不过我却认为里面有很多迷人的哲学式的美感。这是我第一次用函数式语言，我被他的间接，以及逻辑上的清晰感给折服了。所有计算都是用函数解决的，可以说是非常接近于数学逻辑了。不过真要入这个程序语言的坑，可能还得稍后一些，彼时的我需要的更多的还是一些工业界的东西。(:( ,不然就要饿肚子了)。扯了这么多，感觉是在为不继续学习 Part B，找借口&amp;hellip;
+知识回顾 wk1 wk1 主要是讲一些 ML的基本用法和概念:
+ variable binding function binding List immutable  但是最为主要的还是在最后的一节:,作者点出了程序语言的几个重要特征(不要忘了，这门课程的目的是叫我们如何学习所有程序语言)
+ Syntax: How do you write the various parts of the language? Semantics: What do the various language features mean? For example, how are expressions evaluated? Idioms: What are the common approaches to using the language features to express computations?</description>
+    </item>
+    
+    <item>
+      <title>about</title>
+      <link>https://zouzhitao.github.io/about/</link>
+      <pubDate>Tue, 27 Nov 2018 09:26:05 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/about/</guid>
+      <description>e-mail : zhitaozou97@gmail.com
+github : taotao
+欢迎下方留言递交友链
+格式
+title = &amp;quot;taotao码字的地方&amp;quot; name = &amp;quot;taotao&amp;quot; url = &amp;quot;https://zouzhitao.github.io/&amp;quot; </description>
+    </item>
+    
+    <item>
+      <title>archives</title>
+      <link>https://zouzhitao.github.io/archives/</link>
+      <pubDate>Tue, 27 Nov 2018 09:14:34 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/archives/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>MIT 6.828 环境配置，踩坑指南</title>
+      <link>https://zouzhitao.github.io/posts/mit6.828-env/</link>
+      <pubDate>Tue, 27 Nov 2018 08:32:56 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/mit6.828-env/</guid>
+      <description>我的环境 :
+ win10, git 2.19 Ubuntu 18.04 git 2.17 jos.git year : 2018  git clone err  SSL err  直接 git clone git clone https://pdos.csail.mit.edu/6.828/2018/jos.git lab
+可能会出现
+fatal: unable to access &#39;https://pdos.csail.mit.edu/6.828/2018/jos.git/&#39;: OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection to pdos.csail.mit.edu:443 解决方法
+添加两行就行了
+export GIT_CURL_VERBOSE=1 export GIT_TRACE_PACKET=2 注意 这个方法在win10 下能成功安装，但是 Ubuntu 下仅能 clone 2017 年的版本
+ 版权声明
+本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
+作者: taotao
+转载请保留此版权声明，并注明出处
+ </description>
+    </item>
+    
+    <item>
+      <title>blog test</title>
+      <link>https://zouzhitao.github.io/posts/test/</link>
+      <pubDate>Mon, 26 Nov 2018 01:13:07 +0800</pubDate>
+      
+      <guid>https://zouzhitao.github.io/posts/test/</guid>
+      <description>这里什么都没有，这是一个博客测试页面
+11/27/18 功能  默认 数学公式支持， $$$$行间公式，$$行内 有一个从udpsec 处copy 的丑陋的目录。以后再做更改了，麻烦 分类，tag支持 disqus 支持  添加站点ico 在theme 对应的partials 页面下有一个 head.html 文件，找到 ico 文本，替换成你的 ico 路劲，我这里是将ico 放在了 static/img/favicon.ico
+ 添加版权声明 (12/15/18)   版权声明
+本作品为作者原创文章，采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
+作者 taotao
+转载请保留此版权声明，并注明出处
+ </description>
+    </item>
+    
+  </channel>
+</rss>

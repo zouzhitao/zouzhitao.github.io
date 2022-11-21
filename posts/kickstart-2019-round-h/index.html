@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="generator" content="Hugo 0.78.1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Kickstart 2019 Round H | taotao的杂货铺</title>
+    <meta property="og:title" content="Kickstart 2019 Round H - taotao的杂货铺">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content="2019-11-21T20:46:21&#43;08:00">
+        
+        
+    <meta property="article:modified_time" content="2019-11-21T20:46:21&#43;08:00">
+        
+    <meta name="Keywords" content="computer system,algorithm,OS,distribute system,big data,ML,算法，系统，分布式，大数据，推荐系统">
+    <meta name="description" content="Kickstart 2019 Round H">
+        
+    <meta name="author" content="taotao">
+    <meta property="og:url" content="https://zouzhitao.github.io/posts/kickstart-2019-round-h/">
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="/css/normalize.css">
+    
+        <link rel="stylesheet" href="/css/prism.css">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+    
+
+
+    
+    
+</head>
+
+<body>
+<header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://zouzhitao.github.io/">
+                        taotao的杂货铺
+                    </a>
+                
+                <p class="description">人生杂谈，随笔，技术笔记</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://zouzhitao.github.io/">首页</a>
+                    
+                    <a  href="https://zouzhitao.github.io/archives/" title="archives">archives</a>
+                    
+                    <a  href="https://zouzhitao.github.io/about/" title="about">about</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div id="body">
+    <div class="container">
+        <div class="col-group">
+
+            <div class="col-8" id="main">
+                <div class="res-cons">
+                    <article class="post">
+                        <header>
+                            <h1 class="post-title">Kickstart 2019 Round H</h1>
+                        </header>
+                        <date class="post-meta meta-date">
+                            2019年11月21日
+                        </date>
+                        
+                        <div class="post-meta meta-category">
+                            |
+                            
+                                <a href="https://zouzhitao.github.io/categories/competitive-programing">competitive-programing</a>
+                            
+                        </div>
+                        
+                        
+                        <div class="post-meta">
+                            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span> 阅读</span></span>
+                        </div>
+                        
+                        
+                        <aside id="toc" class="dismissed">
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
+  <ul>
+    <li><a href="#题目链接">题目链接</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#题目链接-1">题目链接</a></li>
+    <li><a href="#题意">题意</a></li>
+  </ul>
+</nav>
+                        </aside><div class="post-content">
+                            <blockquote>
+<p>kickstart 2019 round H, 2019 年最后一场kickstart，被打回原型了</p>
+</blockquote>
+<p>感觉还是应该莽一发小数据的&hellip; 前天已经接到了google的实习申请通知了，得抓紧时间刷题了，近期准备把 2018，2017都刷一遍</p>
+<h1 id="a-h-index">A H-index</h1>
+<p>easy， H，是递增的，因此有很多种解决方案</p>
+<ol>
+<li>维护一个 $citation \ge h$ 的优先队列，h变化过程中动态删减 (from lls)</li>
+<li>维护从 [0,l]以来citation的顺序，移动过程中动态计算</li>
+</ol>
+<p><strong><a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-H-A.cpp">code</a></strong></p>
+<h1 id="b-diagonal-puzzle">B. Diagonal Puzzle</h1>
+<h2 id="题目链接">题目链接</h2>
+<p><a href="https://codingcompetitions.withgoogle.com/kickstart/round/0000000000050edd/00000000001a2835">https://codingcompetitions.withgoogle.com/kickstart/round/0000000000050edd/00000000001a2835</a></p>
+<p>这题很像棋盘翻转，不过是在对角线上的版本，</p>
+<p>考虑一下，如果任意一跳对角线只有翻转与不反转两种情况，重复翻转无效，因此，对于两条大对角线，枚举两种情况，之后对于其上的点，如果为 &lsquo;.&rsquo; 则必翻转，由此求解</p>
+<p>不过写起来真麻烦，代码参考了 <a href="https://github.com/lzy960601/Google_Coding_Competitions/blob/master/KickStart/2019H/B.cpp">lls的解决方案</a></p>
+<p>将每条对角线想象成一个点，每个点想成边，则对于每个点 $C_{ij}$, 表示一条从 $(i+j) -&gt; (i-j)$ 的边，(注意重编码)其颜色为 $C$, 对于任意一个连通分量，翻转一条对角线就能决定所有翻转，dfs就行了</p>
+<p><strong><a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-H-B.cpp">code</a></strong></p>
+<h1 id="c-elevanagram">C. Elevanagram</h1>
+<h2 id="题目链接-1">题目链接</h2>
+<p><a href="https://codingcompetitions.withgoogle.com/kickstart/round/0000000000050edd/00000000001a286d">https://codingcompetitions.withgoogle.com/kickstart/round/0000000000050edd/00000000001a286d</a></p>
+<h2 id="题意">题意</h2>
+<p>对于一个数字(很大，数字 $i,1\le i\le 9$, 有 $A[i]\le 10^9$ 个)，是否存在一种排列方式，s.t.它能够被 11 整除</p>
+<p>对于 test1其实很好解决，直接dp就行了，这里有很多种dp姿势，我写的有点搓</p>
+<p>我的方法如下:</p>
+<blockquote>
+<p>首先，设数字 $i$ 选择的正数为 $k_i$, 则他对答案的贡献为 $\sum (k_i - (A_i-k_i)) i % 11$
+因此设 $dp[i][j]$ 表示前 $i$ 个数中 最终 mod 11为 $j$ 的正数的个数情况</p>
+</blockquote>
+<p><strong><a href="https://github.com/zouzhitao/competitive-programing/blob/master/kick-start/2019-H-c.cpp">code</a></strong></p>
+<blockquote>
+<p><strong>版权声明</strong></p>
+<p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
+<p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
+<p><strong>仅允许非商业转载，转载请保留此版权声明，并注明出处</strong></p>
+</blockquote>
+
+                        </div>
+                        
+
+                        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/posts/kickstart-2019-rounde/">Kickstart 2019 Round E</a></li>
+        
+        <li><a href="/posts/kickstart-2019-roundd/">Kickstart 2019 RoundD</a></li>
+        
+        <li><a href="/posts/kickstart-2019-roundc/">Kickstart 2019 RoundC 题解</a></li>
+        
+        <li><a href="/posts/unordered-map/">kickstart: Scrambled-Words(hash&#43;complexity)</a></li>
+        
+        <li><a href="/posts/18-kickstart-rounda-pb-lucky-dip/">2018 google Kickstart RoundA PB Lucky Dip 详细题解</a></li>
+        
+    </ul>
+</div>
+
+
+                        <div class="post-meta meta-tags">
+                            
+                            <ul class="clearfix">
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/kickstart">kickstart</a></li>
+                                
+                            </ul>
+                            
+                        </div>
+                    </article>
+                    
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "zouzhitao-github-io" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+    
+                </div>
+            </div>
+            <div id="secondary">
+    <section class="widget">
+        <form id="search" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://zouzhitao.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/grad-opt/" title="梯度下降优化算法简单总结">梯度下降优化算法简单总结</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kick-start-2020-round-a/" title="Kick Start 2020 Round A 题解">Kick Start 2020 Round A 题解</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kickstart-2019-round-h/" title="Kickstart 2019 Round H">Kickstart 2019 Round H</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/parrallel-computer-arch/" title="现代多核计算机体系结构简介">现代多核计算机体系结构简介</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/pagerank/" title="PageRank 算法简介">PageRank 算法简介</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/dm-reduction-pca-svd/" title="Dimension Reduction: PCA and SVD">Dimension Reduction: PCA and SVD</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/pbds/" title="pbds: STL 的扩展数据结构">pbds: STL 的扩展数据结构</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/machine-learning/">machine-learning(8)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/math/">math(4)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/programing-language/">programing-language(5)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/system/">system(6)</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="https://blog.csdn.net/Dylan_Frank" title="以前的个人博客">dylanfrank@csdn</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://traderforce.github.io/" title="银牌大佬交易者">trader</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://bbkgl.github.io/" title="c&#43;&#43;技术大牛">坤坤</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://tawn0000.github.io" title="JNU ACMer,银牌大佬">tawn</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://akeeper.space/" title="彼得·攀的小站">null</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://godweiyang.com" title="ECNU NLPer">godweiyang</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://blog.csdn.net/Krone_" title="望着楼上大佬">Krone_@csdn</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://zc-apiao.space/" title="过客别墅">Apiao</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://zouzhitao.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+        </div>
+    </div>
+</div>
+<footer id="footer">
+    <div class="container">
+        &copy; 2018 <a href="https://zouzhitao.github.io/">taotao的杂货铺 By taotao</a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="http://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/rujews/maupassant-hugo" target="_blank">maupassant</a>.
+        
+    </div>
+</footer>
+
+
+    <script type="text/javascript" src="/js/prism.js" async="true"></script>
+    <script type="text/javascript">
+    window.MathJax = {
+        tex2jax: {
+            inlineMath: [ ['$','$'] ],
+            processEscapes: true
+        }
+    };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src="/js/totop.js?v=0.0.0" async=""></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-100944759-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+<script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+</body>
+</html>

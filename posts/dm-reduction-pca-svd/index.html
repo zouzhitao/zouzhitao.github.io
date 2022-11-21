@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="generator" content="Hugo 0.78.1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Dimension Reduction: PCA and SVD | taotao的杂货铺</title>
+    <meta property="og:title" content="Dimension Reduction: PCA and SVD - taotao的杂货铺">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content="2019-10-23T14:20:43&#43;08:00">
+        
+        
+    <meta property="article:modified_time" content="2019-10-23T14:20:43&#43;08:00">
+        
+    <meta name="Keywords" content="computer system,algorithm,OS,distribute system,big data,ML,算法，系统，分布式，大数据，推荐系统">
+    <meta name="description" content="Dimension Reduction: PCA and SVD">
+        
+    <meta name="author" content="taotao">
+    <meta property="og:url" content="https://zouzhitao.github.io/posts/dm-reduction-pca-svd/">
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="/css/normalize.css">
+    
+        <link rel="stylesheet" href="/css/prism.css">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+    
+
+
+    
+    
+</head>
+
+<body>
+<header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://zouzhitao.github.io/">
+                        taotao的杂货铺
+                    </a>
+                
+                <p class="description">人生杂谈，随笔，技术笔记</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://zouzhitao.github.io/">首页</a>
+                    
+                    <a  href="https://zouzhitao.github.io/archives/" title="archives">archives</a>
+                    
+                    <a  href="https://zouzhitao.github.io/about/" title="about">about</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div id="body">
+    <div class="container">
+        <div class="col-group">
+
+            <div class="col-8" id="main">
+                <div class="res-cons">
+                    <article class="post">
+                        <header>
+                            <h1 class="post-title">Dimension Reduction: PCA and SVD</h1>
+                        </header>
+                        <date class="post-meta meta-date">
+                            2019年10月23日
+                        </date>
+                        
+                        <div class="post-meta meta-category">
+                            |
+                            
+                                <a href="https://zouzhitao.github.io/categories/algorithm">algorithm</a>
+                            
+                        </div>
+                        
+                        
+                        <div class="post-meta">
+                            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span> 阅读</span></span>
+                        </div>
+                        
+                        
+                        <aside id="toc" class="dismissed">
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
+  <ul>
+    <li><a href="#与linear-regression-的关系">与linear regression 的关系</a></li>
+    <li><a href="#问题的严格定义">问题的严格定义</a>
+      <ul>
+        <li><a href="#1维情况">1维情况</a></li>
+        <li><a href="#多维">多维</a></li>
+      </ul>
+    </li>
+    <li><a href="#compute-pca">compute PCA</a>
+      <ul>
+        <li><a href="#k1">k=1</a></li>
+        <li><a href="#矩阵变换">矩阵变换</a></li>
+        <li><a href="#更大的-k">更大的 $k$</a></li>
+      </ul>
+    </li>
+    <li><a href="#power-iteration">power iteration</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#svd-简介">SVD 简介</a></li>
+    <li><a href="#low-rank-近似">low rank 近似</a></li>
+  </ul>
+</nav>
+                        </aside><div class="post-content">
+                            <blockquote>
+<p>这篇博文简要总结关于数据降维的另外两种方法，PCA与SVD。之前讲过用JL变换和随机投影的方式做降维，那种方式的出发点是从计算效率出发的，所以计算方式会更快同时也是数据透明(data-oblivious)的,也就是不关心数据的特点，而今天要讲的两种方式都关心数据的特点。同时这里给出了一些PCA的相关直观性解释</p>
+</blockquote>
+<h1 id="pca">PCA</h1>
+<p>首先我们说降维的目标始终都是用一个低维空间($\mathcal{R}^m$) 来近似的表示高维空间 $\mathcal{R}^n,m\ll n$ 中的向量。</p>
+<p>也就是说 PCA的目标就是</p>
+<blockquote>
+<p>将 $m$ 个 $n$ 维空间中的向量 $\mathbf{x}_1,\dots,\mathbf{x}_m$ 用 $k$ 个$n$ 维空间中的向量来近似表示：</p>
+</blockquote>
+<p>$$
+\mathbf{x}_i\approx \sum_{j=1}^k a_{ij}\mathbf{v}_j,\forall l,m\le k,l\neq m,\mathbf{v}_l^T\mathbf{v}_m=0,||\mathbf{v}_j||=1
+$$
+也就是说将 每个n维向量往 $k$ 个正交向量张成的空间投影。</p>
+<p>因此PCA的目的就是找到这 $k$ 正交向量。怎么找我们留在后面(注意在随即投影中，这几个向量都是random选择的)</p>
+<h2 id="与linear-regression-的关系">与linear regression 的关系</h2>
+<!-- raw HTML omitted -->
+<p>也就是说最大的不同在于 线性回归找到的线是使得说有点到线的竖直距离最小，而pca是让找到线到说有点的垂直距离(perpendicular) 距离最小。</p>
+<h2 id="问题的严格定义">问题的严格定义</h2>
+<h3 id="1维情况">1维情况</h3>
+<!-- raw HTML omitted -->
+<p>我们的目标就是要:</p>
+<p>$$
+\mathbf{v} = \arg \min_{||v||=1} \sum_i dist(\mathbf{x}_i\leftrightarrow v)^2
+$$</p>
+<p>很显然这个目标等价于</p>
+<p>$$
+\mathbf{v} = \arg \max_{||v||=1} \sum_i &lt;\mathbf{x}_i,v&gt;^2\tag{1}
+$$</p>
+<p><strong>detail</strong></p>
+<ol>
+<li>很显然这个投影距离是shift，和scale敏感的，所以做pca前通常需要0均值化，以及去scale</li>
+</ol>
+<h3 id="多维">多维</h3>
+<p>定义 $n$ 维空间中 $k$ 个正交向量，所张成的子空间 $S=span\{\mathbf{v}_1,\dots,\mathbf{v}_k\}$，很显然，多为情况就是</p>
+<p>$$
+S = \arg \max \sum_i \sum_j (&lt;\mathbf{x}_i,\mathbf{v}_j&gt;)^2
+$$</p>
+<h2 id="compute-pca">compute PCA</h2>
+<h3 id="k1">k=1</h3>
+<p>首先考虑 $k=1$ 的情形，</p>
+<p>$$
+\begin{aligned}
+&amp;\sum &lt;\mathbf{x}_i,\mathbf{v}&gt; ^2\\\<br>
+=&amp;(Xv)^T (Xv)\\\<br>
+=&amp;v^TX^TXv<br>
+\end{aligned}
+$$</p>
+<p>其中 $X$ 是行向量矩阵，记 $A = X^TX$,(<strong>NOTE</strong> 这个矩阵一定是semi-positive的矩阵)</p>
+<p>因此，原来的问题可以简化为</p>
+<p>$$
+v=\arg \max v^TAv=v^TQ^TDQv\tag{2}
+$$</p>
+<p>由于 $A$ 是半正定的，我们一定可以用特征值分解成 $A=Q^TDQ$, 其中 $D=diag\{\lambda_1,\dots,\lambda_m\}$</p>
+<h3 id="矩阵变换">矩阵变换</h3>
+<p>注意对于正交矩阵 $Q$, 任意一个向量 $\mathbf{v}$ ,$Qv$ 其实是做了一个旋转变换，是保长度和角度的 $||Qv||^2 = vQ^TQv=v^Tv=||v||$</p>
+<p>同时对角矩阵 $D$, $Dv$ 是拉伸变换。</p>
+<p>也就是说对于$v=\{v_1,\dots,v_d\}$</p>
+<p>$Dv=\{\lambda_1 v_1,\dots,\lambda_d v_d\}$</p>
+<p>同时</p>
+<p>$$
+v^TDv=\sum \lambda_i v_i^2\tag{3}
+$$</p>
+<p>由于 $||v||=\sum v_i^2 =1$, 所以最大化(3) 式，其实是在仅需令 $v_1=1$ 就行了(特征值由大到小排序)</p>
+<p>而对于 (2) 式来说，仅需让 $v=Q_1$ 就行了，也就是第一个最大特征值</p>
+<h3 id="更大的-k">更大的 $k$</h3>
+<p>对于更大的 $k$ 来说由于特征向量之间是正交的，所以仅需让 $v_i=Q_i$ 就行了，也就是一般教科书中的定义</p>
+<blockquote>
+<p>第 $k$ 个主成分为$X^TX$ 的第 $k$ 个特征向量</p>
+</blockquote>
+<h2 id="power-iteration">power iteration</h2>
+<p>特征值的计算，这里有一个迭代式的最大特征值计算方法</p>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">power_iteration</span>(A, num_simulations):
+    <span style="color:#e6db74">&#34;&#34;&#34;
+</span><span style="color:#e6db74">    compute largest eigenvector and eigenvalue,
+</span><span style="color:#e6db74">    code copy from wikipedia:https://en.wikipedia.org/wiki/Power_iteration
+</span><span style="color:#e6db74">    Args:
+</span><span style="color:#e6db74">        A:2-d array
+</span><span style="color:#e6db74">            must be a semi-positive matrix
+</span><span style="color:#e6db74">        num_simulationa: int
+</span><span style="color:#e6db74">            the number of iterations
+</span><span style="color:#e6db74">    return: (eigenvetor,eigenvalue)
+</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+    <span style="color:#75715e"># Ideally choose a random vector</span>
+    <span style="color:#75715e"># To decrease the chance that our vector</span>
+    <span style="color:#75715e"># Is orthogonal to the eigenvector</span>
+    b_k <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>rand(A<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>])
+
+    <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(num_simulations):
+        <span style="color:#75715e"># calculate the matrix-by-vector product Ab</span>
+        b_k1 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>dot(A, b_k)
+
+        <span style="color:#75715e"># calculate the norm</span>
+        b_k1_norm <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>norm(b_k1)
+
+        <span style="color:#75715e"># re normalize the vector</span>
+        b_k <span style="color:#f92672">=</span> b_k1 <span style="color:#f92672">/</span> b_k1_norm
+
+    <span style="color:#66d9ef">return</span> b_k,b_k<span style="color:#f92672">.</span>dot(A)<span style="color:#f92672">.</span>dot(b_k)
+
+</code></pre></div><p>这个的直观是有的，我们知道 $Av$ 相当于不停的往矩阵 $A$ 的特征子空间做投影，因此当向量变化到最大特征值对应的特征值方向的时候，这个投影就不会变化了，近似保护的了投影最大。然而这只是我们理解，这个算法背后有非常严格的数学证明，这里就掠过了</p>
+<h1 id="svd">SVD</h1>
+<p>SVD 属于另外一种数据降维的方法，他提供了矩阵的一种低秩(low rank)近似。</p>
+<h2 id="svd-简介">SVD 简介</h2>
+<p>这部分属于线性代数中的类容，这里仅对SVD做个简单的直观上的证明。非严格的数学证明</p>
+<p>SVD是说 任意的一个矩阵 $A$,均可以写成</p>
+<p>$$
+A=U_{m\mathbb{x}n}\Sigma_{m\mathbb{x}n} V_{n\mathbf{x}n}^T,U,V,s.t.||U||=1,U^TU=I
+$$</p>
+<p>即 $U,V$ 都是正交阵，$\Sigma=diag\{\sigma_1,\dots,\sigma_r,\},r=rank(A)$ 是对角阵</p>
+<p>注意这个形式和特征值分解特别像，不过特征值分解是对方阵而言的，而SVD是对任意矩阵而言的，它的证明有很多种方法，我这里提供一个<strong>简单的非常直观的不那么严格的证明</strong>，主要是提供一种直观上的理解</p>
+<p>这个问题等价于，我们要在 $m$ 维空间中找到一组正交基 $\{v_1,\dots,v_m\}.s.t. Av_i=\sigma_i u_i$</p>
+<ol>
+<li>
+<p>我们知道任意一个矩阵右乘一个向量$Av$，其实是对 $v$ 做一个<strong>线性</strong> 变换 $\mathcal{R}^n\rightarrow \mathcal{R}^m$, 同时上面的那个问题相当于是找到一组正交向量 $v$,使得其在线性变换A下仍旧是正交的.而什么是线性变换呢？不就是拉伸和旋转嘛。</p>
+</li>
+<li>
+<p>旋转不会改变正交性质，拉伸<strong>可能</strong>会<!-- raw HTML omitted --><!-- raw HTML omitted -->wikipedia<!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>如果拉伸的向量的方向正好是线性空间的基向量的方向，那拉伸就不会了。因此问题就变为能否在线性空间A中找到$n$ 个基向量了，这是显然的因为 $rank(A)\le min(m,n)$ 将前 $r$ 个向量设置为 $A$ 的基向量，其他在进行扩充就行了。</p>
+</li>
+<li>
+<p>无法在线性空间A中表示的向量一定垂直与 A的基向量，因此投影一定为 $0$, 即变换后$Av$ 一定是 0，对应的 $\sigma_i$ 取0就好了，其他进行扩充。(这个挺直观的，想象在二维平面上的y轴上的点投影到x轴，一定是0)</p>
+</li>
+</ol>
+<p><strong>NOTE</strong> 以上证明并不严格，仅仅是有个直观理解，</p>
+<p>同时SVD也可以理解为将线性变换分解为旋转拉伸再旋转的过程</p>
+<p>SVD 的另外一种表示</p>
+<p>$$
+A=\sum \sigma_i u_i v_i^T
+$$</p>
+<p>SVD 还有很多有趣的性质，比如：</p>
+<ol>
+<li>矩阵A的 F-norm: $||A||_F^2=tr(A^TA)=||V\Sigma U^TU\Sigma V^T||_F^2=\sum \sigma_i^2$</li>
+</ol>
+<h2 id="low-rank-近似">low rank 近似</h2>
+<p>设</p>
+<p>$$
+A_k=\sum_{i=1}^k \sigma_i u_i v_i^T,k\le rank(A)
+$$</p>
+<p>可以证明,对于任意的 $B,rank(B) =k$</p>
+<p>$$
+||A-A_k||\le ||A-B||
+$$</p>
+<p>对于 F-norm 成立(这个证明很麻烦，我暂时没找到一个简单的证明，得复习一下代数了)</p>
+<p>而这可以用来压缩矩阵。对于原来的矩阵你需要 $space=O(mn)$,现在就仅仅需要 $O(k(m+n))$ 了。</p>
+<h1 id="reference">reference</h1>
+<ol>
+<li>Gregory Valiant.<a href="http://web.stanford.edu/class/cs168/l/l7.pdf">2019 cs168 lecture note 7</a></li>
+<li>Gregory Valiant.<a href="http://web.stanford.edu/class/cs168/l/l8.pdf">2019 cs168 lecture note 8</a></li>
+<li>Gregory Valiant.<a href="http://web.stanford.edu/class/cs168/l/l9.pdf">2019 cs168 lecture note 9</a></li>
+<li>Anand Rajaraman, Jure Leskovec, and Jeffrey D. Ullman. mining massive data sets</li>
+</ol>
+<blockquote>
+<p><strong>版权声明</strong></p>
+<p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
+<p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
+<p><strong>仅允许非商业转载，转载请保留此版权声明，并注明出处</strong></p>
+</blockquote>
+
+                        </div>
+                        
+
+                        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/posts/pbds/">pbds: STL 的扩展数据结构</a></li>
+        
+        <li><a href="/posts/dm-association-rule/">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a></li>
+        
+        <li><a href="/posts/kickstart-2019-g/">Kick Start 2019 Round G</a></li>
+        
+        <li><a href="/posts/kick-start-2019-roundf/">Kick Start 2019 Round F</a></li>
+        
+        <li><a href="/posts/lsh/">找相似元素: LSH 局部敏感性hash</a></li>
+        
+    </ul>
+</div>
+
+
+                        <div class="post-meta meta-tags">
+                            
+                            <ul class="clearfix">
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/pca">PCA</a></li>
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/svd">SVD</a></li>
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/dimension-reduction">Dimension-reduction</a></li>
+                                
+                            </ul>
+                            
+                        </div>
+                    </article>
+                    
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "zouzhitao-github-io" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+    
+                </div>
+            </div>
+            <div id="secondary">
+    <section class="widget">
+        <form id="search" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://zouzhitao.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/grad-opt/" title="梯度下降优化算法简单总结">梯度下降优化算法简单总结</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kick-start-2020-round-a/" title="Kick Start 2020 Round A 题解">Kick Start 2020 Round A 题解</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kickstart-2019-round-h/" title="Kickstart 2019 Round H">Kickstart 2019 Round H</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/parrallel-computer-arch/" title="现代多核计算机体系结构简介">现代多核计算机体系结构简介</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/pagerank/" title="PageRank 算法简介">PageRank 算法简介</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/dm-reduction-pca-svd/" title="Dimension Reduction: PCA and SVD">Dimension Reduction: PCA and SVD</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/pbds/" title="pbds: STL 的扩展数据结构">pbds: STL 的扩展数据结构</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/machine-learning/">machine-learning(8)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/math/">math(4)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/programing-language/">programing-language(5)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/system/">system(6)</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="https://blog.csdn.net/Dylan_Frank" title="以前的个人博客">dylanfrank@csdn</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://traderforce.github.io/" title="银牌大佬交易者">trader</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://bbkgl.github.io/" title="c&#43;&#43;技术大牛">坤坤</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://tawn0000.github.io" title="JNU ACMer,银牌大佬">tawn</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://akeeper.space/" title="彼得·攀的小站">null</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://godweiyang.com" title="ECNU NLPer">godweiyang</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://blog.csdn.net/Krone_" title="望着楼上大佬">Krone_@csdn</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://zc-apiao.space/" title="过客别墅">Apiao</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://zouzhitao.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+        </div>
+    </div>
+</div>
+<footer id="footer">
+    <div class="container">
+        &copy; 2018 <a href="https://zouzhitao.github.io/">taotao的杂货铺 By taotao</a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="http://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/rujews/maupassant-hugo" target="_blank">maupassant</a>.
+        
+    </div>
+</footer>
+
+
+    <script type="text/javascript" src="/js/prism.js" async="true"></script>
+    <script type="text/javascript">
+    window.MathJax = {
+        tex2jax: {
+            inlineMath: [ ['$','$'] ],
+            processEscapes: true
+        }
+    };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src="/js/totop.js?v=0.0.0" async=""></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-100944759-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+<script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+</body>
+</html>

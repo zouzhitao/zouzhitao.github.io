@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="generator" content="Hugo 0.78.1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Cache Friendly Binary Search: cache 友好的二分搜索 | taotao的杂货铺</title>
+    <meta property="og:title" content="Cache Friendly Binary Search: cache 友好的二分搜索 - taotao的杂货铺">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content="2020-08-16T20:46:35&#43;08:00">
+        
+        
+    <meta property="article:modified_time" content="2020-08-16T20:46:35&#43;08:00">
+        
+    <meta name="Keywords" content="computer system,algorithm,OS,distribute system,big data,ML,算法，系统，分布式，大数据，推荐系统">
+    <meta name="description" content="Cache Friendly Binary Search: cache 友好的二分搜索">
+        
+    <meta name="author" content="taotao">
+    <meta property="og:url" content="https://zouzhitao.github.io/posts/cache-friendly-binary-search/">
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="/css/normalize.css">
+    
+        <link rel="stylesheet" href="/css/prism.css">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+    
+
+
+    
+    
+</head>
+
+<body>
+<header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://zouzhitao.github.io/">
+                        taotao的杂货铺
+                    </a>
+                
+                <p class="description">人生杂谈，随笔，技术笔记</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://zouzhitao.github.io/">首页</a>
+                    
+                    <a  href="https://zouzhitao.github.io/archives/" title="archives">archives</a>
+                    
+                    <a  href="https://zouzhitao.github.io/about/" title="about">about</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div id="body">
+    <div class="container">
+        <div class="col-group">
+
+            <div class="col-8" id="main">
+                <div class="res-cons">
+                    <article class="post">
+                        <header>
+                            <h1 class="post-title">Cache Friendly Binary Search: cache 友好的二分搜索</h1>
+                        </header>
+                        <date class="post-meta meta-date">
+                            2020年8月16日
+                        </date>
+                        
+                        <div class="post-meta meta-category">
+                            |
+                            
+                                <a href="https://zouzhitao.github.io/categories/system">system</a>
+                            
+                        </div>
+                        
+                        
+                        <div class="post-meta">
+                            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span> 阅读</span></span>
+                        </div>
+                        
+                        
+                        <aside id="toc" class="dismissed">
+                            <span class="toc-title">文章目录 <a href="#" class="toc-dismiss"></a></span> <nav id="TableOfContents">
+  <ul>
+    <li><a href="#eytzinger-memory-layout">eytzinger memory layout</a></li>
+    <li><a href="#如何将有序数组改为eytzinger形式">如何将有序数组改为eytzinger形式</a></li>
+    <li><a href="#在eytzinger-布局上的二分搜索实现">在eytzinger 布局上的二分搜索实现</a>
+      <ul>
+        <li><a href="#branch-free-优化">branch-free 优化</a></li>
+        <li><a href="#prefetch">prefetch</a></li>
+        <li><a href="#memory-allignment">Memory allignment</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+                        </aside><div class="post-content">
+                            <blockquote>
+<p>前段时间面试，一面试官问我一个问题。写一个二分搜索。我一分钟以内就切完了，面试官让我在x86平台下将代码优化到极致. 我一下子就懵了。感觉多年的计算机白学了。</p>
+</blockquote>
+<p>众所周知二分查找的主要瓶颈在 cache miss. 因为查找过程中第一次可能在 数组的 $\frac{1}{2}$ 处，第二次可能就跑到了数组的 $\frac{3}{4}$ 或者 $\frac{1}{4}$ 处，如果数组够长，那前面的几次查找几乎都会miss。</p>
+<p><strong>因此优化二分查找的效率，主要就在于优化 cache miss</strong></p>
+<p>我上网找了两天资料，确实找到了一种方法可以优化二分查找<a href="https://algorithmica.org/en/eytzinger">eytzinger binary search</a>，可是限制条件是十分昂贵的:</p>
+<ol>
+<li>需要对数组布局做一个重排(单次二分查找不会有任何优势)</li>
+<li>只有在对数组做多次静态二分查找的情形下会带来cache优化。</li>
+</ol>
+<p>我们先来详细看一下算法。再来仔细分析这个算法</p>
+<h1 id="eytzinger-binary-search">eytzinger binary search</h1>
+<h2 id="eytzinger-memory-layout">eytzinger memory layout</h2>
+<p>先来看一下eytzinger 内存布局。</p>
+<p>先举一个例子，一个有序数组的[1,&hellip;,15] 所对应的<strong>完全二分查找树</strong>如下</p>
+<!-- raw HTML omitted -->
+<p>如果我们将这颗树保存为 pointer-free 的完全二叉树的形式，可以得到下面的数组形式
+记为 $b$, base-1,也就是</p>
+<ol>
+<li>$b[1]$ 为根节点</li>
+<li>$b[2k]$ 为 $b[k]$ 的左孩子，且 $b[2k] &lt;= b[k]$</li>
+<li>$b[2k+1]$ 为 $b[k]$ 的右孩子，且 $b[2k +1] &gt;=b[k]$</li>
+</ol>
+<p>也就是说</p>
+<p>对于一个有序数组的eytzinger 内存布局定义为它的<strong>完全二分搜索树的数组形式</strong>，类似表示在计算机世界中并不少见，比如 binary-heap就是这样表示的。</p>
+<h2 id="如何将有序数组改为eytzinger形式">如何将有序数组改为eytzinger形式</h2>
+<p>其实不难发现 原数组是这颗完全二分搜索树的<strong>中序遍历</strong>，而eytzinger布局是这颗完全二分搜索树的<strong>层序遍历</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> n <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e5</span>;
+<span style="color:#66d9ef">int</span> a[n], b[n<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>];
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">eytzinger</span>(<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, <span style="color:#66d9ef">int</span> k <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>) {
+    <span style="color:#66d9ef">if</span> (k <span style="color:#f92672">&lt;=</span> n) {
+        i <span style="color:#f92672">=</span> eytzinger(i, <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> k);
+        b[k] <span style="color:#f92672">=</span> a[i<span style="color:#f92672">++</span>];
+        i <span style="color:#f92672">=</span> eytzinger(i, <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> k <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>);
+    }
+    <span style="color:#66d9ef">return</span> i;
+}
+</code></pre></div><h2 id="在eytzinger-布局上的二分搜索实现">在eytzinger 布局上的二分搜索实现</h2>
+<p>原理很简单了，</p>
+<pre><code>1. 从根节点开始,如果 b[1] &gt;=target,转到left分支,否则转到right 分支
+2. 直到到达一个非叶子节点
+</code></pre><p>那么退出的时候一定对应着的是<strong>非叶子节点的 index</strong>，我们如何找到所对应的答案呢？</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">search</span>(<span style="color:#66d9ef">int</span> x) {
+    <span style="color:#66d9ef">int</span> k <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+    <span style="color:#66d9ef">while</span> (k <span style="color:#f92672">&lt;=</span> n) {
+        <span style="color:#66d9ef">if</span> (b[k] <span style="color:#f92672">&gt;=</span> x)
+            k <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> k;
+        <span style="color:#66d9ef">else</span>
+            k <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> k <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
+    }
+    k <span style="color:#f92672">&gt;&gt;=</span> __builtin_ffs(<span style="color:#f92672">~</span>k);
+    <span style="color:#66d9ef">return</span> b[k];
+}
+</code></pre></div><p>其实很简单，我们来看跳到做分支的条件 $b[k]&gt;=target$, 也就是说<strong>跳到的做分支的下标一定是满足答案的下标</strong>(不失一般性，这里我们的二分主要为cpp的<code>lower_bound</code>)</p>
+<p>因此我们只要找到<strong>最后一次跳到左分支的下标</strong>就行了， 注意跳到右分支一定会在末尾append 一个1，因此最后 $k$ 出循环的时候append了几个1就说明跳了几次右分支(记为 $s$)，也就是对 $k$ 取反后的第一个为1的bit。我们对 $k$ 左移 $s$ 次找到它的祖先就好了。</p>
+<h3 id="branch-free-优化">branch-free 优化</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">while</span> (k <span style="color:#f92672">&lt;=</span> n)
+    k <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> k <span style="color:#f92672">+</span> (b[k] <span style="color:#f92672">&lt;</span> x);
+</code></pre></div><h3 id="prefetch">prefetch</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">while</span> (k <span style="color:#f92672">&lt;=</span> n) {
+    __builtin_prefetch(b <span style="color:#f92672">+</span> k <span style="color:#f92672">*</span> block_size);
+    k <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> k <span style="color:#f92672">+</span> (b[k] <span style="color:#f92672">&lt;</span> x);
+}
+</code></pre></div><h3 id="memory-allignment">Memory allignment</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">alignas</span>(<span style="color:#ae81ff">64</span>) <span style="color:#66d9ef">int</span> b[n<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>];
+</code></pre></div><h1 id="code">code</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#pragma GCC optimize(&#34;O3&#34;)
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;bits/stdc++.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+
+<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> n <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span><span style="color:#f92672">&lt;&lt;</span><span style="color:#ae81ff">20</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> block_size <span style="color:#f92672">=</span> <span style="color:#ae81ff">16</span>; <span style="color:#75715e">// = 64 / 4 = cache_line_size / sizeof(int)
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">alignas</span>(<span style="color:#ae81ff">64</span>) <span style="color:#66d9ef">int</span> a[n], b[n<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>];
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">eytzinger</span>(<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, <span style="color:#66d9ef">int</span> k <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>) {
+    <span style="color:#66d9ef">if</span> (k <span style="color:#f92672">&lt;=</span> n) {
+        i <span style="color:#f92672">=</span> eytzinger(i, <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> k);
+        b[k] <span style="color:#f92672">=</span> a[i<span style="color:#f92672">++</span>];
+        i <span style="color:#f92672">=</span> eytzinger(i, <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> k <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>);
+    }
+    <span style="color:#66d9ef">return</span> i;
+}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">search</span>(<span style="color:#66d9ef">int</span> x) {
+    <span style="color:#66d9ef">int</span> k <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+    <span style="color:#66d9ef">while</span> (k <span style="color:#f92672">&lt;=</span> n) {
+        __builtin_prefetch(b <span style="color:#f92672">+</span> k <span style="color:#f92672">*</span> block_size);
+        k <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> k <span style="color:#f92672">+</span> (b[k] <span style="color:#f92672">&lt;</span> x);
+    }
+    k <span style="color:#f92672">&gt;&gt;=</span> __builtin_ffs(<span style="color:#f92672">~</span>k);
+    <span style="color:#66d9ef">return</span> k;
+}
+</code></pre></div><h1 id="分析">分析</h1>
+<p>整个算法有一个非常大的预处理开销($O(n)$)，开销会比单次二分查找还要大</p>
+<ol>
+<li>只有当对于一个 array 做多次<strong>静态</strong> 二分查询的时候才会有加速(多次的意思是 $q&raquo;n$)</li>
+<li>算法对cache-line的大小和array size 比较敏感</li>
+</ol>
+<h1 id="reference">reference</h1>
+<ol>
+<li><a href="https://algorithmica.org/en/eytzinger">eytzinger Binary Search</a></li>
+<li>Erik Demaine. <a href="https://erikdemaine.org/papers/BRICS2002/paper.pdf">Cache-Oblivious Algorithms and Data Structures</a></li>
+<li>Paul-Virak Khuong, Pat Morin. <a href="https://arxiv.org/ftp/arxiv/papers/1509/1509.05053.pdf">Array layouts for comparison-based searching</a></li>
+</ol>
+<blockquote>
+<p><strong>版权声明</strong></p>
+<p>本作品为作者原创文章，采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></p>
+<p><strong>作者:</strong> <a href="https://zouzhitao.github.io/">taotao</a></p>
+<p><strong>仅允许非商业转载，转载请保留此版权声明，并注明出处</strong></p>
+</blockquote>
+
+                        </div>
+                        
+
+                        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/posts/grad-opt/">梯度下降优化算法简单总结</a></li>
+        
+        <li><a href="/posts/kick-start-2020-round-a/">Kick Start 2020 Round A 题解</a></li>
+        
+        <li><a href="/posts/kickstart-2019-round-h/">Kickstart 2019 Round H</a></li>
+        
+        <li><a href="/posts/parrallel-computer-arch/">现代多核计算机体系结构简介</a></li>
+        
+        <li><a href="/posts/pagerank/">PageRank 算法简介</a></li>
+        
+    </ul>
+</div>
+
+
+                        <div class="post-meta meta-tags">
+                            
+                            <ul class="clearfix">
+                                
+                                <li><a href="https://zouzhitao.github.io/tags/hpc">hpc</a></li>
+                                
+                            </ul>
+                            
+                        </div>
+                    </article>
+                    
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "zouzhitao-github-io" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+    
+                </div>
+            </div>
+            <div id="secondary">
+    <section class="widget">
+        <form id="search" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://zouzhitao.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/cache-friendly-binary-search/" title="Cache Friendly Binary Search: cache 友好的二分搜索">Cache Friendly Binary Search: cache 友好的二分搜索</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/grad-opt/" title="梯度下降优化算法简单总结">梯度下降优化算法简单总结</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kick-start-2020-round-a/" title="Kick Start 2020 Round A 题解">Kick Start 2020 Round A 题解</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kickstart-2019-round-h/" title="Kickstart 2019 Round H">Kickstart 2019 Round H</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/parrallel-computer-arch/" title="现代多核计算机体系结构简介">现代多核计算机体系结构简介</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/pagerank/" title="PageRank 算法简介">PageRank 算法简介</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/dm-reduction-pca-svd/" title="Dimension Reduction: PCA and SVD">Dimension Reduction: PCA and SVD</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/pbds/" title="pbds: STL 的扩展数据结构">pbds: STL 的扩展数据结构</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/dm-association-rule/" title="Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)">Data Mining:关联规则(Associations Aule)，找频繁项(Frequent Item Set)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/posts/kickstart-2019-g/" title="Kick Start 2019 Round G">Kick Start 2019 Round G</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/algorithm/">algorithm(6)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/competitive-programing/">competitive-programing(12)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/ir/">ir(3)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/machine-learning/">machine-learning(8)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/math/">math(4)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/programing-language/">programing-language(5)</a>
+    </li>
+    
+    <li>
+        <a href="https://zouzhitao.github.io/categories/system/">system(6)</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="https://blog.csdn.net/Dylan_Frank" title="以前的个人博客">dylanfrank@csdn</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://traderforce.github.io/" title="银牌大佬交易者">trader</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://bbkgl.github.io/" title="c&#43;&#43;技术大牛">坤坤</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://tawn0000.github.io" title="JNU ACMer,银牌大佬">tawn</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://akeeper.space/" title="彼得·攀的小站">null</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://godweiyang.com" title="ECNU NLPer">godweiyang</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://blog.csdn.net/Krone_" title="望着楼上大佬">Krone_@csdn</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://zc-apiao.space/" title="过客别墅">Apiao</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://zouzhitao.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+        </div>
+    </div>
+</div>
+<footer id="footer">
+    <div class="container">
+        &copy; 2018 <a href="https://zouzhitao.github.io/">taotao的杂货铺 By taotao</a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="http://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/rujews/maupassant-hugo" target="_blank">maupassant</a>.
+        
+    </div>
+</footer>
+
+
+    <script type="text/javascript" src="/js/prism.js" async="true"></script>
+    <script type="text/javascript">
+    window.MathJax = {
+        tex2jax: {
+            inlineMath: [ ['$','$'] ],
+            processEscapes: true
+        }
+    };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src="/js/totop.js?v=0.0.0" async=""></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-100944759-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+<script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+</body>
+</html>
